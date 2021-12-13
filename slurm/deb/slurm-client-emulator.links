@@ -1,0 +1,17 @@
+usr/share/man/man7/slurm-client-emulator.7.gz usr/share/man/man1/sshare-emulator.1.gz
+usr/share/man/man7/slurm-client-emulator.7.gz usr/share/man/man1/scancel-emulator.1.gz
+usr/share/man/man7/slurm-client-emulator.7.gz usr/share/man/man1/sattach-emulator.1.gz
+usr/share/man/man7/slurm-client-emulator.7.gz usr/share/man/man1/sbatch-emulator.1.gz
+usr/share/man/man7/slurm-client-emulator.7.gz usr/share/man/man1/sreport-emulator.1.gz
+usr/share/man/man7/slurm-client-emulator.7.gz usr/share/man/man1/sbcast-emulator.1.gz
+usr/share/man/man7/slurm-client-emulator.7.gz usr/share/man/man1/srun-emulator.1.gz
+usr/share/man/man7/slurm-client-emulator.7.gz usr/share/man/man1/squeue-emulator.1.gz
+usr/share/man/man7/slurm-client-emulator.7.gz usr/share/man/man1/sprio-emulator.1.gz
+usr/share/man/man7/slurm-client-emulator.7.gz usr/share/man/man1/sdiag-emulator.1.gz
+usr/share/man/man7/slurm-client-emulator.7.gz usr/share/man/man1/strigger-emulator.1.gz
+usr/share/man/man7/slurm-client-emulator.7.gz usr/share/man/man1/sinfo-emulator.1.gz
+usr/share/man/man7/slurm-client-emulator.7.gz usr/share/man/man1/salloc-emulator.1.gz
+usr/share/man/man7/slurm-client-emulator.7.gz usr/share/man/man1/sacct-emulator.1.gz
+usr/share/man/man7/slurm-client-emulator.7.gz usr/share/man/man1/sacctmgr-emulator.1.gz
+usr/share/man/man7/slurm-client-emulator.7.gz usr/share/man/man1/scontrol-emulator.1.gz
+usr/share/man/man7/slurm-client-emulator.7.gz usr/share/man/man1/sstat-emulator.1.gz

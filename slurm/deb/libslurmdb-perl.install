@@ -1,0 +1,4 @@
+#!/usr/bin/dh-exec --with=subst
+${PERL_ARCHLIB}/auto/Slurmdb/autosplit.ix
+${PERL_ARCHLIB}/auto/Slurmdb/Slurmdb.so
+${PERL_ARCHLIB}/Slurmdb.pm

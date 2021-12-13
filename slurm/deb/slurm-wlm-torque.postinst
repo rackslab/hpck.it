@@ -1,0 +1,24 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+   configure)
+      update-alternatives \
+         --install /usr/bin/mpirun mpirun /usr/bin/mpiexec.slurm 20 \
+         --slave /usr/share/man/man1/mpirun.1.gz mpirun.1.gz /usr/share/man/man1/mpirun.slurm.1.gz \
+         --slave /usr/bin/mpiexec mpiexec /usr/bin/mpiexec.slurm \
+         --slave /usr/share/man/man1/mpiexec.1.gz mpiexec.1.gz /usr/share/man/man1/mpiexec.slurm.1.gz     
+      ;;
+   abort-upgrade|abort-remove|abort-deconfigure)
+      exit 0;
+      ;;
+   *)
+      echo "postinst called with unknown argument \`$1'" >&2
+      exit 0;
+      ;;
+esac
+
+#DEBHELPER#
+        
+exit 0

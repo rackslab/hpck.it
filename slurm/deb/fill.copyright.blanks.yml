@@ -1,0 +1,5 @@
+contribs/cray/csm/:
+  license: GPL-2+
+contribs/pmi2/:
+  license: BSD
+

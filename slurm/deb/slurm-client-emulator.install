@@ -1,0 +1,17 @@
+debian/tmp-emulator/usr/bin/sshare-emulator 	/usr/bin/
+debian/tmp-emulator/usr/bin/scancel-emulator 	/usr/bin/
+debian/tmp-emulator/usr/bin/sattach-emulator 	/usr/bin/
+debian/tmp-emulator/usr/bin/sbatch-emulator 	/usr/bin/
+debian/tmp-emulator/usr/bin/sreport-emulator 	/usr/bin/
+debian/tmp-emulator/usr/bin/sbcast-emulator 	/usr/bin/
+debian/tmp-emulator/usr/bin/srun-emulator 		/usr/bin/
+debian/tmp-emulator/usr/bin/squeue-emulator 	/usr/bin/
+debian/tmp-emulator/usr/bin/sprio-emulator 		/usr/bin/
+debian/tmp-emulator/usr/bin/sdiag-emulator 		/usr/bin/
+debian/tmp-emulator/usr/bin/strigger-emulator 	/usr/bin/
+debian/tmp-emulator/usr/bin/sinfo-emulator 		/usr/bin/
+debian/tmp-emulator/usr/bin/salloc-emulator 	/usr/bin/
+debian/tmp-emulator/usr/bin/sacct-emulator 		/usr/bin/
+debian/tmp-emulator/usr/bin/sacctmgr-emulator 	/usr/bin/
+debian/tmp-emulator/usr/bin/scontrol-emulator 	/usr/bin/
+debian/tmp-emulator/usr/bin/sstat-emulator 		/usr/bin/

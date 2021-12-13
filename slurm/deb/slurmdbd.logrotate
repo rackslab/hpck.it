@@ -1,0 +1,16 @@
+/var/log/slurm-llnl/slurmdbd.log /var/log/slurm/slurmdbd.log {
+  compress
+  missingok
+  nocopytruncate
+  nocreate
+  nodelaycompress
+  nomail
+  notifempty
+  noolddir
+  rotate 12
+  sharedscripts
+  size=5M
+  postrotate
+      /usr/sbin/invoke-rc.d --quiet slurmdbd reconfig >/dev/null
+  endscript
+}

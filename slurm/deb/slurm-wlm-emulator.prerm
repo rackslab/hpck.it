@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+	remove|deconfigure)
+		update-alternatives --remove slurmctld /usr/sbin/slurmctld-wlm-emulator
+		update-alternatives --remove slurmd /usr/sbin/slurmd-wlm-emulator
+		;;
+esac
+
+#DEBHELPER#
+
+exit 0

@@ -1,0 +1,11 @@
+---
+version: 21.08.4
+tarball: https://download.schedmd.com/slurm/slurm-{{ pkg.version }}.tar.bz2
+checksums:
+  21.08.4:
+    sha1: 6feb9026eafc78478c65410117d6a3582b7ce5b5
+rpm:
+  release: 1
+  buildargs: --with mysql
+deb:
+  release: 1

@@ -1,0 +1,140 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+export PERL_ARCHLIB := $(shell perl -MConfig -e 'print substr($$Config{vendorarch}, 1)')
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all,-bindnow
+# include defs of all DEB_HOST_*/DEB_BUILD_* vars
+include /usr/share/dpkg/architecture.mk
+
+ifneq ($(DEB_TARGET_ARCH_BITS),64)
+  ENABLEDEPRECATED = --enable-deprecated
+endif
+
+%:
+	dh $@ --builddirectory
+
+override_dh_auto_clean:
+	dh_auto_clean
+	dh_auto_clean --builddirectory build-emulator
+	rm -rvf $(CURDIR)/debian/tmp-emulator
+
+# We run configure with --disable-debug to avoid the default use of -O0 and
+# consequent unprotected source functions, causing lintian report
+# hardening-no-fortify-functions
+# Notice that -g in CFLAGS is still provided by dpkg-buildflags
+override_dh_auto_configure:
+	dh_auto_configure -- --sysconfdir=/etc/slurm --with-munge --enable-pam --without-rpath --disable-debug --enable-multiple-slurmd --with-pmix=/usr/lib/$(DEB_HOST_MULTIARCH)/pmix2 $(ENABLEDEPRECATED) SUCMD=/bin/su SLEEP_CMD=/bin/sleep
+	dh_auto_configure --builddirectory build-emulator -- -sysconfdir=/etc/slurm --with-munge --enable-pam --without-rpath --disable-debug --enable-front-end --enable-multiple-slurmd --with-pmix=/usr/lib/$(DEB_HOST_MULTIARCH)/pmix2 $(ENABLEDEPRECATED) SUCMD=/bin/su SLEEP_CMD=/bin/sleep
+override_dh_auto_build:
+	dh_auto_build
+	dh_auto_build --builddirectory build-emulator
+
+override_dh_shlibdeps:
+	dh_shlibdeps -O--builddirectory -O--parallel -l$(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/slurm-wlm/
+
+override_dh_auto_install:
+	dh_auto_install
+	
+	# Rename slurm(1) manpage before dh_installman run. It is not possible
+	# to rename manpages in debian/*.manpages so hardcore `mv` is done here
+	mv -v debian/tmp/usr/share/man/man7/slurm.7 debian/tmp/usr/share/man/man7/slurm-wlm.7
+	
+	# run make install for libpam-slurm pkg
+	$(MAKE) -C obj-$(DEB_BUILD_GNU_TYPE)/contribs/pam install DESTDIR=$(CURDIR)/debian/tmp
+	
+	# run make install for libpam-slurm-adopt pkg
+	$(MAKE) -C obj-$(DEB_BUILD_GNU_TYPE)/contribs/pam_slurm_adopt install DESTDIR=$(CURDIR)/debian/tmp
+	
+	# run make install for libslurm[db]-perl pkgs
+	$(MAKE) -C obj-$(DEB_BUILD_GNU_TYPE)/contribs/perlapi install DESTDIR=$(CURDIR)/debian/tmp PERL_MM_OPT="INSTALLDIRS=vendor"
+	find debian/tmp/$(PERL_ARCHLIB) -type f -name "*.so" | xargs chrpath -d
+	
+	# run make install for slurm-wlm-torque pkg
+	$(MAKE) -C obj-$(DEB_BUILD_GNU_TYPE)/contribs/torque install DESTDIR=$(CURDIR)/debian/tmp
+
+	# run make install for PMI pkg
+	$(MAKE) -C obj-$(DEB_BUILD_GNU_TYPE)/contribs/pmi install DESTDIR=$(CURDIR)/debian/tmp
+
+	# run make install for PMI2 pkg
+	$(MAKE) -C obj-$(DEB_BUILD_GNU_TYPE)/contribs/pmi2 install DESTDIR=$(CURDIR)/debian/tmp
+
+	# clear dependency_libs field in *.la files
+	# see lintian non-empty-dependency_libs-in-la-file for reference
+	sed -i "/dependency_libs/ s/'.*'/''/" `find debian/tmp/ -name '*.la'`
+
+	# Rename mpiexec to mpiexec.slurm
+	mv -v debian/tmp/usr/bin/mpiexec	debian/tmp/usr/bin/mpiexec.slurm
+
+	# build manpages for pbs wrappers
+	for i in debian/tmp/usr/bin/pbsnodes \
+		debian/tmp/usr/bin/mpiexec.slurm \
+		debian/tmp/usr/bin/q*; do \
+			pod2man -v $$i > debian/tmp/usr/share/man/man1/$$(basename $$i).1; \
+	done
+
+	# Remove embedded jquery.min.js
+	rm -fv debian/tmp/usr/share/doc/slurm-wlm/html/jquery.min.js
+
+	# Rename the header files directory to slurm
+	mv -v debian/tmp/usr/include/slurm-wlm debian/tmp/usr/include/slurm
+
+	# Rename binaries that are also in the slurm-wlm-emulator
+	mv -v debian/tmp/usr/sbin/slurmctld debian/tmp/usr/sbin/slurmctld-wlm
+	mv -v debian/tmp/usr/sbin/slurmd debian/tmp/usr/sbin/slurmd-wlm
+	mv -v debian/tmp/usr/sbin/slurmstepd debian/tmp/usr/sbin/slurmstepd-wlm
+
+	dh_auto_install --builddirectory build-emulator  --destdir=$(CURDIR)/debian/tmp-emulator
+	# Rename binaries in the emulator packages
+	mv -v debian/tmp-emulator/usr/sbin/slurmctld debian/tmp-emulator/usr/sbin/slurmctld-wlm-emulator
+	mv -v debian/tmp-emulator/usr/sbin/slurmd debian/tmp-emulator/usr/sbin/slurmd-wlm-emulator
+	mv -v debian/tmp-emulator/usr/sbin/slurmstepd debian/tmp-emulator/usr/sbin/slurmstepd-wlm-emulator
+	mv -v debian/tmp-emulator/usr/bin/sshare	debian/tmp-emulator/usr/bin/sshare-emulator
+	mv -v debian/tmp-emulator/usr/bin/scancel 	debian/tmp-emulator/usr/bin/scancel-emulator
+	mv -v debian/tmp-emulator/usr/bin/sattach 	debian/tmp-emulator/usr/bin/sattach-emulator
+	mv -v debian/tmp-emulator/usr/bin/sbatch 	debian/tmp-emulator/usr/bin/sbatch-emulator
+	mv -v debian/tmp-emulator/usr/bin/sreport 	debian/tmp-emulator/usr/bin/sreport-emulator
+	mv -v debian/tmp-emulator/usr/bin/sbcast 	debian/tmp-emulator/usr/bin/sbcast-emulator
+	mv -v debian/tmp-emulator/usr/bin/srun 	debian/tmp-emulator/usr/bin/srun-emulator
+	mv -v debian/tmp-emulator/usr/bin/squeue 	debian/tmp-emulator/usr/bin/squeue-emulator
+	mv -v debian/tmp-emulator/usr/bin/sprio 	debian/tmp-emulator/usr/bin/sprio-emulator
+	mv -v debian/tmp-emulator/usr/bin/sdiag 	debian/tmp-emulator/usr/bin/sdiag-emulator
+	mv -v debian/tmp-emulator/usr/bin/strigger debian/tmp-emulator/usr/bin/strigger-emulator
+	mv -v debian/tmp-emulator/usr/bin/sinfo 	debian/tmp-emulator/usr/bin/sinfo-emulator
+	mv -v debian/tmp-emulator/usr/bin/salloc 	debian/tmp-emulator/usr/bin/salloc-emulator
+	mv -v debian/tmp-emulator/usr/bin/sacct	debian/tmp-emulator/usr/bin/sacct-emulator
+	mv -v debian/tmp-emulator/usr/bin/sacctmgr debian/tmp-emulator/usr/bin/sacctmgr-emulator
+	mv -v debian/tmp-emulator/usr/bin/scontrol debian/tmp-emulator/usr/bin/scontrol-emulator
+	mv -v debian/tmp-emulator/usr/bin/sstat	debian/tmp-emulator/usr/bin/sstat-emulator
+
+override_dh_strip:
+	dh_strip -plibslurm36
+	dh_strip -plibpmi0 --dbgsym-migration='libpmi0-dbg (<< 17.02.6~)'
+	dh_strip -plibpmi2-0 --dbgsym-migration='libpmi2-0-dbg (<< 17.02.6~)'
+	dh_strip -pslurm-wlm-basic-plugins --dbgsym-migration='slurm-wlm-basic-plugins-dbg (<< 17.02.6~)'
+	dh_strip -pslurm-client --dbgsym-migration='slurm-client-dbg (<< 17.02.6~)'
+	dh_strip -pslurmd --dbgsym-migration='slurmd-dbg (<< 17.02.6~)'
+	dh_strip -pslurmctld --dbgsym-migration='slurmctld-dbg (<< 17.02.6~)'
+	dh_strip -pslurmdbd --dbgsym-migration='slurmdbd-dbg (<< 17.02.6~)'
+	# we do not care about debug symbols for those pkgs
+	dh_strip -plibslurmdb-perl --no-automatic-dbgsym
+	dh_strip -plibslurm-perl --no-automatic-dbgsym
+	dh_strip -psview --no-automatic-dbgsym
+	dh_strip -plibpam-slurm --no-automatic-dbgsym
+	dh_strip -plibpam-slurm-adopt --no-automatic-dbgsym
+	dh_strip -pslurm-wlm-emulator --no-automatic-dbgsym
+	dh_strip -pslurm-client-emulator --no-automatic-dbgsym
+	dh_strip -plibpmi0-dev --no-automatic-dbgsym
+	dh_strip -plibpmi2-0-dev --no-automatic-dbgsym
+	dh_strip -plibslurm-dev --no-automatic-dbgsym
+	dh_strip -pslurm-wlm-basic-plugins-dev --no-automatic-dbgsym
+	dh_strip -pslurmrestd --no-automatic-dbgsym
+	strip --verbose --strip-unneeded --remove-section=.comment \
+		--remove-section=.note debian/slurm-wlm-basic-plugins-dev/usr/lib/*/slurm-wlm/*.a
+
+override_dh_auto_test:
+
+override_dh_compress:
+	dh_compress -X.pdf -X.ttf

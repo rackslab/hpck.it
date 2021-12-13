@@ -1,0 +1,7 @@
+---
+deb:
+  bullseye: bullseye
+  bookworm: bookworm
+  sid: sid
+rpm:
+  el8: rocky-8-x86_64

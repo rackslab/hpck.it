@@ -1,0 +1,13 @@
+Configuration Instructions
+==========================
+In order to use SLURM you need a proper configuration file for your
+cluster that need to be stored under /etc/slurm/slurm.conf on every
+node. You can point your browser to
+file:///usr/share/doc/slurmctld/slurm-wlm-configurator.html for an
+automatic configuration tool. Please leave red fields untouched and
+change green field to fit your cluster configuration.
+
+You can also find a simple sample configuration that provides a
+control machine to run the Slurm's central management daemon and
+a single node for job execution under
+/usr/share/doc/slurmctld/examples/slurm.conf.simple.gz

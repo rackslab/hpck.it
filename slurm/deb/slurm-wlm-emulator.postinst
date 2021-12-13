@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+if [ "$1" = "configure" ] ; then
+
+  update-alternatives --install /usr/sbin/slurmctld slurmctld /usr/sbin/slurmctld-wlm-emulator 60
+  update-alternatives --install /usr/sbin/slurmd slurmd /usr/sbin/slurmd-wlm-emulator 60 \
+    --slave /usr/sbin/slurmstepd slurmstepd /usr/sbin/slurmstepd-wlm-emulator
+
+fi
+
+#DEBHELPER#
+
+exit 0

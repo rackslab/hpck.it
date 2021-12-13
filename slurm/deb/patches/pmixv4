@@ -1,0 +1,39 @@
+Description: Enable pmix plugin compilation with pmix version 4
+ HAVE_PMIX macro is missing when pmix version 4 is found. This prevents
+ the compilation of the slurm pmix plugin.
+Author: Gennaro Oliva <oliva.g@na.icar.cnr.it>
+Forwarded: https://bugs.schedmd.com/show_bug.cgi?id=10683
+Last-Update: 2021-01-23
+
+--- a/auxdir/x_ac_pmix.m4
++++ b/auxdir/x_ac_pmix.m4
+@@ -181,7 +181,8 @@
+ 
+   AM_CONDITIONAL(HAVE_PMIX, [test $_x_ac_pmix_v1_found = "1"] ||
+                 [test $_x_ac_pmix_v2_found = "1"] ||
+-                [test $_x_ac_pmix_v3_found = "1"] )
++                [test $_x_ac_pmix_v3_found = "1"] ||
++                [test $_x_ac_pmix_v4_found = "1"] )
+   AM_CONDITIONAL(HAVE_PMIX_V1, [test $_x_ac_pmix_v1_found = "1"])
+   AM_CONDITIONAL(HAVE_PMIX_V2, [test $_x_ac_pmix_v2_found = "1"])
+   AM_CONDITIONAL(HAVE_PMIX_V3, [test $_x_ac_pmix_v3_found = "1"])
+--- a/src/plugins/mpi/pmix/mpi_pmix.c
++++ b/src/plugins/mpi/pmix/mpi_pmix.c
+@@ -87,6 +87,8 @@
+ const char plugin_type[] = "mpi/pmix_v2";
+ #elif (HAVE_PMIX_VER == 3)
+ const char plugin_type[] = "mpi/pmix_v3";
++#elif (HAVE_PMIX_VER == 4)
++const char plugin_type[] = "mpi/pmix_v4";
+ #endif
+ 
+ const uint32_t plugin_version = SLURM_VERSION_NUMBER;
+@@ -112,6 +114,8 @@
+ 	xstrfmtcat(full_path, "%s/", PMIXP_V2_LIBPATH);
+ #elif defined PMIXP_V3_LIBPATH
+ 	xstrfmtcat(full_path, "%s/", PMIXP_V3_LIBPATH);
++#elif defined PMIXP_V4_LIBPATH
++	xstrfmtcat(full_path, "%s/", PMIXP_V4_LIBPATH);
+ #endif
+ 	xstrfmtcat(full_path, "libpmix.so");
+ 

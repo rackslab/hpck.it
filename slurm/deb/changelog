@@ -1,0 +1,1351 @@
+slurm-wlm (20.11.8-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Mon, 23 Aug 2021 15:53:23 +0200
+
+slurm-wlm (20.11.7-1) unstable; urgency=medium
+
+  * New upstream release fixes CVE-2021-31215 (Closes: #988439)
+  * Add typo patch for acct_gather.conf man page
+  * Update miscellanea manpage patch
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 15 Jun 2021 17:49:41 +0200
+
+slurm-wlm (20.11.5-1) unstable; urgency=medium
+
+  * New upstream release
+  * Update libslurm36 symbols file
+  * Refresh mail-path patch
+  * Add more calls to sleep trying to fix #985725
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Mon, 05 Apr 2021 01:18:48 +0200
+
+slurm-wlm (20.11.4-1) unstable; urgency=medium
+
+  * New upstream release
+  * Refresh patches
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 19 Feb 2021 11:13:22 +0100
+
+slurm-wlm (20.11.3-3) unstable; urgency=medium
+
+  * Pass SUCMD and SLEEP_CMD to configure (Closes: #977319)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 17 Feb 2021 21:24:19 +0100
+
+slurm-wlm (20.11.3-2) unstable; urgency=medium
+
+  * Source only upload for migration to testing
+  * Modify slurmrestd EnvironmentFile location
+  * Add lintian overrides for slurmrestd
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 28 Jan 2021 03:05:28 +0100
+
+slurm-wlm (20.11.3-1) unstable; urgency=medium
+
+  * New upstream release
+  * Remove typos patches
+  * Refresh patches
+  * Bump libslurm to soname 36
+  * Remove unused overrides
+  * Update d/copyright
+  * Fix typos
+  * Add patch to compile against pmix v4
+  * Fix sacct test failure
+  * Add slurmrestd package
+  * Update configurators
+  * Fix packages descriptions
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sun, 24 Jan 2021 18:29:47 +0100
+
+slurm-wlm (20.02.6-2) unstable; urgency=medium
+
+  * Fix pmix support (Closes: #954272)
+  * Fix srun autopkgtest
+  * Tweak slurm.conf for autopkgtest
+  * Add mpi autopkgtest
+  * Bump standard version to 4.5.1 (no changes)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 02 Dec 2020 01:13:08 +0100
+
+slurm-wlm (20.02.6-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #974721, #974722)
+  * Refresh miscellanea-manpages and mail-path patches
+  * Remove use-python3 patch included upstream
+  * Remove smap command
+  * Remove cray.conf.5 man page
+  * Bump libslurm to soname 35
+  * Update configurators
+  * Fix the slurmdbd example file (Closes: #949734)
+  * Remove llnl from the source package name and from the
+    configuration, lib and log directory names
+  * Remove PM Green patch: bug fixed upstream
+  * Update d/copyright
+  * Update libslurm35.symbols
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 17 Nov 2020 00:11:42 +0100
+
+slurm-llnl (19.05.5-2.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Add __attribute__((__common__)) to some "tentative import"
+    declarations in src/plugins/select/cons_tres/job_test.c
+  * Move definiton of "opt" from scanel.h to scanel.c
+
+ -- Peter Michael Green <plugwash@debian.org>  Sat, 22 Aug 2020 22:59:50 +0000
+
+slurm-llnl (19.05.5-2) unstable; urgency=medium
+
+  * Declare libslurm-dev Breaks+Replaces relation with the old
+    libslurmdb-dev package (Closes: #949249)
+  * Bump standard version to 4.5.0 (no changes)
+  * Move slurm-client-emulator, slurm-wlm and spank man pages to
+    section 7
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 24 Mar 2020 10:58:42 +0100
+
+slurm-llnl (19.05.5-1) unstable; urgency=medium
+
+  * New upstream release
+
+  [ Martijn Kruiten ]
+  * Include slurmdb.h in libslurm-dev (Closes: #944606)
+  * Remove conflicting docs from the slurmd and slurmctld packages
+    (Closes: #942453)
+  * Credit to Martijn for libpam-slurm-adopt in release 19.05.3.2-1.
+    Sorry for not mentioning it before and thank you very much for your
+    contribution!
+
+  [ Gennaro Oliva ]
+  * Remove useless libglade2 build dep (better later than never)
+  * Remove libssh2 build dep
+  * Remove crypto/openssl related stuff
+  * Use python3 to generate html doc (Closes: #938499)
+  * Update libslurm symbols file
+  * Add support for pmix (Closes: #948008)
+
+  [ Christian Ehrhardt ] 
+  * Improve sacct test
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 16 Jan 2020 22:46:11 +0100
+
+slurm-llnl (19.05.3.2-2) unstable; urgency=medium
+
+  * Enable deprecated configure option on 32bit archs
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 15 Oct 2019 09:31:57 +0200
+
+slurm-llnl (19.05.3.2-1) unstable; urgency=medium
+
+  * New upstream release fixes CVE-2019-12838 (Closes: #931880)
+  * Remove libslurmdb packages as it was merged into libslurm
+  * Bump standard version to 4.4.1 (no changes)
+  * Update d/copyright
+  * Sync configurators with upstream
+  * Refresh patches
+  * Increase libslurm version to 34
+  * Update libslurm symbols file
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 08 Oct 2019 18:18:52 +0200
+
+slurm-llnl (18.08.6.2-1) unstable; urgency=medium
+
+  * New upstream release 18.08.6.2
+  * Update libslurm{,db} symbols file
+  * Refresh remove-google-javascript patch
+  * Update postinst scripts to move pid file under /run when
+    /run/slurm-llnl is used (Closes: #885759)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sun, 10 Mar 2019 01:42:38 +0100
+
+slurm-llnl (18.08.5.2-1) unstable; urgency=medium
+
+  * New upstream release fixes CVE-2019-6438 (Closes: #920997)
+  * debian/patches/man-pages-typos: removed, applied upstream
+  * Add Build-Depends-Package field to symbol files
+  * Handling slurm user inside the plugin package as suggested by
+    Karl Kornel (Closes: #850891)
+  * Allow using a slurm user with a different UID if created before
+    installation (Closes: #851103)
+  * Move pid files under /run (Closes: #885759)
+  * Change static libs strip options for standard version 4.3.0
+  * Fix a typo in the perl code
+  * Remove rc4 symlink creation in slurmdbd.postinst
+  * Update service files to sync with upstream
+  * Update init scripts with the new pid files
+  * Remove init scripts symlinks for old SlurmdSpoolDir and StateSaveLocation
+  * Sync configurators with upstream
+  * Bump debhelper compat level to 11
+  * Remove --without-blcr configure option not needed anymore
+  * Add libfreeipmi-dev build dependency to enable freeipmi support
+  * Remove old d/NEWS file
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sun, 17 Feb 2019 13:32:52 +0100
+
+slurm-llnl (18.08.3-1) unstable; urgency=medium
+
+  * New upstream release
+  * Update libslurm33.symbols
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 24 Oct 2018 23:51:22 +0200
+
+slurm-llnl (18.08.2-1) unstable; urgency=medium
+
+  * New upstream release
+  * Fix sacct test script (Closes: #910886)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 23 Oct 2018 16:40:57 +0200
+
+slurm-llnl (18.08.1-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #909653)
+  * Update libslurm{,db} symbols file to soname 33
+  * Modifiy the mail patch since /usr/bin/mail is now supported upstream
+  * Refresh patches and remove parts included upstream
+  * Update d/copyright
+  * Update html configurators
+  * Fix typos in the some man pages
+  * Update simple configuration files
+  * Remove unused cgroup release agent script
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Mon, 08 Oct 2018 01:23:32 +0200
+
+slurm-llnl (17.11.9-1) unstable; urgency=medium
+
+  * New upstream release
+  * Bump standard version to 4.2.0
+    Passing verbose options to commands in d/rules
+  * Update libslurm32.symbols
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 10 Aug 2018 15:25:19 +0200
+
+slurm-llnl (17.11.8-1) unstable; urgency=medium
+
+  * New upstream release
+  * Bump standard version to 4.1.5 (no changes)
+  * Update html configurators
+  * Update libslurm32 symbols file
+  * Disable pdf and ttf compression to improve html doc usability
+  * Add man2html dependency to enable html man pages in doc
+  * Add libssh2 dependency to enable native X11 forwarding
+  * Add libcurl dependency to build jobcomp/elasticsearch plugin
+  * Add lz4 dependency to enable lz4 compression to sbcast
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 27 Jul 2018 10:06:43 +0200
+
+slurm-llnl (17.11.7-1) unstable; urgency=high
+
+  * New upstream release fixes CVE-2018-10995
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 06 Jun 2018 11:15:08 +0200
+
+slurm-llnl (17.11.6-1) unstable; urgency=medium
+
+  * New upstream release
+  * Update Vcs info with the new salsa.d.o git repo
+  * Change Maintainer to HPC Team
+  * Add Gennaro Oliva as Uploader
+  * Bump standard version to 4.1.4 (no changes)
+  * Rename the header files directory to slurm (Closes: #887924)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 22 May 2018 11:43:27 +0200
+
+slurm-llnl (17.11.5-1) unstable; urgency=medium
+
+  [ Mehdi Dogguy ]
+  * Add an empty /etc/slurm-llnl/plugstack.conf.d directory for plugin
+    configuration and associated configuration file plugstack.conf
+
+  [ Gennaro Oliva ]
+  * Bump debhelper compat level to 10
+  * Bump standard version to 4.1.3
+  * Delete old transitional packages' files
+  * New upstream release fixes CVE-2018-7033
+  * Update libslurm{,db}32 symbols files
+  * Fix slurmdbd.conf.5 and slurm.conf.5 man pages
+  * Fix a typo in the mpiexec wrapper man page
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sat, 17 Mar 2018 08:50:51 +0100
+
+slurm-llnl (17.11.2-1) unstable; urgency=medium
+
+  [ Mehdi Dogguy ]
+  * New upstream release
+    - Refresh patches
+  * Drop old transitional packages (Closes: #878864) and old Replaces
+    and Breaks statements.
+  * Fix default pidfile for slurm daemons (See: #885759)
+  * Use --runstatedir instead of --localstatedir in debian/rules to
+    specify run state directory.
+  * Override call to dh_shlibdeps so that dpkg-shlibdeps finds
+    libslurmfull.so
+  * Override lintian error binary-or-shlib-defines-rpath: Slurm provides
+    a private shared library. Its location matches the future name of the
+    source package.
+
+  [ Gennaro Oliva ]
+  * Drop unused lintian spelling-error-in-binary overrides
+  * Update d/copyright
+  * Upgrade Standards-Version to 4.1.2, no changes needed
+
+ -- Mehdi Dogguy <mehdi@debian.org>  Sun, 14 Jan 2018 10:59:47 +0100
+
+slurm-llnl (17.02.9-1) unstable; urgency=medium
+
+  * New upstream release fixes CVE-2017-15566 (Closes: #880530)
+  * Add new symbols to libslurm31 and libslurmdb31
+  * Modify header patch to remove google script in the footer
+  * Rename header patch
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sun, 05 Nov 2017 01:02:24 +0100
+
+slurm-llnl (17.02.7-1) unstable; urgency=medium
+
+  * New upstream release
+  * Rightly moving slurmdbd symbols in slurmdbd debug package
+  * Switch from -dbg packages to automatic -dbgsym
+  * Change package priority to optional as required by the new standard
+  * Change d/copyright format uri to https
+  * Standard version upgraded to 4.1.1
+  * Increase debhelper version dependency to get rid of dh-systemd
+  * Add srun, sbatch and sacct autopkgtests
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sat, 07 Oct 2017 01:25:22 +0200
+
+slurm-llnl (17.02.5-1) unstable; urgency=medium
+
+  [ Mehdi Dogguy and Gennaro Oliva ]
+  * New upstream release.
+  * Refresh patches.
+  * Update libslurm{db,}31.symbols
+
+  [ Gennaro Oliva ]
+  * Update d/copyright and switch to copyright-format 1.0
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Mon, 03 Jul 2017 15:30:51 +0200
+
+slurm-llnl (17.02.1.2-1) unstable; urgency=medium
+
+  * New upstream major release
+  * Update libslurm{,db} package files to soname 31
+  * Refresh patches and remove those included upstream
+  * Remove srun_cr man page not installed without blcr support
+  * Update service files to avoid killing job (Closes: #855905)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 08 Mar 2017 08:57:37 +0100
+
+slurm-llnl (16.05.9-1) unstable; urgency=medium
+
+  * New upstream release
+  * Overrides spelling-error-in-binary false positives
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 03 Feb 2017 09:50:02 +0100
+
+slurm-llnl (16.05.8-1) unstable; urgency=medium
+
+  * New upstream release 
+  * Remove wiki.conf.5 from slurm-client manpages
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sat, 07 Jan 2017 02:40:23 +0100
+
+slurm-llnl (16.05.7-2) unstable; urgency=medium
+
+  * Enable multiple slurmd support (Closes: #849140)
+  * Drop dependency on openssl-blacklist (Closes: #848627)
+  * slurmd and slurm-client postrm don't kill slurm processes anymore
+  * Checks whether the slurm user exists before deleting
+  * Use numerical uid 64030 to kill slurm owned processes
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 30 Dec 2016 16:06:07 +0100
+
+slurm-llnl (16.05.7-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #828549)
+  * Add libswitch-perl dependency to slurm-wlm-torque (Closes: #847342)
+  * Add slurmd.README.Debian (Closes: #845268) 
+  * Move README.Debian to slurmctld.README.Debian
+  * Add lintian overrides for no bindnow in many packages
+  * Use jquery.min.js provided by libjs-jquery instead of upstream's
+  * Add jquery source in missing-sources
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 14 Dec 2016 11:01:06 +0100
+
+slurm-llnl (16.05.6-1) unstable; urgency=medium
+
+  * Update libslurm{,db} symbols files
+  * Remove unused hardening-no-bindnow lintian overrides
+  * Add lsb-base dependency to slurmdbd
+  * Change libmysqlclient-dev build dependency to default
+  * Add libpmi2-0 packages thanks to Markus Geimer (Closes: #840404)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 28 Oct 2016 16:23:07 +0200
+
+slurm-llnl (16.05.5-1) unstable; urgency=medium
+
+  * New upstream release
+  * Update debian configurators
+  * Update header patch to remove google script in html
+  * Update symbol files
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 30 Sep 2016 16:08:43 +0200
+
+slurm-llnl (16.05.4-1) unstable; urgency=medium
+
+  * New upstream release 
+  * Add missing sh5util binary to slurm-client and qalter qrerun and
+    mpiexec.slurm to slurm-wlm-torque (as requested by Jordi Blasco)
+  * Update ax_lib_hdf5.m4 to avoid CPPFLAGS to be overwritten
+  * Add HDF5_CPPFLAGS to successfully compile libsh5util_old.la
+  * Restore default fortify flags
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Mon, 26 Sep 2016 11:44:23 +0200
+
+slurm-llnl (16.05.2-1) unstable; urgency=medium
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 29 Jul 2016 18:34:26 +0200
+
+slurm-llnl (16.05.0-1) unstable; urgency=medium
+
+  * New upstream major release 
+  * Update library files to version 30
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 14 Jun 2016 11:15:17 +0200
+
+slurm-llnl (15.08.11-1) unstable; urgency=medium
+
+  * New upstream release 
+  * Fix d/rules using wildcard instead of the triplet
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 04 May 2016 12:01:47 +0200
+
+slurm-llnl (15.08.10-1) unstable; urgency=medium
+
+  * New upstream release 
+  * Update libslurm29 and libslurmdb29 symbol files
+  * Add hardening=+pie to DEB_BUILD_MAINT_OPTIONS
+  * Add Documentation section in systemd service files
+  * Remove fix-spelling-errors patch included in upstream
+  * Add lintian overrides for missing bindnow option
+  * Upgrade to standard version 3.9.8
+  * Remove postinst/rm in library packages since ldconfig is now handled
+    by dh_makeshlibs
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 03 May 2016 17:19:24 +0200
+
+slurm-llnl (15.08.8-1) unstable; urgency=medium
+
+  * New upstream release 
+  * Upgrade to standard version 3.9.7
+  * Use https uri for Vcs-Browser and Vcs-Git in d/control
+  * Update libslurm29 and libslurmdb29 symbol files 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 24 Feb 2016 13:21:18 +0100
+
+slurm-llnl (15.08.7-1) unstable; urgency=medium
+
+  * New upstream release 
+  * Call ldconfig in postinst/rm of library packages
+
+    [ Ana Guerrero Lopez ]
+  * Add package slurm-wlm-emulator. This package provides binaries that are
+    already in the slurmd and slurmctld package. These packages binaries
+    have now the suffix -wlm and the binaries in slurm-wln-emulator got
+    the suffix -wlm-emulator.
+    The binaries are handled with alternatives, having the emulator package
+    a higher priority value.
+  * Add slurm-client-emulator with all the same binaries from slurm-client
+    built in emulator mode, these are the binaries to use when running thr
+    daemons from slurm-wlm-emulator.
+    Binaries have appended suffix -emulator to avoid conflicts.
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 22 Jan 2016 21:20:36 +0100
+
+slurm-llnl (15.08.4-1) unstable; urgency=medium
+
+  * New upstream release
+  * Change slurm user's home directory to /nonexistent
+  * Update libslurm29 and libslurmdb29 symbol files
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Mon, 30 Nov 2015 17:40:21 +0100
+
+slurm-llnl (15.08.3-1) unstable; urgency=medium
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 06 Nov 2015 13:53:28 +0100
+
+slurm-llnl (15.08.2-1) unstable; urgency=medium
+
+  * New upstream release 
+  * Remove scontrol-man-page included in upstream 
+  * Remove unused override shlib-with-executable-stack in
+    slurm-wlm-basic-plugins for a false-positive now fixed
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Mon, 26 Oct 2015 12:23:09 +0100
+
+slurm-llnl (15.08.1-1) unstable; urgency=medium
+
+  * New upstream release 
+  * Remove man-pages patch included in upstream
+  * Update libslurm29 and libslurmdb29 symbol files 
+  * Fix a typo in scontrol.1 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Mon, 28 Sep 2015 15:41:18 +0200
+
+slurm-llnl (15.08.0-1) unstable; urgency=medium
+
+  * New upstream release 
+  * Updated libraries api version to 29 
+  * Updated mail-path patch
+  * Minor man pages changes 
+  * Add d/slurm-client.lintian-overrides to avoid warnings for a long
+    line in acct_gather.conf.5 and for the conflicts with sinfo in
+    d/control
+  * Remove d/slurmd.lintian-overrides since the lintian bug that caused
+    the spelling-error-in-binary false positive was solved
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 24 Sep 2015 16:30:57 +0200
+
+slurm-llnl (14.11.8-4) unstable; urgency=medium
+
+  * Conflict with older versions of sinfo only
+
+ -- Mehdi Dogguy <mehdi@debian.org>  Wed, 19 Aug 2015 22:15:21 +0000
+
+slurm-llnl (14.11.8-3) unstable; urgency=medium
+
+  * Add libipmimonitoring-dev build dependency (Closes: #792368)
+  * Add librrd-dev build dependency (Closes: #792370)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 15 Jul 2015 09:48:30 +0200
+
+slurm-llnl (14.11.8-2) unstable; urgency=medium
+
+  * Correct a typo in the slurmd init.d script (Closes: #792027) 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Mon, 13 Jul 2015 08:55:20 +0200
+
+slurm-llnl (14.11.8-1) unstable; urgency=medium
+
+  * New upstream release
+  * Updated libslurm28 and libslurmdb28 symbol files
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 08 Jul 2015 11:01:46 +0200
+
+slurm-llnl (14.11.7-1) unstable; urgency=medium
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 02 Jul 2015 14:46:24 +0200
+
+slurm-llnl (14.11.6-1) unstable; urgency=medium
+
+  [ Gennaro Oliva ]
+  * New upstream release
+  * Minor man pages formatting changes
+  * Restore var/*/slurm-llnl dirnames in the html configurator tools
+  * Add --disable-debug to configure
+
+  [ Rémi Palancher ]
+  * Add -dbg packages for libs, binaries and plugins
+  * Remove autoreconf since not needed anymore
+  * Remove patch honor-without-rpath-hwloc since merged upstream
+  * Create user slurm on slurm-client pkg install (Closes: #783663)
+  * Add missing dep on ucf + adduser on pkgs
+  * Add missing dep for -client on -basic-plugins (Closes: #783662)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 20 May 2015 16:47:32 +0200
+
+slurm-llnl (14.03.9-5) unstable; urgency=medium
+
+  [ Roland Fehrenbacher ]
+  * sacctmgr moved to the slurm-client package (Closes: #768938)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 12 Nov 2014 12:07:04 +0100
+
+slurm-llnl (14.03.9-4) unstable; urgency=medium
+
+  * Declaring slurm-client conflict with sinfo (Closes: #768112)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 06 Nov 2014 10:28:03 +0100
+
+slurm-llnl (14.03.9-3) unstable; urgency=medium
+
+  * Do not force slurmdbd.conf's mode to 600.
+
+ -- Mehdi Dogguy <mehdi@debian.org>  Sat, 25 Oct 2014 01:13:56 +0200
+
+slurm-llnl (14.03.9-2) unstable; urgency=medium
+
+  [ Roland Fehrenbacher ]
+  * Fix names of boot scripts in logrotate files
+  * Ensure slurmdbd.conf has mode 600
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 24 Oct 2014 15:31:40 +0200
+
+slurm-llnl (14.03.9-1) unstable; urgency=low
+
+  [ Mehdi Dogguy ]
+  * New upstream release.
+
+  [ Gennaro Oliva ]
+  * Upgraded to standard version 3.9.6
+  * Updated libslurm27.symbols and libslurmdb27.symbols.
+  * Fix spelling error in slurm.conf.5
+    * add debian/patches/manpages
+  * Added munge to slurmd and slurmctld Depends (Closes: #766160)
+
+  [ Rémi Palancher ]
+  * Enable hwloc support
+    * add Build-Depends on libhwloc-dev
+    * enable dh autoreconf
+    * add debian/patches/honor-without-rpath-hwloc
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 23 Oct 2014 17:27:46 +0200
+
+slurm-llnl (14.03.8-2) unstable; urgency=medium
+
+  [ Mehdi Dogguy ]
+  * Update Homepage field in d/control file
+  * Fix watch file
+
+  [ Rémi Palancher ]
+  * Use architecture.mk for DEB_BUILD/DEB_HOST defs
+  * Fix typo in default PID path in configurator
+
+ -- Mehdi Dogguy <mehdi@debian.org>  Tue, 07 Oct 2014 21:55:59 +0200
+
+slurm-llnl (14.03.8-1) experimental; urgency=medium
+
+  [ Gennaro Oliva ]
+  * Binary packages renaming:
+    slurm-llnl -> slurm-client
+    slurm-llnl-slurmd -> slurmd
+    slurm-llnl-slurmctld -> slurmctld
+    slurm-llnl-slurdbd -> slurmdbd
+    slurm-llnl-basic-plugins -> slurm-wlm-basic-plugins
+    slurm-llnl-basic-plugins-dev -> slurm-wlm-basic-plugins-dev
+    slurm-llnl-sview -> sview
+    slurm-llnl-doc -> slurm-wlm-doc
+  * New slurm-wlm metapackage depending on slurmctld
+    slurm-client and slurmd
+  * New slurm-llnl and slurm-llnl-slurmdbd
+    transitional dummy packages
+  * README.* updated
+  * Configurators, slurm-resume.sh and
+    slurm-suspend.sh examples moved to the slurmctld
+    package
+  * init.d scripts modified to import old default and
+    to avoid usless dependency on slurm-client
+  * Restored lintian-overrides files to avoid
+    informational ("-I") tags
+  * Added slurm directories in transitional dummy
+    packages to avoid installation messages warnings
+    about not removing non-empty directories
+  * Added slurm-llnl-slurmdbd and slurm-llnl preinst
+    to remove rc?.d symlinks to the old init scripts
+    and the script itself if it doesn't contain user
+    changes
+  * Added {slurmd,slurmctld,slurmdbd}.tmpfile to
+    create /var/run/slurm-llnl when using systemd
+  * Added a warning message in the slurm-llnl preinst in case of
+    modified init files
+
+  [ Rémi Palancher ]
+  * New upstream release 14.03.7 (Closes: #756012)
+    Maintainers patches have been ported to this new upstream version
+    SONAME of shared libs in *-dev pkgs dumped from 26 to 27 with updated
+    debian/*.symbols
+  * Bump debhelper compat level from 7 to 9
+  * Split slurm-llnl package into 3 packages: slurm-llnl{,-slurmd,-slurmtld}
+    (Closes: #749945)
+  * Added native systemd services files
+  * Remove build-dep to libpq-dev since upstream does not support PostgreSQL
+    backend anymore
+  * Big cleanup in debian/rules back to something more dh standards compliant.
+    This also fixes FTBFS when built twice in a row (Closes: #617697).
+  * Moved examples in dedicated subdirectory
+  * Adds examples for cgroup configuration in slurmd pkg
+  * Remove useless file related to transient slurm-llnl-dev package
+  * Use globing in libslurm-dev.manpages
+  * Correct path to README in init scripts and path to example in README
+  * Add patch to increase size of read buffer for sacctmgr
+    + debian/patches/sacctmgr-increase-buffer
+  * Enable parallel build
+  * Remove all lintian overrides
+
+  [ Mehdi Dogguy ]
+  * Wrap {,Build-}Depends lines in debian/control file to increase readability.
+  * Add Rémi and myself as Uploaders
+  * Add Vcs-{Browser,Git} fields.
+  * Import new upstream release (14.03.8)
+
+ -- Rémi Palancher <remi@rezib.org>  Mon, 08 Sep 2014 15:00:28 +0200
+
+slurm-llnl (2.6.7-2) unstable; urgency=medium
+
+  [ gregor herrmann ]
+  * Fix "hardcodes /usr/lib/perl5":
+    - drop debian/libslurmdb-perl.dirs
+    - dynamically create directories and move files in debian/rules, using the
+      value of $Config{vendorarch}
+    (Closes: #752814)
+
+  [ Gennaro Oliva ]
+  * Add lintian overrides for spelling-error-in-binary in the
+    slurm-llnl-basic-plugins package to avoid wrong spelling error detection
+  * Added dh_autoreconf (Closes: #744659)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 29 Jul 2014 17:13:06 +0200
+
+slurm-llnl (2.6.7-1) unstable; urgency=medium
+
+  * New upstream release
+  * Added lua5.1-0-dev build dependency
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 21 Mar 2014 16:47:16 +0100
+
+slurm-llnl (2.6.5-1) unstable; urgency=low
+
+  * New upstream release
+  * Changed Build-Depends entry from postgresql-server-dev to libpq-dev
+    (Closes: #732512) thanks to Christoph Berg and Martin Pitt
+  * Sleeping one second in the postrotate section of slurm-llnl.logrotate
+    (Closes: #735741) thanks to Stephane Vaillant
+  * Adding optional dependency for mysql in slurm-llnl-slurmdbd.init.d
+    (Closes: #735748) thanks to Stephane Vaillant
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sat, 04 Jan 2014 10:43:02 +0100
+
+slurm-llnl (2.6.4-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 05 Nov 2013 12:49:24 +0100
+
+slurm-llnl (2.5.7-1) unstable; urgency=low
+
+  * New upstream relase
+  * Add lintian overrides for shlib-with-executable-stack in the
+    slurm-llnl-basic-plugins package since _block_sync_core_bitmap in
+    src/plugins/select/cons_res/dist_tasks.c contains nested functions
+  * Add slurm-llnl-configurator.easy.html
+  * Changed homepage to http://www.schedmd.com (Closes: #703529)
+  * Successfully compile under 4.8 (Closes: #701359)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sat, 08 Jun 2013 17:53:39 +0200
+
+slurm-llnl (2.5.3-1) unstable; urgency=low
+
+  * New upstream major release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 06 Feb 2013 16:14:10 +0100
+
+slurm-llnl (2.4.5-1) unstable; urgency=low
+
+  * New upstream major release 
+  * Add lintian overrides for hardening-no-fortify-functions in the
+    slurm-llnl-basic-plugins package
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sun, 03 Feb 2013 11:53:20 +0100
+
+slurm-llnl (2.3.4-2) unstable; urgency=low
+
+  * Avoiding deluser to fail on purge (Closes: #667537) 
+  * Hardening flags added (Closes: #663878), thanks to Simon Ruderich
+    for the patch
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 05 Apr 2012 12:42:35 +0200
+
+slurm-llnl (2.3.4-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 20 Mar 2012 09:50:31 +0100
+
+slurm-llnl (2.3.3-2) unstable; urgency=low
+
+  * Changed Build-Depends entry from postgresql-server-dev-8.4 to 9.1
+    (Closes: #639480)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Mon, 13 Feb 2012 10:46:03 +0100
+
+slurm-llnl (2.3.3-1) unstable; urgency=low
+
+  * New upstream release 
+  * New watch file pointing to schedmd website 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 24 Jan 2012 23:02:15 +0100
+
+slurm-llnl (2.3.2-2) unstable; urgency=low
+
+  * Enable hardened build flags through dpkg-buildflags, thanks to
+    Moritz Muehlenhoff (Closes: #656781)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sat, 21 Jan 2012 20:57:11 +0100
+
+slurm-llnl (2.3.2-1) unstable; urgency=low
+
+  * New upstream release
+  * slurm-llnl-configurator.html updated
+  * libpam-slurm packages merged to slurm-llnl source
+  * libpam-slurm package new versioning following slurm-llnl
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 27 Dec 2011 19:27:46 +0100
+
+slurm-llnl (2.2.7-1) unstable; urgency=low
+
+  * New upstream release
+  * Empty dependency_libs entries in .la files (Closes: #633286) 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Mon, 11 Jul 2011 16:01:19 +0200
+
+slurm-llnl (2.2.6-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 10 Jun 2011 13:10:13 +0200
+
+slurm-llnl (2.2.5-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 06 May 2011 10:48:55 +0200
+
+slurm-llnl (2.2.4-1) unstable; urgency=low
+
+  * New upstream releases 
+  * Cleaning spare file and directories, not belonging to the sources
+    generated by the building process and not removed by distclean.
+    Added debian/clean with spare files and rm -rf inside debian/rules
+    for directories.
+  * Added new packages libslurm-perl, libslurmdb-perl, slurm-llnl-torque
+    (Closes: #575822) thanks to Julien Blache
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 08 Apr 2011 11:21:17 +0200
+
+slurm-llnl (2.2.3-1) unstable; urgency=low
+
+  * New upstream release
+  * Patches renamed to represent their purposes 
+  * libslurm22.symbol updated
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 03 Mar 2011 10:20:43 +0100
+
+slurm-llnl (2.2.1-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 28 Jan 2011 11:13:19 +0100
+
+slurm-llnl (2.2.0-1) unstable; urgency=low
+
+  * New upstream major release 
+  * libsurm22{,-dev} replace libsurm21{,-dev}
+  * New libsurmdb22{,-dev} package
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 12 Jan 2011 13:25:42 +0100
+
+slurm-llnl (2.1.16-2) unstable; urgency=low
+
+  * Making slurm-llnl{,-slurmdbd} postrm scripts independent by ucf
+    (Closes: #604207)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sun, 05 Dec 2010 16:04:09 +0100
+
+slurm-llnl (2.1.16-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 01 Dec 2010 17:25:51 +0100
+
+slurm-llnl (2.1.15-3) unstable; urgency=low
+
+  * Make slurm-llnl-slurmdbd package depend on ucf (Closes: #604207) 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sun, 21 Nov 2010 21:12:24 +0100
+
+slurm-llnl (2.1.15-2) unstable; urgency=low
+
+  * Properly set LD_LIBRARY_PATH in slurm and slurmdbd init scripts
+    FIX CVE-2010-3380 (Closes: #602340)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 04 Nov 2010 12:36:33 +0100
+
+slurm-llnl (2.1.15-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sat, 16 Oct 2010 22:52:17 +0200
+
+slurm-llnl (2.1.14-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 03 Sep 2010 18:03:29 +0200
+
+slurm-llnl (2.1.11-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 04 Aug 2010 16:10:05 +0200
+
+slurm-llnl (2.1.10-1) unstable; urgency=low
+
+  * New upstream release
+  * Setting /usr/bin/mail as default mailer (Closes: #588862) 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sat, 17 Jul 2010 10:02:48 +0200
+
+slurm-llnl (2.1.9-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sat, 12 Jun 2010 05:53:11 +0200
+
+slurm-llnl (2.1.8-1) unstable; urgency=low
+
+  * New upstream release 
+  * Removed logrotate filename wildcards to avoid conflicts between the 
+    slurm-llnl and the slurm-llnl-slurmdbd packages (Closes: #580010) 
+  * Switch to dpkg-source 3.0 (quilt) format
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 21 May 2010 16:39:37 +0200
+
+slurm-llnl (2.1.7-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 16 Apr 2010 22:15:07 +0200
+
+slurm-llnl (2.1.6-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Mon, 29 Mar 2010 18:57:03 +0200
+
+slurm-llnl (2.1.5-1) unstable; urgency=low
+
+  * New upstream release
+  * Added support for pam (Closes: #573461) 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 25 Mar 2010 16:34:15 +0100
+
+slurm-llnl (2.1.4-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 02 Mar 2010 23:58:44 +0100
+
+slurm-llnl (2.1.2-1) unstable; urgency=low
+
+  * New upstream release 
+  * Added munge dependence for slurm-llnl-slurmdbd (Closes: #567013)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sun, 14 Feb 2010 20:21:29 +0100
+
+slurm-llnl (2.1.1-2) unstable; urgency=low
+
+  * slurm-llnl-slurmdbd postinst script doesn't change /var/run/slurm-llnl
+    owner anymore (Closes: #566572)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Mon, 25 Jan 2010 00:14:06 +0100
+
+slurm-llnl (2.1.1-1) unstable; urgency=low
+
+  * New upstream release (Closes: #565454)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 21 Jan 2010 23:01:37 +0100
+
+slurm-llnl (2.1.0-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 12 Jan 2010 11:32:17 +0100
+
+slurm-llnl (2.0.9-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Mon, 14 Dec 2009 11:04:53 +0100
+
+slurm-llnl (2.0.7-2) unstable; urgency=low
+
+  * Fixed getline definition to build on AMD (Closes: #552836)
+  * Changing dependency from version 8.3 to 8.4 of postgreSQL (Closes: #559605)
+  * Fixing various typos
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sat, 05 Dec 2009 23:28:51 +0100
+
+slurm-llnl (2.0.7-1) unstable; urgency=low
+
+  * New upstream release announced together with 2.0.6
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sun, 18 Oct 2009 18:53:06 +0200
+
+slurm-llnl (2.0.5-1) unstable; urgency=low
+
+  * New upstream release 
+  * Changed dependecy from lib-mysqlclient15 to lib-mysqlclient 
+  * Added Default-Start for runlevel 2 and 4 and $remote_fs requirement in
+    init.d scripts (Closes: #541252)
+  * Postinst checks for wrong runlevels 2 and 4 links
+  * Upgraded to standard version 3.8.3
+  * Add lintian overrides for missing slurm-llnl-configurator.html in doc
+    base registration
+  * modified postrm scripts to ignore pkill return value in order to avoid
+    postrm failure when no slurm process is running
+  * Checking for slurmctld.pid before cancelling running and pending
+    jobs during package removal 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 24 Sep 2009 23:28:15 +0200
+
+slurm-llnl (2.0.4-1) unstable; urgency=low
+
+  * New upstream release
+  * Removed gettext bashism in init.d scripts (Closes: #530993, #530994)
+  * init.d script modified to check that a daemon is not running before
+    a call with the stop argument is completed
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 16 Jul 2009 11:05:21 +0200
+
+slurm-llnl (2.0.2-1) unstable; urgency=low
+
+  * New upstream release 
+  * New slurm-llnl-configurator.html
+  * init.d script key check modified
+  * init.d scripts create run-time variable data directories (/var/run)
+  * slurm-llnl.init.d checks if StateSaveLocation SlurmdSpoolDir are
+    under /var/run and link them to the actual location under /var/lib
+  * postinst script remove StateSaveLocation and SlurmdSpoolDir content if
+    upgrading from version 1 to start daemons in a clean state
+  * Removed comments from the slurm.conf.simple file
+  * Instruction for using openssl cryptography, not used by default anymore,
+    moved to README.cryptotype-openssl
+  * slurm-llnl.prerm added to cancel running and pending jobs when
+    removing the package
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 26 Jun 2009 08:29:16 +0200
+
+slurm-llnl (1.3.15-1) unstable; urgency=high
+
+  * New slurm-llnl-basic-plugins{,-dev} descriptions (Closes: #512059)
+  * New libpmi-dev description
+  * Compat version upgraded to 7
+  * Standard version upgraded to 3.8.1
+  * Creating /var/run SLURM directories at boot rather than at
+    installation time 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 16 Apr 2009 20:09:37 +0200
+
+slurm-llnl (1.3.13-1) unstable; urgency=low
+
+  * New upstream release (Closes: #511511)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 14 Jan 2009 09:25:10 +0100
+
+slurm-llnl (1.3.12-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 08 Jan 2009 10:41:16 +0100
+
+slurm-llnl (1.3.11-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 03 Dec 2008 11:56:28 +0100
+
+slurm-llnl (1.3.10-1) unstable; urgency=low
+
+  * New upstream release 
+  * Modified manual pages: sacctmgr.1
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 05 Nov 2008 11:07:01 +0100
+
+slurm-llnl (1.3.9-1) unstable; urgency=low
+
+  * New upstream release
+  * New watch file with generic versioning
+  * Modified manual pages: sacctmgr.1, sacct.1, sinfo.1,
+    slurm_free_job_info_msg.3 and slurm_slurmd_status.3
+  * Deleted empty manual page slurm_trigger.3 and its symbolic links:
+    slurm_{clear,free,get,set}_trigger.3
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 15 Oct 2008 14:49:27 +0200
+
+slurm-llnl (1.3.8-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 04 Sep 2008 00:40:20 +0200
+
+slurm-llnl (1.3.7-1) unstable; urgency=low
+
+  * New upstream release
+  * New watch file for new naming convention of development snapshots
+  * Added libpmi0 and libslurm13 symbols files
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 29 Aug 2008 01:07:14 +0200
+
+slurm-llnl (1.3.6-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 24 Jul 2008 16:29:28 +0200
+
+slurm-llnl (1.3.5-1) unstable; urgency=low
+
+  * New upstream release
+  * Changed watch file to avoid development snapshot download
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 15 Jul 2008 14:31:36 +0200
+
+slurm-llnl (1.3.4-1) unstable; urgency=low
+
+  * New upstream release
+  * Upgraded to standards version 3.8.0
+  * Homepage field added to the control file
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 24 Jun 2008 11:13:22 +0200
+
+slurm-llnl (1.3.3-1) unstable; urgency=low
+
+  * New upstream release
+  * Removed patches to src/slurmctd/controller.c src/slurmdbd/slurmdbd.c
+    doc/man/man1/sacctmgr.1 included to upstream
+  * Edited watch file to seek for 1.3 releases
+  * doc/man/man1/salloc.1 doc/man/man1/sbatch.1 doc/man/man5/slurm.conf.5
+    patched to improve formatting and avoid manual warnings 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 30 May 2008 13:11:30 +0200
+
+slurm-llnl (1.3.2-1) unstable; urgency=low
+
+  * New upstream major release.
+  * New slurmdbd package.
+  * init.d script modified to check if configuration file is for version 1.2
+  * Installation script renamed to slurm-llnl.{pre,post}{inst,rm}
+  * Sample slurm-resume.sh script to use with ResumeProgram
+  * Sample slurm-suspend.sh script to use with SuspendProgram
+  * New sample configuration file updated to version 1.3
+  * New html automatic configuration tool updated to version 1.3
+  * New build dependency for postgres and mysql development files
+  * Added log files to be stored in /var/log/slurm-llnl 
+  * Added logrotate for log files
+  * Added patch to slurmctld in order to correctly support SIGHUP
+  * Added patch to slurmdbd in order to correctly support SIGHUP
+  * slurm-llnl.init.d modified in order to use the correct pidfile
+  * slurm-llnl.init.d check openssl vulnerabilty
+  * slurm-llnl.init.d check for key only on the controller and for cert on all
+    the slurmd nodes only if cryptotype is openssl
+  * slurm-llnl.init.d seek for key and cert in the location specified in the
+    configuration file (not necessarly in /etc/slurm-llnl)
+  * Added patch to sacctmgr.1 manual page to correct hyphens where
+    minus signs were intended
+  * Removed bashism from installation and init.d scripts
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 28 May 2008 10:49:49 +0200
+
+slurm-llnl (1.3.0-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Mon, 31 Mar 2008 00:18:47 +0200
+
+slurm-llnl (1.2.25-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 21 Mar 2008 09:05:53 +0100
+
+slurm-llnl (1.2.24-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 07 Mar 2008 15:41:43 +0100
+
+slurm-llnl (1.2.23-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sun, 17 Feb 2008 12:41:13 +0100
+
+slurm-llnl (1.2.22-1) unstable; urgency=low
+
+  * New Upstream Release
+  * Modified watch file to search for updated 1.2.X version
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 01 Feb 2008 15:59:18 +0100
+
+slurm-llnl (1.2.21-1) unstable; urgency=low
+
+  * New upstream release
+  * Added support for uscan (Closes: #454317) thanks to Manuel Prinz
+  * Solve preinst failure when upgrading and the user slurm does not
+    exist (Closes: #459618) thanks to Manuel Prinz
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Mon, 14 Jan 2008 15:06:12 +0100
+
+slurm-llnl (1.2.20-1) unstable; urgency=low
+
+  * New Upstream Release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 04 Dec 2007 15:38:55 +0100
+
+slurm-llnl (1.2.19-1) unstable; urgency=low
+
+  * New upstream available 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 02 Nov 2007 12:31:16 +0100
+
+slurm-llnl (1.2.18-1) unstable; urgency=low
+
+  * New upstream version
+  * Removed useless libglade2-dev, libgtk2.0-dev dependencies for the
+    sview package
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 11 Oct 2007 12:06:47 +0200
+
+slurm-llnl (1.2.17-1) unstable; urgency=low
+
+  * New upstream release, 1.2.16 is missing because I was waiting for
+    a uid in the range 60000-64999 to be assigned to the slurm user
+  * Using fixed uid 64030 for the slurm user
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 28 Sep 2007 16:42:14 +0200
+
+slurm-llnl (1.2.15-2) unstable; urgency=low
+
+  * Added slurm-llnl dependency for sview to solve old packages
+    installation conflict and avoid problems if configuration is missing
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 12 Sep 2007 14:41:26 +0200
+
+slurm-llnl (1.2.15-1) unstable; urgency=low
+
+  * New upstream release
+  * sview moved to a separate package (slurm-llnl-sview) to avoid gtk
+    dependency for slurm-llnl package
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sat, 01 Sep 2007 02:10:40 +0200
+
+slurm-llnl (1.2.14-1) unstable; urgency=low
+
+  * New upstream available, 13 and 12 are missing because I was on
+    vacation
+  * Fixed debian/control packages Sections (Closes: #438906) thanks to
+    Manuel Prinz
+  * Fixed debian/control plugins plugins-dev packages descriptions
+    (Closes: #435133) thanks to Anton Blanchard
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 23 Aug 2007 21:34:14 +0200
+
+slurm-llnl (1.2.11-1) unstable; urgency=low
+
+  * debian/copyright edited by Dirk 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 20 Jul 2007 21:39:40 +0200
+
+slurm-llnl (1.2.11~20070720-1) unstable; urgency=low
+
+  * Added OpenSSL exception to debian/copyright
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 20 Jul 2007 16:09:20 +0200
+
+slurm-llnl (1.2.11~20070713-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Fri, 13 Jul 2007 21:17:05 +0200
+
+slurm-llnl (1.2.9-20070617) unstable; urgency=low
+
+  * Switch to the slurm-llnl namespace with sysconfdir /etc/slurm-llnl and
+    localstatedir /var/run/slurm-llnl
+  * Consequent modification of postinst, postrm, slurm-llnl.dirs,
+    slurm-llnl-configurator.html
+  * Removed service stop in the preinst upgrade case to avoid the double
+    stop
+  * Naive sample configuration with two hosts among the examples
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sun, 17 Jun 2007 10:41:48 +0200
+
+slurm-llnl (1.2.9-20070610) unstable; urgency=low
+
+  * New upstream version availabe
+  * Lintian warning manpage-has-errors-from-man for srun.1 and spank.8 has
+    been removed
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sun, 10 Jun 2007 01:17:37 +0200
+
+slurm-llnl (1.2.7-20070606) unstable; urgency=low
+
+  * Added "sleep 1" between start and stop to make init.d script restart work 
+  * New copyright file with full listing of authors, copyrights and licenses
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 06 Jun 2007 00:20:26 +0200
+
+slurm-llnl (1.2.7-20070520) unstable; urgency=low
+
+  * New upstream release available
+  * Debconf configuration removed
+  * LSB functions for the init script
+  * Init script checks configuration and point to README.Debian
+  * slurm-llnl-configurator.html created from configurator.html
+  * old fsf address fixed
+  * preinst upgrade adduser (for people upgrading from old version)
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 24 May 2007 23:15:03 +0200
+
+slurm-llnl (1.1.20-1) unstable; urgency=low
+
+  * New upstream version available
+  * Built on munge not using opessl 
+  * Using 1.1.13-1 sample configuration file beacuse new upstream config
+    file is not well commented
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 28 Nov 2006 09:00:31 +0100
+
+slurm-llnl (1.1.13-1) unstable; urgency=low
+
+  * New upstream version available
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sun,  1 Oct 2006 22:49:47 +0200
+
+slurm-llnl (1.1.10-1) unstable; urgency=low
+
+  * New upstream version available
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sat,  2 Sep 2006 15:30:43 +0200
+
+slurm-llnl (1.1.4-1) unstable; urgency=low
+
+  * New upstream version available
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Mon, 17 Jul 2006 17:59:00 +0200
+
+slurm-llnl (1.1.3-1) unstable; urgency=low
+
+  * New upstream version available
+  * Removed bluegene binaries
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Wed, 12 Jul 2006 17:18:57 +0200
+
+slurm-llnl (1.1.1-1) unstable; urgency=low
+
+  * New upstream version available
+  * Debconf script for installation
+  * Fixed Build-Dependencies with curses
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue, 11 Jul 2006 22:29:25 +0200
+
+slurm-llnl (1.0.1-1) unstable; urgency=low
+
+  * Initial release Closes: #351688
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Tue,  2 May 2006 01:10:43 +0200

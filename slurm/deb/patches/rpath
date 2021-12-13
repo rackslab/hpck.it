@@ -1,0 +1,29 @@
+Description: Fix an rpath issue
+ The libdir has to match the source package name in order to host
+ slurm's private shared library.
+Author: Mehdi Dogguy <mehdi@debian.org>
+Forwarded: not-needed
+Last-Update: 2018-01-12
+
+--- a/configure.ac
++++ b/configure.ac
+@@ -3,7 +3,7 @@
+ dnl Prologue
+ dnl
+ 
+-AC_INIT(slurm, m4_esyscmd([perl -ne 'print,exit if s/^\s*VERSION:\s*(\d*.\d*).\S*/\1/i' ./META | sed 's/^v//' | tr '-' '_' | tr -d '\n']), [], [], [https://slurm.schedmd.com])
++AC_INIT(slurm-wlm, m4_esyscmd([perl -ne 'print,exit if s/^\s*VERSION:\s*(\d*.\d*).\S*/\1/i' ./META | sed 's/^v//' | tr '-' '_' | tr -d '\n']), [], [], [https://slurm.schedmd.com])
+ AC_PREREQ(2.59)
+ AC_CONFIG_SRCDIR([configure.ac])
+ AC_CONFIG_AUX_DIR([auxdir])
+--- a/auxdir/slurm.m4
++++ b/auxdir/slurm.m4
+@@ -117,7 +117,7 @@
+     # You will notice " or ' each does something different when resolving
+     # variables.  Some need to be resolved now ($libdir) and others
+     # ($(top_builddir)) need to be resolved when dealing with the Makefile.am's
+-    LIB_SLURM="-Wl,-rpath=$libdir/slurm"
++    LIB_SLURM="-Wl,-rpath=$libdir/slurm-wlm"
+     LIB_SLURM=$LIB_SLURM' -L$(top_builddir)/src/api/.libs -lslurmfull'
+ 
+     AC_MSG_RESULT([shared]);

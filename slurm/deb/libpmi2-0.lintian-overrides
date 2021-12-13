@@ -1,0 +1,14 @@
+# The SLURM plugins are shared object used by multiple executables. Some
+# of these executable cannot resolve all symbols contained in the
+# plugins at startup since these symbols are defined in a different
+# executable.
+#
+# e.g. both sinfo and slurmctld use select_linear.so and when running
+# sinfo linked with ld -z now (bindnow option) we get:
+# sinfo: error: plugin_load_from_file:
+# dlopen(/usr/lib/x86_64-linux-gnu/slurm/select_linear.so):
+# /usr/lib/x86_64-linux-gnu/slurm/select_linear.so: undefined symbol: slurm_job_preempt_mode
+#
+# This happens because because slurm_job_preempt_mode is contained in
+# /usr/sbin/slurmctld and will never be referenced when running sinfo.
+hardening-no-bindnow

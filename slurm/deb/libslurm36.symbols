@@ -1,0 +1,1556 @@
+libslurm.so.36 libslurm36 #MINVER#
+* Build-Depends-Package: libslurm-dev
+ islurm_get_rem_time2__@Base 1.3.8
+ islurm_get_rem_time__@Base 1.3.8
+ plugin_context_create@Base 2.5.7
+ plugin_context_destroy@Base 2.5.7
+ slurm_accept_msg_conn@Base 1.3.8
+#MISSING: 14.11.0# slurm_accept_stream@Base 1.3.8
+ slurm_accounting_enforce_string@Base 2.2.0
+ slurm_acct_gather_energy_destroy@Base 2.6.2
+ slurm_acct_gather_energy_init@Base 2.5.3
+ slurm_acct_storage_fini@Base 1.3.8
+ slurm_acct_storage_init@Base 1.3.8
+ slurm_add_slash_to_quotes@Base 2.2.0
+ slurm_addr_is_unspec@Base 20.11.2
+ slurm_addto_step_list@Base 15.08.0
+ slurm_addto_mode_char_list@Base 17.02.0
+ slurm_addto_char_list@Base 1.3.8
+ slurm_addto_char_list_with_case@Base 18.08.0
+ slurm_addto_id_char_list@Base 20.02.1
+ slurm_allocate_het_job_blocking@Base 20.02.1
+#MISSING: 20.02.1# slurm_allocate_pack_job_blocking@Base 17.11.2
+ slurm_allocate_resources@Base 1.3.8
+ slurm_allocate_resources_blocking@Base 1.3.8
+ slurm_allocation_lookup@Base 1.3.8
+#MISSING: 17.11.2# slurm_allocation_lookup_lite@Base 1.3.8
+ slurm_allocation_msg_thr_create@Base 1.3.8
+ slurm_allocation_msg_thr_destroy@Base 1.3.8
+#MISSING: 20.11.2# slurm_api_clear_config@Base 1.3.8
+#MISSING: 14.03.0# slurm_api_set_conf_file@Base 1.3.8
+#MISSING: 18.08.0# slurm_api_set_default_config@Base 1.3.8
+ slurm_api_version@Base 1.3.8
+#MISSING: 17.02.0# slurm_arg_count@Base 1.3.8
+#MISSING: 17.02.0# slurm_arg_idx_by_name@Base 1.3.8
+#MISSING: 17.02.0# slurm_arg_name_by_idx@Base 1.3.8
+#MISSING: 2.5.3# slurm_auth_context_create@Base 1.3.8
+#MISSING: 17.11.2# slurm_asctime@Base 15.08.0
+#MISSING: 17.11.2# slurm_asctime_r@Base 15.08.0
+ slurm_auth_fini@Base 1.3.8
+#MISSING: 2.6.5# slurm_auth_get_arg_desc@Base 1.3.8
+ slurm_auth_index@Base 19.05.2
+ slurm_auth_init@Base 1.3.8
+ slurm_auth_opts_to_socket@Base 19.05.2
+ slurm_bb_flags2str@Base 15.08.0
+ slurm_bb_str2flags@Base 15.08.0
+#MISSING: 18.08.0# slurm_bg_block_state_string@Base 2.2.0
+ slurm_bit_alloc@Base 1.3.8
+ slurm_bit_and@Base 1.3.8
+ slurm_bit_clear@Base 1.3.8
+ slurm_bit_clear_all@Base 14.11.0
+ slurm_bit_clear_count@Base 1.3.8
+ slurm_bit_clear_count_range@Base 14.11.0
+ slurm_bit_copy@Base 1.3.8
+ slurm_bit_copybits@Base 1.3.8
+ slurm_bit_equal@Base 1.3.8
+ slurm_bit_ffc@Base 1.3.8
+ slurm_bit_ffs@Base 1.3.8
+ slurm_bit_fill_gaps@Base 1.3.8
+ slurm_bit_fls@Base 1.3.8
+ slurm_bit_fmt@Base 1.3.8
+ slurm_bit_fmt_binmask@Base 1.3.8
+ slurm_bit_fmt_full@Base 17.02.0
+ slurm_bit_fmt_hexmask@Base 1.3.8
+ slurm_bit_fmt_hexmask_trim@Base 20.11.2
+ slurm_bit_free@Base 1.3.8
+ slurm_bit_get_bit_num@Base 1.3.8
+ slurm_bit_get_pos_num@Base 1.3.8
+ slurm_bit_nclear@Base 1.3.8
+ slurm_bit_nffc@Base 1.3.8
+ slurm_bit_nffs@Base 1.3.8
+ slurm_bit_noc@Base 1.3.8
+ slurm_bit_not@Base 1.3.8
+ slurm_bit_nset@Base 1.3.8
+ slurm_bit_nset_max_count@Base 1.3.8
+ slurm_bit_or@Base 1.3.8
+ slurm_bit_overlap@Base 1.3.8
+ slurm_bit_overlap_any@Base 20.02.1
+ slurm_bit_pick_cnt@Base 1.3.8
+ slurm_bit_realloc@Base 1.3.8
+ slurm_bit_rotate@Base 1.3.8
+ slurm_bit_rotate_copy@Base 1.3.8
+ slurm_bit_set@Base 1.3.8
+ slurm_bit_set_all@Base 14.11.0
+ slurm_bit_set_count@Base 1.3.8
+ slurm_bit_set_count_range@Base 2.5.7
+ slurm_bit_size@Base 1.3.8
+ slurm_bit_super_set@Base 1.3.8
+ slurm_bit_test@Base 1.3.8
+ slurm_bit_unfmt@Base 1.3.8
+ slurm_bit_unfmt_binmask@Base 1.3.8
+ slurm_bit_unfmt_hexmask@Base 1.3.8
+ slurm_bitfmt2int@Base 1.3.8
+ slurm_build_all_nodeline_info@Base 20.02.1
+ slurm_callerid_get_own_netinfo@Base 15.08.0
+#MISSING: 18.08.0# slurm_cgroup_conf@Base 2.3.1
+ slurm_char_list_copy@Base 17.11.2
+ slurm_char_list_to_xstr@Base 17.11.2
+ slurm_char_to_hex@Base 18.08.0
+#MISSING: 20.02.1# slurm_checkpoint_able@Base 1.3.8
+#MISSING: 20.02.1# slurm_checkpoint_complete@Base 1.3.8
+#MISSING: 20.02.1# slurm_checkpoint_create@Base 1.3.8
+#MISSING: 20.02.1# slurm_checkpoint_disable@Base 1.3.8
+#MISSING: 20.02.1# slurm_checkpoint_enable@Base 1.3.8
+#MISSING: 20.02.1# slurm_checkpoint_error@Base 1.3.8
+#MISSING: 20.02.1# slurm_checkpoint_requeue@Base 2.2.0
+#MISSING: 20.02.1# slurm_checkpoint_restart@Base 1.3.8
+#MISSING: 20.02.1# slurm_checkpoint_task_complete@Base 1.3.8
+#MISSING: 20.02.1# slurm_checkpoint_tasks@Base 2.0.0
+#MISSING: 20.02.1# slurm_checkpoint_vacate@Base 1.3.8
+ slurm_clear_trigger@Base 1.3.8
+#MISSING: 17.11.2# slurm_close@Base 15.08.0
+#MISSING: 15.08.0# slurm_close_accepted_conn@Base 1.3.8
+#MISSING: 18.08.0# slurm_close_slurmdbd_conn@Base 1.3.8
+#MISSING: 15.08.0# slurm_close_stream@Base 1.3.8
+ slurm_complete_job@Base 1.3.8
+ slurm_conf@Base 20.11.2
+ slurm_conf_destroy@Base 1.3.8
+ slurm_conf_downnodes_array@Base 1.3.8
+ slurm_conf_expand_slurmd_path@Base 1.3.8
+ slurm_conf_frontend_array@Base 2.3.1
+ slurm_conf_get_addr@Base 1.3.8
+ slurm_conf_get_aliased_nodename@Base 1.3.8
+ slurm_conf_get_aliases@Base 2.2.3
+ slurm_conf_get_bcast_address@Base 20.02.1
+ slurm_conf_get_cpus_bsct@Base 2.5.3
+#MISSING: 2.5.3# slurm_conf_get_cpus_sct@Base 1.3.8
+ slurm_conf_get_hostname@Base 1.3.8
+ slurm_conf_get_nodeaddr@Base 2.0.0
+ slurm_conf_get_nodename@Base 1.3.8
+#MISSING: 20.11.2# slurm_conf_get_nodename_from_addr@Base 2.5.3
+ slurm_conf_get_port@Base 1.3.8
+ slurm_conf_get_res_spec_info@Base 14.11.0
+ slurm_conf_init@Base 1.3.8
+ slurm_conf_install_fork_handlers@Base 1.3.8
+ slurm_conf_lock@Base 1.3.8
+ slurm_conf_mutex_init@Base 1.3.8
+ slurm_conf_nodename_array@Base 1.3.8
+ slurm_conf_nodeset_array@Base 20.02.1
+ slurm_conf_options@Base 1.3.8
+ slurm_conf_partition_array@Base 1.3.8
+ slurm_conf_reinit@Base 1.3.8
+ slurm_conf_unlock@Base 1.3.8
+#MISSING: 18.08.0# slurm_conn_type_string@Base 2.2.0
+#MISSING: 18.08.0# slurm_conn_type_string_full@Base 2.3.1
+ slurm_convert_num_unit2@Base 16.05.5
+ slurm_convert_num_unit@Base 16.05.5
+ slurm_copy_char_list@Base 15.08.0
+ slurm_copy_priority_factors_object@Base 15.08.0
+ slurm_copy_resource_allocation_response_msg@Base 20.11.2
+ slurm_cray_nodelist2nids@Base 14.03.0
+ slurm_create_buf@Base 1.3.8
+ slurm_create_mmap_buf@Base 18.08.0
+ slurm_create_partition@Base 2.0.0
+ slurm_create_reservation@Base 2.0.0
+ slurm_cred_begin_expiration@Base 1.3.8
+ slurm_cred_copy@Base 1.3.8
+ slurm_cred_create@Base 1.3.8
+ slurm_cred_creator_ctx_create@Base 1.3.8
+ slurm_cred_ctx_destroy@Base 1.3.8
+ slurm_cred_ctx_get@Base 1.3.8
+ slurm_cred_ctx_key_update@Base 1.3.8
+ slurm_cred_ctx_pack@Base 1.3.8
+ slurm_cred_ctx_set@Base 1.3.8
+ slurm_cred_ctx_unpack@Base 1.3.8
+ slurm_cred_destroy@Base 1.3.8
+ slurm_cred_faker@Base 1.3.8
+ slurm_cred_fini@Base 19.05.2
+ slurm_cred_free_args@Base 1.3.8
+ slurm_cred_get_arg@Base 19.05.2
+ slurm_cred_get_args@Base 1.3.8
+ slurm_cred_get_signature@Base 1.3.8
+ slurm_cred_handle_reissue@Base 1.3.8
+ slurm_cred_init@Base 19.05.2
+ slurm_cred_insert_jobid@Base 1.3.8
+ slurm_cred_jobid_cached@Base 1.3.8
+ slurm_cred_pack@Base 1.3.8
+ slurm_cred_print@Base 1.3.8
+ slurm_cred_revoke@Base 1.3.8
+ slurm_cred_revoked@Base 1.3.8
+ slurm_cred_rewind@Base 1.3.8
+ slurm_cred_send_gids_enabled@Base 20.11.2
+ slurm_cred_unpack@Base 1.3.8
+ slurm_cred_verifier_ctx_create@Base 1.3.8
+ slurm_cred_verify@Base 1.3.8
+#MISSING: 19.05.2# slurm_crypto_fini@Base 1.3.8
+#MISSING: 19.05.2# slurm_crypto_init@Base 16.05.5
+ slurm_ctime2@Base 15.08.0
+ slurm_ctime2_r@Base 15.08.0
+#MISSING: 20.02.1# slurm_ctime@Base 14.03.0
+#MISSING: 20.02.1# slurm_ctime_r@Base 14.03.0
+ slurm_ctl_conf_2_key_pairs@Base 2.1.0
+ slurm_debug2@Base 1.3.8
+ slurm_debug3@Base 1.3.8
+ slurm_debug4@Base 2.2.0
+ slurm_debug5@Base 2.2.0
+ slurm_debug@Base 1.3.8
+ slurm_delete_partition@Base 1.3.8
+ slurm_delete_reservation@Base 2.0.0
+ slurm_delta_tv@Base 17.02.0
+ slurm_destroy_assoc_shares_object@Base 15.08.0
+#MISSING: 15.08.0# slurm_destroy_association_shares_object@Base 2.0.0
+#MISSING: 20.02.1# slurm_destroy_char@Base 1.3.8
+ slurm_destroy_config_key_pair@Base 2.1.0
+ slurm_destroy_config_plugin_params@Base 18.08.0
+ slurm_destroy_federation_rec@Base 17.11.2
+ slurm_destroy_gres_device@Base 17.11.2
+ slurm_destroy_gres_slurmd_conf@Base 19.05.2
+ slurm_destroy_priority_factors_object@Base 2.0.0
+#MISSING: 18.08.0# slurm_destroy_select_ba_request@Base 2.3.1
+ slurm_destroy_selected_step@Base 20.11.2
+#MISSING: 20.02.1# slurm_destroy_uint32_ptr@Base 2.0.0
+#MISSING: 2.6.2# slurm_diff_tv@Base 2.3.1
+ slurm_diff_tv_str@Base 2.3.1
+#MISSING: 17.11.2# slurm_dump_cleanup_list@Base 1.3.8
+ slurm_eio_handle_create@Base 14.11.0
+ slurm_eio_handle_destroy@Base 14.11.0
+ slurm_eio_handle_mainloop@Base 14.11.0
+ slurm_eio_message_socket_accept@Base 14.11.0
+ slurm_eio_message_socket_readable@Base 14.11.0
+ slurm_eio_new_initial_obj@Base 14.11.2
+ slurm_eio_new_obj@Base 14.11.0
+ slurm_eio_obj_create@Base 14.11.0
+ slurm_eio_obj_destroy@Base 14.11.0
+ slurm_eio_remove_obj@Base 14.11.0
+ slurm_eio_signal_shutdown@Base 14.11.0
+ slurm_eio_signal_wakeup@Base 14.11.0
+ slurm_env_array_append@Base 1.3.8
+ slurm_env_array_append_fmt@Base 1.3.8
+ slurm_env_array_copy@Base 1.3.8
+ slurm_env_array_create@Base 1.3.8
+ slurm_env_array_free@Base 1.3.8
+ slurm_env_array_merge@Base 1.3.8
+ slurm_env_array_overwrite@Base 1.3.8
+ slurm_env_array_overwrite_fmt@Base 1.3.8
+ slurm_env_array_overwrite_het_fmt@Base 20.02.1
+#MISSING: 20.02.1# slurm_env_array_overwrite_pack_fmt@Base 17.11.2
+ slurm_env_unset_environment@Base 2.3.3
+ slurm_error@Base 1.3.8
+ slurm_fatal@Base 1.3.8
+ slurm_fatal_abort@Base 17.11.4
+#MISSING: 17.11.2# slurm_fatal_add_cleanup@Base 1.3.8
+#MISSING: 17.11.2# slurm_fatal_add_cleanup_job@Base 1.3.8
+#MISSING: 17.11.2# slurm_fatal_cleanup@Base 1.3.8
+#MISSING: 17.11.2# slurm_fatal_remove_cleanup@Base 1.3.8
+#MISSING: 17.11.2# slurm_fatal_remove_cleanup_job@Base 1.3.8
+ slurm_fd_get_socket_error@Base 20.02.1
+#MISSING: 19.05.2# slurm_fd_read_n@Base 1.3.8
+ slurm_fd_set_blocking@Base 1.3.8
+ slurm_fd_set_nonblocking@Base 1.3.8
+#MISSING: 19.05.2# slurm_fd_write_n@Base 1.3.8
+ slurm_fetch_token@Base 20.02.1
+ slurm_find_char_in_list@Base 17.11.2
+#MISSING: 19.05.2# slurm_find_group_user@Base 14.11.8
+ slurm_fini@Base 20.11.2
+ slurm_forward_data@Base 2.4.5
+ slurm_free_accounting_update_msg@Base 1.3.8
+ slurm_free_acct_gather_energy_req_msg@Base 2.6.2
+ slurm_free_acct_gather_node_resp_msg@Base 2.5.3
+ slurm_free_assoc_mgr_info_msg@Base 15.08.0
+ slurm_free_assoc_mgr_info_request_members@Base 15.08.8
+ slurm_free_assoc_mgr_info_request_msg@Base 15.08.0
+ slurm_free_batch_script_msg@Base 17.11.2
+ slurm_free_bb_status_req_msg@Base 18.08.0
+ slurm_free_bb_status_resp_msg@Base 18.08.0
+#MISSING: 18.08.0# slurm_free_block_info@Base 2.2.0
+#MISSING: 18.08.0# slurm_free_block_info_members@Base 2.2.0
+#MISSING: 18.08.0# slurm_free_block_info_msg@Base 2.1.0
+#MISSING: 18.08.0# slurm_free_block_info_request_msg@Base 2.1.0
+#MISSING: 18.08.0# slurm_free_block_job_info@Base 2.3.1
+ slurm_free_buf@Base 1.3.8
+ slurm_free_burst_buffer_info_msg@Base 15.08.0
+#MISSING: 20.02.1# slurm_free_checkpoint_comp_msg@Base 1.3.8
+#MISSING: 20.02.1# slurm_free_checkpoint_msg@Base 1.3.8
+#MISSING: 20.02.1# slurm_free_checkpoint_resp_msg@Base 1.3.8
+#MISSING: 20.02.1# slurm_free_checkpoint_task_comp_msg@Base 1.3.8
+#MISSING: 20.02.1# slurm_free_checkpoint_tasks_msg@Base 1.3.8
+ slurm_free_comp_msg_list@Base 15.08.0
+ slurm_free_complete_batch_script_msg@Base 1.3.8
+ slurm_free_complete_job_allocation_msg@Base 1.3.8
+ slurm_free_complete_prolog_msg@Base 14.03.0
+ slurm_free_composite_msg@Base 15.08.0
+ slurm_free_config_request_msg@Base 20.02.1
+ slurm_free_config_response_msg@Base 20.02.1
+ slurm_free_control_status_msg@Base 18.08.0
+ slurm_free_crontab_request_msg@Base 20.11.2
+ slurm_free_crontab_response_msg@Base 20.11.2
+ slurm_free_crontab_update_request_msg@Base 20.11.2
+ slurm_free_crontab_update_response_msg@Base 20.11.2
+ slurm_free_ctl_conf@Base 1.3.8
+ slurm_free_ctld_multi_msg@Base 17.11.2
+ slurm_free_delete_part_msg@Base 1.3.8
+ slurm_free_dep_msg@Base 20.02.1
+ slurm_free_dep_update_origin_msg@Base 20.02.1
+ slurm_free_epilog_complete_msg@Base 1.3.8
+ slurm_free_event_log_msg@Base 17.02.0
+ slurm_free_file_bcast_msg@Base 1.3.8
+ slurm_free_forward_data_msg@Base 2.4.5
+ slurm_free_front_end_info_members@Base 2.3.1
+ slurm_free_front_end_info_msg@Base 2.3.1
+ slurm_free_front_end_info_request_msg@Base 2.3.1
+ slurm_free_get_kvs_msg@Base 1.3.8
+ slurm_free_job_alloc_info_msg@Base 1.3.8
+#MISSING: 17.11.2# slurm_free_job_alloc_info_response_msg@Base 1.3.8
+ slurm_free_job_array_resp@Base 14.11.0
+ slurm_free_job_desc_msg@Base 1.3.8
+ slurm_free_job_id_msg@Base 1.3.8
+ slurm_free_job_id_request_msg@Base 1.3.8
+ slurm_free_job_id_response_msg@Base 1.3.8
+ slurm_free_job_info@Base 1.3.8
+ slurm_free_job_info_members@Base 1.3.8
+ slurm_free_job_info_msg@Base 1.3.8
+ slurm_free_job_info_request_msg@Base 1.3.8
+ slurm_free_job_launch_msg@Base 1.3.8
+ slurm_free_job_notify_msg@Base 1.3.8
+ slurm_free_job_step_create_request_msg@Base 1.3.8
+ slurm_free_job_step_create_response_msg@Base 1.3.8
+#MISSING: 20.11.2# slurm_free_job_step_id_msg@Base 1.3.8
+ slurm_free_job_step_info_members@Base 2.2.0
+ slurm_free_job_step_info_request_msg@Base 1.3.8
+ slurm_free_job_step_info_response_msg@Base 1.3.8
+ slurm_free_job_step_kill_msg@Base 1.3.8
+ slurm_free_job_step_pids@Base 2.2.0
+ slurm_free_job_step_stat@Base 2.2.0
+ slurm_free_job_user_id_msg@Base 2.6.2
+ slurm_free_kill_job_msg@Base 1.3.8
+#MISSING: 17.11.2# slurm_free_kill_tasks_msg@Base 1.3.8
+ slurm_free_kvs_comm_set@Base 1.3.8
+ slurm_free_last_update_msg@Base 1.3.8
+ slurm_free_launch_tasks_request_msg@Base 1.3.8
+ slurm_free_launch_tasks_response_msg@Base 1.3.8
+#MISSING: 20.11.2# slurm_free_layout_info_msg@Base 15.08.0
+#MISSING: 20.11.2# slurm_free_layout_info_request_msg@Base 15.08.0
+ slurm_free_license_info_msg@Base 14.03.0
+ slurm_free_license_info_request_msg@Base 14.03.0
+ slurm_free_msg@Base 1.3.8
+ slurm_free_msg_data@Base 1.3.8
+ slurm_free_msg_members@Base 17.02.0
+ slurm_free_net_forward_msg@Base 19.05.2
+ slurm_free_network_callerid_msg@Base 15.08.0
+ slurm_free_network_callerid_resp@Base 15.08.0
+ slurm_free_node_info_members@Base 2.2.0
+ slurm_free_node_info_msg@Base 1.3.8
+ slurm_free_node_info_request_msg@Base 1.3.8
+ slurm_free_node_info_single_msg@Base 2.6.2
+ slurm_free_node_reg_resp_msg@Base 18.08.0
+ slurm_free_node_registration_status_msg@Base 1.3.8
+ slurm_free_options_members@Base 20.02.1
+ slurm_free_part_info_request_msg@Base 1.3.8
+ slurm_free_partition_info_members@Base 2.2.0
+ slurm_free_partition_info_msg@Base 1.3.8
+ slurm_free_ping_slurmd_resp@Base 2.5.3
+#MISSING: 20.11.2# slurm_free_powercap_info_msg@Base 15.08.0
+ slurm_free_priority_factors_request_msg@Base 2.0.0
+ slurm_free_priority_factors_response_msg@Base 2.0.0
+ slurm_free_prolog_launch_msg@Base 14.03.0
+ slurm_free_reattach_tasks_request_msg@Base 1.3.8
+ slurm_free_reattach_tasks_response_msg@Base 1.3.8
+ slurm_free_reboot_msg@Base 2.4.5
+ slurm_free_requeue_msg@Base 14.03.0
+ slurm_free_reroute_msg@Base 17.11.2
+ slurm_free_reservation_info_msg@Base 2.0.0
+ slurm_free_reserve_info_members@Base 2.2.0
+ slurm_free_resource_allocation_response_msg@Base 1.3.8
+ slurm_free_resource_allocation_response_msg_members@Base 15.08.0
+ slurm_free_resv_desc_msg@Base 2.0.0
+ slurm_free_resv_desc_msg_part@Base 20.11.2
+ slurm_free_resv_info_request_msg@Base 2.0.0
+ slurm_free_resv_name_msg@Base 2.0.0
+ slurm_free_return_code_msg@Base 1.3.8
+ slurm_free_sbcast_cred_msg@Base 2.1.0
+ slurm_free_set_debug_flags_msg@Base 2.3.1
+ slurm_free_set_debug_level_msg@Base 1.3.8
+ slurm_free_set_fs_dampening_factor_msg@Base 17.11.2
+ slurm_free_shares_request_msg@Base 2.0.0
+ slurm_free_shares_response_msg@Base 2.0.0
+ slurm_free_shutdown_msg@Base 1.3.8
+ slurm_free_sib_msg@Base 17.02.0
+#MISSING: 16.05.0# slurm_free_sicp_msg@Base 15.08.0
+#MISSING: 17.11.2# slurm_free_signal_job_msg@Base 1.3.8
+ slurm_free_signal_tasks_msg@Base 17.11.2
+ slurm_free_slurmd_status@Base 1.3.8
+#MISSING: 20.11.2# slurm_free_spank_env_request_msg@Base 2.3.1
+#MISSING: 20.11.2# slurm_free_spank_env_responce_msg@Base 2.3.1
+ slurm_free_srun_exec_msg@Base 1.3.8
+ slurm_free_srun_job_complete_msg@Base 1.3.8
+ slurm_free_srun_node_fail_msg@Base 1.3.8
+ slurm_free_srun_ping_msg@Base 1.3.8
+ slurm_free_srun_step_missing_msg@Base 2.0.0
+ slurm_free_srun_timeout_msg@Base 1.3.8
+ slurm_free_srun_user_msg@Base 1.3.8
+ slurm_free_stats_info_request_msg@Base 2.4.5
+ slurm_free_stats_response_msg@Base 2.4.5
+#MISSING: 20.11.2# slurm_free_step_alloc_info_msg@Base 15.08.0
+ slurm_free_step_complete_msg@Base 1.3.8
+ slurm_free_step_id@Base 20.11.2
+ slurm_free_submit_response_response_msg@Base 1.3.8
+ slurm_free_suspend_int_msg@Base 2.5.3
+ slurm_free_suspend_msg@Base 1.3.8
+ slurm_free_task_exit_msg@Base 1.3.8
+ slurm_free_task_user_managed_io_stream_msg@Base 1.3.8
+ slurm_free_token_request_msg@Base 20.02.1
+ slurm_free_token_response_msg@Base 20.02.1
+ slurm_free_top_job_msg@Base 16.05.0
+ slurm_free_topo_info_msg@Base 2.0.0
+ slurm_free_trigger_msg@Base 1.3.8
+ slurm_free_update_front_end_msg@Base 2.3.1
+#MISSING: 20.11.2# slurm_free_update_job_time_msg@Base 1.3.8
+#MISSING: 20.11.2# slurm_free_update_layout_msg@Base 15.08.0
+ slurm_free_update_node_msg@Base 1.3.8
+ slurm_free_update_part_msg@Base 1.3.8
+ slurm_free_update_step_msg@Base 2.2.0
+ slurm_free_will_run_response_msg@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_accounting_storage_backup_host@Base 2.0.0
+#MISSING: 20.11.2# slurm_get_accounting_storage_enforce@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_accounting_storage_ext_host@Base 20.02.1
+#MISSING: 20.11.2# slurm_get_accounting_storage_host@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_accounting_storage_loc@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_accounting_storage_pass@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_accounting_storage_port@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_accounting_storage_tres@Base 15.08.0
+#MISSING: 20.11.2# slurm_get_accounting_storage_type@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_accounting_storage_user@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_acct_gather_energy_type@Base 2.5.3
+ slurm_get_acct_gather_filesystem_type@Base 2.6.2
+#MISSING: 17.11.2# slurm_get_acct_gather_infiniband_type@Base 2.6.2
+ slurm_get_acct_gather_interconnect_type@Base 17.11.2
+ slurm_get_acct_gather_node_freq@Base 2.5.3
+#MISSING: 20.11.2# slurm_get_acct_gather_profile_type@Base 2.6.2
+#MISSING: 20.11.2# slurm_get_addr@Base 1.3.8
+#MISSING: 18.08.0# slurm_get_api_config@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_auth_alt_types@Base 19.05.2
+#MISSING: 20.11.2# slurm_get_auth_info@Base 14.11.0
+ slurm_get_auth_ttl@Base 14.11.0
+#MISSING: 20.11.2# slurm_get_auth_type@Base 1.3.8
+#MISSING: 2.6.2# slurm_get_avail_procs@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_batch_start_timeout@Base 1.3.12
+#MISSING: 20.11.2# slurm_get_bb_type@Base 15.08.0
+#MISSING: 20.02.1# slurm_get_checkpoint_dir@Base 15.08.1
+#MISSING: 20.02.1# slurm_get_checkpoint_type@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_cli_filter_plugins@Base 19.05.2
+#MISSING: 20.11.2# slurm_get_cluster_name@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_comm_parameters@Base 18.08.0
+#MISSING: 20.11.2# slurm_get_complete_wait@Base 2.0.0
+#MISSING: 20.11.2# slurm_get_control_cnt@Base 18.08.0
+#MISSING: 14.11.0# slurm_get_controller_addr_spec@Base 1.3.8
+ slurm_get_convert_unit_val@Base 16.05.5
+ slurm_get_core_spec_plugin@Base 14.03.0
+#MISSING: 20.11.2# slurm_get_cpu_freq_def@Base 14.11.0
+#MISSING: 20.11.2# slurm_get_cpu_freq_govs@Base 15.08.0
+#MISSING: 20.11.2# slurm_get_cred_type@Base 19.05.2
+#MISSING: 19.05.2# slurm_get_crypto_type@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_debug_flags@Base 2.0.0
+#MISSING: 20.11.2# slurm_get_def_mem_per_cpu@Base 2.1.0
+#MISSING: 20.11.2# slurm_get_dependency_params@Base 20.02.1
+ slurm_get_end_time@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_env_timeout@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_epilog_msg_time@Base 1.3.8
+ slurm_get_errno@Base 1.3.8
+ slurm_get_ext_sensors_freq@Base 2.6.2
+ slurm_get_ext_sensors_type@Base 2.6.2
+ slurm_get_extra_conf_path@Base 2.6.2
+#MISSING: 20.02.1# slurm_get_fast_schedule@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_fs_dampening_factor@Base 14.03.0
+ slurm_get_gpu_freq_def@Base 19.05.2
+#MISSING: 20.11.2# slurm_get_gres_plugins@Base 2.2.0
+#MISSING: 20.11.2# slurm_get_hash_val@Base 2.2.0
+#MISSING: 20.11.2# slurm_get_health_check_program@Base 1.3.8
+ slurm_get_ip_str@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_is_association_based_accounting@Base 1.3.9
+#MISSING: 20.11.2# slurm_get_job_acct_oom_kill@Base 19.05.2
+#MISSING: 20.11.2# slurm_get_job_container_plugin@Base 14.03.0
+#MISSING: 20.11.2# slurm_get_job_slurmctld_logfile@Base 16.05.0
+ slurm_get_job_stderr@Base 14.03.0
+ slurm_get_job_stdin@Base 14.03.0
+ slurm_get_job_stdout@Base 14.03.0
+ slurm_get_job_steps@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_job_submit_plugins@Base 2.2.0
+#MISSING: 20.11.2# slurm_get_jobacct_gather_freq@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_jobacct_gather_params@Base 14.03.0
+#MISSING: 20.11.2# slurm_get_jobacct_gather_type@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_jobcomp_host@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_jobcomp_loc@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_jobcomp_params@Base 20.02.1
+#MISSING: 20.11.2# slurm_get_jobcomp_pass@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_jobcomp_port@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_jobcomp_type@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_jobcomp_user@Base 1.3.8
+ slurm_get_keep_alive_time@Base 2.6.2
+#MISSING: 20.11.2# slurm_get_kill_on_bad_exit@Base 2.0.0
+#MISSING: 20.11.2# slurm_get_kill_wait@Base 2.4.5
+#MISSING: 20.11.2# slurm_get_kvs_comm_set@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_launch_params@Base 15.08.0
+#MISSING: 20.11.2# slurm_get_launch_type@Base 2.5.3
+#MISSING: 20.11.2# slurm_get_layouts@Base 14.11.0
+ slurm_get_log_level@Base 19.05.2
+#MISSING: 20.11.2# slurm_get_max_array_size@Base 14.11.0
+#MISSING: 20.11.2# slurm_get_max_mem_per_cpu@Base 2.1.0
+#MISSING: 20.11.2# slurm_get_mcs_plugin@Base 16.05.0
+#MISSING: 20.11.2# slurm_get_mcs_plugin_params@Base 16.05.0
+#MISSING: 20.11.2# slurm_get_mpi_default@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_mpi_params@Base 2.0.0
+#MISSING: 20.11.2# slurm_get_msg_aggr_params@Base 15.08.0
+#MISSING: 20.11.2# slurm_get_msg_timeout@Base 1.3.8
+ slurm_get_node_energy@Base 2.6.2
+#MISSING: 20.11.2# slurm_get_node_features_plugins@Base 16.05.0
+ slurm_get_peer_addr@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_plugin_dir@Base 1.3.8
+ slurm_get_port@Base 20.11.2
+#MISSING: 20.11.2# slurm_get_power_parameters@Base 15.08.0
+#MISSING: 20.11.2# slurm_get_power_plugin@Base 15.08.0
+#MISSING: 20.11.2# slurm_get_preempt_mode@Base 2.1.0
+ slurm_get_preempt_type@Base 2.1.0
+#MISSING: 20.11.2# slurm_get_prep_plugins@Base 20.02.1
+#MISSING: 20.11.2# slurm_get_priority_calc_period@Base 2.1.0
+#MISSING: 20.11.2# slurm_get_priority_decay_hl@Base 2.0.0
+#MISSING: 20.11.2# slurm_get_priority_favor_small@Base 2.0.0
+#MISSING: 20.11.2# slurm_get_priority_flags@Base 17.02.0
+#MISSING: 20.11.2# slurm_get_priority_max_age@Base 2.0.0
+#MISSING: 20.11.2# slurm_get_priority_params@Base 14.11.0
+#MISSING: 20.11.2# slurm_get_priority_reset_period@Base 2.0.0
+#MISSING: 20.11.2# slurm_get_priority_site_factor_params@Base 19.05.2
+#MISSING: 20.11.2# slurm_get_priority_site_factor_plugin@Base 19.05.2
+#MISSING: 20.11.2# slurm_get_priority_type@Base 2.0.0
+#MISSING: 20.11.2# slurm_get_priority_weight_age@Base 2.0.0
+#MISSING: 20.11.2# slurm_get_priority_weight_assoc@Base 19.05.2
+#MISSING: 20.11.2# slurm_get_priority_weight_fairshare@Base 2.0.0
+#MISSING: 20.11.2# slurm_get_priority_weight_job_size@Base 2.0.0
+#MISSING: 20.11.2# slurm_get_priority_weight_partition@Base 2.0.0
+#MISSING: 20.11.2# slurm_get_priority_weight_qos@Base 2.0.0
+#MISSING: 20.11.2# slurm_get_priority_weight_tres@Base 15.08.0
+#MISSING: 20.11.2# slurm_get_private_data@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_proctrack_type@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_prolog_flags@Base 14.03.0
+#MISSING: 20.11.2# slurm_get_prolog_timeout@Base 15.08.0
+#MISSING: 20.11.2# slurm_get_propagate_prio_process@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_reboot_program@Base 17.02.5
+ slurm_get_rem_time@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_resume_fail_program@Base 18.08.0
+#MISSING: 20.11.2# slurm_get_resume_program@Base 16.05.6
+#MISSING: 20.11.2# slurm_get_resume_timeout@Base 2.0.0
+ slurm_get_return_code@Base 1.3.8
+#MISSING: 17.02.0# slurm_get_root_filter@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_route_plugin@Base 14.11.0
+#MISSING: 20.11.2# slurm_get_sbcast_parameters@Base 17.02.0
+ slurm_get_sched_log_level@Base 19.05.2
+ slurm_get_sched_params@Base 2.0.0
+#MISSING: 17.02.0# slurm_get_sched_port@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_sched_type@Base 1.3.8
+#MISSING: 18.08.0# slurm_get_select_jobinfo@Base 1.3.8
+ slurm_get_select_nodeinfo@Base 2.1.0
+ slurm_get_select_type@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_select_type_param@Base 2.3.1
+ slurm_get_selected_step_id@Base 20.11.2
+#MISSING: 20.11.2# slurm_get_slurm_user_id@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_slurmctld_params@Base 18.08.0
+#MISSING: 20.11.2# slurm_get_slurmctld_plugstack@Base 2.6.2
+#MISSING: 20.11.2# slurm_get_slurmctld_timeout@Base 17.02.0
+#MISSING: 20.11.2# slurm_get_slurmd_params@Base 18.08.0
+#MISSING: 17.11.2# slurm_get_slurmd_plugstack@Base 14.03.0
+#MISSING: 20.11.2# slurm_get_slurmd_port@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_slurmd_spooldir@Base 14.11.0
+#MISSING: 20.11.2# slurm_get_slurmd_user_id@Base 2.0.0
+#MISSING: 20.11.2# slurm_get_srun_eio_timeout@Base 15.08.0
+#MISSING: 20.11.2# slurm_get_srun_epilog@Base 1.3.8
+ slurm_get_srun_port_range@Base 14.11.0
+#MISSING: 20.11.2# slurm_get_srun_prolog@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_state_save_location@Base 1.3.8
+ slurm_get_statistics@Base 2.4.5
+ slurm_get_stepd_loc@Base 18.08.6.2
+ slurm_get_stream_addr@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_suspend_time@Base 2.1.0
+#MISSING: 20.11.2# slurm_get_suspend_timeout@Base 2.2.0
+#MISSING: 20.11.2# slurm_get_switch_type@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_task_epilog@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_task_plugin@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_task_plugin_param@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_task_prolog@Base 1.3.8
+#MISSING: 20.11.2# slurm_get_tcp_timeout@Base 16.05.0
+#MISSING: 20.11.2# slurm_get_time_slice@Base 14.11.0
+ slurm_get_tmp_fs@Base 15.08.1
+#MISSING: 20.11.2# slurm_get_topology_param@Base 15.08.0
+#MISSING: 20.11.2# slurm_get_topology_plugin@Base 2.0.0
+ slurm_get_track_wckey@Base 1.3.12
+#MISSING: 20.11.2# slurm_get_tree_width@Base 1.3.8
+ slurm_get_tres_weight_array@Base 15.08.0
+ slurm_get_triggers@Base 1.3.8
+ slurm_get_unit_type@Base 16.05.5
+#MISSING: 20.02.1# slurm_get_use_spec_resources@Base 14.11.0
+#MISSING: 20.11.2# slurm_get_vsize_factor@Base 2.2.0
+#MISSING: 20.11.2# slurm_get_wait_time@Base 1.3.8
+ slurm_getenvp@Base 1.3.8
+#MISSING: 17.11.2# slurm_getpeername@Base 15.08.0
+ slurm_getpwuid_r@Base 14.03.0
+#MISSING: 20.02.1# slurm_gmtime@Base 15.08.0
+#MISSING: 20.02.1# slurm_gmtime_r@Base 15.08.0
+ slurm_gres_2_tres_str@Base 17.11.2
+ slurm_gres_build_job_details@Base 17.11.2
+ slurm_gres_device_major@Base 17.11.2
+ slurm_gres_get_job_info@Base 17.11.2
+ slurm_gres_get_job_state@Base 17.11.2
+ slurm_gres_get_node_used@Base 17.11.2
+ slurm_gres_get_step_info@Base 17.11.2
+ slurm_gres_get_step_state@Base 17.11.2
+ slurm_gres_get_system_cnt@Base 17.11.2
+ slurm_gres_get_value_by_type@Base 17.11.2
+ slurm_gres_gresid_to_gresname@Base 17.11.2
+ slurm_gres_set_job_tres_cnt@Base 17.11.2
+ slurm_gres_set_node_tres_cnt@Base 17.11.2
+ slurm_grow_buf@Base 1.3.8
+ slurm_het_job_lookup@Base 20.02.1
+ slurm_het_job_will_run@Base 20.02.1
+ slurm_hex_to_char@Base 18.08.0
+ slurm_hostlist2bitmap@Base 20.02.1
+ slurm_hostlist_cmp_first@Base 20.02.1
+ slurm_hostlist_copy@Base 1.3.8
+ slurm_hostlist_count@Base 1.3.8
+ slurm_hostlist_create@Base 1.3.8
+ slurm_hostlist_create_dims@Base 2.3.1
+ slurm_hostlist_delete@Base 1.3.8
+ slurm_hostlist_delete_host@Base 1.3.8
+ slurm_hostlist_delete_nth@Base 1.3.8
+ slurm_hostlist_deranged_string@Base 1.3.8
+ slurm_hostlist_deranged_string_dims@Base 2.3.1
+ slurm_hostlist_deranged_string_malloc@Base 2.2.0
+ slurm_hostlist_deranged_string_xmalloc@Base 2.2.0
+ slurm_hostlist_deranged_string_xmalloc_dims@Base 2.3.1
+ slurm_hostlist_destroy@Base 1.3.8
+ slurm_hostlist_find@Base 1.3.8
+ slurm_hostlist_iterator_create@Base 1.3.8
+ slurm_hostlist_iterator_destroy@Base 1.3.8
+ slurm_hostlist_iterator_reset@Base 1.3.8
+ slurm_hostlist_next@Base 1.3.8
+ slurm_hostlist_next_range@Base 1.3.8
+ slurm_hostlist_nth@Base 1.3.8
+ slurm_hostlist_pop@Base 1.3.8
+ slurm_hostlist_pop_range@Base 1.3.8
+ slurm_hostlist_push@Base 1.3.8
+ slurm_hostlist_push_host@Base 1.3.8
+ slurm_hostlist_push_host_dims@Base 2.3.1
+ slurm_hostlist_push_list@Base 1.3.8
+ slurm_hostlist_ranged_string@Base 1.3.8
+ slurm_hostlist_ranged_string_dims@Base 2.3.1
+ slurm_hostlist_ranged_string_malloc@Base 2.2.0
+ slurm_hostlist_ranged_string_xmalloc@Base 2.2.0
+ slurm_hostlist_ranged_string_xmalloc_dims@Base 2.3.1
+ slurm_hostlist_remove@Base 1.3.8
+ slurm_hostlist_shift@Base 1.3.8
+ slurm_hostlist_shift_dims@Base 14.03.9
+ slurm_hostlist_shift_range@Base 1.3.8
+#MISSING: 2.5.7# slurm_hostlist_soft@Base 1.3.8
+ slurm_hostlist_sort@Base 2.5.7
+ slurm_hostlist_uniq@Base 1.3.8
+ slurm_hostset_copy@Base 1.3.8
+ slurm_hostset_count@Base 1.3.8
+ slurm_hostset_create@Base 1.3.8
+ slurm_hostset_delete@Base 1.3.8
+ slurm_hostset_destroy@Base 1.3.8
+ slurm_hostset_find@Base 1.3.8
+ slurm_hostset_insert@Base 1.3.8
+ slurm_hostset_nth@Base 1.3.8
+ slurm_hostset_shift@Base 1.3.8
+ slurm_hostset_shift_range@Base 1.3.8
+ slurm_hostset_within@Base 1.3.8
+ slurm_info@Base 1.3.8
+ slurm_init@Base 20.11.2
+ slurm_init_buf@Base 1.3.8
+ slurm_init_job_desc_msg@Base 1.3.8
+ slurm_init_msg_engine@Base 1.3.8
+#MISSING: 20.02.1# slurm_init_msg_engine_addrname_port@Base 2.0.0
+ slurm_init_msg_engine_port@Base 1.3.8
+ slurm_init_msg_engine_ports@Base 14.11.0
+ slurm_init_node_conf@Base 20.02.1
+ slurm_init_node_info_t@Base 18.08.0
+ slurm_init_part_desc_msg@Base 1.3.8
+ slurm_init_reboot_msg@Base 18.08.0
+ slurm_init_resv_desc_msg@Base 2.0.0
+ slurm_init_trigger_msg@Base 2.5.3
+#MISSING: 18.08.0# slurm_init_update_block_msg@Base 2.1.0
+ slurm_init_update_front_end_msg@Base 2.3.1
+ slurm_init_update_node_msg@Base 2.0.0
+ slurm_init_update_step_msg@Base 2.2.0
+#MISSING: 14.03.0# slurm_int_and_set_count@Base 1.3.8
+ slurm_job_batch_script@Base 17.11.2
+ slurm_job_cpus_allocated_on_node@Base 2.1.0
+ slurm_job_cpus_allocated_on_node_id@Base 2.1.0
+ slurm_job_cpus_allocated_str_on_node@Base 15.08.0
+ slurm_job_cpus_allocated_str_on_node_id@Base 15.08.0
+ slurm_job_node_ready@Base 1.3.8
+ slurm_job_reason_num@Base 19.05.2
+ slurm_job_reason_string@Base 2.2.0
+ slurm_job_share_string@Base 16.05.0
+ slurm_job_state_num@Base 2.2.0
+ slurm_job_state_string@Base 2.2.0
+ slurm_job_state_string_compact@Base 2.2.0
+ slurm_job_step_create@Base 1.3.8
+ slurm_job_step_get_pids@Base 2.2.0
+ slurm_job_step_layout_free@Base 1.3.8
+ slurm_job_step_layout_get@Base 1.3.8
+ slurm_job_step_pids_free@Base 2.2.0
+ slurm_job_step_pids_response_msg_free@Base 2.2.0
+ slurm_job_step_stat@Base 2.2.0
+ slurm_job_step_stat_free@Base 2.2.0
+ slurm_job_step_stat_response_msg_free@Base 2.2.0
+ slurm_job_will_run2@Base 15.08.0
+ slurm_job_will_run@Base 1.3.8
+#MISSING: 2.5.3# slurm_jobacct_common_alloc_jobacct@Base 2.2.0
+#MISSING: 2.5.3# slurm_jobacct_common_free_jobacct@Base 2.2.0
+#MISSING: 2.5.3# slurm_jobacct_common_pack@Base 2.2.0
+#MISSING: 2.5.3# slurm_jobacct_common_unpack@Base 2.2.0
+#MISSING: 2.5.3# slurm_jobacct_gather_fini@Base 1.3.8
+#MISSING: 2.5.3# slurm_jobacct_gather_init@Base 1.3.8
+ slurm_jobacctinfo_create@Base 2.5.3
+ slurm_jobacctinfo_destroy@Base 2.5.3
+ slurm_jobacctinfo_pack@Base 2.5.3
+ slurm_jobacctinfo_unpack@Base 2.5.3
+ slurm_jobinfo_ctx_get@Base 1.3.8
+ slurm_kill_job2@Base 14.11.0
+ slurm_kill_job@Base 1.3.8
+ slurm_kill_job_msg@Base 17.11.2
+ slurm_kill_job_step@Base 1.3.8
+#MISSING: 15.08.0# slurm_layouts_fini@Base 14.11.0
+#MISSING: 15.08.0# slurm_layouts_get_entity@Base 14.11.0
+#MISSING: 15.08.0# slurm_layouts_get_layout@Base 14.11.0
+#MISSING: 15.08.0# slurm_layouts_init@Base 14.11.0
+#MISSING: 15.08.0# slurm_layouts_load_config@Base 14.11.0
+ slurm_list_append@Base 1.3.8
+ slurm_list_append_list@Base 1.3.8
+ slurm_list_count@Base 1.3.8
+ slurm_list_create@Base 1.3.8
+ slurm_list_delete_all@Base 1.3.8
+ slurm_list_delete_item@Base 1.3.8
+ slurm_list_delete_ptr@Base 20.11.2
+ slurm_list_dequeue@Base 1.3.8
+ slurm_list_destroy@Base 1.3.8
+ slurm_list_enqueue@Base 1.3.8
+ slurm_list_find@Base 1.3.8
+ slurm_list_find_first@Base 1.3.8
+ slurm_list_flush@Base 2.2.0
+ slurm_list_for_each@Base 1.3.8
+ slurm_list_for_each_max@Base 20.02.1
+ slurm_list_insert@Base 1.3.8
+#MISSING: 20.02.1# slurm_list_install_fork_handlers@Base 1.3.8
+ slurm_list_is_empty@Base 1.3.8
+ slurm_list_iterator_create@Base 1.3.8
+ slurm_list_iterator_destroy@Base 1.3.8
+ slurm_list_iterator_reset@Base 1.3.8
+ slurm_list_next@Base 1.3.8
+ slurm_list_peek@Base 1.3.8
+ slurm_list_pop@Base 1.3.8
+ slurm_list_prepend@Base 1.3.8
+ slurm_list_push@Base 1.3.8
+ slurm_list_remove@Base 1.3.8
+ slurm_list_shallow_copy@Base 20.02.1
+ slurm_list_sort@Base 1.3.8
+ slurm_list_transfer@Base 1.3.8
+ slurm_list_transfer_max@Base 20.02.1
+#MISSING: 14.11.0# slurm_listen_stream@Base 1.3.8
+ slurm_load_assoc_mgr_info@Base 15.08.0
+#MISSING: 18.08.0# slurm_load_block_info@Base 2.1.0
+ slurm_load_burst_buffer_info@Base 15.08.0
+ slurm_load_burst_buffer_stat@Base 18.08.0
+ slurm_load_ctl_conf@Base 1.3.8
+ slurm_load_federation@Base 17.02.0
+ slurm_load_front_end@Base 2.3.1
+ slurm_load_job@Base 1.3.8
+ slurm_load_job_prio@Base 17.11.2
+ slurm_load_job_user@Base 2.6.2
+ slurm_load_jobs@Base 1.3.8
+#MISSING: 20.11.2# slurm_load_layout@Base 15.08.0
+ slurm_load_licenses@Base 14.03.0
+ slurm_load_node2@Base 17.11.2
+ slurm_load_node@Base 1.3.8
+ slurm_load_node_single2@Base 17.11.2
+ slurm_load_node_single@Base 2.6.2
+ slurm_load_partitions2@Base 17.11.2
+ slurm_load_partitions@Base 1.3.8
+#MISSING: 20.11.2# slurm_load_powercap@Base 15.08.0
+ slurm_load_reservations@Base 2.0.0
+#MISSING: 16.05.0# slurm_load_sicp@Base 15.08.0
+ slurm_load_slurmd_status@Base 1.3.8
+ slurm_load_topo@Base 2.0.0
+#MISSING: 20.02.1# slurm_localtime@Base 15.08.0
+#MISSING: 20.02.1# slurm_localtime_r@Base 15.08.0
+ slurm_log_alter@Base 1.3.8
+ slurm_log_alter_with_fp@Base 2.5.3
+#MISSING: 20.02.1# slurm_log_fatal@Base 2.6.2
+ slurm_log_fini@Base 1.3.8
+ slurm_log_flush@Base 1.3.8
+ slurm_log_fp@Base 1.3.8
+ slurm_log_has_data@Base 1.3.8
+ slurm_log_init@Base 1.3.8
+ slurm_log_oom@Base 2.6.2
+ slurm_log_reinit@Base 1.3.8
+ slurm_log_set_fpfx@Base 1.3.8
+ slurm_log_var@Base 19.05.2
+ slurm_make_time_str@Base 1.3.8
+ slurm_mcs_fini@Base 16.05.0
+ slurm_mcs_get_enforced@Base 16.05.0
+ slurm_mcs_get_params_specific@Base 16.05.0
+ slurm_mcs_get_privatedata@Base 16.05.0
+ slurm_mcs_get_select@Base 16.05.0
+ slurm_mcs_init@Base 16.05.0
+ slurm_mcs_reconfig@Base 16.05.0
+ slurm_mcs_reset_params@Base 16.05.0
+ slurm_mins2time_str@Base 16.05.5
+ slurm_mktime@Base 15.08.0
+ slurm_mon_abbr@Base 16.05.5
+ slurm_mpi_plugin_init@Base 2.4.5
+ slurm_msg_recvfrom_timeout@Base 15.08.0
+ slurm_msg_sendto@Base 15.08.0
+ slurm_msg_sendto_timeout@Base 15.08.0
+ slurm_msg_t_copy@Base 1.3.8
+ slurm_msg_t_init@Base 1.3.8
+#MISSING: 17.11.2# slurm_net_accept_stream@Base 1.3.8
+#MISSING: 20.11.2# slurm_net_set_low_water@Base 1.3.8
+ slurm_net_stream_listen@Base 1.3.8
+ slurm_network_callerid@Base 15.08.0
+ slurm_node_state_string@Base 2.2.0
+ slurm_node_state_string_compact@Base 2.2.0
+#MISSING: 19.05.2# slurm_node_use_string@Base 2.2.0
+ slurm_notify_job@Base 1.3.8
+ slurm_open_controller_conn@Base 1.3.8
+ slurm_open_controller_conn_spec@Base 1.3.8
+ slurm_open_msg_conn@Base 1.3.8
+#MISSING: 18.08.0# slurm_open_slurmdbd_conn@Base 1.3.8
+ slurm_open_stream@Base 1.3.8
+ slurm_option_get@Base 19.05.2
+ slurm_option_get_next_set@Base 19.05.2
+ slurm_option_isset@Base 19.05.2
+ slurm_option_reset@Base 19.05.2
+ slurm_option_set@Base 19.05.2
+ slurm_option_set_by_cli@Base 19.05.2
+ slurm_option_set_by_data@Base 20.02.1
+ slurm_option_set_by_env@Base 19.05.2
+ slurm_option_table_create@Base 19.05.2
+ slurm_option_table_destroy@Base 19.05.2
+ slurm_pack16@Base 1.3.8
+ slurm_pack16_array@Base 1.3.8
+ slurm_pack32@Base 1.3.8
+ slurm_pack32_array@Base 1.3.8
+ slurm_pack64@Base 1.3.8
+ slurm_pack8@Base 1.3.8
+ slurm_pack_addr@Base 20.11.2
+ slurm_pack_addr_array@Base 20.11.2
+#MISSING: 18.08.0# slurm_pack_block_job_info@Base 2.3.1
+#MISSING: 20.02.1# slurm_pack_job_lookup@Base 17.11.2
+#MISSING: 20.02.1# slurm_pack_job_will_run@Base 17.11.2
+ slurm_pack_list@Base 18.08.0
+ slurm_pack_selected_step@Base 20.11.2
+ slurm_pack_slurm_addr@Base 1.3.8
+ slurm_pack_slurm_addr_array@Base 1.3.8
+ slurm_pack_slurm_step_layout@Base 14.03.0
+ slurm_pack_slurmdbd_msg@Base 18.08.3
+ slurm_pack_time@Base 1.3.8
+ slurm_packbool@Base 19.05.2
+ slurm_packdouble@Base 2.3.1
+ slurm_packfloat@Base 19.05.2
+ slurm_packlongdouble@Base 15.08.0
+ slurm_packmem@Base 1.3.8
+ slurm_packmem_array@Base 1.3.8
+ slurm_packstr_array@Base 1.3.8
+ slurm_parse_step_str@Base 20.11.2
+ slurm_parse_time@Base 16.05.5
+#MISSING: 17.02.0# slurm_parser@Base 1.3.8
+ slurm_perror@Base 1.3.8
+ slurm_persist_conn_close@Base 17.02.0
+ slurm_persist_conn_destroy@Base 17.02.0
+ slurm_persist_conn_free_thread_loc@Base 17.02.0
+ slurm_persist_conn_members_destroy@Base 17.02.0
+ slurm_persist_conn_open@Base 17.02.0
+ slurm_persist_conn_open_without_init@Base 17.02.0
+ slurm_persist_conn_process_msg@Base 17.02.0
+ slurm_persist_conn_recv_server_fini@Base 17.02.0
+ slurm_persist_conn_recv_server_init@Base 17.02.0
+ slurm_persist_conn_recv_thread_init@Base 17.02.0
+ slurm_persist_conn_reopen@Base 17.02.0
+ slurm_persist_conn_wait_for_thread_loc@Base 17.02.0
+ slurm_persist_conn_writeable@Base 17.02.0
+ slurm_persist_free_init_req_msg@Base 17.02.0
+ slurm_persist_free_rc_msg@Base 17.02.0
+ slurm_persist_make_rc_msg@Base 17.02.0
+ slurm_persist_make_rc_msg_flags@Base 18.08.0
+ slurm_persist_msg_pack@Base 17.02.0
+ slurm_persist_msg_unpack@Base 17.02.0
+ slurm_persist_pack_init_req_msg@Base 17.02.0
+ slurm_persist_pack_rc_msg@Base 17.02.0
+ slurm_persist_recv_msg@Base 17.02.0
+ slurm_persist_send_msg@Base 17.02.0
+ slurm_persist_unpack_init_req_msg@Base 17.02.0
+ slurm_persist_unpack_rc_msg@Base 17.02.0
+ slurm_pid2jobid@Base 1.3.8
+ slurm_ping@Base 1.3.8
+ slurm_plugin_get_syms@Base 2.2.0
+ slurm_plugin_load_and_link@Base 2.2.0
+ slurm_plugin_strerror@Base 2.2.0
+ slurm_plugin_unload@Base 2.2.0
+ slurm_plugrack_create@Base 2.2.0
+ slurm_plugrack_destroy@Base 2.2.0
+ slurm_plugrack_read_dir@Base 2.2.0
+#MISSING: 19.05.2# slurm_plugrack_set_major_type@Base 2.2.0
+#MISSING: 19.05.2# slurm_plugrack_set_paranoia@Base 2.2.0
+ slurm_plugrack_use_by_type@Base 2.2.0
+ slurm_pmi_finalize@Base 1.3.8
+ slurm_pmi_free_kvs_comm_set@Base 20.11.2
+ slurm_pmi_get_kvs_comm_set@Base 20.11.2
+ slurm_pmi_kill_job_step@Base 20.11.2
+ slurm_pmi_send_kvs_comm_set@Base 20.11.2
+ slurm_populate_node_partitions@Base 17.02.0
+ slurm_preempt_mode_num@Base 2.2.0
+ slurm_preempt_mode_string@Base 2.2.0
+#MISSING: 18.08.0# slurm_print_block_info@Base 2.1.0
+#MISSING: 18.08.0# slurm_print_block_info_msg@Base 2.1.0
+ slurm_print_burst_buffer_info_msg@Base 15.08.0
+ slurm_print_burst_buffer_record@Base 15.08.0
+ slurm_print_cpu_bind_help@Base 2.0.0
+ slurm_print_ctl_conf@Base 1.3.8
+ slurm_print_federation@Base 17.02.0
+ slurm_print_front_end_info_msg@Base 2.3.1
+ slurm_print_front_end_table@Base 2.3.1
+ slurm_print_job_info@Base 1.3.8
+ slurm_print_job_info_msg@Base 1.3.8
+ slurm_print_job_step_info@Base 1.3.8
+ slurm_print_job_step_info_msg@Base 1.3.8
+ slurm_print_key_pairs@Base 2.0.0
+ slurm_print_launch_task_msg@Base 1.3.8
+#MISSING: 20.11.2# slurm_print_layout_info@Base 15.08.0
+#MISSING: 15.08.0# slurm_print_mem_bind_help@Base 2.0.0
+ slurm_print_mem_bind_help@Base 2.0.0
+ slurm_print_multi_line_string@Base 17.11.4
+ slurm_print_node_info_msg@Base 1.3.8
+ slurm_print_node_table@Base 1.3.8
+ slurm_print_partition_info@Base 1.3.8
+ slurm_print_partition_info_msg@Base 1.3.8
+#MISSING: 19.05.2# slurm_print_peer_addr@Base 17.02.0
+#MISSING: 20.11.2# slurm_print_powercap_info_msg@Base 15.08.0
+ slurm_print_reservation_info@Base 2.0.0
+ slurm_print_reservation_info_msg@Base 2.0.0
+ slurm_print_set_options@Base 19.05.2
+#MISSING: 20.11.2# slurm_print_slurm_addr@Base 1.3.8
+ slurm_print_slurmd_status@Base 1.3.8
+ slurm_print_topo_info_msg@Base 2.0.0
+ slurm_print_topo_record@Base 2.0.0
+ slurm_priority_fini@Base 2.0.0
+ slurm_priority_init@Base 2.0.0
+ slurm_private_data_string@Base 2.2.0
+ slurm_process_option@Base 19.05.2
+ slurm_process_option_data@Base 20.02.1
+ slurm_process_option_or_exit@Base 20.11.3
+ slurm_prog_name@Base 2.6.2
+ slurm_pull_trigger@Base 2.2.0
+ slurm_read_hostfile@Base 1.3.8
+ slurm_read_stream@Base 1.3.8
+#MISSING: 20.11.2# slurm_read_stream_timeout@Base 1.3.8
+ slurm_receive_fd_over_pipe@Base 20.02.1
+ slurm_receive_msg@Base 1.3.8
+ slurm_receive_msg_and_forward@Base 1.3.8
+ slurm_receive_msgs@Base 1.3.8
+ slurm_reconfigure@Base 1.3.8
+ slurm_recv_timeout@Base 15.08.0
+ slurm_rehash_node@Base 20.02.1
+ slurm_remove_crontab@Base 20.11.2
+ slurm_request_crontab@Base 20.11.2
+ slurm_requeue2@Base 14.11.0
+ slurm_requeue@Base 1.3.8
+ slurm_reservation_flags_string@Base 2.2.0
+ slurm_reset_alias@Base 2.4.5
+ slurm_reset_all_options@Base 19.05.2
+ slurm_reset_statistics@Base 2.4.5
+ slurm_resume2@Base 14.11.0
+ slurm_resume@Base 1.3.8
+ slurm_revert_num_unit@Base 16.05.5
+ slurm_route_split_hostlist_treewidth@Base 14.11.0
+ slurm_run_in_daemon@Base 14.03.0
+ slurm_running_in_daemon@Base 20.02.1
+ slurm_running_in_slurmctld@Base 20.02.1
+ slurm_running_in_slurmd@Base 20.02.1
+ slurm_running_in_slurmd_stepd@Base 20.11.2
+ slurm_running_in_slurmdbd@Base 20.02.1
+#MISSING: 20.11.2# slurm_running_in_slurmdstepd@Base 20.02.1
+ slurm_running_in_slurmrestd@Base 20.02.1
+ slurm_running_in_slurmstepd@Base 20.02.1
+ slurm_s_p_dump_values@Base 14.03.0
+ slurm_s_p_get_array@Base 14.03.0
+ slurm_s_p_get_boolean@Base 14.03.0
+ slurm_s_p_get_double@Base 15.08.0
+ slurm_s_p_get_float@Base 15.08.0
+ slurm_s_p_get_long@Base 14.03.0
+ slurm_s_p_get_long_double@Base 15.08.0
+ slurm_s_p_get_pointer@Base 14.03.0
+ slurm_s_p_get_string@Base 2.3.1
+ slurm_s_p_get_uint16@Base 14.03.0
+ slurm_s_p_get_uint32@Base 2.3.1
+ slurm_s_p_get_uint64@Base 17.02.0
+ slurm_s_p_hashtbl_create@Base 2.3.1
+ slurm_s_p_hashtbl_destroy@Base 2.3.1
+ slurm_s_p_hashtbl_merge@Base 14.03.0
+ slurm_s_p_parse_buffer@Base 15.08.0
+ slurm_s_p_parse_file@Base 2.3.1
+ slurm_s_p_parse_line@Base 14.03.0
+ slurm_s_p_parse_pair@Base 14.03.0
+ slurm_sbcast_lookup@Base 2.1.0
+#MISSING: 20.02.1# slurm_sched_debug2@Base 18.08.0
+#MISSING: 20.02.1# slurm_sched_debug3@Base 18.08.0
+#MISSING: 20.02.1# slurm_sched_debug@Base 18.08.0
+ slurm_sched_error@Base 18.08.0
+ slurm_sched_info@Base 18.08.0
+ slurm_sched_verbose@Base 18.08.0
+ slurm_secs2time_str@Base 16.05.5
+ slurm_select_fini@Base 1.3.8
+ slurm_select_init@Base 1.3.8
+ slurm_send_addr_recv_msgs@Base 1.3.8
+ slurm_send_fd_over_pipe@Base 20.02.1
+#MISSING: 20.11.2# slurm_send_kvs_comm_set@Base 1.3.8
+ slurm_send_msg@Base 18.08.0
+ slurm_send_msg_maybe@Base 17.11.9
+ slurm_send_node_msg@Base 1.3.8
+ slurm_send_only_controller_msg@Base 1.3.8
+ slurm_send_only_node_msg@Base 1.3.8
+ slurm_send_rc_err_msg@Base 14.03.0
+ slurm_send_rc_msg@Base 1.3.8
+ slurm_send_recv_controller_msg@Base 1.3.8
+ slurm_send_recv_controller_rc_msg@Base 1.3.8
+ slurm_send_recv_msg@Base 17.02.0
+ slurm_send_recv_msgs@Base 1.3.8
+ slurm_send_recv_node_msg@Base 1.3.8
+ slurm_send_recv_rc_msg_only_one@Base 1.3.8
+#MISSING: 18.08.0# slurm_send_recv_slurmdbd_msg@Base 1.3.8
+ slurm_send_reroute_msg@Base 17.11.2
+#MISSING: 18.08.0# slurm_send_slurmdbd_msg@Base 1.3.8
+#MISSING: 18.08.0# slurm_send_slurmdbd_recv_rc_msg@Base 1.3.8
+ slurm_send_timeout@Base 15.08.0
+#MISSING: 20.11.2# slurm_set_accounting_storage_host@Base 2.0.2
+#MISSING: 20.11.2# slurm_set_accounting_storage_loc@Base 1.3.8
+#MISSING: 20.11.2# slurm_set_accounting_storage_port@Base 1.3.11
+#MISSING: 20.11.2# slurm_set_accounting_storage_tres@Base 15.08.10
+#MISSING: 20.11.2# slurm_set_accounting_storage_user@Base 2.0.2
+ slurm_set_addr@Base 1.3.8
+#MISSING: 15.08.0# slurm_set_addr_any@Base 1.3.8
+#MISSING: 20.11.2# slurm_set_addr_char@Base 1.3.8
+#MISSING: 15.08.8# slurm_set_addr_uint@Base 1.3.8
+#MISSING: 18.08.0# slurm_set_api_config@Base 1.3.8
+#MISSING: 20.11.2# slurm_set_auth_type@Base 1.3.8
+#MISSING: 20.11.2# slurm_set_debug_flags@Base 2.3.1
+ slurm_set_debug_level@Base 1.3.8
+ slurm_set_debugflags@Base 2.3.1
+#MISSING: 20.11.2# slurm_set_fs_dampening_factor@Base 17.11.2
+ slurm_set_fs_dampeningfactor@Base 17.11.2
+#MISSING: 20.11.2# slurm_set_jobcomp_port@Base 1.3.11
+#MISSING: 20.11.2# slurm_set_launch_type@Base 2.5.3
+ slurm_set_port@Base 20.11.2
+#MISSING: 20.11.2# slurm_set_power_parameters@Base 15.08.0
+ slurm_set_schedlog_level@Base 2.2.0
+#MISSING: 15.08.0# slurm_set_stream_blocking@Base 1.3.8
+#MISSING: 15.08.0# slurm_set_stream_non_blocking@Base 1.3.8
+#MISSING: 20.11.2# slurm_set_select_type_param@Base 17.11.2
+#MISSING: 20.11.2# slurm_set_tree_width@Base 1.3.8
+ slurm_set_trigger@Base 1.3.8
+ slurm_setenvpf@Base 1.3.8
+ slurm_seterrno@Base 1.3.8
+ slurm_setup_addr@Base 20.11.2
+ slurm_setup_remote_working_cluster@Base 17.11.2
+#MISSING: 20.11.2# slurm_setup_sockaddr@Base 15.08.0
+ slurm_shutdown@Base 1.3.8
+#MISSING: 18.08.0# slurm_shutdown_msg_conn@Base 1.3.8
+#MISSING: 18.08.0# slurm_shutdown_msg_engine@Base 1.3.8
+ slurm_signal_job@Base 1.3.8
+ slurm_signal_job_step@Base 1.3.8
+ slurm_slurmdbd_free_buffer@Base 18.08.3
+#MISSING: 18.08.0# slurm_slurmdbd_defs_fini@Base 17.02.2
+#MISSING: 18.08.0# slurm_slurmdbd_defs_init@Base 17.02.2
+ slurm_slurmdbd_free_id_rc_msg@Base 17.02.2
+ slurm_slurmdbd_free_list_msg@Base 17.02.2
+ slurm_slurmdbd_free_usage_msg@Base 17.02.2
+ slurm_slurmdbd_pack_fini_msg@Base 19.05.5
+ slurm_sort_char_list_asc@Base 1.3.9
+ slurm_sort_char_list_desc@Base 1.3.9
+ slurm_sort_key_pairs@Base 2.1.0
+ slurm_spank_log@Base 20.02.1
+#MISSING: 18.08.0# slurm_sprint_block_info@Base 2.1.0
+ slurm_sprint_cpu_bind_type@Base 1.3.8
+ slurm_sprint_front_end_table@Base 2.3.1
+ slurm_sprint_job_info@Base 1.3.8
+ slurm_sprint_job_step_info@Base 1.3.8
+#MISSING: 19.05.2# slurm_sprint_mem_bind_type@Base 1.3.8
+ slurm_sprint_node_table@Base 1.3.8
+ slurm_sprint_partition_info@Base 1.3.8
+ slurm_sprint_reservation_info@Base 2.0.0
+ slurm_step_ctx_create@Base 1.3.8
+ slurm_step_ctx_create_no_alloc@Base 1.3.8
+ slurm_step_ctx_create_timeout@Base 2.6.2
+ slurm_step_ctx_daemon_per_node_hack@Base 1.3.8
+ slurm_step_ctx_destroy@Base 1.3.8
+ slurm_step_ctx_get@Base 1.3.8
+ slurm_step_ctx_params_t_init@Base 1.3.8
+ slurm_step_launch@Base 1.3.8
+ slurm_step_launch_abort@Base 1.3.8
+ slurm_step_launch_add@Base 2.5.3
+ slurm_step_launch_fwd_signal@Base 1.3.8
+ slurm_step_launch_params_t_init@Base 1.3.8
+ slurm_step_launch_wait_finish@Base 1.3.8
+ slurm_step_launch_wait_start@Base 1.3.8
+ slurm_step_layout_copy@Base 1.3.8
+ slurm_step_layout_create@Base 1.3.8
+ slurm_step_layout_destroy@Base 1.3.8
+ slurm_step_layout_host_id@Base 1.3.8
+ slurm_step_layout_host_name@Base 1.3.8
+ slurm_step_layout_merge@Base 20.11.2
+ slurm_step_layout_type_name@Base 2.0.0
+ slurm_step_retry_errno@Base 17.11.4
+ slurm_stepd_add_extern_pid@Base 15.08.4
+ slurm_stepd_available@Base 15.08.0
+ slurm_stepd_connect@Base 15.08.0
+#MISSING: 20.11.2# slurm_stepd_connect_nss@Base 20.02.5
+ slurm_stepd_get_info@Base 19.05.2
+ slurm_stepd_get_namespace_fd@Base 20.11.5
+ slurm_stepd_get_uid@Base 15.08.0
+#MISSING: 17.02.0# slurm_strcasestr@Base 2.0.0
+ slurm_stepd_get_x11_display@Base 17.11.2
+ slurm_stepd_getgr@Base 19.05.2
+ slurm_stepd_getpw@Base 19.05.2
+ slurm_strerror@Base 1.3.8
+ slurm_strlcpy@Base 1.3.8
+ slurm_submit_batch_het_job@Base 20.02.1
+ slurm_submit_batch_job@Base 1.3.8
+#MISSING: 20.02.1# slurm_submit_batch_pack_job@Base 17.11.2
+ slurm_suspend2@Base 14.11.0
+ slurm_suspend@Base 1.3.8
+ slurm_takeover@Base 2.0.0
+#MISSING: 2.6.7# slurm_terminate_job@Base 1.3.8
+ slurm_terminate_job_step@Base 1.3.8
+ slurm_time_str2mins@Base 16.05.5
+ slurm_time_str2secs@Base 16.05.5
+ slurm_top_job@Base 16.05.0
+ slurm_topo_build_config@Base 2.1.0
+ slurm_topo_fini@Base 2.1.0
+ slurm_topo_generate_node_ranking@Base 2.3.1
+ slurm_topo_get_node_addr@Base 2.1.0
+ slurm_topo_init@Base 2.1.0
+ slurm_transfer_s_p_options@Base 14.03.0
+#MISSING: 19.05.2# slurm_try_xmalloc@Base 1.3.8
+#MISSING: 19.05.2# slurm_try_xrealloc@Base 1.3.8
+ slurm_unpack16@Base 1.3.8
+ slurm_unpack16_array@Base 1.3.8
+ slurm_unpack32@Base 1.3.8
+ slurm_unpack32_array@Base 1.3.8
+ slurm_unpack64@Base 1.3.8
+ slurm_unpack8@Base 1.3.8
+ slurm_unpack_addr_array@Base 20.11.2
+ slurm_unpack_addr_no_alloc@Base 20.11.2
+#MISSING: 18.08.0# slurm_unpack_block_info_members@Base 2.3.1
+#MISSING: 18.08.0# slurm_unpack_block_info_msg@Base 2.2.0
+ slurm_unpack_list@Base 18.08.0
+ slurm_unpack_received_msg@Base 17.02.0
+ slurm_unpack_selected_step@Base 20.11.2
+ slurm_unpack_slurm_addr_array@Base 1.3.8
+ slurm_unpack_slurm_addr_no_alloc@Base 1.3.8
+ slurm_unpack_slurm_step_layout@Base 14.03.0
+ slurm_unpack_slurmdbd_msg@Base 18.08.3
+ slurm_unpack_time@Base 1.3.8
+ slurm_unpackbool@Base 19.05.2
+ slurm_unpackdouble@Base 2.3.1
+ slurm_unpackfloat@Base 19.05.2
+ slurm_unpacklongdouble@Base 15.08.0
+#MISSING: 20.11.2# slurm_unpackmem@Base 1.3.8
+ slurm_unpackmem_array@Base 1.3.8
+ slurm_unpackmem_malloc@Base 1.3.8
+ slurm_unpackmem_ptr@Base 1.3.8
+ slurm_unpackmem_xmalloc@Base 1.3.8
+ slurm_unpackstr_array@Base 1.3.8
+ slurm_unpackstr_xmalloc_chooser@Base 17.11.5
+ slurm_unpackstr_xmalloc_escaped@Base 17.11.5
+ slurm_unsetenvp@Base 1.3.8
+#MISSING: 18.08.0# slurm_update_block@Base 2.1.0
+ slurm_update_crontab@Base 20.11.2
+ slurm_update_front_end@Base 2.3.1
+ slurm_update_job2@Base 14.11.0
+ slurm_update_job@Base 1.3.8
+#MISSING: 20.11.2# slurm_update_layout@Base 15.08.0
+ slurm_update_node@Base 1.3.8
+ slurm_update_partition@Base 1.3.8
+#MISSING: 20.11.2# slurm_update_powercap@Base 15.08.0
+ slurm_update_reservation@Base 2.0.0
+ slurm_update_step@Base 2.2.0
+#MISSING: 18.08.0# slurm_valid_uid_gid@Base 15.08.1
+ slurm_verbose@Base 1.3.8
+ slurm_verify_cpu_bind@Base 2.0.0
+ slurm_verify_mem_bind@Base 2.0.0
+ slurm_with_slurmdbd@Base 20.11.2
+ slurm_write_ctl_conf@Base 14.11.0
+ slurm_write_stream@Base 1.3.8
+#MISSING: 20.11.2# slurm_write_stream_timeout@Base 1.3.8
+ slurm_xassert_failed@Base 1.3.8
+ slurm_xbasename@Base 1.3.8
+ slurm_xcalloc@Base 19.05.2
+ slurm_xcgroup_config_read_mutex@Base 19.05.2
+ slurm_xcgroup_fini_slurm_cgroup_conf@Base 19.05.2
+ slurm_xcgroup_get_slurm_cgroup_conf@Base 19.05.2
+ slurm_xfer_buf_data@Base 1.3.8
+ slurm_xfree@Base 1.3.8
+ slurm_xfree_ptr@Base 20.02.1
+ slurm_xfree_struct_group_array@Base 19.05.2
+ slurm_xfree_struct_passwd@Base 19.05.2
+ slurm_xlate_job_id@Base 2.6.2
+#MISSING: 19.05.2# slurm_xmalloc@Base 1.3.8
+ slurm_xmemcat@Base 1.3.8
+#MISSING: 19.05.2# slurm_xrealloc@Base 1.3.8
+ slurm_xrecalloc@Base 19.05.2
+ slurm_xshort_hostname@Base 1.3.8
+ slurm_xsignal@Base 1.3.8
+ slurm_xsignal_block@Base 1.3.8
+ slurm_xsignal_save_mask@Base 1.3.8
+ slurm_xsignal_set_mask@Base 1.3.8
+ slurm_xsignal_sigset_create@Base 1.3.8
+ slurm_xsignal_unblock@Base 1.3.8
+ slurm_xsize@Base 1.3.8
+#MISSING: 18.08.0# slurm_xslurm_strerrorcat@Base 1.3.8
+ slurm_xstr_mem_bind_type@Base 19.05.2
+ slurm_xstrcasecmp@Base 14.03.0
+ slurm_xstrcasestr@Base 17.02.0
+ slurm_xstrcat@Base 1.3.8
+ slurm_xstrcatchar@Base 1.3.8
+ slurm_xstrchr@Base 14.03.0
+ slurm_xstrcmp@Base 14.03.0
+ slurm_xstrdup@Base 1.3.8
+ slurm_xstrdup_printf@Base 1.3.8
+ slurm_xstrfmtcat@Base 1.3.8
+ slurm_xstrfmtcatat@Base 19.05.2
+ slurm_xstrftimecat@Base 1.3.8
+ slurm_xstring_is_whitespace@Base 1.3.8
+ slurm_xstrncasecmp@Base 17.02.9
+ slurm_xstrncat@Base 2.2.0
+ slurm_xstrncmp@Base 17.02.9
+ slurm_xstrndup@Base 1.3.8
+ slurm_xstrrchr@Base 17.11.2
+ slurm_xstrstr@Base 17.11.8
+#MISSING: 18.08.0# slurm_xstrstrip@Base 1.3.9
+ slurm_xstrsubstitute@Base 1.3.8
+ slurm_xstrtolower@Base 2.1.10
+ slurmdb_accounts_add@Base 19.05.2
+ slurmdb_accounts_get@Base 19.05.2
+ slurmdb_accounts_modify@Base 19.05.2
+ slurmdb_accounts_remove@Base 19.05.2
+ slurmdb_add_accounting_to_tres_list@Base 15.08.0
+ slurmdb_add_cluster_accounting_to_tres_list@Base 15.08.0
+ slurmdb_add_time_from_count_to_tres_list@Base 15.08.0
+ slurmdb_addto_qos_char_list@Base 2.3.1
+ slurmdb_admin_level_str@Base 2.3.1
+ slurmdb_archive@Base 19.05.2
+ slurmdb_archive_load@Base 19.05.2
+ slurmdb_associations_add@Base 19.05.2
+ slurmdb_associations_get@Base 19.05.2
+ slurmdb_associations_modify@Base 19.05.2
+ slurmdb_associations_remove@Base 19.05.2
+ slurmdb_ave_tres_usage@Base 18.08.0
+ slurmdb_clear_stats@Base 19.05.2
+ slurmdb_cluster_fed_states_str@Base 17.02.0
+ slurmdb_cluster_flags_2_str@Base 2.3.1
+ slurmdb_cluster_rec_2_report@Base 2.5.7
+ slurmdb_clusters_add@Base 19.05.2
+ slurmdb_clusters_get@Base 19.05.2
+ slurmdb_clusters_modify@Base 19.05.2
+ slurmdb_clusters_remove@Base 19.05.2
+ slurmdb_combine_tres_strings@Base 15.08.0
+ slurmdb_config_get@Base 19.05.2
+ slurmdb_connection_close@Base 19.05.2
+ slurmdb_connection_commit@Base 19.05.2
+#MISSING: 20.11.2# slurmdb_connection_get2@Base 19.05.2
+ slurmdb_connection_get@Base 19.05.2
+ slurmdb_coord_add@Base 19.05.2
+ slurmdb_coord_remove@Base 19.05.2
+ slurmdb_copy_assoc_rec_limits@Base 15.08.0
+ slurmdb_copy_cluster_rec@Base 17.02.0
+ slurmdb_copy_federation_rec@Base 17.02.0
+ slurmdb_copy_qos_rec_limits@Base 15.08.0
+ slurmdb_copy_tres_list@Base 15.08.0
+ slurmdb_copy_tres_rec@Base 15.08.0
+ slurmdb_create_assoc_usage@Base 15.08.0
+ slurmdb_create_job_rec@Base 2.3.1
+ slurmdb_create_qos_usage@Base 15.08.0
+ slurmdb_create_step_rec@Base 2.3.1
+ slurmdb_destroy_account_cond@Base 2.3.1
+ slurmdb_destroy_account_rec@Base 2.3.1
+ slurmdb_destroy_accounting_rec@Base 2.3.1
+ slurmdb_destroy_archive_cond@Base 2.3.1
+ slurmdb_destroy_archive_rec@Base 2.3.1
+#MISSING: 15.08.0# slurmdb_destroy_association_cond@Base 2.3.1
+#MISSING: 15.08.0# slurmdb_destroy_association_rec@Base 2.3.1
+ slurmdb_destroy_bf_usage@Base 19.05.2
+ slurmdb_destroy_bf_usage_members@Base 19.05.2
+ slurmdb_destroy_assoc_cond@Base 15.08.0
+ slurmdb_destroy_assoc_rec@Base 15.08.0
+ slurmdb_destroy_assoc_usage@Base 15.08.0
+ slurmdb_destroy_clus_res_rec@Base 14.03.0
+ slurmdb_destroy_cluster_accounting_rec@Base 2.3.1
+ slurmdb_destroy_cluster_cond@Base 2.3.1
+ slurmdb_destroy_cluster_rec@Base 2.3.1
+ slurmdb_destroy_coord_rec@Base 2.3.1
+ slurmdb_destroy_event_cond@Base 2.3.1
+ slurmdb_destroy_event_rec@Base 2.3.1
+ slurmdb_destroy_federation_cond@Base 17.02.0
+ slurmdb_destroy_federation_rec@Base 17.02.0
+ slurmdb_destroy_hierarchical_rec@Base 2.3.1
+ slurmdb_destroy_job_cond@Base 2.3.1
+#MISSING: 20.02.1# slurmdb_destroy_job_modify_cond@Base 2.3.1
+ slurmdb_destroy_job_rec@Base 2.3.1
+ slurmdb_destroy_print_tree@Base 2.3.1
+ slurmdb_destroy_qos_cond@Base 2.3.1
+ slurmdb_destroy_qos_rec@Base 2.3.1
+ slurmdb_destroy_qos_usage@Base 15.08.0
+ slurmdb_destroy_report_acct_grouping@Base 2.3.1
+ slurmdb_destroy_report_assoc_rec@Base 2.3.1
+ slurmdb_destroy_report_cluster_grouping@Base 2.3.1
+ slurmdb_destroy_report_cluster_rec@Base 2.3.1
+ slurmdb_destroy_report_job_grouping@Base 2.3.1
+ slurmdb_destroy_report_user_rec@Base 2.3.1
+ slurmdb_destroy_res_cond@Base 14.03.0
+ slurmdb_destroy_res_rec@Base 14.03.0
+ slurmdb_destroy_reservation_cond@Base 2.3.1
+ slurmdb_destroy_reservation_rec@Base 2.3.1
+ slurmdb_destroy_rollup_stats@Base 20.02.1
+ slurmdb_destroy_rpc_obj@Base 20.02.1
+#MISSING: 20.11.2# slurmdb_destroy_selected_step@Base 2.3.1
+ slurmdb_destroy_slurmdb_stats@Base 18.08.0
+ slurmdb_destroy_stats_rec@Base 17.02.0
+ slurmdb_destroy_step_rec@Base 2.3.1
+ slurmdb_destroy_tres_cond@Base 15.08.0
+ slurmdb_destroy_tres_rec@Base 15.08.0
+ slurmdb_destroy_tres_rec_noalloc@Base 15.08.0
+ slurmdb_destroy_txn_cond@Base 2.3.1
+ slurmdb_destroy_txn_rec@Base 2.3.1
+ slurmdb_destroy_update_object@Base 2.3.1
+#MISSING: 20.02.1# slurmdb_destroy_update_shares_rec@Base 2.3.1
+ slurmdb_destroy_used_limits@Base 2.3.1
+ slurmdb_destroy_user_cond@Base 2.3.1
+ slurmdb_destroy_user_rec@Base 2.3.1
+ slurmdb_destroy_wckey_cond@Base 2.3.1
+ slurmdb_destroy_wckey_rec@Base 2.3.1
+ slurmdb_diff_tres_list@Base 15.08.0
+ slurmdb_events_get@Base 19.05.2
+ slurmdb_federation_flags_str@Base 17.02.0
+ slurmdb_federations_add@Base 19.05.2
+ slurmdb_federations_get@Base 19.05.2
+ slurmdb_federations_modify@Base 19.05.2
+ slurmdb_federations_remove@Base 19.05.2
+ slurmdb_find_assoc_in_list@Base 16.05.0
+ slurmdb_find_cluster_accting_tres_in_list@Base 15.08.0
+ slurmdb_find_cluster_in_list@Base 17.02.0
+ slurmdb_find_qos_in_list@Base 17.11.5
+ slurmdb_find_qos_in_list_by_name@Base 15.08.0
+ slurmdb_find_selected_step_in_list@Base 15.08.1
+ slurmdb_find_tres_count_in_string@Base 15.08.0
+ slurmdb_find_tres_in_list@Base 15.08.0
+ slurmdb_find_tres_in_list_by_count@Base 15.08.0
+ slurmdb_find_tres_in_list_by_type@Base 15.08.0
+ slurmdb_find_tres_in_string@Base 15.08.0
+ slurmdb_find_update_object_in_list@Base 16.05.0
+ slurmdb_format_tres_str@Base 15.08.0
+ slurmdb_free_assoc_rec_members@Base 15.08.0
+ slurmdb_free_qos_rec_members@Base 15.08.0
+ slurmdb_free_slurmdb_stats_members@Base 18.08.0
+ slurmdb_free_stats_rec_members@Base 20.02.1
+ slurmdb_get_acct_hierarchical_rec_list@Base 2.3.1
+ slurmdb_get_acct_hierarchical_rec_list_no_lft@Base 16.05.0
+ slurmdb_get_first_avail_cluster@Base 15.08.0
+ slurmdb_get_first_het_job_cluster@Base 20.02.1
+#MISSING: 20.02.1# slurmdb_get_first_pack_cluster@Base 17.11.2
+ slurmdb_get_hierarchical_sorted_assoc_list@Base 2.3.1
+ slurmdb_get_info_cluster@Base 2.3.1
+#MISSING: 15.08.10# slurmdb_get_new_tres_pos@Base 15.08.0
+#MISSING: 18.08.0# slurmdb_get_old_tres_pos@Base 15.08.10
+ slurmdb_get_qos_complete_str_bitstr@Base 15.08.0
+#MISSING: 20.11.2# slurmdb_get_selected_step_id@Base 14.11.0
+ slurmdb_get_stats@Base 19.05.2
+ slurmdb_get_tres_base_unit@Base 16.05.0
+#MISSING: 15.08.0# slurmdb_init_association_rec@Base 2.3.1
+ slurmdb_init_assoc_rec@Base 15.08.0
+ slurmdb_init_clus_res_rec@Base 14.03.0
+ slurmdb_init_cluster_cond@Base 2.3.1
+ slurmdb_init_cluster_rec@Base 2.3.1
+ slurmdb_init_federation_cond@Base 17.02.0
+ slurmdb_init_federation_rec@Base 17.02.0
+ slurmdb_init_qos_rec@Base 2.3.1
+ slurmdb_init_res_cond@Base 14.03.0
+ slurmdb_init_res_rec@Base 14.03.0
+ slurmdb_init_tres_cond@Base 15.08.0
+ slurmdb_init_wckey_rec@Base 2.3.1
+ slurmdb_job_cond_def_start_end@Base 18.08.6.2
+ slurmdb_job_flags_str@Base 19.05.2
+ slurmdb_job_modify@Base 19.05.2
+ slurmdb_job_sort_by_submit_time@Base 19.05.2
+ slurmdb_jobcomp_fini@Base 19.05.2
+ slurmdb_jobcomp_init@Base 19.05.2
+ slurmdb_jobcomp_jobs_get@Base 19.05.2
+ slurmdb_jobs_fix_runaway@Base 19.05.2
+ slurmdb_jobs_get@Base 19.05.2
+ slurmdb_make_tres_string@Base 15.08.0
+ slurmdb_make_tres_string_from_arrays@Base 15.08.0
+ slurmdb_make_tres_string_from_simple@Base 15.08.0
+ slurmdb_merge_grp_node_usage@Base 20.11.2
+ slurmdb_pack_account_cond@Base 2.3.1
+ slurmdb_pack_account_rec@Base 2.3.1
+ slurmdb_pack_accounting_rec@Base 2.3.1
+ slurmdb_pack_archive_cond@Base 2.3.1
+ slurmdb_pack_archive_rec@Base 2.3.1
+#MISSING: 15.08.0# slurmdb_pack_association_cond@Base 2.3.1
+#MISSING: 15.08.0# slurmdb_pack_association_rec@Base 2.3.1
+ slurmdb_pack_assoc_cond@Base 15.08.0
+ slurmdb_pack_assoc_rec@Base 15.08.0
+ slurmdb_pack_assoc_rec_with_usage@Base 15.08.0
+ slurmdb_pack_assoc_usage@Base 15.08.0
+ slurmdb_pack_clus_res_rec@Base 14.03.0
+ slurmdb_pack_cluster_accounting_rec@Base 2.3.1
+ slurmdb_pack_cluster_cond@Base 2.3.1
+ slurmdb_pack_cluster_rec@Base 2.3.1
+ slurmdb_pack_coord_rec@Base 2.3.1
+ slurmdb_pack_event_cond@Base 2.3.1
+ slurmdb_pack_event_rec@Base 2.3.1
+ slurmdb_pack_federation_cond@Base 17.02.0
+ slurmdb_pack_federation_rec@Base 17.02.0
+ slurmdb_pack_job_cond@Base 2.3.1
+ slurmdb_pack_job_modify_cond@Base 2.3.1
+ slurmdb_pack_job_rec@Base 2.3.1
+ slurmdb_pack_qos_cond@Base 2.3.1
+ slurmdb_pack_qos_rec@Base 2.3.1
+ slurmdb_pack_qos_rec_with_usage@Base 15.08.0
+ slurmdb_pack_qos_usage@Base 15.08.0
+ slurmdb_pack_res_cond@Base 14.03.0
+ slurmdb_pack_res_rec@Base 14.03.0
+ slurmdb_pack_reservation_cond@Base 2.3.1
+ slurmdb_pack_reservation_rec@Base 2.3.1
+ slurmdb_pack_rollup_stats@Base 20.02.1
+ slurmdb_pack_rpc_obj@Base 20.02.1
+#MISSING: 20.11.2# slurmdb_pack_selected_step@Base 2.3.1
+ slurmdb_pack_stats_msg@Base 17.02.0
+ slurmdb_pack_step_rec@Base 2.3.1
+ slurmdb_pack_tres_cond@Base 15.08.0
+ slurmdb_pack_tres_rec@Base 15.08.0
+ slurmdb_pack_txn_cond@Base 2.3.1
+ slurmdb_pack_txn_rec@Base 2.3.1
+ slurmdb_pack_update_object@Base 2.3.1
+ slurmdb_pack_used_limits@Base 2.3.1
+ slurmdb_pack_user_cond@Base 2.3.1
+ slurmdb_pack_user_rec@Base 2.3.1
+ slurmdb_pack_wckey_cond@Base 2.3.1
+ slurmdb_pack_wckey_rec@Base 2.3.1
+ slurmdb_parse_purge@Base 2.3.1
+ slurmdb_problem_str_get@Base 2.3.1
+ slurmdb_problems_get@Base 19.05.2
+ slurmdb_purge_string@Base 2.3.1
+ slurmdb_qos_add@Base 19.05.2
+ slurmdb_qos_flags_str@Base 2.3.1
+ slurmdb_qos_get@Base 19.05.2
+ slurmdb_qos_modify@Base 19.05.2
+ slurmdb_qos_remove@Base 19.05.2
+ slurmdb_qos_str@Base 2.3.1
+ slurmdb_reconfig@Base 19.05.2
+ slurmdb_report_cluster_account_by_user@Base 19.05.2
+ slurmdb_report_cluster_user_by_account@Base 19.05.2
+ slurmdb_report_cluster_user_by_wckey@Base 19.05.2
+ slurmdb_report_cluster_wckey_by_user@Base 19.05.2
+ slurmdb_report_job_sizes_grouped_by_account@Base 19.05.2
+ slurmdb_report_job_sizes_grouped_by_account_then_wckey@Base 19.05.2
+ slurmdb_report_job_sizes_grouped_by_wckey@Base 19.05.2
+ slurmdb_report_set_start_end_time@Base 2.3.1
+ slurmdb_report_user_top_usage@Base 19.05.2
+ slurmdb_res_add@Base 19.05.2
+ slurmdb_res_flags_str@Base 14.03.0
+ slurmdb_res_get@Base 19.05.2
+ slurmdb_res_modify@Base 19.05.2
+ slurmdb_res_remove@Base 19.05.2
+ slurmdb_res_type_str@Base 14.03.0
+ slurmdb_reservations_get@Base 19.05.2
+ slurmdb_send_accounting_update@Base 2.3.1
+#MISSING: 16.05.0# slurmdb_set_new_tres_cnt@Base 15.08.0
+ slurmdb_setup_cluster_dim_size@Base 2.3.1
+ slurmdb_setup_cluster_dims@Base 2.3.1
+ slurmdb_setup_cluster_flags@Base 2.3.1
+ slurmdb_setup_cluster_name_dims@Base 2.3.1
+ slurmdb_setup_cluster_rec@Base 17.11.2
+ slurmdb_setup_plugin_id_select@Base 16.05.0
+ slurmdb_shutdown@Base 19.05.2
+#MISSING: 17.02.2# slurmdb_slurmdbd_free_id_rc_msg@Base 2.3.1
+#MISSING: 17.02.2# slurmdb_slurmdbd_free_list_msg@Base 2.3.1
+#MISSING: 17.02.0# slurmdb_slurmdbd_free_rc_msg@Base 2.3.1
+#MISSING: 17.02.2# slurmdb_slurmdbd_free_usage_msg@Base 2.3.1
+ slurmdb_sort_hierarchical_assoc_list@Base 2.3.1
+ slurmdb_sort_tres_by_id_asc@Base 15.08.0
+ slurmdb_str_2_cluster_flags@Base 2.3.1
+ slurmdb_sum_accounting_list@Base 15.08.0
+ slurmdb_transfer_acct_list_2_tres@Base 15.08.0
+ slurmdb_transfer_tres_time@Base 15.08.0
+ slurmdb_tree_name_get@Base 2.3.1
+ slurmdb_tres_add@Base 19.05.2
+ slurmdb_tres_get@Base 19.05.2
+ slurmdb_tres_list_from_string@Base 15.08.0
+ slurmdb_tres_string_combine_lists@Base 15.08.0
+ slurmdb_txn_get@Base 19.05.2
+ slurmdb_unpack_account_cond@Base 2.3.1
+ slurmdb_unpack_account_rec@Base 2.3.1
+ slurmdb_unpack_accounting_rec@Base 2.3.1
+ slurmdb_unpack_archive_cond@Base 2.3.1
+ slurmdb_unpack_archive_rec@Base 2.3.1
+#MISSING: 15.08.0# slurmdb_unpack_association_cond@Base 2.3.1
+#MISSING: 15.08.0# slurmdb_unpack_association_rec@Base 2.3.1
+ slurmdb_unpack_assoc_cond@Base 15.08.0
+ slurmdb_unpack_assoc_rec@Base 15.08.0
+ slurmdb_unpack_assoc_rec_members@Base 15.08.0
+ slurmdb_unpack_assoc_rec_with_usage@Base 15.08.0
+ slurmdb_unpack_assoc_usage@Base 15.08.0
+ slurmdb_unpack_clus_res_rec@Base 14.03.0
+ slurmdb_unpack_cluster_accounting_rec@Base 2.3.1
+ slurmdb_unpack_cluster_cond@Base 2.3.1
+ slurmdb_unpack_cluster_rec@Base 2.3.1
+ slurmdb_unpack_coord_rec@Base 2.3.1
+ slurmdb_unpack_event_cond@Base 2.3.1
+ slurmdb_unpack_event_rec@Base 2.3.1
+ slurmdb_unpack_federation_cond@Base 17.02.0
+ slurmdb_unpack_federation_rec@Base 17.02.0
+ slurmdb_unpack_job_cond@Base 2.3.1
+ slurmdb_unpack_job_modify_cond@Base 2.3.1
+ slurmdb_unpack_job_rec@Base 2.3.1
+ slurmdb_unpack_qos_cond@Base 2.3.1
+ slurmdb_unpack_qos_rec@Base 2.3.1
+ slurmdb_unpack_qos_rec_with_usage@Base 15.08.0
+ slurmdb_unpack_qos_usage@Base 15.08.0
+ slurmdb_unpack_res_cond@Base 14.03.0
+ slurmdb_unpack_res_rec@Base 14.03.0
+ slurmdb_unpack_reservation_cond@Base 2.3.1
+ slurmdb_unpack_reservation_rec@Base 2.3.1
+ slurmdb_unpack_rollup_stats@Base 20.02.1
+ slurmdb_unpack_rpc_obj@Base 20.02.1
+#MISSING: 20.11.2# slurmdb_unpack_selected_step@Base 2.3.1
+ slurmdb_unpack_stats_msg@Base 17.02.0
+ slurmdb_unpack_step_rec@Base 2.3.1
+ slurmdb_unpack_tres_cond@Base 15.08.0
+ slurmdb_unpack_tres_rec@Base 15.08.0
+ slurmdb_unpack_tres_rec_noalloc@Base 15.08.0
+ slurmdb_unpack_txn_cond@Base 2.3.1
+ slurmdb_unpack_txn_rec@Base 2.3.1
+ slurmdb_unpack_update_object@Base 2.3.1
+ slurmdb_unpack_used_limits@Base 2.3.1
+ slurmdb_unpack_user_cond@Base 2.3.1
+ slurmdb_unpack_user_rec@Base 2.3.1
+ slurmdb_unpack_wckey_cond@Base 2.3.1
+ slurmdb_unpack_wckey_rec@Base 2.3.1
+ slurmdb_usage_get@Base 19.05.2
+ slurmdb_usage_roll@Base 19.05.2
+ slurmdb_users_add@Base 19.05.2
+ slurmdb_users_get@Base 19.05.2
+ slurmdb_users_modify@Base 19.05.2
+ slurmdb_users_remove@Base 19.05.2
+ slurmdb_wckeys_add@Base 19.05.2
+ slurmdb_wckeys_get@Base 19.05.2
+ slurmdb_wckeys_modify@Base 19.05.2
+ slurmdb_wckeys_remove@Base 19.05.2
+ working_cluster_rec@Base 19.05.2

@@ -1,0 +1,41 @@
+slurmctld (20.02.6-1) unstable; urgency=medium
+
+  The configuration directory has been moved from /etc/slurm-llnl to
+  /etc/slurm. The upgrade process will copy the existing configuration
+  files. The directory is managed by the slurm-wlm-basic-plugin package
+  that will handle the transition for any kind of host (client hosts,
+  slurmctld, slurmd and slurmdbd server hosts).
+
+  The new recommend locations for the Slurm state files are under
+  /var/lib/slurm and for the log files are under /var/log/slurm, but you
+  can safely keep using the old locations (/var/lib/slurm-llnl and
+  /var/log/slurm-llnl). The packages scripts will still handle log
+  rotation and directory removal on purging.
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Thu, 05 Nov 2020 02:05:15 +0100
+
+slurmctld (18.08.5.2-1) unstable; urgency=medium
+
+  If you are upgrading Slurm from stretch or an older version of Debian,
+  please make sure there is no job running in your cluster: upgrading
+  directly from a version earlier than 17.02 will result in loss of
+  state information. Even if you plan to quick upgrade from 14.03 ->
+  15.08 -> 16.05 -> 17.02, you will need to wait until after those jobs
+  are gone before you upgrade to 18.08.
+
+  The pid file for the slurmctld and slurmd daemons has been moved to /run, the
+  installation process will update /etc/slurm-llnl/slurm.conf for you if
+  it points to the original location under /var/run/slurm-llnl
+
+  The default value are now:
+
+  SlurmctldPidFile=/run/slurmctld.pid
+  SlurmdPidFile=/run/slurmd.pid
+
+  These parameters can be omitted.
+
+  Please be sure to update the value of these parameters on your cluster
+  configuration management system or if you set them in a file using the
+  Include directive.
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sat, 16 Feb 2019 14:10:46 +0100

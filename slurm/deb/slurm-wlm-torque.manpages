@@ -1,0 +1,10 @@
+debian/tmp/usr/share/man/man1/pbsnodes.1
+debian/tmp/usr/share/man/man1/qdel.1
+debian/tmp/usr/share/man/man1/qhold.1
+debian/tmp/usr/share/man/man1/qrls.1
+debian/tmp/usr/share/man/man1/qstat.1
+debian/tmp/usr/share/man/man1/qsub.1
+debian/generate_pbs_nodefile.1
+debian/tmp/usr/share/man/man1/qalter.1
+debian/tmp/usr/share/man/man1/qrerun.1
+debian/tmp/usr/share/man/man1/mpiexec.slurm.1

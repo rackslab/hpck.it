@@ -1,0 +1,21 @@
+slurmdbd (18.08.5.2-1) unstable; urgency=medium
+
+  The 18.08 slurmdbd will work with Slurm daemons of version 17.02 and
+  above. You will not need to update all clusters at the same time, but
+  it is very important to update slurmdbd first and having it running
+  before updating any other clusters making use of it.
+
+  The pid file for the slurmdbd daemon has been moved to /run, the
+  installation process will update /etc/slurm-llnl/slurmdbd.conf for you
+  if it points to the original location under /var/run/slurm-llnl
+
+  The default value is now:
+
+  PidFile=/run/slurmdbd.pid
+
+  This parameter can be omitted
+
+  Please be sure to update the value of this parameter on your cluster
+  configuration management system.
+
+ -- Gennaro Oliva <oliva.g@na.icar.cnr.it>  Sat, 16 Feb 2019 14:11:05 +0100

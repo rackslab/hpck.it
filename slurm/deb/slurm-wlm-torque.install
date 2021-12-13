@@ -1,0 +1,10 @@
+usr/bin/pbsnodes
+usr/bin/qdel
+usr/bin/qhold
+usr/bin/qrls
+usr/bin/qstat
+usr/bin/qsub
+usr/bin/generate_pbs_nodefile
+usr/bin/qrerun
+usr/bin/qalter
+usr/bin/mpiexec.slurm

@@ -1,0 +1,123 @@
+############################################################################### 
+#                   Sample configuration file for slurmdbd
+###############################################################################
+#
+# slurmdb.conf is an ASCII file which describes Slurm
+# Database Daemon (SlurmDBD) configuration information.
+# The contents of the file are case insensitive except for the names of
+# nodes and files. Any text following a "#" in the configuration file is
+# treated as a comment through the end of that line. The size of each
+# line in the file is limited to 1024 characters. Changes to the
+# configuration file take effect upon restart of SlurmDbd or daemon
+# receipt of the SIGHUP signal unless otherwise noted.
+#
+# This file should be only on the computer where SlurmDBD executes and
+# should only be readable by the user which executes SlurmDBD (e.g.
+# "slurm"). This file should be protected from unauthorized access since
+# it contains a database password.
+###############################################################################
+
+# AuthType
+# Define the authentication method for communications between Slurm
+# components. Acceptable values at present include "auth/none" and
+# "auth/munge". The default value is "auth/munge". Do not use
+# "auth/none" if you desire any security. "auth/munge" indicates that
+# LLNL's MUNGE system is to be used (this is the supported
+# authentication mechanism for Slurm; see "https://dun.github.io/munge/"
+# for more information). SlurmDBD must be terminated prior to changing
+# the value of AuthType and later restarted.
+AuthType=auth/munge
+
+# DbdHost
+# The  short,  or  long, name of the machine where the Slurm Database Daemon is
+# executed (i.e. the name returned by the command "hostname -s").   This  value
+# must be specified.
+DbdHost=localhost
+
+# DbdPort
+# The  port  number  that  the  Slurm Database Daemon (slurmdbd) listens to for
+# work. The default value is SLURMDBD_PORT as established at system build time.
+# If  none is explicitly specified, it will be set to 6819.  This value must be
+# equal to the AccountingStoragePort parameter in the slurm.conf file.
+
+# DebugLevel
+# The level of detail to provide the Slurm Database Daemon's logs.  The default
+# value is info.
+#
+# quiet     Log nothing
+# fatal     Log only fatal errors
+# error     Log only errors
+# info      Log errors and general informational messages
+# verbose   Log errors and verbose informational messages
+# debug     Log errors and verbose informational messages  and  debugging  mes‐
+#           sages
+# debug2    Log  errors  and  verbose informational messages and more debugging
+#           messages
+# debug3    Log errors and verbose informational messages and even more  debug‐
+#           ging messages
+# debug4    Log  errors and verbose informational messages and even more debug‐
+#           ging messages
+# debug5    Log errors and verbose informational messages and even more  debug‐
+#           ging messages
+DebugLevel=info
+
+# MessageTimeout
+# Time permitted for a round-trip communication to complete in seconds. Default
+# value is 10 seconds.
+
+# StorageHost
+# Define the name of the host the database is running where  we  are  going  to
+# store the data.  Ideally this should be the host on which slurmdbd executes.
+StorageHost=localhost
+
+# StorageLoc
+# Specify the name of the database as the location where accounting records are
+# written. Defaults to "slurm_acct_db".
+StorageLoc=slurm_acct_db
+
+# StoragePass
+# Define  the  password  used  to  gain access to the database to store the job
+# accounting data. The '#' character is not permitted in a password.
+StoragePass=shazaam
+
+# StoragePort
+# The port number that the Slurm Database Daemon (slurmdbd)  communicates  with
+# the database.
+
+# StorageType
+# Define  the  accounting storage mechanism type.  Acceptable values at present
+# include  "accounting_storage/mysql".   The  value  "accounting_storage/mysql"
+# indicates  that  accounting  records  should be written to a MySQL or MariaDB
+# database specified by the StorageLoc parameter.  This value  must  be  speci‐
+# fied.
+StorageType=accounting_storage/mysql
+
+# StorageUser
+# Define  the  name of the user we are going to connect to the database with to
+# store the job accounting data.
+StorageUser=slurm
+
+################################################################################
+# WARNING!
+# If you are running slurmdbd on Debian or derived system please leave
+# the above values untouched
+################################################################################
+# LogFile
+# Fully qualified pathname of a file into which the Slurm Database
+# Daemon’s logs are written. The default value is none (performs
+# logging via syslog).
+LogFile=/var/log/slurm/slurmdbd.log
+
+# PidFile
+# Fully qualified pathname of a file into which  the  Slurm  Database  Daemon's
+# logs are written.  The default value is none (performs logging via syslog).
+# See  the  section  LOGGING in the slurm.conf man page if a pathname is speci‐
+# fied.
+PidFile=/run/slurmdbd.pid
+
+# SlurmUser
+# The  name  of the user that the slurmdbd daemon executes as.  This user must
+# exist on the machine executing the Slurm Database Daemon and  have  the  same
+# user  ID  as  the hosts on which slurmdbd execute.  For security purposes, a
+# user other than "root" is recommended. The default value is "root".
+SlurmUser=slurm

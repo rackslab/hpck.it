@@ -1,0 +1,1327 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: slurm
+Upstream-Contact: https://www.schedmd.com/contact.php
+Source: https://slurm.schedmd.com
+
+Files: *
+Copyright: 2001-2009 The Regents of the University of California
+           2004,2008-2011 Lawrence Livermore National Security, LLC
+           2010-2020 SchedMD LLC
+License: GPL-2+ with OpenSSL exception
+
+Files: debian/*
+Copyright: 2006-2017 Gennaro Oliva
+           2014-2015 Mehdi Dogguy <mehdi@debian.org>
+           2014-2015 Rémi Palancher
+           2014 Gregor Herrmann
+           2014 Roland Fehrenbacher
+           2016 Ana Guerrero Lopez
+License: GPL-2+
+
+Files: src/api/pmi_server.c
+       src/api/pmi_server.h
+       src/api/step_ctx.h
+       src/api/step_io.c
+       src/api/step_io.h
+       src/common/eio.h
+       src/common/env.h
+       src/sattach/opt.c
+       src/sattach/opt.h
+       src/slurmd/slurmstepd/step_terminate_monitor.c
+       src/slurmd/slurmstepd/step_terminate_monitor.h
+       src/sview/submit_info.c
+       src/sview/sview.h
+       testsuite/expect/regression.py
+       testsuite/slurm_unit/api/manual/cancel-tst.c
+       testsuite/slurm_unit/api/manual/complete-tst.c
+       testsuite/slurm_unit/api/manual/job_info-tst.c
+       testsuite/slurm_unit/api/manual/node_info-tst.c
+       testsuite/slurm_unit/api/manual/partition_info-tst.c
+       testsuite/slurm_unit/api/manual/reconfigure-tst.c
+       testsuite/slurm_unit/api/manual/submit-tst.c
+       testsuite/slurm_unit/api/manual/update_config-tst.c
+       src/sview/bb_info.c
+       src/sview/gthread_helper.c
+       src/sview/gthread_helper.h
+       testsuite/expect/globals_federation
+       testsuite/expect/slurm_status
+       contribs/perlapi/libslurmdb/perl/Slurmdb.pm
+       contribs/spank_direct_io.c
+       contribs/pam/pam_slurm.c
+       contribs/pam_slurm_adopt/helper.c
+       contribs/spank_core.c
+       src/sattach/sattach.c
+       src/sview/admin_info.c
+       src/sview/common.c
+       src/sview/front_end_info.c
+       testsuite/expect/globals
+       testsuite/expect/globals_accounting
+       testsuite/expect/test*
+       testsuite/expect/inc*
+       src/sview/resv_info.c
+Copyright: 2002-2009 The Regents of the University of California
+           2008-2012 Lawrence Livermore National Security, LLC
+           2011-2018 SchedMD LLC
+License: GPL-2+
+
+Files: testsuite/expect/test7.17.prog.c
+       testsuite/expect/test7.4
+       testsuite/expect/test7.6
+Copyright: 2014 SchedMD LLC
+           2004-2007 The Regents of the University of California
+           2008-2011 Lawrence Livermore National Security
+License: GPL-2+ with OpenSSL exception
+
+Files: */Makefile.in
+       auxdir/libtool.m4
+       auxdir/ltoptions.m4
+       auxdir/ltsugar.m4
+       auxdir/ltversion.m4
+       auxdir/lt~obsolete.m4
+Copyright: 1994-2020 Free Software Foundation, Inc
+License: FSF-unlimited
+
+Files: testsuite/expect/test1.102
+       testsuite/expect/test1.103
+       testsuite/expect/test1.104
+       testsuite/expect/test1.105
+       testsuite/expect/test1.106
+       testsuite/expect/test1.107
+       testsuite/expect/test1.108
+       testsuite/expect/test1.109
+       testsuite/expect/test1.110
+       testsuite/expect/test1.111
+       testsuite/expect/test1.112
+       testsuite/expect/test15.30
+       testsuite/expect/test15.31
+       testsuite/expect/test15.32
+       testsuite/expect/test15.33
+       testsuite/expect/test15.34
+       testsuite/expect/test15.35
+       testsuite/expect/test15.36
+       testsuite/expect/test15.37
+       testsuite/expect/test15.38
+       testsuite/expect/test17.51
+       testsuite/expect/test17.52
+       testsuite/expect/test17.53
+       testsuite/expect/test17.54
+       testsuite/expect/test17.55
+       testsuite/expect/test17.56
+       testsuite/expect/test17.57
+       testsuite/expect/test17.58
+       testsuite/expect/test17.59
+       testsuite/expect/test17.60
+       testsuite/expect/test17.61
+       testsuite/expect/test17.64
+Copyright: 2015-2016 CEA/DAM/DIF
+License: GPL-2+
+
+Files: src/common/slurm_mcs.c
+       src/common/slurm_mcs.h
+       src/common/xcgroup_read_config.c
+       src/common/xcgroup_read_config.h
+       src/common/xhash.c
+       src/common/xhash.h
+       src/common/xtree.c
+       src/common/xtree.h
+       src/plugins/mcs/account/mcs_account.c
+       src/plugins/mcs/group/mcs_group.c
+       src/plugins/mcs/none/mcs_none.c
+       src/plugins/mcs/user/mcs_user.c
+       src/plugins/proctrack/cgroup/proctrack_cgroup.c
+       src/plugins/task/cgroup/task_cgroup.c
+       src/plugins/task/cgroup/task_cgroup.h
+       src/plugins/task/cgroup/task_cgroup_cpuset.h
+       src/plugins/task/cgroup/task_cgroup_devices.h
+       src/plugins/task/cgroup/task_cgroup_memory.c
+       src/plugins/task/cgroup/task_cgroup_memory.h
+       src/slurmd/common/xcgroup.c
+       src/slurmd/common/xcgroup.h
+       src/slurmd/common/xcpuinfo.h
+       testsuite/slurm_unit/common/xhash-test.c
+       testsuite/slurm_unit/common/xtree-test.c
+Copyright: 2009,2012,2013,2015-2016 CEA/DAM/DIF
+License: GPL-2+ with OpenSSL exception
+
+Files: src/api/resource_functions.c
+       src/common/cpu_frequency.c
+       src/common/cpu_frequency.h
+       src/common/slurm_acct_gather_filesystem.c
+       src/common/slurm_acct_gather_filesystem.h
+       src/common/slurm_acct_gather_interconnect.c
+       src/common/slurm_acct_gather_interconnect.h
+       src/common/slurm_acct_gather_profile.c
+       src/common/slurm_acct_gather_profile.h
+       src/common/slurm_route.c
+       src/common/slurm_route.h
+       src/plugins/accounting_storage/mysql/as_mysql_resource.c
+       src/plugins/accounting_storage/mysql/as_mysql_resource.h
+       src/plugins/acct_gather_profile/hdf5/hdf5_api.c
+       src/plugins/acct_gather_profile/none/acct_gather_profile_none.c
+       src/plugins/jobacct_gather/cgroup/jobacct_gather_cgroup_blkio.c
+       src/plugins/jobacct_gather/cgroup/jobacct_gather_cgroup_cpuacct.c
+       src/plugins/jobacct_gather/cgroup/jobacct_gather_cgroup_memory.c
+       src/plugins/route/default/route_default.c
+       src/plugins/route/topology/route_topology.c
+       src/plugins/task/cgroup/task_cgroup_devices.c
+       src/sacctmgr/resource_functions.c
+       src/slurmd/common/slurmd_cgroup.c
+       src/slurmd/common/slurmd_cgroup.h
+       testsuite/expect/test33.1.prog.c
+Copyright: 2011-2014 Bull
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/mpi/pmix/mpi_pmix.c
+       src/plugins/mpi/pmix/pmixp_agent.c
+       src/plugins/mpi/pmix/pmixp_agent.h
+       src/plugins/mpi/pmix/pmixp_client.c
+       src/plugins/mpi/pmix/pmixp_client.h
+       src/plugins/mpi/pmix/pmixp_client_v1.c
+       src/plugins/mpi/pmix/pmixp_client_v2.c
+       src/plugins/mpi/pmix/pmixp_coll.c
+       src/plugins/mpi/pmix/pmixp_coll.h
+       src/plugins/mpi/pmix/pmixp_coll_tree.c
+       src/plugins/mpi/pmix/pmixp_common.h
+       src/plugins/mpi/pmix/pmixp_conn.c
+       src/plugins/mpi/pmix/pmixp_conn.h
+       src/plugins/mpi/pmix/pmixp_dconn.c
+       src/plugins/mpi/pmix/pmixp_dconn.h
+       src/plugins/mpi/pmix/pmixp_dconn_tcp.c
+       src/plugins/mpi/pmix/pmixp_dconn_tcp.h
+       src/plugins/mpi/pmix/pmixp_dconn_ucx.c
+       src/plugins/mpi/pmix/pmixp_dconn_ucx.h
+       src/plugins/mpi/pmix/pmixp_debug.h
+       src/plugins/mpi/pmix/pmixp_dmdx.c
+       src/plugins/mpi/pmix/pmixp_dmdx.h
+       src/plugins/mpi/pmix/pmixp_info.c
+       src/plugins/mpi/pmix/pmixp_info.h
+       src/plugins/mpi/pmix/pmixp_io.c
+       src/plugins/mpi/pmix/pmixp_io.h
+       src/plugins/mpi/pmix/pmixp_nspaces.c
+       src/plugins/mpi/pmix/pmixp_nspaces.h
+       src/plugins/mpi/pmix/pmixp_server.c
+       src/plugins/mpi/pmix/pmixp_server.h
+       src/plugins/mpi/pmix/pmixp_state.c
+       src/plugins/mpi/pmix/pmixp_state.h
+       src/plugins/mpi/pmix/pmixp_utils.c
+       src/plugins/mpi/pmix/pmixp_utils.h
+Copyright: 2014-2015 Artem Polyakov
+           2015-2018 Mellanox Technologies, Inc
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/mpi/pmix/pmixp_coll_ring.c
+Copyright: 2018 Mellanox Technologies, Inc
+License: GPL-2+ with OpenSSL exception
+
+Files: contribs/cray/libalps_test_programs.tar.gz
+Copyright: 2009-2011 Centro Svizzero di Calcolo Scientifico (CSCS)
+           1996-2003 Maximum Entropy Data Consultants Ltd
+License: GPL-2 and LGPL-2.1+
+
+Files: src/common/proc_args.h
+       src/common/slurm_resource_info.c
+       src/common/slurm_resource_info.h
+       src/common/slurm_rlimits_info.c
+       src/common/slurm_rlimits_info.h
+       src/common/slurm_selecttype_info.c
+       src/common/slurm_selecttype_info.h
+       src/plugins/select/cons_res/dist_tasks.h
+       src/plugins/select/cons_res/job_test.h
+       src/plugins/select/cons_res/select_cons_res.c
+       src/plugins/select/linear/select_linear.h
+       src/plugins/task/affinity/affinity.c
+       src/plugins/task/affinity/affinity.h
+       src/plugins/task/affinity/dist_tasks.h
+       src/slurmctld/gang.h
+Copyright: 2005-2008 Hewlett-Packard Development Company, L.P
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/mpi/pmi2/agent.h
+       src/plugins/mpi/pmi2/client.c
+       src/plugins/mpi/pmi2/client.h
+       src/plugins/mpi/pmi2/info.c
+       src/plugins/mpi/pmi2/info.h
+       src/plugins/mpi/pmi2/kvs.c
+       src/plugins/mpi/pmi2/kvs.h
+       src/plugins/mpi/pmi2/nameserv.c
+       src/plugins/mpi/pmi2/nameserv.h
+       src/plugins/mpi/pmi2/pmi.h
+       src/plugins/mpi/pmi2/pmi1.c
+       src/plugins/mpi/pmi2/pmi2.c
+       src/plugins/mpi/pmi2/spawn.c
+       src/plugins/mpi/pmi2/spawn.h
+       src/plugins/mpi/pmi2/tree.h
+Copyright: 2007-2009,2011-2013 National University of Defense Technology, China
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/job_submit/cray_aries/job_submit_cray_aries.c
+       src/plugins/select/cray_aries/ccm.c
+       src/plugins/select/cray_aries/ccm.h
+       src/plugins/select/cray_aries/select_cray_aries.c
+       src/plugins/switch/cray_aries/cookies.c
+       src/plugins/switch/cray_aries/gpu.c
+       src/plugins/switch/cray_aries/iaa.c
+       src/plugins/switch/cray_aries/pe_info.c
+       src/plugins/switch/cray_aries/scaling.c
+       src/plugins/switch/cray_aries/switch_cray_aries.c
+       src/plugins/switch/cray_aries/switch_cray_aries.h
+       src/plugins/switch/cray_aries/util.c
+       src/plugins/task/cray_aries/task_cray_aries.c
+Copyright: 2013,2014,2016 SchedMD LLC
+           2013,2014,2016 Cray Inc
+License: GPL-2+ with OpenSSL exception
+
+Files: testsuite/expect/test29.1
+       testsuite/expect/test29.2
+       testsuite/expect/test29.3
+       testsuite/expect/test29.4
+       testsuite/expect/test29.5
+       testsuite/expect/test29.6
+       testsuite/expect/test29.7
+       testsuite/expect/test29.8
+Copyright: 2011-2014 SchedMD LLC
+License: None
+
+Files: src/common/slurm_jobacct_gather.c
+       src/common/slurm_jobacct_gather.h
+       src/plugins/acct_gather_energy/none/acct_gather_energy_none.c
+       src/plugins/jobacct_gather/linux/jobacct_gather_linux.c
+       src/plugins/jobacct_gather/none/jobacct_gather_none.c
+       src/slurmd/slurmd/get_mach_stat.c
+Copyright: 2005-2006 Hewlett-Packard Development Company, L.P
+           2002-2007 The Regents of the University of California
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/acct_gather_energy/ipmi/acct_gather_energy_ipmi.c
+       src/plugins/acct_gather_filesystem/none/acct_gather_filesystem_none.c
+       src/plugins/acct_gather_interconnect/none/acct_gather_interconnect_none.c
+       src/plugins/jobacct_gather/cgroup/jobacct_gather_cgroup.c
+       src/plugins/jobacct_gather/cgroup/jobacct_gather_cgroup.h
+Copyright: 2007,2011-2013 Bull
+           2002,2007 The Regents of the University of California
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/acct_gather_profile/hdf5/hdf5_api.h
+       src/plugins/acct_gather_profile/hdf5/sh5util/sh5util.c
+Copyright: 2013,2015 Bull
+           2013-2016 SchedMD LLC
+License: GPL-2+ with OpenSSL exception
+
+Files: auxdir/x_ac_cray.m4
+       contribs/cray/csm/gres.conf.j2
+       contribs/cray/csm/slurm.conf.j2
+       contribs/cray/csm/slurmconfgen_smw.py
+       contribs/cray/slurm.conf.template
+       contribs/cray/slurmconfgen.py.in
+Copyright: 2013,2015-2016 Cray Inc
+License: None
+
+Files: contribs/pam_slurm_adopt/pam_slurm_adopt.c
+       src/common/callerid.c
+       src/common/callerid.h
+       src/plugins/priority/multifactor/fair_tree.c
+       src/plugins/priority/multifactor/fair_tree.h
+Copyright: 2014-2015 Brigham Young University
+License: GPL-2+ with OpenSSL exception
+
+Files: src/common/proc_args.c
+       src/plugins/select/cons_res/job_test.c
+       src/plugins/select/cons_res/select_cons_res.h
+       src/slurmctld/gang.c
+Copyright: 2005-2008 Hewlett-Packard Development Company, L.P
+           2010-2015 SchedMD LLC
+License: GPL-2+ with OpenSSL exception
+
+Files: contribs/skilling.c
+       src/plugins/topology/3d_torus/hilbert.c
+       src/plugins/topology/3d_torus/hilbert.h
+Copyright: 1996-2003 Maximum Entropy Data Consultants Ltd
+License: LGPL-2.1+
+
+Files: contribs/torque/pbsnodes.pl
+       contribs/torque/qdel.pl
+       contribs/torque/qhold.pl
+       contribs/torque/qrls.pl
+       contribs/torque/qstat.pl
+Copyright: 2007 The Regents of the University of California
+           2006-2007 Cluster Resources, Inc
+License: GPL-2+ with OpenSSL exception
+
+Files: contribs/cray/slurmsmwd/*
+Copyright: 2017 Regents of the University of California
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/mpi/pmi2/agent.c
+       src/plugins/mpi/pmi2/mpi_pmi2.c
+       src/plugins/mpi/pmi2/setup.c
+       src/plugins/mpi/pmi2/setup.h
+Copyright: 2011-2012 National University of Defense Technology, China
+           2015 Mellanox Technologies, Inc
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/acct_gather_energy/rapl/acct_gather_energy_rapl.c
+       src/plugins/acct_gather_filesystem/lustre/acct_gather_filesystem_lustre.c
+       src/plugins/acct_gather_interconnect/ofed/acct_gather_interconnect_ofed.c
+       src/plugins/acct_gather_interconnect/ofed/acct_gather_interconnect_ofed.h
+Copyright: 2012-2013 Bull - Yiannis Georgiou
+           2002 The Regents of the University of California
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/acct_gather_energy/ipmi/acct_gather_energy_ipmi_config.c
+       src/plugins/acct_gather_energy/ipmi/acct_gather_energy_ipmi_config.h
+Copyright: 2012,2015 Bull - Thomas Cadeau
+License: GPL-2+ with OpenSSL exception
+
+Files: src/common/slurm_acct_gather_energy.c
+       src/common/slurm_acct_gather_energy.h
+       src/common/slurm_ext_sensors.c
+       src/common/slurm_ext_sensors.h
+Copyright: 2012-2013 Bull-HN-PHX
+License: GPL-2+ with OpenSSL exception
+
+Files: src/sview/job_info.c
+       src/sview/node_info.c
+       src/sview/part_info.c
+       testsuite/expect/test28.8
+Copyright: 2010-2016 SchedMD LLC
+           2008-2011 Lawrence Livermore National Security, LLC
+           2004-2007 The Regents of the University of California
+License: GPL-2+
+
+Files: contribs/pmi2/pmi2.h
+       contribs/pmi2/pmi2_util.c
+       contribs/pmi2/pmi2_util.h
+       contribs/pmi2/slurm/pmi2.h
+Copyright: 2001,2007 Argonne National Laboratory
+           2002 University of Chicago
+License: ANL
+
+Files: auxdir/compile
+       auxdir/depcomp
+       auxdir/missing
+       auxdir/test-driver
+Copyright: 1996-2014 Free Software Foundation, Inc
+License: GPL-2+
+
+Files: src/common/slurm_protocol_api.h
+       src/slurmd/slurmstepd/slurmstepd_job.c
+       src/slurmd/slurmstepd/slurmstepd_job.h
+Copyright: 2002-2007 The Regents of the University of California
+           2008-2010 Lawrence Livermore National Security, LLC
+           2013 Intel Inc
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/ext_sensors/none/ext_sensors_none.c
+       src/plugins/ext_sensors/rrd/ext_sensors_rrd.c
+       src/plugins/ext_sensors/rrd/ext_sensors_rrd.h
+Copyright: 2013 Bull - Thomas Cadeau/Martin Perry/Yiannis Georgiou
+License: GPL-2+ with OpenSSL exception
+
+Files: src/common/slurm_topology.c
+       src/common/slurm_topology.h
+       src/plugins/topology/hypercube/topology_hypercube.c
+Copyright: 2009-2010 Lawrence Livermore National Security, LLC
+           2014 Silicon Graphics, Inc
+License: GPL-2+ with OpenSSL exception
+
+Files: src/common/stepd_api.c
+       src/scontrol/scontrol.c
+       src/sview/popups.c
+Copyright: 2002-2007 The Regents of the University of California
+           2008-2010 Lawrence Livermore National Security, LLC
+           2008 Vijay Ramasubramanian
+License: GPL-2+ with OpenSSL exception
+
+Files: testsuite/expect/test1.76
+       testsuite/expect/test12.6
+       testsuite/expect/test33.1
+Copyright: 2013-2014 Bull
+License: GPL-2+
+
+Files: src/slurmd/common/xcpuinfo.c
+Copyright: 2009,2013 CEA/DAM/DIF
+           2012,2014 Bull
+License: GPL-2+ with OpenSSL exception
+
+Files: src/slurmd/common/reverse_tree_math.c
+       src/slurmd/common/reverse_tree_math.h
+Copyright: 2006 The Regents of the University of California
+           2014 Institute of Semiconductor Physics
+License: GPL-2+ with OpenSSL exception
+
+Files: src/common/slurm_protocol_api.c
+       src/slurmd/slurmstepd/mgr.c
+Copyright: 2002-2007 The Regents of the University of California
+           2008-2010 Lawrence Livermore National Security, LLC
+           2010-2016 SchedMD LLC
+           2013 Intel Inc
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/priority/multifactor/priority_multifactor.c
+       src/plugins/priority/multifactor/priority_multifactor.h
+Copyright: 2012 Aalto University
+           2008-2009 Lawrence Livermore National Security, LLC
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/task/affinity/dist_tasks.c
+       src/sacct/sacct.c
+Copyright: 2005-2009 Hewlett-Packard Development Company, L.P
+           2008-2009 Lawrence Livermore National Security, LLC
+License: GPL-2+ with OpenSSL exception
+
+Files: src/api/assoc_mgr_info.c
+       src/scontrol/info_assoc_mgr.c
+Copyright: 2004,2014 Centro Svizzero di Calcolo Scientifico (CSCS)
+           2015 SchedMD LLC
+License: GPL-2+ with OpenSSL exception
+
+Files: src/common/strnatcmp.?
+Copyright: 2000,2004 Martin Pool
+License: Zlib
+
+Files: src/common/slurm_step_layout.?
+Copyright: 2005 Hewlett-Packard Development Company, L.P
+           2002 The Regents of the University of California
+License: GPL-2+
+
+Files: src/common/mapping.c
+       src/common/mapping.h
+Copyright: 2014 Institute of Semiconductor Physics
+License: GPL-2+ with OpenSSL exception
+
+Files: src/common/log.?
+Copyright: 2002-2007 The Regents of the University of California
+           2008-2010 Lawrence Livermore National Security, LLC
+           1995 Tatu Ylonen
+           2000 Markus Friedl
+License: BSD-2-clause with SSH exception
+
+Files: contribs/seff/seff
+       contribs/seff/smail
+Copyright: 2015 Princeton University Research Computing
+License: None
+
+Files: contribs/perlapi/libslurm/perl/ppport.h
+       contribs/perlapi/libslurmdb/perl/ppport.h
+       contribs/perlapi/libslurm/perl/lib/Slurm/*
+       contribs/perlapi/libslurm/perl/lib/Slurm.pm
+Copyright: 2004-2009 Marcus Holland-Moritz
+           2001 Paul Marquess
+           1999 Kenneth Albanowski
+License: Perl
+
+Files: contribs/sgi/README.txt
+       contribs/sgi/netloc_to_topology.c
+Copyright: 2014 Silicon Graphics, Inc
+License: None
+
+Files: contribs/sgather/sgather
+       contribs/sgather/sgather.1
+Copyright: 2013 ZIH, TU Dresden, Federal Republic of Germany
+License: None
+
+Files: testsuite/expect/test12.6.prog.c
+       testsuite/expect/test21.31
+Copyright: 2012-2013 Bull
+License: GPL-2
+
+Files: auxdir/config.guess
+       auxdir/config.sub
+Copyright: 1992-2018 Free Software Foundation, Inc
+License: GPL-3
+
+Files: aclocal.m4
+Copyright: 1996-2014 Free Software Foundation, Inc
+           2004 Scott James Remnant
+           2012-2015 Dan Nicholson
+License: FSF-unlimited
+
+Files: src/srun/srun.c
+Copyright: 2002-2007 The Regents of the University of California
+           2008-2010 Lawrence Livermore National Security, LLC
+           2007-2008 Red Hat, Inc
+License: GPL-2+ with OpenSSL exception
+
+Files: src/slurmd/slurmd/slurmd.c
+Copyright: 2002-2007 The Regents of the University of California
+           2008-2010 Lawrence Livermore National Security, LLC
+           2008 Vijay Ramasubramanian
+           2010-2013 SchedMD LLC
+           2013 Intel Inc
+License: GPL-2+ with OpenSSL exception
+
+Files: src/slurmd/slurmd/req.c
+Copyright: 2002-2007 The Regents of the University of California
+           2008-2010 Lawrence Livermore National Security, LLC
+           2010-2016 SchedMD LLC
+           2015 Mellanox Technologies, Inc
+License: GPL-2+ with OpenSSL exception
+
+Files: src/slurmd/common/setproctitle.c
+Copyright: 1994,2002-2007 The Regents of the University of California
+           2008-2009 Lawrence Livermore National Security, LLC
+           1996-2001 The PostgreSQL Global Development Group
+License: GPL-2+ with OpenSSL exception and PostgreSQL
+
+Files: src/plugins/select/cons_res/dist_tasks.c
+Copyright: 2006-2008 Hewlett-Packard Development Company, L.P
+           2012 Bull
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/select/linear/select_linear.c
+Copyright: 2004-2007 The Regents of the University of California
+           2008-2010 Lawrence Livermore National Security, LLC
+           2010 SchedMD LLC
+           2014 Silicon Graphics, Inc
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/mpi/pmix/tests/test_common.h
+Copyright: 2013-2015 Intel Inc
+           2015 Artem Polyakov
+License: None
+
+Files: src/plugins/mpi/pmix/tests/pmix_client.c
+Copyright: 2004-2010 The Trustees of Indiana University and Indiana
+           2004-2011 The University of Tennessee and The University
+           2004-2005 High Performance Computing Center Stuttgart
+           2004-2005 The Regents of the University of California
+           2006-2013 Los Alamos National Security, LLC
+           2009-2012 Cisco Systems, Inc
+           2011 Oak Ridge National Labs
+           2013-2014 Intel Inc
+           2015 Mellanox Technologies, Inc
+License: None
+
+Files: src/plugins/mpi/pmi2/tree.c
+Copyright: 2011-2012 National University of Defense Technology, China
+           2014 Institute of Semiconductor Physics
+           2015 Mellanox Technologies, Inc
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/task/affinity/task_affinity.c
+Copyright: 2005-2008 Hewlett-Packard Development Company, L.P
+           2005-2007 The Regents of the University of California
+           2008-2009 Lawrence Livermore National Security, LLC
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/task/affinity/schedutils.c
+Copyright: 2004 Robert Love
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/task/cgroup/task_cgroup_cpuset.c
+Copyright: 2009 CEA/DAM/DIF
+           2012,2015 Bull/Atos
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/acct_gather_profile/hdf5/acct_gather_profile_hdf5.c
+Copyright: 2013 Bull
+           2013 SchedMD LLC
+           2002 The Regents of the University of California
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/gres/mic/gres_mic.c
+Copyright: 2012 CSC-IT Center for Science Ltd
+           2010 Lawrence Livermore National Security, LLC
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/acct_gather_energy/ibmaem/acct_gather_energy_ibmaem.c
+Copyright: 2015 Leibniz Supercomputing Centre
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/acct_gather_profile/influxdb/acct_gather_profile_influxdb.c
+Copyright: 2016 F. Hoffmann - La Roche
+           2013 Bull
+           2013 SchedMD LLC
+           2002 The Regents of the University of California
+License: GPL-2+ with OpenSSL exception
+
+Files: src/plugins/job_submit/require_timelimit/job_submit_require_timelimit.c
+Copyright: 2013 Rensselaer Polytechnic Institute
+License: GPL-2+ with OpenSSL exception
+
+Files: contribs/pmi/pmi.c
+Copyright: 2002 University of Chicago
+           2005-2007 The Regents of the University of California
+           2008-2010 Lawrence Livermore National Security, LLC
+License: GPL-2+ with OpenSSL exception
+
+Files: src/common/read_config.h
+Copyright: 2002-2007 The Regents of the University of California
+           2008-2010 Lawrence Livermore National Security, LLC
+           2008 Vijay Ramasubramanian
+           2010-2016 SchedMD LLC
+License: GPL-2+ with OpenSSL exception
+
+Files: src/common/strlcpy.c
+Copyright: 1998 Todd C. Miller
+License: ISC
+
+Files: src/common/slurm_time.h
+Copyright: 1991-2015 Free Software Foundation, Inc
+License: LGPL-2.1+
+
+Files: src/common/read_config.c
+Copyright: 2002-2007 The Regents of the University of California
+           2008-2010 Lawrence Livermore National Security, LLC
+           2008 Vijay Ramasubramanian
+           2010-2016 SchedMD LLC
+           2012,2014 Bull
+           2012-2013 Los Alamos National Security, LLC
+           2013 Intel Inc
+License: GPL-2+ with OpenSSL exception
+
+Files: src/common/uthash/uthash.h
+Copyright: 2003-2012 Troy D. Hanson
+License: BSD-like
+
+Files: slurm/pmi.h
+Copyright: 2002 University of Chicago
+License: ANL
+
+Files: slurm/slurm.h.in
+Copyright: 2002-2007 The Regents of the University of California
+           2008-2010 Lawrence Livermore National Security, LLC
+           2010-2016 SchedMD LLC
+           2012-2013 Los Alamos National Security, LLC
+           2013 Cray Inc
+License: GPL-2+ with OpenSSL exception
+
+Files: contribs/sjstat
+Copyright: 2007 The Regents of the University of California
+           2008-2009 Lawrence Livermore National Security, LLC
+           2006-2007 Cluster Resources, Inc
+License: GPL-2+ with OpenSSL exception
+
+Files: contribs/cray/pam_job.c
+Copyright: 2000-2006 Silicon Graphics, Inc
+           2011 Centro Svizzero di Calcolo Scientifico (CSCS)
+License: LGPL-2.1+
+
+Files: contribs/mic/mpirun-mic
+Copyright:  Olli-Pekka Lehto - CSC IT Center for Science Ltd
+License: None
+
+Files: contribs/torque/qrerun.pl
+Copyright: 2006-2007 Cluster Resources, Inc
+License: GPL-2+ with OpenSSL exception
+
+Files: contribs/torque/generate_pbs_nodefile.pl
+Copyright: 2013 Brigham Young University
+License: GPL-2+
+
+Files: contribs/pmi2/pmi2_api.c
+Copyright: 2007 Argonne National Laboratory
+           2013 Intel Inc
+License: ANL
+
+Files: contribs/slurm_completion_help/slurm_completion.sh
+       contribs/slurm_completion_help/slurm.vim
+Copyright: 2012 Damien François
+License: GPL-2+ with OpenSSL exception
+
+Files: testsuite/dejagnu.h
+Copyright: 2000-2002,2004,2006 Free Software Foundation, Inc
+License: GPL-3+
+
+Files: testsuite/expect/inc3.11.9
+Copyright: 2013 Barcelona Supercomputing Center
+License: GPL-2+
+
+Files: testsuite/expect/test1.53.prog.c
+Copyright: 2002-2007 The Regents of the University of California
+           2008-2009 Lawrence Livermore National Security, LLC
+License: None
+
+Files: auxdir/ax_check_zlib.m4
+Copyright: 2008 Loic Dachary
+           2010 Bastien Chevreux
+License: GPL-2+ with Autoconf exception
+
+Files: auxdir/ax_lib_hdf5.m4
+Copyright: 2009 Timothy Brown
+           2010 Rhys Ulerich
+License: FSF-all-permissive
+
+Files: auxdir/x_ac_curl.m4
+Copyright: 2006 David Shaw
+License: curl
+
+Files: auxdir/install-sh
+Copyright: 1994 X Consortium
+License: MIT/X11
+
+Files: auxdir/ax_gcc_builtin.m4
+Copyright: 2013 Gabriele Svelto
+License: FSF-all-permissive
+
+Files: auxdir/ax_pthread.m4
+Copyright: 2008 Steven G. Johnson
+           2011 Daniel Richard G
+License: GPL-3+ with Autoconf exception
+
+Files: auxdir/ltmain.sh
+Copyright: 1996-2015 Free Software Foundation, Inc
+License: GPL-2+ and GPL-3+
+
+Files: auxdir/ax_check_compile_flag.m4
+Copyright: 2008 Guido U. Draheim
+           2011 Maarten Bosmans
+License: GPL-3+ with Autoconf exception
+
+Files: auxdir/x_ac_ucx.m4
+Copyright: 2017 Mellanox Technologies
+License: None
+
+Files: src/slurmrestd/plugins/openapi/*/*
+Copyright: Copyright (C) 2019-2020 SchedMD LLC.
+License: GPL-2+ with OpenSSL exception or Apache-2.0
+
+License: GPL-2+ with OpenSSL exception
+ This file is part of SLURM, a resource management program.
+ For details, see <https://slurm.schedmd.com/>.
+ Please also read the included file: DISCLAIMER.
+ .
+ SLURM is free software; you can redistribute it and/or modify it under
+ the terms of the GNU General Public License as published by the Free
+ Software Foundation; either version 2 of the License, or (at your option)
+ any later version.
+ .
+ In addition, as a special exception, the copyright holders give permission
+ to link the code of portions of this program with the OpenSSL library under
+ certain conditions as described in each individual source file, and
+ distribute linked combinations including the two. You must obey the GNU
+ General Public License in all respects for all of the code used other than
+ OpenSSL. If you modify file(s) with this exception, you may extend this
+ exception to your version of the file(s), but you are not obligated to do
+ so. If you do not wish to do so, delete this exception statement from your
+ version.  If you delete this exception statement from all source files in
+ the program, then also delete it here.
+ .
+ SLURM is distributed in the hope that it will be useful, but WITHOUT ANY
+ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ details.
+ .
+ You should have received a copy of the GNU General Public License along
+ with SLURM; if not, write to the Free Software Foundation, Inc.,
+ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA.
+Comment:
+ Content of the DISCLAIMER file follows
+ Slurm was produced at Lawrence Livermore National Laboratory in collaboration
+ with various organizations.
+ .
+ Copyright (C) 2012-2013 Los Alamos National Security, LLC.
+ Copyright (C) 2011 Trinity Centre for High Performance Computing
+ Copyright (C) 2010-2015 SchedMD LLC
+ Copyright (C) 2009-2013 CEA/DAM/DIF
+ Copyright (C) 2009-2011 Centro Svizzero di Calcolo Scientifico (CSCS)
+ Copyright (C) 2008-2011 Lawrence Livermore National Security
+ Copyright (C) 2008 Vijay Ramasubramanian
+ Copyright (C) 2007-2008 Red Hat, Inc.
+ Copyright (C) 2007-2013 National University of Defense Technology, China
+ Copyright (C) 2007-2015 Bull
+ Copyright (C) 2005-2008 Hewlett-Packard Development Company, L.P.
+ Copyright (C) 2004-2009, Marcus Holland-Moritz
+ Copyright (C) 2002-2007 The Regents of the University of California
+ Copyright (C) 2002-2003 Linux NetworX
+ Copyright (C) 2002 University of Chicago
+ Copyright (C) 2001, Paul Marquess
+ Copyright (C) 2000 Markus Friedl
+ Copyright (C) 1999, Kenneth Albanowski
+ Copyright (C) 1998 Todd C. Miller <Todd.Miller@courtesan.com>
+ Copyright (C) 1996-2003 Maximum Entropy Data Consultants Ltd,
+ Copyright (C) 1995 Tatu Ylonen <ylo@cs.hut.fi>, Espoo, Finland
+ Copyright (C) 1989-1994, 1996-1999, 2001 Free Software Foundation, Inc.
+ Many other organizations contributed code and/or documentation without
+ including a copyright notice.
+ .
+ Written by:
+ Amjad Majid Ali (Colorado State University)
+ Par Andersson (National Supercomputer Centre, Sweden)
+ Don Albert (Bull)
+ Ernest Artiaga (Barcelona Supercomputer Center, Spain)
+ Danny Auble (LLNL, SchedMD LLC)
+ Susanne Balle (HP)
+ Anton Blanchard (Samba)
+ Janne Blomqvist (Aalto University, Finland)
+ David Bremer (LLNL)
+ Jon Bringhurst (LANL)
+ Bill Brophy (Bull)
+ Hongjia Cao (National University of Defense Techonogy, China)
+ Daniel Christians (HP)
+ Gilles Civario (Bull)
+ Chuck Clouston (Bull)
+ Joseph Donaghy (LLNL)
+ Chris Dunlap (LLNL)
+ Joey Ekstrom (LLNL/Bringham Young University)
+ Josh England (TGS Management Corporation)
+ Kent Engstrom (National Supercomputer Centre, Sweden)
+ Jim Garlick (LLNL)
+ Didier Gazen (Laboratoire d'Aerologie, France)
+ Raphael Geissert (Debian)
+ Yiannis Georgiou (Bull)
+ Andriy Grytsenko (Massive Solutions Limited, Ukraine)
+ Mark Grondona (LLNL)
+ Takao Hatazaki (HP, Japan)
+ Matthieu Hautreux (CEA, France)
+ Chris Holmes (HP)
+ David Hoppner
+ Nathan Huff (North Dakota State University)
+ David Jackson (Adaptive Computing)
+ Morris Jette (LLNL, SchedMD LLC)
+ Klaus Joas (University Karlsruhe, Germany)
+ Greg Johnson (LANL)
+ Jason King (LLNL)
+ Aaron Knister (Environmental Protection Agency)
+ Nancy Kritkausky (Bull)
+ Roman Kurakin (Institute of Natural Science and Ecology, Russia)
+ Eric Lin (Bull)
+ Don Lipari (LLNL)
+ Puenlap Lee (Bull)
+ Dennis Leepow
+ Bernard Li (Genome Sciences Centre, Canada)
+ Donald Lipari (LLNL)
+ Steven McDougall (SiCortex)
+ Donna Mecozzi (LLNL)
+ Bjorn-Helge Mevik (University of Oslo, Norway)
+ Chris Morrone (LLNL)
+ Pere Munt (Barcelona Supercomputer Center, Spain)
+ Michal Novotny (Masaryk University, Czech Republic)
+ Bryan O'Sullivan (Pathscale)
+ Gennaro Oliva (Institute of High Performance Computing and Networking, Italy)
+ Alejandro Lucero Palau (Barcelona Supercomputer Center, Spain)
+ Daniel Palermo (HP)
+ Dan Phung (LLNL/Columbia University)
+ Ashley Pittman (Quadrics, UK)
+ Vijay Ramasubramanian (University of Maryland)
+ Krishnakumar Ravi[KK] (HP)
+ Petter Reinholdtsen (University of Oslo, Norway)
+ Gerrit Renker (Swiss National Computer Centre)
+ Andy Riebs (HP)
+ Asier Roa (Barcelona Supercomputer Center, Spain)
+ Miguel Ros (Barcelona Supercomputer Center, Spain)
+ Beat Rubischon (DALCO AG, Switzerland)
+ Dan Rusak (Bull)
+ Eygene Ryabinkin (Kurchatov Institute, Russia)
+ Federico Sacerdoti (D.E. Shaw)
+ Rod Schultz (Bull)
+ Tyler Strickland (University of Florida)
+ Jeff Squyres (LAM MPI)
+ Prashanth Tamraparni (HP, India)
+ Jimmy Tang (Trinity College, Ireland)
+ Kevin Tew (LLNL/Bringham Young University)
+ Adam Todorski (Rensselaer Polytechnic Institute)
+ Nathan Weeks (Iowa State University)
+ Tim Wickberg (Rensselaer Polytechnic Institute)
+ Ramiro Brito Willmersdorf (Universidade Federal de Pemambuco, Brazil)
+ Jay Windley (Linux NetworX)
+ Anne-Marie Wunderlin (Bull)
+ .
+ CODE-OCEC-09-009. All rights reserved.
+ .
+ This file is part of Slurm, a resource management program.
+ For details, see <https://slurm.schedmd.com/>.
+ Please also read the supplied file: DISCLAIMER.
+ .
+ Slurm is free software; you can redistribute it and/or modify it under
+ the terms of the GNU General Public License as published by the Free
+ Software Foundation; either version 2 of the License, or (at your option)
+ any later version.
+ .
+ Slurm is distributed in the hope that it will be useful, but WITHOUT ANY
+ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ details.
+ .
+ You should have received a copy of the GNU General Public License along
+ with Slurm; if not, write to the Free Software Foundation, Inc.,
+ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA.
+ .
+ OUR NOTICE AND TERMS OF AND CONDITIONS OF THE GNU GENERAL PUBLIC LICENSE
+ .
+ Our Preamble Notice
+ .
+ Auspices
+ .
+ This work performed under the auspices of the U.S. Department of Energy by 
+ Lawrence Livermore National Laboratory under Contract DE-AC52-07NA27344.
+ .
+ Disclaimer
+ .
+ This work was sponsored by an agency of the United States government. 
+ Neither the United States Government nor Lawrence Livermore National 
+ Security, LLC, nor any of their employees, makes any warranty, express 
+ or implied, or assumes any liability or responsibility for the accuracy, 
+ completeness, or usefulness of any information, apparatus, product, or 
+ process disclosed, or represents that its use would not infringe privately
+ owned rights. References herein to any specific commercial products, process, 
+ or services by trade names, trademark, manufacturer or otherwise does not
+ necessarily constitute or imply its endorsement, recommendation, or
+ favoring by the United States Government or the Lawrence Livermore National
+ Security, LLC. The views and opinions of authors expressed herein do not 
+ necessarily state or reflect those of the United States government or 
+ Lawrence Livermore National Security, LLC, and shall not be used for 
+ advertising or product endorsement purposes.
+ .
+ The precise terms and conditions for copying, distribution and modification 
+ is provided in the file named "COPYING" in this directory.
+
+License: GPL-2+
+ This file is part of SLURM, a resource management program.
+ For details, see <https://slurm.schedmd.com/>.
+ Please also read the included file: DISCLAIMER.
+ .
+ SLURM is free software; you can redistribute it and/or modify it under
+ the terms of the GNU General Public License as published by the Free
+ Software Foundation; either version 2 of the License, or (at your option)
+ any later version.
+ .
+ SLURM is distributed in the hope that it will be useful, but WITHOUT ANY
+ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ details.
+ .
+ You should have received a copy of the GNU General Public License along
+ with SLURM; if not, write to the Free Software Foundation, Inc.,
+ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA.
+Comment:
+ On Debian systems, the complete text of version 2 of the GNU General
+ Public License can be found in `/usr/share/common-licenses/GPL-2'.
+
+License: FSF-unlimited
+ This file is free software; the Free Software Foundation gives
+ unlimited permission to copy and/or distribute it, with or without
+ modifications, as long as this notice is preserved.
+
+License: LGPL-2.1+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+ .
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+ .
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+Comment:
+ On Debian systems, the full text of the GNU Lesser General Public License
+ version 2.1 can be found in the file `/usr/share/common-licenses/LGPL-2.1'.
+
+License: ANL
+ Permission is hereby granted to use, reproduce, prepare derivative works, and
+ to redistribute to others.  This software was authored by:
+ .
+ Mathematics and Computer Science Division
+ Argonne National Laboratory, Argonne IL 60439
+ .
+ (and)
+ .
+ Department of Computer Science
+ University of Illinois at Urbana-Champaign
+ .
+                               GOVERNMENT LICENSE
+ .
+ Portions of this material resulted from work developed under a U.S.
+ Government Contract and are subject to the following license: the Government
+ is granted for itself and others acting on its behalf a paid-up, nonexclusive,
+ irrevocable worldwide license in this computer software to reproduce, prepare
+ derivative works, and perform publicly and display publicly.
+ .
+                                   DISCLAIMER
+ .
+ This computer code material was prepared, in part, as an account of work
+ sponsored by an agency of the United States Government.  Neither the United
+ States, nor the University of Chicago, nor any of their employees, makes any
+ warranty express or implied, or assumes any legal liability or responsibility
+ for the accuracy, completeness, or usefulness of any information, apparatus,
+ product, or process disclosed, or represents that its use would not infringe
+ privately owned rights.
+
+License: Zlib
+ This software is provided 'as-is', without any express or implied
+ warranty.  In no event will the authors be held liable for any damages
+ arising from the use of this software.
+ .
+ Permission is granted to anyone to use this software for any purpose,
+ including commercial applications, and to alter it and redistribute it
+ freely, subject to the following restrictions:
+ .
+ 1. The origin of this software must not be misrepresented; you must not
+ claim that you wrote the original software. If you use this software
+ in a product, an acknowledgment in the product documentation would be
+ appreciated but is not required.
+ 2. Altered source versions must be plainly marked as such, and must not be
+ misrepresented as being the original software.
+ 3. This notice may not be removed or altered from any source distribution.
+
+License: BSD-2-clause with SSH exception
+ As far as I am concerned, the code I have written for this software
+ can be used freely for any purpose.  Any derived versions of this
+ software must be clearly marked as such, and if the derived work is
+ incompatible with the protocol description in the RFC file, it must be
+ called by a name other than "ssh" or "Secure Shell".
+ .
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+ 1. Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+ 2. Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+ .
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+License: Perl
+ This program is free software; you can redistribute it and/or
+ modify it under the same terms as Perl itself.
+Comment:
+ On Debian systems, the (double) licenses for Perl can be found at:
+ `/usr/share/common-licenses/Artistic' and
+ `/usr/share/common-licenses/GPL-1'
+
+License: GPL-2
+ This program is free software; you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published by
+ the Free Software Foundation version 2 of the License.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+ You should have received a copy of the GNU General Public License along
+ with this program; if not, write to the Free Software Foundation, Inc.,
+ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+
+License: GPL-3
+ This file is free software; you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 3 of the License, or
+ (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful, but
+ WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, see <http://www.gnu.org/licenses/>.
+ .
+ As a special exception to the GNU General Public License, if you
+ distribute this file as part of a program that contains a
+ configuration script generated by Autoconf, you may include it under
+ the same distribution terms that you use for the rest of that
+ program.  This Exception is an additional permission under section 7
+ of the GNU General Public License, version 3 ("GPLv3").
+Comment:
+ On Debian systems, the full text of the GNU General Public License
+ version 3 can be found in the file `/usr/share/common-licenses/GPL-3'.
+
+License: PostgreSQL
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose, without fee, and without a written agreement
+ is hereby granted, provided that the above copyright notice and this
+ paragraph and the following two paragraphs appear in all copies.
+ .
+ IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR
+ DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, INCLUDING
+ LOST PROFITS, ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS
+ DOCUMENTATION, EVEN IF THE UNIVERSITY OF CALIFORNIA HAS BEEN ADVISED OF THE
+ POSSIBILITY OF SUCH DAMAGE.
+ .
+ THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+ AND FITNESS FOR A PARTICULAR PURPOSE.  THE SOFTWARE PROVIDED HEREUNDER IS
+ ON AN "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATIONS TO
+ PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+
+License: ISC
+ Permission to use, copy, modify, and distribute this software for any
+ purpose with or without fee is hereby granted, provided that the above
+ copyright notice and this permission notice appear in all copies.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+License: BSD-like
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+ .
+ Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+ .
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+ OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+License: GPL-3+
+ This program is free software: you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published by the
+ Free Software Foundation, either version 3 of the License, or (at your
+ option) any later version.
+ .
+ This program is distributed in the hope that it will be useful, but
+ WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License along
+ with this program. If not, see <http://www.gnu.org/licenses/>.
+ .
+ As a special exception, the respective Autoconf Macro's copyright owner
+ gives unlimited permission to copy, distribute and modify the configure
+ scripts that are the output of Autoconf when processing the Macro. You
+ need not follow the terms of the GNU General Public License when using
+ or distributing such scripts, even though portions of the text of the
+ Macro appear in them. The GNU General Public License (GPL) does govern
+ all other use of the material that constitutes the Autoconf Macro.
+ .
+ This special exception to the GPL applies to versions of the Autoconf
+ Macro released by the Autoconf Archive. When you make and distribute a
+ modified version of the Autoconf Macro, you may extend this special
+ exception to the GPL to apply to your modified version as well.
+Comment:
+ On Debian systems, the full text of the GNU General Public License
+ version 3, can be found at `/usr/share/common-licenses/GPL-3'.
+
+License: GPL-2+ with Autoconf exception
+ This program is free software; you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published by the
+ Free Software Foundation; either version 2 of the License, or (at your
+ option) any later version.
+ .
+ This program is distributed in the hope that it will be useful, but
+ WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License along
+ with this program. If not, see <http://www.gnu.org/licenses/>.
+ .
+ As a special exception, the respective Autoconf Macro's copyright owner
+ gives unlimited permission to copy, distribute and modify the configure
+ scripts that are the output of Autoconf when processing the Macro. You
+ need not follow the terms of the GNU General Public License when using
+ or distributing such scripts, even though portions of the text of the
+ Macro appear in them. The GNU General Public License (GPL) does govern
+ all other use of the material that constitutes the Autoconf Macro.
+ .
+ This special exception to the GPL applies to versions of the Autoconf
+ Macro released by the Autoconf Archive. When you make and distribute a
+ modified version of the Autoconf Macro, you may extend this special
+ exception to the GPL to apply to your modified version as well.
+
+License: FSF-all-permissive
+ Copying and distribution of this file, with or without modification, are
+ permitted in any medium without royalty provided the copyright notice
+ and this notice are preserved. This file is offered as-is, without any
+ warranty.
+
+License: curl
+ This software is licensed as described in the file COPYING, which
+ you should have received as part of this distribution. The terms
+ are also available at http://curl.haxx.se/docs/copyright.html.
+ .
+ You may opt to use, copy, modify, merge, publish, distribute and/or sell
+ copies of the Software, and permit persons to whom the Software is
+ furnished to do so, under the terms of the COPYING file.
+ .
+ This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
+ KIND, either express or implied.
+
+License: GPL-3+ with Autoconf exception
+ This program is free software: you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published by the
+ Free Software Foundation, either version 3 of the License, or (at your
+ option) any later version.
+ .
+ This program is distributed in the hope that it will be useful, but
+ WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License along
+ with this program. If not, see <http://www.gnu.org/licenses/>.
+ .
+ As a special exception, the respective Autoconf Macro's copyright owner
+ gives unlimited permission to copy, distribute and modify the configure
+ scripts that are the output of Autoconf when processing the Macro. You
+ need not follow the terms of the GNU General Public License when using
+ or distributing such scripts, even though portions of the text of the
+ Macro appear in them. The GNU General Public License (GPL) does govern
+ all other use of the material that constitutes the Autoconf Macro.
+ .
+ This special exception to the GPL applies to versions of the Autoconf
+ Macro released by the Autoconf Archive. When you make and distribute a
+ modified version of the Autoconf Macro, you may extend this special
+ exception to the GPL to apply to your modified version as well.
+
+License: MIT/X11
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to
+ deal in the Software without restriction, including without limitation the
+ rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ sell copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ .
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+ X CONSORTIUM BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+ AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNEC-
+ TION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ .
+ Except as contained in this notice, the name of the X Consortium shall not
+ be used in advertising or otherwise to promote the sale, use or other deal-
+ ings in this Software without prior written authorization from the X Consor-
+ tium.
+ .
+ FSF changes to this file are in the public domain.
+
+License: None
+  No license explicitly mentioned, assuming that the main license
+  GPL-2+ with OpenSSL exception applies
+
+License: Apache-2.0
+ Licensed under the terms of The Apache License, Version 2.0, and abbreviated as
+ "Apache 2.0" within the OpenAPI specification itself. A copy of this license is
+ available at https://www.apache.org/licenses/LICENSE-2.0.html.
+ .
+ As an additional requirement for changes to this specification: Contributors
+ wishing to submit changes to these files must sign SchedMD's Contributor
+ License Agreement ("CLA"). (https://slurm.schedmd.com/contributor.html).
+ By signing the CLA, contributors are specifically licensing any changes,
+ modifications, revisions, or edits to the OpenAPI specification for Slurm’s
+ RESTful interface back to SchedMD to the maximum extent permitted by the
+ relevant law and the CLA.
+ .
+ On Debian systems, the complete text of the Apache License,
+ Version 2.0 can be found in '/usr/share/common-licenses/Apache-2.0'.

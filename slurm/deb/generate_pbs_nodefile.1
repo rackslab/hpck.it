@@ -1,0 +1,16 @@
+.\" (C) Copyright 2013 Gennaro Oliva <oliva.g@na.icar.cnr.it>,
+.\"
+.TH GENERATE_PBS_NODEFILE 1 "October  1, 2013"
+.SH NAME
+generate_pbs_nodefile \- generate a $PBS_NODEFILE style file with the
+list of nodes used by a job
+.SH SYNOPSIS
+.B generate_pbs_nodefile
+.SH DESCRIPTION
+This manual page documents briefly the generate_pbs_nodefile
+command.
+.PP
+\fBgenerate_pbs_nodefile\fP is a program that uses SLURM environment
+variables to produce a $PBS_NODEFILE\-style output file. The output goes
+in a temporary file and the name of the file is printed on stdout.
+Intended usage is: export PBS_NODEFILE=`generate_pbs_nodefile`

@@ -1,0 +1,25 @@
+ignore:
+  pattern:
+  - /debian/
+  - Makefile.am
+  - Makefile.in
+  - /testsuite/
+  - /doc/
+  - .travis.yml
+  - BUILD.NOTES
+  - /config(.guess|ure|.h.in)
+  - LICENSE.OpenSSL
+  - README
+  - AUTHORS
+  - CONTRIBUTING.md
+  - DISCLAIMER
+  - INSTALL
+  - META
+  - NEWS
+  - README.rst
+  - RELEASE_NOTES
+  - autogen.sh
+
+  suffixes:
+  - example
+  - m4

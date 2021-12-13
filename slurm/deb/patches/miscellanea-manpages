@@ -1,0 +1,145 @@
+Description: Move general info man pages to the miscellanea section (7)
+ This patch moves the general information man pages slurm.1 and spank.8
+ to the miscellanea section since they are not related to commands
+Author: Gennaro Oliva <oliva.g@na.icar.cnr.it>
+Forwarded: https://bugs.schedmd.com/show_bug.cgi?id=8719
+Last-Update: 2021-05-17
+
+diff --git a/configure.ac b/configure.ac
+index d55e537f..61067ba9 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -416,6 +416,7 @@ AC_CONFIG_FILES([Makefile
+ 		 doc/man/man1/Makefile
+ 		 doc/man/man3/Makefile
+ 		 doc/man/man5/Makefile
++		 doc/man/man7/Makefile
+ 		 doc/man/man8/Makefile
+ 		 doc/html/Makefile
+ 		 doc/html/configurator.html
+diff --git a/doc/man/Makefile.am b/doc/man/Makefile.am
+index 5a3ddf7f..e3afc1da 100644
+--- a/doc/man/Makefile.am
++++ b/doc/man/Makefile.am
+@@ -1,3 +1,3 @@
+ 
+-SUBDIRS = man1 man3 man5 man8
++SUBDIRS = man1 man3 man5 man7 man8
+ 
+diff --git a/doc/man/man1/Makefile.am b/doc/man/man1/Makefile.am
+index ce6cd5d8..68870920 100644
+--- a/doc/man/man1/Makefile.am
++++ b/doc/man/man1/Makefile.am
+@@ -12,7 +12,6 @@ man1_MANS = \
+ 	scrontab.1 \
+ 	sdiag.1	\
+ 	sinfo.1   \
+-	slurm.1 \
+ 	sprio.1 \
+ 	squeue.1 \
+ 	sreport.1 \
+diff --git a/doc/man/man7/Makefile.am b/doc/man/man7/Makefile.am
+new file mode 100644
+index 00000000..dfdbe959
+--- /dev/null
++++ b/doc/man/man7/Makefile.am
+@@ -0,0 +1,23 @@
++htmldir = ${datadir}/doc/${PACKAGE}-${SLURM_VERSION_STRING}/html
++
++man7_MANS = slurm.7 \
++  spank.7
++
++EXTRA_DIST = $(man7_MANS)
++
++if HAVE_MAN2HTML
++
++html_DATA = \
++  spank.html
++
++MOSTLYCLEANFILES = ${html_DATA}
++
++EXTRA_DIST += $(html_DATA)
++
++SUFFIXES = .html
++
++.7.html:
++	`dirname $<`/../man2html.py @SLURM_MAJOR@.@SLURM_MINOR@ $(srcdir)/../../html/header.txt $(srcdir)/../../html/footer.txt $<
++
++endif
++
+diff --git a/doc/man/man5/slurm.conf.5 b/doc/man/man5/slurm.conf.5
+index 1978f6e6..76498e50 100644
+--- a/doc/man/man5/slurm.conf.5
++++ b/doc/man/man5/slurm.conf.5
+@@ -1696,7 +1696,7 @@ This provides support for a highly configurable set of plugins to
+ be called before and/or after execution of each task spawned as
+ part of a user's job step.  Default location is "plugstack.conf"
+ in the same directory as the system slurm.conf. For more information
+-on SPANK plugins, see the \fBspank\fR(8) manual.
++on SPANK plugins, see the \fBspank\fR(7) manual.
+ 
+ .TP
+ \fBPowerParameters\fR
+@@ -6009,4 +6009,4 @@ details.
+ \fBgetrlimit\fR(2), \fBgres.conf\fR(5), \fBgroup\fR(5), \fBhostname\fR(1),
+ \fBscontrol\fR(1), \fBslurmctld\fR(8), \fBslurmd\fR(8),
+ \fBslurmdbd\fR(8), \fBslurmdbd.conf\fR(5), \fBsrun\fR(1),
+-\fBspank\fR(8), \fBsyslog\fR(3), \fBtopology.conf\fR(5)
++\fBspank\fR(7), \fBsyslog\fR(3), \fBtopology.conf\fR(5)
+diff --git a/doc/man/man1/slurm.1 b/doc/man/man7/slurm.7
+similarity index 97%
+rename from doc/man/man1/slurm.1
+rename to doc/man/man7/slurm.7
+index ecb5617f..a043fb73 100644
+--- a/doc/man/man1/slurm.1
++++ b/doc/man/man7/slurm.7
+@@ -1,4 +1,4 @@
+-.TH Slurm "1" "Slurm System" "June 2018" "Slurm System"
++.TH Slurm "7" "Slurm System" "June 2018" "Slurm System"
+ 
+ .SH "NAME"
+ Slurm \- Slurm Workload Manager overview.
+@@ -68,5 +68,5 @@ details.
+ \fBsview\fR(1),
+ \fBslurm.conf\fR(5), \fBslurmdbd.conf\fR(5),
+ \fBslurmctld\fR(8), \fBslurmd\fR(8), \fBslurmdbd\fR(8), \fBslurmstepd\fR(8),
+-\fBspank\fR(8)
++\fBspank\fR(7)
+ 
+diff --git a/doc/man/man8/spank.8 b/doc/man/man7/spank.7
+similarity index 99%
+rename from doc/man/man8/spank.8
+rename to doc/man/man7/spank.7
+index 4609dbf9..91d0996d 100644
+--- a/doc/man/man8/spank.8
++++ b/doc/man/man7/spank.7
+@@ -1,4 +1,4 @@
+-.TH SPANK "8" "Slurm Component" "June 2021" "Slurm Component"
++.TH SPANK "7" "Slurm Component" "June 2021" "Slurm Component"
+ 
+ .SH "NAME"
+ \fBSPANK\fR \- Slurm Plug\-in Architecture for Node and job (K)control
+diff --git a/doc/man/man8/Makefile.am b/doc/man/man8/Makefile.am
+index 8527b1c0..27b5777e 100644
+--- a/doc/man/man8/Makefile.am
++++ b/doc/man/man8/Makefile.am
+@@ -4,8 +4,7 @@ man8_MANS = slurmctld.8 \
+ 	slurmd.8 \
+ 	slurmdbd.8 \
+ 	slurmrestd.8 \
+-	slurmstepd.8 \
+-	spank.8
++	slurmstepd.8
+ 
+ if HAVE_MAN2HTML
+ 
+@@ -14,8 +13,7 @@ html_DATA = \
+ 	slurmd.html \
+ 	slurmdbd.html \
+ 	slurmrestd.html \
+-	slurmstepd.html \
+-	spank.html
++	slurmstepd.html
+ 
+ MOSTLYCLEANFILES = ${html_DATA}
+ 
