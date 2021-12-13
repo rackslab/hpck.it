@@ -1,10 +1,7 @@
-Source: slurm-wlm
+Source: slurm
 Section: admin
 Priority: optional
-Maintainer: Debian HPC Team <debian-hpc@lists.debian.org>
-Uploaders: Rémi Palancher <remi@rezib.org>,
-           Mehdi Dogguy <mehdi@debian.org>,
-           Gennaro Oliva <oliva.g@na.icar.cnr.it>,
+Maintainer: Rémi Palancher <remi@rackslab.io>
 Build-Depends:
  debhelper (>= 11),
  libmunge-dev,

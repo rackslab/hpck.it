@@ -12,7 +12,7 @@ License: GPL-2+ with OpenSSL exception
 Files: debian/*
 Copyright: 2006-2017 Gennaro Oliva
            2014-2015 Mehdi Dogguy <mehdi@debian.org>
-           2014-2015 Rémi Palancher
+           2014-2015,2021 Rémi Palancher <remi@rackslab.io>
            2014 Gregor Herrmann
            2014 Roland Fehrenbacher
            2016 Ana Guerrero Lopez
