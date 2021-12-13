@@ -1,21 +1,18 @@
+# This file is largely coming for Slurm upstream project with minor
+# modifications from hpck.it team. License of the upstream project
+# is GPLv2+.
+#
+# Please refer to upstream DISCLAIMER file for copyrights.
 Name:		slurm
-Version:	21.08.0
-%define rel	1
-Release:	%{rel}%{?dist}
+Version:	{{ pkg.version }}
+Release:	{{ pkg.release }}
 Summary:	Slurm Workload Manager
 
 Group:		System Environment/Base
 License:	GPLv2+
 URL:		https://slurm.schedmd.com/
 
-# when the rel number is one, the directory name does not include it
-%if "%{rel}" == "1"
-%global slurm_source_dir %{name}-%{version}
-%else
-%global slurm_source_dir %{name}-%{version}-%{rel}
-%endif
-
-Source:		%{slurm_source_dir}.tar.bz2
+Source:		%{name}-%{version}.tar.bz2
 
 # build options		.rpmmacros options	change to default action
 # ====================  ====================	========================
@@ -330,8 +327,7 @@ notifies slurm about failed nodes.
 #############################################################################
 
 %prep
-# when the rel number is one, the tarball filename does not include it
-%setup -n %{slurm_source_dir}
+%setup -q
 
 %build
 %configure \
