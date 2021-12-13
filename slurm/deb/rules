@@ -26,8 +26,8 @@ override_dh_auto_clean:
 # hardening-no-fortify-functions
 # Notice that -g in CFLAGS is still provided by dpkg-buildflags
 override_dh_auto_configure:
-	dh_auto_configure -- --sysconfdir=/etc/slurm --with-munge --enable-pam --without-rpath --disable-debug --enable-multiple-slurmd --with-pmix=/usr/lib/$(DEB_HOST_MULTIARCH)/pmix2 $(ENABLEDEPRECATED) SUCMD=/bin/su SLEEP_CMD=/bin/sleep
-	dh_auto_configure --builddirectory build-emulator -- -sysconfdir=/etc/slurm --with-munge --enable-pam --without-rpath --disable-debug --enable-front-end --enable-multiple-slurmd --with-pmix=/usr/lib/$(DEB_HOST_MULTIARCH)/pmix2 $(ENABLEDEPRECATED) SUCMD=/bin/su SLEEP_CMD=/bin/sleep
+	dh_auto_configure -- --sysconfdir=/etc/slurm --with-munge --enable-pam --without-rpath --disable-debug --enable-multiple-slurmd $(ENABLEDEPRECATED) SUCMD=/bin/su SLEEP_CMD=/bin/sleep
+	dh_auto_configure --builddirectory build-emulator -- -sysconfdir=/etc/slurm --with-munge --enable-pam --without-rpath --disable-debug --enable-front-end --enable-multiple-slurmd $(ENABLEDEPRECATED) SUCMD=/bin/su SLEEP_CMD=/bin/sleep
 override_dh_auto_build:
 	dh_auto_build
 	dh_auto_build --builddirectory build-emulator
