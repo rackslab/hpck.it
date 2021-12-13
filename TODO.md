@@ -1,0 +1,2 @@
+- [ ] Define copyright/versioning/authoring rules (eg. d/changelog entry)
+- [ ] Restore PMIx support for Slurm on Debian
