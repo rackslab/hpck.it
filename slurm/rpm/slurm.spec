@@ -1,5 +1,5 @@
 # This file is largely coming for Slurm upstream project with minor
-# modifications from hpck.it team. License of the upstream project
+# modifications from HPCk.it team. License of the upstream project
 # is GPLv2+.
 #
 # Please refer to upstream DISCLAIMER file for copyrights.

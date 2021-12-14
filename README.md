@@ -1,9 +1,9 @@
-# hpck.it: software for HPC infrastructures
+# HPCk.it: software for HPC infrastructures
 
-## Description
+## Description
 
 This Git repository contains packages definitions and packaging code for
-software published in hpck.it packages repositories. It is meant to be used as
+software published in HPCk.it packages repositories. It is meant to be used as
 an input source for [Fatbuildr](https://github.com/rackslab/fatbuildr).
 
 ## Status
@@ -12,7 +12,7 @@ This is a prototype of an ongoing work.
 
 ## Authors
 
-hpck.it is maintained by [Rackslab](https://rackslab.io).
+HPCk.it is maintained by [Rackslab](https://rackslab.io).
 
 ## License
 
