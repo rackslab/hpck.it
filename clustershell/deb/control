@@ -1,0 +1,32 @@
+Source: clustershell
+Section: net
+Priority: optional
+Maintainer: HPCKit team <maintainers@hpck.it>
+Homepage: https://cea-hpc.github.com/clustershell/
+Build-Depends: debhelper-compat (= 12), python3-all (>= 3.4), python3-setuptools, dh-python
+Standards-Version: 4.2.1
+
+Package: python3-clustershell
+Architecture: all
+Section: python
+Depends: ${misc:Depends}, ${python3:Depends}, python3-pkg-resources
+Suggests: vim-addon-manager
+Recommends: python3-yaml
+Description: clustershell python3 libraries
+ Event-based Python library to execute commands on local or distant
+ cluster nodes in parallel depending on the selected engine and
+ worker mechanisms.
+
+Package: clustershell
+Architecture: all
+Depends: ${misc:Depends}, ${python3:Depends}, python3-clustershell
+Suggests: vim-addon-manager
+Recommends: python3-yaml
+Description: Distributed shell that provides an efficient Python interface
+ Event-based Python library to execute commands on local or distant
+ cluster nodes in parallel depending on the selected engine and
+ worker mechanisms.
+ .
+ The library provides also advanced nodeset handling methods. Its goal
+ is to improve the administration of cluster by providing a lightweight
+ but scalable API for developers.

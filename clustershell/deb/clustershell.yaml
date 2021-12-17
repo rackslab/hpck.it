@@ -1,0 +1,7 @@
+addon: clustershell
+description: "Syntax highlighting for clustershell"
+files:
+  - ftdetect/clustershell.vim
+  - syntax/clushconf.vim
+  - syntax/groupsconf.vim
+
