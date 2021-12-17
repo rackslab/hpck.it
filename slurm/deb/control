@@ -1,7 +1,7 @@
 Source: slurm
 Section: admin
 Priority: optional
-Maintainer: Rémi Palancher <remi@rackslab.io>
+Maintainer: HPCKit team <maintainers@hpck.it>
 Build-Depends:
  debhelper (>= 11),
  libmunge-dev,
@@ -31,8 +31,6 @@ Build-Depends:
  liblz4-dev
 Standards-Version: 4.5.1
 Homepage: http://slurm.schedmd.com
-Vcs-Browser: https://salsa.debian.org/hpc-team/slurm-wlm
-Vcs-Git: https://salsa.debian.org/hpc-team/slurm-wlm.git
 
 Package: slurm-wlm
 Architecture: any
