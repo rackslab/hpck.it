@@ -1,11 +1,6 @@
 # This file is largely coming for Clustershell upstream project with minor
 # modifications from HPCk.it maintainers. License of the upstream project
 # is LGPLv2+.
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
-%{!?python2_sitelib: %global python2_sitelib %{python_sitelib}}
-%{!?__python: %global __python python}
-%{!?__python2: %global __python2 %{__python}}
-
 %if 0%{?fedora} >= 22
 %{!?python2_pkgversion: %global python2_pkgversion 2}
 %global python2_pkgprefix python%{python2_pkgversion}
