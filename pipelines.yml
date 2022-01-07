@@ -1,12 +1,13 @@
 ---
 name: HPCk.it
-deb:
-  bullseye: bullseye
-  bookworm: bookworm
-  sid: sid
-rpm:
-  el8: rocky-8-x86_64
 gpg:
   name: HPCk.it maintainers
   email: maintainers@hpck.it
 msg: HPCk.it release
+formats:
+  deb:
+    bullseye: bullseye
+    bookworm: bookworm
+    sid: sid
+  rpm:
+    el8: rocky-8-x86_64
