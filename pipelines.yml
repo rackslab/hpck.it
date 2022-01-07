@@ -8,3 +8,4 @@ rpm:
 gpg:
   name: HPCk.it maintainers
   email: maintainers@hpck.it
+msg: HPCk.it release
