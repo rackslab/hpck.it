@@ -1,4 +1,5 @@
 ---
+name: HPCk.it
 deb:
   bullseye: bullseye
   bookworm: bookworm
