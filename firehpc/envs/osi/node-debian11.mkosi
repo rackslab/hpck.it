@@ -1,0 +1,10 @@
+[Distribution]
+Distribution=debian
+Release=bullseye
+
+[Output]
+Format=tar
+CompressOutput=xz
+
+[Content]
+WithDocs=yes
