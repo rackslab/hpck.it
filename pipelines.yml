@@ -11,3 +11,5 @@ formats:
     sid: sid
   rpm:
     el8: rocky-8-x86_64
+  osi:
+    firehpc: null
