@@ -3,10 +3,13 @@ Description: Increase size of sacctmgr read buffer
  with sacctmgr load. Without this patch, sacctmgr is not able to handle lines
  with more than 4096 which is too small in some cases. Also removed useless
  macro definition in other related file.
-Author: Rémi Palancher <remi@rezib.org>
 Forwarded: http://thread.gmane.org/gmane.comp.distributed.slurm.devel/5483
 Last-Update: 2019-09-06
+Author: Rémi Palancher <remi@rezib.org>
 
+
+diff --git a/src/sacctmgr/file_functions.c b/src/sacctmgr/file_functions.c
+index 990236a..0985c91 100644
 --- a/src/sacctmgr/file_functions.c
 +++ b/src/sacctmgr/file_functions.c
 @@ -42,7 +42,7 @@

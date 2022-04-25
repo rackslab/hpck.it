@@ -5,13 +5,16 @@ Description: Force use of hdf5 1.8 API
  The solution is to either force use of 1.8 API with the dedicated macro or
  define no macro at all, as it is the default behavior with hdf5 1.10 provided
  in Debian.
-Author: Rémi Palancher <remi@rackslab.io>
 Forwarded: no
 Last-Update: 2021-12-13
+Author: Rémi Palancher <remi@rackslab.io>
 
---- a/configure.ac	2021-12-13 13:24:33.771921763 +0000
-+++ b/configure.ac	2021-12-13 13:25:23.827769942 +0000
-@@ -221,7 +221,7 @@
+
+diff --git a/configure.ac b/configure.ac
+index 234aab1..5de64dd 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -221,7 +221,7 @@ AM_CONDITIONAL(BUILD_HDF5, test "$with_hdf5" = "yes")
  # --with-default-api-version=v16 which creates problems for slurm
  # because slurm uses the 1.8 API. By defining this CPP macro we get
  # the 1.8 API.
@@ -20,4 +23,3 @@ Last-Update: 2021-12-13
  
  X_AC_LZ4
  X_AC_HWLOC
-

@@ -1,13 +1,16 @@
 Description: Fix default pidfile paths
  This patch points default pidfild paths under /run
-Author: Mehdi Dogguy <mehdi@debian.org> and Gennaro Oliva <oliva.g@na.icar.cnr.it>
-Bug-Debian: http://bugs.debian.org/885759
+ian: http://bugs.debian.org/885759
 Forwarded: not-needed
 Last-Update: 2018-12-13
+Author: Mehdi Dogguy <mehdi@debian.org>
 
+
+diff --git a/src/common/read_config.h b/src/common/read_config.h
+index 2ebe33f..346d442 100644
 --- a/src/common/read_config.h
 +++ b/src/common/read_config.h
-@@ -153,9 +153,9 @@
+@@ -154,9 +154,9 @@ extern uint16_t drop_priv_flag;
  #  define DEFAULT_SELECT_TYPE       "select/linear"
  #endif
  #define DEFAULT_SITE_FACTOR_PLUGIN  "site_factor/none"
@@ -19,6 +22,8 @@ Last-Update: 2018-12-13
  #define DEFAULT_SLURMD_TIMEOUT      300
  #define DEFAULT_SPOOLDIR            "/var/spool/slurmd"
  #define DEFAULT_STORAGE_HOST        "localhost"
+diff --git a/src/slurmdbd/read_config.h b/src/slurmdbd/read_config.h
+index 444a0ab..2c785ef 100644
 --- a/src/slurmdbd/read_config.h
 +++ b/src/slurmdbd/read_config.h
 @@ -48,7 +48,7 @@

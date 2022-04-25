@@ -1,14 +1,17 @@
-Description: mail command absolute pathname                       
+Description: mail command absolute pathname
  This patch changes the default command to /usr/bin/mail in various
   configuration files and manual pages.                            
-Author: Gennaro Oliva <oliva.g@na.icar.cnr.it>                    
 Bug-Debian: http://bugs.debian.org/588862
 Forwarded: not-needed
 Last-Update: 2018-10-01
+Author: Gennaro Oliva <oliva.g@na.icar.cnr.it>
 
+
+diff --git a/doc/man/man1/strigger.1 b/doc/man/man1/strigger.1
+index 80e15cc..2405246 100644
 --- a/doc/man/man1/strigger.1
 +++ b/doc/man/man1/strigger.1
-@@ -323,7 +323,7 @@
+@@ -322,7 +322,7 @@ $ cat /usr/sbin/primary_slurmctld_failure
  strigger \-\-set \-\-primary_slurmctld_failure \\
           \-\-program=/usr/sbin/primary_slurmctld_failure
  # Notify the administrator of the failure using e\-mail
@@ -17,7 +20,7 @@ Last-Update: 2018-10-01
  
  $ strigger \-\-set \-\-primary_slurmctld_failure \\
             \-\-program=/usr/sbin/primary_slurmctld_failure
-@@ -342,7 +342,7 @@
+@@ -341,7 +341,7 @@ $ cat /usr/sbin/slurm_admin_notify
  strigger \-\-set \-\-node \-\-down \\
           \-\-program=/usr/sbin/slurm_admin_notify
  # Notify administrator using by e\-mail
