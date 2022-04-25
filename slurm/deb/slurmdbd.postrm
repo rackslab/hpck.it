@@ -20,16 +20,8 @@ set -e
 
 case "$1" in
        purge)
-         if which ucf >/dev/null; then
-           ucf --purge /etc/slurm-llnl/slurmdbd.conf
-         fi
-
-         # Remove log files in the old log dir location
-         rm -f /var/log/slurm-llnl/slurmdbd.log*
-         rmdir /var/log/slurm-llnl 2>/dev/null || true
-
          # Remove log files
-         rm -f /var/log/slurm/slurmctld.log*
+         rm -f /var/log/slurm/slurmdbd.log*
 
          pkill -9 -u slurm slurmdbd || true
         ;;

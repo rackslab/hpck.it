@@ -20,13 +20,7 @@ set -e
 
 case "$1" in
        purge)
-         rm -rf /var/lib/slurm-llnl/slurmctld
          rm -rf /var/lib/slurm/slurmctld
-         rmdir /var/lib/slurm-llnl 2>/dev/null || true
-
-         # Remove log files in the old log dir location
-         rm -f /var/log/slurm-llnl/slurmctld.log*
-         rmdir /var/log/slurm-llnl 2>/dev/null || true
 
          # Remove log files
          rm -f /var/log/slurm/slurmctld.log*

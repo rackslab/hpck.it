@@ -1,1 +1,1 @@
-slurm-wlm: dh-exec-subst-unknown-variable
+slurm: dh-exec-subst-unknown-variable

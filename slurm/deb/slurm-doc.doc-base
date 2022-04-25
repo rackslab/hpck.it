@@ -1,5 +1,5 @@
-Document: slurm-wlm
-Title: Debian slurm-wlm Manual
+Document: slurm
+Title: HPCk.it Slurm Manual
 Author: Slurm Team
 Abstract: The manual of SLURM, the Simple Linux Utility for Resource
  Management, an open-source cluster resource management
@@ -7,5 +7,5 @@ Abstract: The manual of SLURM, the Simple Linux Utility for Resource
 Section: System/Administration
 
 Format: HTML
-Index: /usr/share/doc/slurm-wlm/html/slurm.html
-Files: /usr/share/doc/slurm-wlm/html/*.html
+Index: /usr/share/doc/slurm/html/slurm.html
+Files: /usr/share/doc/slurm/html/*.html

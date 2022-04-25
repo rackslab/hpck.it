@@ -1,4 +1,4 @@
-/var/log/slurm-llnl/slurmctld.log /var/log/slurm/slurmctld.log {
+/var/log/slurm/slurmctld.log {
   compress
   missingok
   nocopytruncate

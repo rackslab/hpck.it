@@ -22,7 +22,6 @@ case "$1" in
       chown slurm:slurm /var/lib/slurm
       chown slurm:slurm /var/lib/slurm/slurmctld
       chown slurm:slurm /var/log/slurm
-      update-alternatives --install /usr/sbin/slurmctld slurmctld /usr/sbin/slurmctld-wlm 50
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

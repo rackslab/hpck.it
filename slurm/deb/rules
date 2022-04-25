@@ -16,28 +16,15 @@ endif
 %:
 	dh $@ --builddirectory
 
-override_dh_auto_clean:
-	dh_auto_clean
-	dh_auto_clean --builddirectory build-emulator
-	rm -rvf $(CURDIR)/debian/tmp-emulator
-
 # We run configure with --disable-debug to avoid the default use of -O0 and
 # consequent unprotected source functions, causing lintian report
 # hardening-no-fortify-functions
 # Notice that -g in CFLAGS is still provided by dpkg-buildflags
 override_dh_auto_configure:
 	dh_auto_configure -- --sysconfdir=/etc/slurm --with-munge --enable-pam --without-rpath --disable-debug --enable-multiple-slurmd $(ENABLEDEPRECATED) SUCMD=/bin/su SLEEP_CMD=/bin/sleep
-	dh_auto_configure --builddirectory build-emulator -- -sysconfdir=/etc/slurm --with-munge --enable-pam --without-rpath --disable-debug --enable-front-end --enable-multiple-slurmd $(ENABLEDEPRECATED) SUCMD=/bin/su SLEEP_CMD=/bin/sleep
-override_dh_auto_build:
-	dh_auto_build
-	dh_auto_build --builddirectory build-emulator
 
 override_dh_auto_install:
 	dh_auto_install
-	
-	# Rename slurm(1) manpage before dh_installman run. It is not possible
-	# to rename manpages in debian/*.manpages so hardcore `mv` is done here
-	mv -v debian/tmp/usr/share/man/man7/slurm.7 debian/tmp/usr/share/man/man7/slurm-wlm.7
 	
 	# run make install for libpam-slurm pkg
 	$(MAKE) -C obj-$(DEB_BUILD_GNU_TYPE)/contribs/pam install DESTDIR=$(CURDIR)/debian/tmp
@@ -49,7 +36,7 @@ override_dh_auto_install:
 	$(MAKE) -C obj-$(DEB_BUILD_GNU_TYPE)/contribs/perlapi install DESTDIR=$(CURDIR)/debian/tmp PERL_MM_OPT="INSTALLDIRS=vendor"
 	find debian/tmp/$(PERL_ARCHLIB) -type f -name "*.so" | xargs chrpath -d
 	
-	# run make install for slurm-wlm-torque pkg
+	# run make install for slurm-torque pkg
 	$(MAKE) -C obj-$(DEB_BUILD_GNU_TYPE)/contribs/torque install DESTDIR=$(CURDIR)/debian/tmp
 
 	# run make install for PMI pkg
@@ -73,63 +60,20 @@ override_dh_auto_install:
 	done
 
 	# Remove embedded jquery.min.js
-	rm -fv debian/tmp/usr/share/doc/slurm-wlm/html/jquery.min.js
-
-	# Rename the header files directory to slurm
-	mv -v debian/tmp/usr/include/slurm-wlm debian/tmp/usr/include/slurm
-
-	# Rename binaries that are also in the slurm-wlm-emulator
-	mv -v debian/tmp/usr/sbin/slurmctld debian/tmp/usr/sbin/slurmctld-wlm
-	mv -v debian/tmp/usr/sbin/slurmd debian/tmp/usr/sbin/slurmd-wlm
-	mv -v debian/tmp/usr/sbin/slurmstepd debian/tmp/usr/sbin/slurmstepd-wlm
-
-	dh_auto_install --builddirectory build-emulator  --destdir=$(CURDIR)/debian/tmp-emulator
-	# Rename binaries in the emulator packages
-	mv -v debian/tmp-emulator/usr/sbin/slurmctld debian/tmp-emulator/usr/sbin/slurmctld-wlm-emulator
-	mv -v debian/tmp-emulator/usr/sbin/slurmd debian/tmp-emulator/usr/sbin/slurmd-wlm-emulator
-	mv -v debian/tmp-emulator/usr/sbin/slurmstepd debian/tmp-emulator/usr/sbin/slurmstepd-wlm-emulator
-	mv -v debian/tmp-emulator/usr/bin/sshare	debian/tmp-emulator/usr/bin/sshare-emulator
-	mv -v debian/tmp-emulator/usr/bin/scancel 	debian/tmp-emulator/usr/bin/scancel-emulator
-	mv -v debian/tmp-emulator/usr/bin/sattach 	debian/tmp-emulator/usr/bin/sattach-emulator
-	mv -v debian/tmp-emulator/usr/bin/sbatch 	debian/tmp-emulator/usr/bin/sbatch-emulator
-	mv -v debian/tmp-emulator/usr/bin/sreport 	debian/tmp-emulator/usr/bin/sreport-emulator
-	mv -v debian/tmp-emulator/usr/bin/sbcast 	debian/tmp-emulator/usr/bin/sbcast-emulator
-	mv -v debian/tmp-emulator/usr/bin/srun 	debian/tmp-emulator/usr/bin/srun-emulator
-	mv -v debian/tmp-emulator/usr/bin/squeue 	debian/tmp-emulator/usr/bin/squeue-emulator
-	mv -v debian/tmp-emulator/usr/bin/sprio 	debian/tmp-emulator/usr/bin/sprio-emulator
-	mv -v debian/tmp-emulator/usr/bin/sdiag 	debian/tmp-emulator/usr/bin/sdiag-emulator
-	mv -v debian/tmp-emulator/usr/bin/strigger debian/tmp-emulator/usr/bin/strigger-emulator
-	mv -v debian/tmp-emulator/usr/bin/sinfo 	debian/tmp-emulator/usr/bin/sinfo-emulator
-	mv -v debian/tmp-emulator/usr/bin/salloc 	debian/tmp-emulator/usr/bin/salloc-emulator
-	mv -v debian/tmp-emulator/usr/bin/sacct	debian/tmp-emulator/usr/bin/sacct-emulator
-	mv -v debian/tmp-emulator/usr/bin/sacctmgr debian/tmp-emulator/usr/bin/sacctmgr-emulator
-	mv -v debian/tmp-emulator/usr/bin/scontrol debian/tmp-emulator/usr/bin/scontrol-emulator
-	mv -v debian/tmp-emulator/usr/bin/sstat	debian/tmp-emulator/usr/bin/sstat-emulator
+	rm -fv debian/tmp/usr/share/doc/slurm/html/jquery.min.js
 
 override_dh_strip:
-	dh_strip -plibslurm37
-	dh_strip -plibpmi0 --dbgsym-migration='libpmi0-dbg (<< 17.02.6~)'
-	dh_strip -plibpmi2-0 --dbgsym-migration='libpmi2-0-dbg (<< 17.02.6~)'
-	dh_strip -pslurm-wlm-basic-plugins --dbgsym-migration='slurm-wlm-basic-plugins-dbg (<< 17.02.6~)'
-	dh_strip -pslurm-client --dbgsym-migration='slurm-client-dbg (<< 17.02.6~)'
-	dh_strip -pslurmd --dbgsym-migration='slurmd-dbg (<< 17.02.6~)'
-	dh_strip -pslurmctld --dbgsym-migration='slurmctld-dbg (<< 17.02.6~)'
-	dh_strip -pslurmdbd --dbgsym-migration='slurmdbd-dbg (<< 17.02.6~)'
-	# we do not care about debug symbols for those pkgs
 	dh_strip -plibslurmdb-perl --no-automatic-dbgsym
 	dh_strip -plibslurm-perl --no-automatic-dbgsym
 	dh_strip -psview --no-automatic-dbgsym
 	dh_strip -plibpam-slurm --no-automatic-dbgsym
 	dh_strip -plibpam-slurm-adopt --no-automatic-dbgsym
-	dh_strip -pslurm-wlm-emulator --no-automatic-dbgsym
-	dh_strip -pslurm-client-emulator --no-automatic-dbgsym
 	dh_strip -plibpmi0-dev --no-automatic-dbgsym
 	dh_strip -plibpmi2-0-dev --no-automatic-dbgsym
 	dh_strip -plibslurm-dev --no-automatic-dbgsym
-	dh_strip -pslurm-wlm-basic-plugins-dev --no-automatic-dbgsym
-	dh_strip -pslurmrestd --no-automatic-dbgsym
+	dh_strip -pslurm-plugins-dev --no-automatic-dbgsym
 	strip --verbose --strip-unneeded --remove-section=.comment \
-		--remove-section=.note debian/slurm-wlm-basic-plugins-dev/usr/lib/*/slurm-wlm/*.a
+		--remove-section=.note debian/slurm-plugins-dev/usr/lib/*/slurm/*.a
 
 override_dh_auto_test:
 

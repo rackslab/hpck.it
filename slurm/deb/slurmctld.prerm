@@ -22,7 +22,6 @@ case "$1" in
         scancel --state=pending
         scancel --state=running
       fi
-      update-alternatives --remove slurmctld /usr/sbin/slurmctld-wlm
     ;;
 
     upgrade)

@@ -1,3 +1,0 @@
-debian/tmp-emulator/usr/sbin/slurmctld-wlm-emulator	/usr/sbin/
-debian/tmp-emulator/usr/sbin/slurmd-wlm-emulator	/usr/sbin/
-debian/tmp-emulator/usr/sbin/slurmstepd-wlm-emulator	/usr/sbin/

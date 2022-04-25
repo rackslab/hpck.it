@@ -1,5 +1,5 @@
 #!/bin/sh
-# postrm script for slurm-wlm-basic-plugins
+# postrm script for slurm-plugins
 #
 # see: dh_installdeb(1)
 
@@ -27,9 +27,6 @@ case "$1" in
 
          # Delete slurm configuration files
          rm -rf /etc/slurm
-
-         # Delete old slurm configuration files
-         rm -rf /etc/slurm-llnl
 
          # Deleting slurm user only if has the reserved ids
          if [ -n "$(id -u slurm 2>/dev/null)" ] ; then
