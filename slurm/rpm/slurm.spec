@@ -4,15 +4,15 @@
 #
 # Please refer to upstream DISCLAIMER file for copyrights.
 Name:		slurm
-Version:	{{ pkg.version }}
-Release:	{{ pkg.release }}
+Version:	{{ version }}
+Release:	{{ release }}
 Summary:	Slurm Workload Manager
 
 Group:		System Environment/Base
 License:	GPLv2+
 URL:		https://slurm.schedmd.com/
 
-Source:		%{name}-%{version}.tar.bz2
+Source:		{{ source }}
 
 # build options		.rpmmacros options	change to default action
 # ====================  ====================	========================
@@ -685,3 +685,5 @@ rm -rf %{buildroot}
 %systemd_preun slurmdbd.service
 %postun slurmdbd
 %systemd_postun_with_restart slurmdbd.service
+
+{{ changelog }}
