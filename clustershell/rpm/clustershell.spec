@@ -26,8 +26,8 @@
 %global srcname ClusterShell
 
 Name:           clustershell
-Version:	{{ pkg.version }}
-Release:	{{ pkg.release }}
+Version:	{{ version }}
+Release:	{{ release }}
 Summary:        Python framework for efficient cluster administration
 
 %if 0%{?suse_version}
@@ -43,7 +43,8 @@ Group:          System Environment/Base
 %endif
 %endif
 URL:            http://cea-hpc.github.io/clustershell/
-Source0:        https://files.pythonhosted.org/packages/source/C/%{srcname}/%{srcname}-%{version}.tar.gz
+Source:         {{ source }}
+{{ patches }}
 BuildArch:      noarch
 %if 0%{?py2}
 Requires:       python2-%{name} = %{version}-%{release}
@@ -105,6 +106,7 @@ ClusterShell Python 3 module and related command line tools.
 
 %prep
 %setup -q -n %{srcname}-%{version}
+{{ prep_patches }}
 
 %build
 %{__python3} setup.py build
@@ -231,104 +233,4 @@ rm -rf %{buildroot}
 %{vimdatadir}/syntax/clushconf.vim
 %{vimdatadir}/syntax/groupsconf.vim
 
-%changelog
-* Wed Nov  3 2021 Stephane Thiell <sthiell@stanford.edu> 1.8.4-1
-- update to 1.8.4
-
-* Sun Dec  1 2019 Stephane Thiell <sthiell@stanford.edu> 1.8.3-1
-- update to 1.8.3
-
-* Mon Aug 12 2019 Stephane Thiell <sthiell@stanford.edu> 1.8.2-1
-- update to 1.8.2
-
-* Tue Oct 30 2018 Stephane Thiell <sthiell@stanford.edu> 1.8.1-1
-- update to 1.8.1
-
-* Mon Oct 23 2017 Stephane Thiell <sthiell@stanford.edu> 1.8-1
-- update to 1.8
-
-* Sat Oct 14 2017 Stephane Thiell <sthiell@stanford.edu> 1.7.91-1
-- update to 1.7.91 (1.8 RC1)
-
-* Mon Oct  2 2017 Stephane Thiell <sthiell@stanford.edu> 1.7.82-1
-- update to 1.7.82 (1.8 beta2)
-
-* Sun Sep  3 2017 Stephane Thiell <sthiell@stanford.edu> 1.7.81-4
-- move vim extensions into the clustershell package
-- use Requires: vim-filesystem instead of vim-common
-- define upgrade path for vim-clustershell
-
-* Sat Sep  2 2017 Stephane Thiell <sthiell@stanford.edu> 1.7.81-3
-- use `python2-` prefix in *Requires if available
-
-* Sat Sep  2 2017 Stephane Thiell <sthiell@stanford.edu> 1.7.81-2
-- create separate packages for python2 and python3 modules
-
-* Fri Sep  1 2017 Stephane Thiell <sthiell@stanford.edu> 1.7.81-1
-- update to 1.7.81 (1.8 beta1)
-
-* Tue Dec 20 2016 Stephane Thiell <sthiell@stanford.edu> 1.7.3-1
-- update to 1.7.3
-
-* Sat Jun 18 2016 Stephane Thiell <sthiell@stanford.edu> 1.7.2-1
-- update to 1.7.2
-
-* Mon Feb 29 2016 Stephane Thiell <sthiell@stanford.edu> 1.7.1-1
-- update to 1.7.1
-
-* Tue Nov 10 2015 Stephane Thiell <sthiell@stanford.edu> 1.7-1
-- update to 1.7
-
-* Fri Aug  7 2015 Stephane Thiell <stephane.thiell@cea.fr> 1.6.96-1
-- update to 1.6.96
-
-* Sun Apr 08 2012 Stephane Thiell <stephane.thiell@cea.fr> 1.6-1
-- update to 1.6
-
-* Thu Jun 09 2011 Stephane Thiell <stephane.thiell@cea.fr> 1.5.1-1
-- update to 1.5.1
-
-* Wed Jun 08 2011 Stephane Thiell <stephane.thiell@cea.fr> 1.5-1
-- update to 1.5
-
-* Sat Mar 19 2011 Stephane Thiell <stephane.thiell@cea.fr> 1.4.3-1
-- update to 1.4.3
-
-* Tue Mar 15 2011 Stephane Thiell <stephane.thiell@cea.fr> 1.4.2-1
-- update to 1.4.2
-
-* Sun Feb 13 2011 Stephane Thiell <stephane.thiell@cea.fr> 1.4.1-1
-- update to 1.4.1
-
-* Sat Jan 15 2011 Stephane Thiell <stephane.thiell@cea.fr> 1.4-1
-- update to 1.4
-
-* Wed Oct 20 2010 Stephane Thiell <stephane.thiell@cea.fr> 1.3.3-1
-- update to 1.3.3
-
-* Fri Sep 10 2010 Stephane Thiell <stephane.thiell@cea.fr> 1.3.2-1
-- renamed Vim subpackage to vim-clustershell
-- update to 1.3.2
-
-* Sun Sep 05 2010 Stephane Thiell <stephane.thiell@cea.fr> 1.3.1-2
-- added -vim subpackage for .vim files
-
-* Fri Sep 03 2010 Stephane Thiell <stephane.thiell@cea.fr> 1.3.1-1
-- removed -n from setup line
-- own clustershell config directory for proper uninstall
-- install vim syntax addons in vimfiles, thus avoiding vim version detection
-- update to 1.3.1
-
-* Sun Aug 22 2010 Stephane Thiell <stephane.thiell@cea.fr> 1.3-4
-- fixed BuildRoot tag in accordance with EPEL guidelines
-- python_sitelib definition: prefer global vs define
-- preserve timestamps and fix permissions when installing files
-
-* Sat Aug 21 2010 Stephane Thiell <stephane.thiell@cea.fr> 1.3-3
-- use a full URL to the package in Source0
-
-* Fri Aug 20 2010 Stephane Thiell <stephane.thiell@cea.fr> 1.3-2
-- various improvements per first review request
-
-* Thu Aug 19 2010 Stephane Thiell <stephane.thiell@cea.fr> 1.3-1
-- initial build candidate for Fedora
+{{ changelog }}

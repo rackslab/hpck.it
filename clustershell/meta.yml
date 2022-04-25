@@ -1,6 +1,6 @@
 ---
 version: 1.8.4
-tarball: https://pypi.debian.net/ClusterShell/ClusterShell-{{ pkg.version }}.tar.gz
+tarball: https://pypi.debian.net/ClusterShell/ClusterShell-{{ version }}.tar.gz
 checksums:
   1.8.4:
     sha256: ff6fba688a06e5e577315d899f0dab3f4fe479cef99d444a4e651af577b7d081
