@@ -1,0 +1,25 @@
+Description: Force use of hdf5 1.8 API
+ Defining H5_NO_DEPRECATED_SYMBOLS macro against hdf5 >= 1.10 as configured in
+ Debian with --with-default-api-version=v18 results in a compilation error as
+ reported in: https://bugs.debian.org/997267
+ The solution is to either force use of 1.8 API with the dedicated macro or
+ define no macro at all, as it is the default behavior with hdf5 1.10 provided
+ in Debian.
+Forwarded: no
+Last-Update: 2021-12-13
+Author: Rémi Palancher <remi@rackslab.io>
+
+
+diff --git a/configure.ac b/configure.ac
+index 61067ba..8edcae5 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -221,7 +221,7 @@ AM_CONDITIONAL(BUILD_HDF5, test "$with_hdf5" = "yes")
+ # --with-default-api-version=v16 which creates problems for slurm
+ # because slurm uses the 1.8 API. By defining this CPP macro we get
+ # the 1.8 API.
+-AC_DEFINE([H5_NO_DEPRECATED_SYMBOLS], [1], [Make sure we get the 1.8 HDF5 API])
++AC_DEFINE([H5_USE_18_API], [1], [Make sure we get the 1.8 HDF5 API])
+ 
+ AX_CHECK_ZLIB([], [])
+ X_AC_LZ4
