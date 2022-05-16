@@ -1,3 +1,8 @@
+{% if version.major == 21 %}
+  {% set soname = 37 %}
+{% elif version.major == 20 %}
+  {% set soname = 36 %}
+{% endif %}
 Source: slurm
 Section: admin
 Priority: optional
@@ -108,7 +113,7 @@ Description: SLURM central management daemon
  interconnect agnostic.
  This package contains the central management daemon slurmctld.
 
-Package: libslurm37
+Package: libslurm{{soname}}
 Section: libs
 Architecture: any
 Pre-Depends: ${misc:Pre-Depends}
@@ -144,7 +149,7 @@ Architecture: any
 Depends:
  ${shlibs:Depends},
  ${misc:Depends},
- libslurm37 (= ${binary:Version})
+ libslurm{{ soname }} (= ${binary:Version})
 Conflicts: libslurm10-dev, libslurm11-dev, libslurm12-dev, libslurm13-dev, libslurm20-dev, libslurm21-dev
 Breaks: libslurmdb-dev
 Replaces: libslurm10-dev, libslurm11-dev, libslurm12-dev, libslurm13-dev, libslurm20-dev, libslurm21-dev, libslurmdb-dev
@@ -160,7 +165,7 @@ Depends:
  ${shlibs:Depends},
  ${misc:Depends},
  libpmi0 (= ${binary:Version}),
- libslurm37 (= ${binary:Version})
+ libslurm{{ soname }} (= ${binary:Version})
 Description: SLURM PMI library implementation development files
  SLURM, the Simple Linux Utility for Resource Management,
  is an open-source cluster resource management and job scheduling.
@@ -174,7 +179,7 @@ Depends:
  ${shlibs:Depends},
  ${misc:Depends},
  libpmi2-0 (= ${binary:Version}),
- libslurm37 (= ${binary:Version})
+ libslurm{{ soname }} (= ${binary:Version})
 Description: SLURM PMI2 library implementation development files
  SLURM, the Simple Linux Utility for Resource Management,
  is an open-source cluster resource management and job scheduling.
