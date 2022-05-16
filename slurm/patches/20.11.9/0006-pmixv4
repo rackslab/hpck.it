@@ -7,10 +7,10 @@ Author: Gennaro Oliva <oliva.g@na.icar.cnr.it>
 
 
 diff --git a/auxdir/x_ac_pmix.m4 b/auxdir/x_ac_pmix.m4
-index 52734fb..736a01b 100755
+index f86c80e..8d4bac4 100755
 --- a/auxdir/x_ac_pmix.m4
 +++ b/auxdir/x_ac_pmix.m4
-@@ -181,7 +181,8 @@ AC_DEFUN([X_AC_PMIX],
+@@ -194,7 +194,8 @@ AC_DEFUN([X_AC_PMIX],
  
    AM_CONDITIONAL(HAVE_PMIX, [test $_x_ac_pmix_v1_found = "1"] ||
                  [test $_x_ac_pmix_v2_found = "1"] ||
