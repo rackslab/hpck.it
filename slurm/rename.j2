@@ -1,0 +1,8 @@
+{% if version.major == 21 %}
+  {% set soname = 37 %}
+{% elif version.major == 20 %}
+  {% set soname = 36 %}
+{% endif %}
+deb/libslurmN.install deb/libslurm{{ soname }}.install
+deb/libslurmN.symbols deb/libslurm{{ soname }}.symbols
+deb/libslurmN.lintian-overrides deb/libslurm{{ soname }}.lintian-overrides
