@@ -184,7 +184,11 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_cred_insert_jobid@Base 1.3.8
  slurm_cred_jobid_cached@Base 1.3.8
  slurm_cred_pack@Base 1.3.8
+{% if version.major >= 21 %}
 #MISSING: 21.08.4# slurm_cred_print@Base 1.3.8
+{% else %}
+ slurm_cred_print@Base 1.3.8
+{% endif %}
  slurm_cred_revoke@Base 1.3.8
  slurm_cred_revoked@Base 1.3.8
  slurm_cred_rewind@Base 1.3.8
@@ -302,7 +306,11 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_free_dep_msg@Base 20.02.1
  slurm_free_dep_update_origin_msg@Base 20.02.1
  slurm_free_epilog_complete_msg@Base 1.3.8
+{% if version.major >= 21 %}
 #MISSING: 21.08.4# slurm_free_event_log_msg@Base 17.02.0
+{% else %}
+ slurm_free_event_log_msg@Base 17.02.0
+{% endif %}
  slurm_free_file_bcast_msg@Base 1.3.8
  slurm_free_forward_data_msg@Base 2.4.5
  slurm_free_front_end_info_members@Base 2.3.1
@@ -554,7 +562,11 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 20.11.2# slurm_get_route_plugin@Base 14.11.0
 #MISSING: 20.11.2# slurm_get_sbcast_parameters@Base 17.02.0
  slurm_get_sched_log_level@Base 19.05.2
+{% if version.major >= 21 %}
 #MISSING: 21.08.4# slurm_get_sched_params@Base 2.0.0
+{% else %}
+ slurm_get_sched_params@Base 2.0.0
+{% endif %}
 #MISSING: 17.02.0# slurm_get_sched_port@Base 1.3.8
 #MISSING: 20.11.2# slurm_get_sched_type@Base 1.3.8
 #MISSING: 18.08.0# slurm_get_select_jobinfo@Base 1.3.8
@@ -604,21 +616,40 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_getpwuid_r@Base 14.03.0
 #MISSING: 20.02.1# slurm_gmtime@Base 15.08.0
 #MISSING: 20.02.1# slurm_gmtime_r@Base 15.08.0
+{% if version.major >= 21 %}
 #MISSING: 21.08.4# slurm_gres_2_tres_str@Base 17.11.2
 #MISSING: 21.08.4# slurm_gres_build_job_details@Base 17.11.2
+{% else %}
+ slurm_gres_2_tres_str@Base 17.11.2
+ slurm_gres_build_job_details@Base 17.11.2
+{% endif %}
  slurm_gres_device_major@Base 17.11.2
  slurm_gres_find_id@Base 21.08.4
  slurm_gres_find_sock_by_job_state@Base 21.08.4
  slurm_gres_get_job_info@Base 17.11.2
+{% if version.major >= 21 %}
 #MISSING: 21.08.4# slurm_gres_get_job_state@Base 17.11.2
+{% else %}
+ slurm_gres_get_job_state@Base 17.11.2
+{% endif %}
  slurm_gres_get_node_used@Base 17.11.2
  slurm_gres_get_step_info@Base 17.11.2
+{% if version.major >= 21 %}
 #MISSING: 21.08.4# slurm_gres_get_step_state@Base 17.11.2
+{% else %}
+ slurm_gres_get_step_state@Base 17.11.2
+{% endif %}
  slurm_gres_get_system_cnt@Base 17.11.2
  slurm_gres_get_value_by_type@Base 17.11.2
+{% if version.major >= 21 %}
 #MISSING: 21.08.4# slurm_gres_gresid_to_gresname@Base 17.11.2
 #MISSING: 21.08.4# slurm_gres_set_job_tres_cnt@Base 17.11.2
 #MISSING: 21.08.4# slurm_gres_set_node_tres_cnt@Base 17.11.2
+{% else %}
+ slurm_gres_gresid_to_gresname@Base 17.11.2
+ slurm_gres_set_job_tres_cnt@Base 17.11.2
+ slurm_gres_set_node_tres_cnt@Base 17.11.2
+{% endif %}
  slurm_gres_sock_delete@Base 21.08.4
  slurm_grow_buf@Base 1.3.8
  slurm_het_job_lookup@Base 20.02.1
@@ -727,10 +758,18 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_jobacctinfo_destroy@Base 2.5.3
  slurm_jobacctinfo_pack@Base 2.5.3
  slurm_jobacctinfo_unpack@Base 2.5.3
+{% if version.major >= 21 %}
 #MISSING: 21.08.4# slurm_jobinfo_ctx_get@Base 1.3.8
+{% else %}
+ slurm_jobinfo_ctx_get@Base 1.3.8
+{% endif %}
  slurm_kill_job2@Base 14.11.0
  slurm_kill_job@Base 1.3.8
+{% if version.major >= 21 %}
 #MISSING: 21.08.4# slurm_kill_job_msg@Base 17.11.2
+{% else %}
+ slurm_kill_job_msg@Base 17.11.2
+{% endif %}
  slurm_kill_job_step@Base 1.3.8
 #MISSING: 15.08.0# slurm_layouts_fini@Base 14.11.0
 #MISSING: 15.08.0# slurm_layouts_get_entity@Base 14.11.0
@@ -964,8 +1003,13 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_print_slurmd_status@Base 1.3.8
  slurm_print_topo_info_msg@Base 2.0.0
  slurm_print_topo_record@Base 2.0.0
+{% if version.major >= 21 %}
 #MISSING: 21.08.4# slurm_priority_fini@Base 2.0.0
 #MISSING: 21.08.4# slurm_priority_init@Base 2.0.0
+{% else %}
+ slurm_priority_fini@Base 2.0.0
+ slurm_priority_init@Base 2.0.0
+{% endif %}
  slurm_private_data_string@Base 2.2.0
  slurm_process_option@Base 19.05.2
  slurm_process_option_data@Base 20.02.1
@@ -1109,6 +1153,7 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_sprint_node_table@Base 1.3.8
  slurm_sprint_partition_info@Base 1.3.8
  slurm_sprint_reservation_info@Base 2.0.0
+{% if version.major >= 21 %}
 #MISSING: 21.08.4# slurm_step_ctx_create@Base 1.3.8
 #MISSING: 21.08.4# slurm_step_ctx_create_no_alloc@Base 1.3.8
 #MISSING: 21.08.4# slurm_step_ctx_create_timeout@Base 2.6.2
@@ -1116,6 +1161,15 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 21.08.4# slurm_step_ctx_destroy@Base 1.3.8
 #MISSING: 21.08.4# slurm_step_ctx_get@Base 1.3.8
 #MISSING: 21.08.4# slurm_step_ctx_params_t_init@Base 1.3.8
+{% else %}
+ slurm_step_ctx_create@Base 1.3.8
+ slurm_step_ctx_create_no_alloc@Base 1.3.8
+ slurm_step_ctx_create_timeout@Base 2.6.2
+ slurm_step_ctx_daemon_per_node_hack@Base 1.3.8
+ slurm_step_ctx_destroy@Base 1.3.8
+ slurm_step_ctx_get@Base 1.3.8
+ slurm_step_ctx_params_t_init@Base 1.3.8
+{% endif %}
  slurm_step_launch@Base 1.3.8
  slurm_step_launch_abort@Base 1.3.8
  slurm_step_launch_add@Base 2.5.3
@@ -1130,12 +1184,20 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_step_layout_host_name@Base 1.3.8
  slurm_step_layout_merge@Base 20.11.2
  slurm_step_layout_type_name@Base 2.0.0
+{% if version.major >= 21 %}
 #MISSING: 21.08.4# slurm_step_retry_errno@Base 17.11.4
+{% else %}
+ slurm_step_retry_errno@Base 17.11.4
+{% endif %}
  slurm_stepd_add_extern_pid@Base 15.08.4
  slurm_stepd_available@Base 15.08.0
  slurm_stepd_connect@Base 15.08.0
 #MISSING: 20.11.2# slurm_stepd_connect_nss@Base 20.02.5
+{% if version.major >= 21 %}
 #MISSING: 21.08.4# slurm_stepd_get_info@Base 19.05.2
+{% else %}
+ slurm_stepd_get_info@Base 19.05.2
+{% endif %}
  slurm_stepd_get_namespace_fd@Base 20.11.5
  slurm_stepd_get_uid@Base 15.08.0
 #MISSING: 17.02.0# slurm_strcasestr@Base 2.0.0
@@ -1217,9 +1279,15 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_xassert_failed@Base 1.3.8
  slurm_xbasename@Base 1.3.8
  slurm_xcalloc@Base 19.05.2
+{% if version.major >= 21 %}
 #MISSING: 21.08.4# slurm_xcgroup_config_read_mutex@Base 19.05.2
 #MISSING: 21.08.4# slurm_xcgroup_fini_slurm_cgroup_conf@Base 19.05.2
 #MISSING: 21.08.4# slurm_xcgroup_get_slurm_cgroup_conf@Base 19.05.2
+{% else %}
+ slurm_xcgroup_config_read_mutex@Base 19.05.2
+ slurm_xcgroup_fini_slurm_cgroup_conf@Base 19.05.2
+ slurm_xcgroup_get_slurm_cgroup_conf@Base 19.05.2
+{% endif %}
  slurm_xdirname@Base 21.08.4
  slurm_xfer_buf_data@Base 1.3.8
  slurm_xfree@Base 1.3.8
