@@ -14,5 +14,6 @@ usr/bin/salloc
 usr/bin/sacct
 usr/bin/sacctmgr
 usr/bin/scontrol
+usr/bin/scrontab
 usr/bin/sstat
 usr/bin/sh5util
