@@ -4,6 +4,12 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
+{% if version.major == 22 %}
+  {% set soname = 38 %}
+{% elif version.major == 21 %}
+  {% set soname = 37 %}
+{% endif %}
+
 export PERL_ARCHLIB := $(shell perl -MConfig -e 'print substr($$Config{vendorarch}, 1)')
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all,-bindnow
 # include defs of all DEB_HOST_*/DEB_BUILD_* vars
@@ -63,6 +69,16 @@ override_dh_auto_install:
 	rm -fv debian/tmp/usr/share/doc/slurm/html/jquery.min.js
 
 override_dh_strip:
+	dh_strip -plibslurm{{ soname }}
+	dh_strip -plibpmi0
+	dh_strip -plibpmi2-0
+	dh_strip -pslurm-plugins
+	dh_strip -pslurm-client
+	dh_strip -pslurmd
+	dh_strip -pslurmctld
+	dh_strip -pslurmdbd
+	dh_strip -pslurmrestd
+	# we do not care about debug symbols for those pkgs
 	dh_strip -plibslurmdb-perl --no-automatic-dbgsym
 	dh_strip -plibslurm-perl --no-automatic-dbgsym
 	dh_strip -psview --no-automatic-dbgsym
