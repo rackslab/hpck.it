@@ -7,10 +7,10 @@ Author: Mehdi Dogguy <mehdi@debian.org>
 
 
 diff --git a/src/common/read_config.h b/src/common/read_config.h
-index 70cb8ef..4a9cbd5 100644
+index 1234774..5ac6020 100644
 --- a/src/common/read_config.h
 +++ b/src/common/read_config.h
-@@ -153,9 +153,9 @@ extern uint16_t drop_priv_flag;
+@@ -163,9 +163,9 @@ typedef struct node_record node_record_t;
  #  define DEFAULT_SELECT_TYPE       "select/linear"
  #endif
  #define DEFAULT_SITE_FACTOR_PLUGIN  "site_factor/none"
@@ -23,7 +23,7 @@ index 70cb8ef..4a9cbd5 100644
  #define DEFAULT_SPOOLDIR            "/var/spool/slurmd"
  #define DEFAULT_STORAGE_HOST        "localhost"
 diff --git a/src/slurmdbd/read_config.h b/src/slurmdbd/read_config.h
-index 444a0ab..2c785ef 100644
+index 5c3851d..4ce42b4 100644
 --- a/src/slurmdbd/read_config.h
 +++ b/src/slurmdbd/read_config.h
 @@ -48,7 +48,7 @@
@@ -33,5 +33,5 @@ index 444a0ab..2c785ef 100644
 -#define DEFAULT_SLURMDBD_PIDFILE	"/var/run/slurmdbd.pid"
 +#define DEFAULT_SLURMDBD_PIDFILE	"/run/slurmdbd.pid"
  #define DEFAULT_SLURMDBD_ARCHIVE_DIR	"/tmp"
- //#define DEFAULT_SLURMDBD_STEP_PURGE	1
- 
+ #define DEFAULT_SLURMDBD_KEEPALIVE_INTERVAL 30
+ #define DEFAULT_SLURMDBD_KEEPALIVE_PROBES 3

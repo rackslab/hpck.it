@@ -8,10 +8,10 @@ Author: Gennaro Oliva <oliva.g@na.icar.cnr.it>
 
 
 diff --git a/doc/man/man1/strigger.1 b/doc/man/man1/strigger.1
-index bde6f4d..b316b8f 100644
+index 3c74d8a..97f0d37 100644
 --- a/doc/man/man1/strigger.1
 +++ b/doc/man/man1/strigger.1
-@@ -323,7 +323,7 @@ $ cat /usr/sbin/primary_slurmctld_failure
+@@ -373,7 +373,7 @@ $ cat /usr/sbin/primary_slurmctld_failure
  strigger \-\-set \-\-primary_slurmctld_failure \\
           \-\-program=/usr/sbin/primary_slurmctld_failure
  # Notify the administrator of the failure using e\-mail
@@ -20,7 +20,7 @@ index bde6f4d..b316b8f 100644
  
  $ strigger \-\-set \-\-primary_slurmctld_failure \\
             \-\-program=/usr/sbin/primary_slurmctld_failure
-@@ -342,7 +342,7 @@ $ cat /usr/sbin/slurm_admin_notify
+@@ -392,7 +392,7 @@ $ cat /usr/sbin/slurm_admin_notify
  strigger \-\-set \-\-node \-\-down \\
           \-\-program=/usr/sbin/slurm_admin_notify
  # Notify administrator using by e\-mail

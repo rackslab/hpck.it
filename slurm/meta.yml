@@ -1,13 +1,13 @@
 ---
 versions:
+  slurm22.05: 22.05.0
   slurm21.08: 21.08.8-2
-  slurm20.11: 20.11.9
 tarball: https://download.schedmd.com/slurm/slurm-{{ version }}.tar.bz2
 checksums:
+  22.05.0:
+    sha1: 8427c29a6aafd667721c8ef941ba5390cc951d07
   21.08.8-2:
     sha1: 8d487b2f77f7496bc098bfca45152576d9c8a2db
-  20.11.9:
-    sha1: c05ea3e43838d3de4f0b81c6e03d54dc6c240be5
 rpm:
   release: 1
   buildargs: --with mysql

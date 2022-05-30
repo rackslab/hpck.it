@@ -3,7 +3,4 @@ ${PERL_ARCHLIB}/auto/Slurm/Slurm.so
 ${PERL_ARCHLIB}/Slurm/Bitstr.pm
 ${PERL_ARCHLIB}/Slurm/Constant.pm
 ${PERL_ARCHLIB}/Slurm/Hostlist.pm
-{% if version.major < 21 %}
-${PERL_ARCHLIB}/Slurm/Stepctx.pm
-{% endif %}
 ${PERL_ARCHLIB}/Slurm.pm

@@ -1,7 +1,5 @@
 usr/include/slurm/slurm_errno.h
-{% if version.major >= 21 %}
 usr/include/slurm/slurm_version.h
-{% endif %}
 usr/include/slurm/slurm.h
 usr/include/slurm/slurmdb.h
 usr/include/slurm/smd_ns.h

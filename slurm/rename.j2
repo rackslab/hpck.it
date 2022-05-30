@@ -1,7 +1,7 @@
-{% if version.major == 21 %}
+{% if version.major == 22 %}
+  {% set soname = 38 %}
+{% elif version.major == 21 %}
   {% set soname = 37 %}
-{% elif version.major == 20 %}
-  {% set soname = 36 %}
 {% endif %}
 deb/libslurmN.install deb/libslurm{{ soname }}.install
 deb/libslurmN.symbols.j2 deb/libslurm{{ soname }}.symbols.j2
