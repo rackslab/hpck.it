@@ -1,0 +1,28 @@
+Source: racksdb
+Section: net
+Priority: optional
+Maintainer: HPCKit team <maintainers@hpck.it>
+Homepage: https://github.com/rackslab/racksdb
+Build-Depends:
+ debhelper-compat (= 13),
+ python3-all (>= 3.6),
+ python3-setuptools,
+ dh-exec,
+ dh-python,
+ asciidoctor,
+ python3-cairo,
+ python3-clustershell,
+ python3-yaml,
+Standards-Version: 4.2.1
+
+Package: racksdb
+Architecture: all
+Section: admin
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Description: RacksDB datacenter infrastructures database
+ RacksDB is an open source solution to modelize your datacenters
+ infrastructures in a simple YAML-based database to store information about the
+ equipments in your datacenters provided with tools and library to request
+ this database.

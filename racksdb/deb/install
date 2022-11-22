@@ -1,0 +1,2 @@
+#!/usr/bin/dh-exec
+schema/racksdb.yml => /usr/share/racksdb/schema.yml
