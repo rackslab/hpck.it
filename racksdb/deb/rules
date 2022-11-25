@@ -5,5 +5,5 @@
 
 override_dh_auto_build:
 	dh_auto_build
-	make -C docs
+	make -C docs man
 

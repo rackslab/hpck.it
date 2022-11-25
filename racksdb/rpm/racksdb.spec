@@ -27,7 +27,7 @@ your datacenters provided with tools and library to request this database.
 
 %build
 %py3_build
-make -C docs
+make -C docs man
 
 %install
 %py3_install
