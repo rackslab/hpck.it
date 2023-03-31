@@ -43,7 +43,7 @@ Group:          System Environment/Base
 %endif
 %endif
 URL:            http://cea-hpc.github.io/clustershell/
-Source:         {{ source }}
+{{ source }}
 {{ patches }}
 BuildArch:      noarch
 %if 0%{?py2}
@@ -105,7 +105,7 @@ ClusterShell Python 3 module and related command line tools.
 
 
 %prep
-%setup -q -n %{srcname}-%{version}
+{{ prep_sources }}
 {{ prep_patches }}
 
 %build
