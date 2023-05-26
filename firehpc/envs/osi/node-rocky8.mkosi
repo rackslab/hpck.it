@@ -8,3 +8,7 @@ CompressOutput=xz
 
 [Content]
 WithDocs=yes
+Packages=
+  NetworkManager
+  iproute
+  iputils

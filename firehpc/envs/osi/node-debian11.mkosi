@@ -8,3 +8,4 @@ CompressOutput=xz
 
 [Content]
 WithDocs=yes
+Packages=python3
