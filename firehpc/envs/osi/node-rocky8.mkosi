@@ -3,7 +3,7 @@ Distribution=rocky
 Release=8
 
 [Output]
-Format=tar
+Format=gpt_ext4
 CompressOutput=xz
 
 [Content]
