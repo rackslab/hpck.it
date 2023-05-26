@@ -1,0 +1,15 @@
+#!/bin/sh
+# postinst script for fatbuildr-common
+
+set -e
+
+case "$1" in
+  configure)
+    if [ -d /run/systemd/system ]; then
+        systemd-sysusers /usr/lib/sysusers.d/firehpc.conf
+    fi
+esac
+
+#DEBHELPER#
+
+exit 0

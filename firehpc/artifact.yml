@@ -1,0 +1,7 @@
+---
+version: 0.1.0
+tarball: https://github.com/rackslab/firehpc/archive/refs/tags/v{{ version | gittag }}.tar.gz
+rpm:
+  release: 1
+deb:
+  release: 1

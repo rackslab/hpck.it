@@ -1,0 +1,22 @@
+Source: firehpc
+Section: net
+Priority: optional
+Maintainer: HPCKit team <maintainers@hpck.it>
+Homepage: https://github.com/rackslab/firehpc
+Build-Depends:
+ debhelper-compat (= 13),
+ python3-all (>= 3.6),
+ python3-setuptools,
+ dh-python,
+ asciidoctor,
+Standards-Version: 4.2.1
+
+Package: firehpc
+Architecture: all
+Section: admin
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Description: Deploy container-based emulated HPC clusters
+ FireHPC is an open source solution to deploy container-based emulated HPC
+ clusters, typically for development, testing or learning purposes.
