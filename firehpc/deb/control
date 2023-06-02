@@ -17,6 +17,8 @@ Section: admin
 Depends:
  ${misc:Depends},
  ${python3:Depends},
+ polkitd,
+ systemd-container,
 Description: Deploy container-based emulated HPC clusters
  FireHPC is an open source solution to deploy container-based emulated HPC
  clusters, typically for development, testing or learning purposes.
