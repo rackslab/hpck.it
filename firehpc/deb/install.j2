@@ -1,4 +1,8 @@
+{% if version.dist in ['deb12', 'sid'] %}
+etc/polkit/firehpc.rules usr/share/polkit-1/rules.d
+{% else %}
 etc/polkit/firehpc.pkla var/lib/polkit-1/localauthority/10-vendor.d
+{% endif %}
 etc/system/firehpc-container@.service lib/systemd/system
 etc/vendor/* usr/share/firehpc
 conf usr/share/firehpc
