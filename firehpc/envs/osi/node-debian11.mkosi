@@ -8,4 +8,8 @@ CompressOutput=xz
 
 [Content]
 WithDocs=yes
-Packages=python3
+Packages=
+  python3
+  iproute2
+  iputils-ping
+  libnss-resolve
