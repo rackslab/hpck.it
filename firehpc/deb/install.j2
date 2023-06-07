@@ -3,9 +3,9 @@ etc/polkit/firehpc.rules usr/share/polkit-1/rules.d
 {% else %}
 etc/polkit/firehpc.pkla var/lib/polkit-1/localauthority/10-vendor.d
 {% endif %}
-etc/system/firehpc-container@.service lib/systemd/system
-etc/tmpfiles/firehpc.conf usr/lib/tmpfiles.d
+etc/system/*.service lib/systemd/system
 etc/vendor/* usr/share/firehpc
 conf usr/share/firehpc
-lib/exec/firehpc-wrapper usr/libexec
+extra/connections/connection_plugins usr/share/firehpc/extra
+lib/exec/firehpc-*-wrapper usr/libexec
 etc/sysusers/*.conf usr/lib/sysusers.d
