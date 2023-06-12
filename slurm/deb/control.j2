@@ -1,7 +1,7 @@
-{% if version.major == 22 %}
+{% if version.major == 23 %}
+  {% set soname = 39 %}
+{% elif version.major == 22 %}
   {% set soname = 38 %}
-{% elif version.major == 21 %}
-  {% set soname = 37 %}
 {% endif %}
 Source: slurm
 Section: admin
@@ -10,7 +10,7 @@ Maintainer: HPCKit team <maintainers@hpck.it>
 Build-Depends:
  debhelper (>= 13),
  libmunge-dev,
- libncurses5-dev,
+ libncurses-dev,
  po-debconf,
  python3,
  libgtk2.0-dev,
@@ -91,7 +91,6 @@ Depends:
  slurm-plugins (= ${binary:Version}),
  ucf,
  munge,
- lsb-base (>= 3.2-12)
 Description: SLURM compute node daemon
  SLURM stands for Simple Linux Utility for Resource Management, it
  is an open-source cluster resource management and job scheduling system
@@ -108,7 +107,6 @@ Depends:
  slurm-plugins (= ${binary:Version}),
  ucf,
  munge,
- lsb-base (>= 3.2-12)
 Description: SLURM central management daemon
  SLURM stands for Simple Linux Utility for Resource Management, it
  is an open-source cluster resource management and job scheduling system
@@ -244,7 +242,6 @@ Depends:
  ${misc:Depends},
  slurm-plugins (= ${binary:Version}),
  munge,
- lsb-base (>= 3.2-12),
  ucf
 Description: Secure enterprise-wide interface to a database for SLURM
  SLURM, the Simple Linux Utility for Resource Management,

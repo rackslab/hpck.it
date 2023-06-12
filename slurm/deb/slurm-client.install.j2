@@ -1,5 +1,8 @@
 usr/bin/sshare
 usr/bin/scancel
+{% if version.major >= 23 %}
+usr/bin/scrun
+{% endif %}
 usr/bin/sattach
 usr/bin/sbatch
 usr/bin/sreport

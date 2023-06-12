@@ -2,12 +2,12 @@ Description: Fix default pidfile paths
  This patch points default pidfild paths under /run
 ian: http://bugs.debian.org/885759
 Forwarded: not-needed
-Last-Update: 2018-12-13
+Last-Update: 2023-06-09
 Author: Mehdi Dogguy <mehdi@debian.org>
 
 
 diff --git a/src/common/read_config.h b/src/common/read_config.h
-index 1234774..5ac6020 100644
+index 60ffe1d..1389c9c 100644
 --- a/src/common/read_config.h
 +++ b/src/common/read_config.h
 @@ -163,9 +163,9 @@ typedef struct node_record node_record_t;

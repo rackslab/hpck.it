@@ -1,19 +1,30 @@
-{% if version.major == 22 %}
+{% if version.major == 23 %}
+  {% set soname = 39 %}
+{% elif version.major == 22 %}
   {% set soname = 38 %}
-{% elif version.major == 21 %}
-  {% set soname = 37 %}
 {% endif %}
 libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 * Build-Depends-Package: libslurm-dev
+{% if version.major >= 23 %}
+ active_node_record_count@Base 23.02.2
+{% endif %}
  islurm_get_rem_time2__@Base 1.3.8
  islurm_get_rem_time__@Base 1.3.8
+{% if version.major >= 23 %}
+ node_record_count@Base 23.02.2
+ node_record_table_ptr@Base 23.02.2
+{% endif %}
  plugin_context_create@Base 2.5.7
  plugin_context_destroy@Base 2.5.7
  slurm_accept_msg_conn@Base 1.3.8
 #MISSING: 14.11.0# slurm_accept_stream@Base 1.3.8
  slurm_accounting_enforce_string@Base 2.2.0
  slurm_acct_gather_energy_destroy@Base 2.6.2
+{% if version.major >= 23 %}
+#MISSING: 23.02.2# slurm_acct_gather_energy_init@Base 2.5.3
+{% else %}
  slurm_acct_gather_energy_init@Base 2.5.3
+{% endif %}
  slurm_acct_storage_fini@Base 1.3.8
  slurm_acct_storage_init@Base 1.3.8
  slurm_add_slash_to_quotes@Base 2.2.0
@@ -47,9 +58,7 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_auth_index@Base 19.05.2
  slurm_auth_init@Base 1.3.8
  slurm_auth_opts_to_socket@Base 19.05.2
-{% if version.major >= 22 %}
  slurm_autodetect_cgroup_version@Base 22.05.0
-{% endif %}
  slurm_bb_flags2str@Base 15.08.0
  slurm_bb_str2flags@Base 15.08.0
 #MISSING: 18.08.0# slurm_bg_block_state_string@Base 2.2.0
@@ -66,6 +75,9 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_bit_ffs@Base 1.3.8
  slurm_bit_fill_gaps@Base 1.3.8
  slurm_bit_fls@Base 1.3.8
+{% if version.major >= 23 %}
+ slurm_bit_fls_from_bit@Base 23.02.2
+{% endif %}
  slurm_bit_fmt@Base 1.3.8
  slurm_bit_fmt_binmask@Base 1.3.8
  slurm_bit_fmt_full@Base 17.02.0
@@ -73,7 +85,11 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_bit_fmt_hexmask_trim@Base 20.11.2
  slurm_bit_free@Base 1.3.8
  slurm_bit_get_bit_num@Base 1.3.8
+{% if version.major >= 23 %}
+#MISSING: 23.02.2# slurm_bit_get_pos_num@Base 1.3.8
+{% else %}
  slurm_bit_get_pos_num@Base 1.3.8
+{% endif %}
  slurm_bit_nclear@Base 1.3.8
  slurm_bit_nffc@Base 1.3.8
  slurm_bit_nffs@Base 1.3.8
@@ -99,9 +115,11 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_bit_unfmt_binmask@Base 1.3.8
  slurm_bit_unfmt_hexmask@Base 1.3.8
  slurm_bitfmt2int@Base 1.3.8
-{% if version.major >= 22 %}
- slurm_bufs_sendto@Base 22.05.0
+{% if version.major >= 23 %}
+ slurm_bitmap2node_name@Base 23.02.2
+ slurm_buffers_pack_msg@Base 23.02.2
 {% endif %}
+ slurm_bufs_sendto@Base 22.05.0
  slurm_build_all_nodeline_info@Base 20.02.1
  slurm_callerid_get_own_netinfo@Base 15.08.0
  slurm_cgroup_conf@Base 21.08.4
@@ -122,6 +140,10 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 20.02.1# slurm_checkpoint_tasks@Base 2.0.0
 #MISSING: 20.02.1# slurm_checkpoint_vacate@Base 1.3.8
  slurm_clear_trigger@Base 1.3.8
+{% if version.major >= 23 %}
+ slurm_client_fini_plugins@Base 23.02.2
+ slurm_client_init_plugins@Base 23.02.2
+{% endif %}
 #MISSING: 17.11.2# slurm_close@Base 15.08.0
 #MISSING: 15.08.0# slurm_close_accepted_conn@Base 1.3.8
 #MISSING: 18.08.0# slurm_close_slurmdbd_conn@Base 1.3.8
@@ -129,65 +151,75 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_closeall@Base 21.08.4
  slurm_complete_job@Base 1.3.8
  slurm_conf@Base 20.11.2
-{% if version.major >= 22 %}
  slurm_conf_add_node@Base 22.05.0
-{% endif %}
  slurm_conf_destroy@Base 1.3.8
  slurm_conf_downnodes_array@Base 1.3.8
  slurm_conf_expand_slurmd_path@Base 1.3.8
  slurm_conf_frontend_array@Base 2.3.1
  slurm_conf_get_addr@Base 1.3.8
-{% if version.major >= 22 %}
  slurm_conf_get_address@Base 22.05.0
-{% endif %}
  slurm_conf_get_aliased_nodename@Base 1.3.8
  slurm_conf_get_aliases@Base 2.2.3
  slurm_conf_get_bcast_address@Base 20.02.1
+{% if version.major >= 23 %}
+#MISSING: 23.02.2# slurm_conf_get_cpus_bsct@Base 2.5.3
+{% else %}
  slurm_conf_get_cpus_bsct@Base 2.5.3
+{% endif %}
 #MISSING: 2.5.3# slurm_conf_get_cpus_sct@Base 1.3.8
  slurm_conf_get_hostname@Base 1.3.8
  slurm_conf_get_nodeaddr@Base 2.0.0
  slurm_conf_get_nodename@Base 1.3.8
 #MISSING: 20.11.2# slurm_conf_get_nodename_from_addr@Base 2.5.3
+{% if version.major >= 23 %}
+#MISSING: 23.02.2# slurm_conf_get_port@Base 1.3.8
+#MISSING: 23.02.2# slurm_conf_get_res_spec_info@Base 14.11.0
+{% else %}
  slurm_conf_get_port@Base 1.3.8
  slurm_conf_get_res_spec_info@Base 14.11.0
+{% endif %}
  slurm_conf_init@Base 1.3.8
+{% if version.major >= 23 %}
+ slurm_conf_init_load@Base 23.02.2
+ slurm_conf_init_stepd@Base 23.02.2
+{% endif %}
  slurm_conf_install_fork_handlers@Base 1.3.8
  slurm_conf_lock@Base 1.3.8
  slurm_conf_mutex_init@Base 1.3.8
  slurm_conf_nodename_array@Base 1.3.8
  slurm_conf_nodeset_array@Base 20.02.1
  slurm_conf_options@Base 1.3.8
-{% if version.major >= 22 %}
  slurm_conf_parse_nodeline@Base 22.05.0
-{% endif %}
  slurm_conf_partition_array@Base 1.3.8
  slurm_conf_reinit@Base 1.3.8
-{% if version.major >= 22 %}
  slurm_conf_remove_node@Base 22.05.0
-{% endif %}
  slurm_conf_unlock@Base 1.3.8
 #MISSING: 18.08.0# slurm_conn_type_string@Base 2.2.0
 #MISSING: 18.08.0# slurm_conn_type_string_full@Base 2.3.1
+{% if version.major >= 23 %}
+ slurm_container_status_to_str@Base 23.02.2
+{% endif %}
  slurm_convert_num_unit2@Base 16.05.5
  slurm_convert_num_unit@Base 16.05.5
  slurm_copy_char_list@Base 15.08.0
+{% if version.major >= 23 %}
+ slurm_copy_priority_factors@Base 23.02.2
+#MISSING: 23.02.2# slurm_copy_priority_factors_object@Base 15.08.0
+{% else  %}
  slurm_copy_priority_factors_object@Base 15.08.0
+{% endif %}
  slurm_copy_resource_allocation_response_msg@Base 20.11.2
  slurm_cray_nodelist2nids@Base 14.03.0
  slurm_create_buf@Base 1.3.8
- slurm_create_mmap_buf@Base 18.08.0
-{% if version.major >= 22 %}
- slurm_create_node@Base 22.05.0
+{% if version.major >= 23 %}
+ slurm_create_container_state_msg@Base 23.02.2
 {% endif %}
+ slurm_create_mmap_buf@Base 18.08.0
+ slurm_create_node@Base 22.05.0
  slurm_create_partition@Base 2.0.0
  slurm_create_reservation@Base 2.0.0
  slurm_cred_begin_expiration@Base 1.3.8
-{% if version.major >= 22 %}
 #MISSING: 22.05.0# slurm_cred_copy@Base 1.3.8
-{% else %}
- slurm_cred_copy@Base 1.3.8
-{% endif %}
  slurm_cred_create@Base 1.3.8
  slurm_cred_creator_ctx_create@Base 1.3.8
  slurm_cred_ctx_destroy@Base 1.3.8
@@ -200,7 +232,12 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_cred_faker@Base 1.3.8
  slurm_cred_fini@Base 19.05.2
  slurm_cred_free_args@Base 1.3.8
+{% if version.major >= 23 %}
+ slurm_cred_get@Base 23.02.2
+#MISSING: 23.02.2# slurm_cred_get_arg@Base 19.05.2
+{% else %}
  slurm_cred_get_arg@Base 19.05.2
+{% endif %}
  slurm_cred_get_args@Base 1.3.8
  slurm_cred_get_mem@Base 21.08.4
  slurm_cred_get_signature@Base 1.3.8
@@ -214,9 +251,7 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_cred_revoked@Base 1.3.8
  slurm_cred_rewind@Base 1.3.8
  slurm_cred_send_gids_enabled@Base 20.11.2
-{% if version.major >= 22 %}
  slurm_cred_unlock_args@Base 22.05.0
-{% endif %}
  slurm_cred_unpack@Base 1.3.8
  slurm_cred_verifier_ctx_create@Base 1.3.8
  slurm_cred_verify@Base 1.3.8
@@ -232,9 +267,7 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_debug4@Base 2.2.0
  slurm_debug5@Base 2.2.0
  slurm_debug@Base 1.3.8
-{% if version.major >= 22 %}
  slurm_delete_node@Base 22.05.0
-{% endif %}
  slurm_delete_partition@Base 1.3.8
  slurm_delete_reservation@Base 2.0.0
  slurm_delta_tv@Base 17.02.0
@@ -243,9 +276,16 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 20.02.1# slurm_destroy_char@Base 1.3.8
  slurm_destroy_config_key_pair@Base 2.1.0
  slurm_destroy_config_plugin_params@Base 18.08.0
+{% if version.major >= 23 %}
+ slurm_destroy_container_exec_msg@Base 23.02.2
+ slurm_destroy_container_state_msg@Base 23.02.2
+{% endif %}
  slurm_destroy_federation_rec@Base 17.11.2
  slurm_destroy_gres_device@Base 17.11.2
  slurm_destroy_gres_slurmd_conf@Base 19.05.2
+{% if version.major >= 23 %}
+ slurm_destroy_priority_factors@Base 23.02.2
+{% endif %}
  slurm_destroy_priority_factors_object@Base 2.0.0
 #MISSING: 18.08.0# slurm_destroy_select_ba_request@Base 2.3.1
  slurm_destroy_selected_step@Base 20.11.2
@@ -277,6 +317,10 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 20.02.1# slurm_env_array_overwrite_pack_fmt@Base 17.11.2
  slurm_env_unset_environment@Base 2.3.3
  slurm_error@Base 1.3.8
+{% if version.major >= 23 %}
+ slurm_errtab@Base 23.02.2
+ slurm_errtab_size@Base 23.02.2
+{% endif %}
  slurm_fatal@Base 1.3.8
  slurm_fatal_abort@Base 17.11.4
 #MISSING: 17.11.2# slurm_fatal_add_cleanup@Base 1.3.8
@@ -290,11 +334,13 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_fd_set_nonblocking@Base 1.3.8
 #MISSING: 19.05.2# slurm_fd_write_n@Base 1.3.8
  slurm_fetch_token@Base 20.02.1
-{% if version.major >= 22 %}
  slurm_find_char_exact_in_list@Base 22.05.0
-{% endif %}
  slurm_find_char_in_list@Base 17.11.2
 #MISSING: 19.05.2# slurm_find_group_user@Base 14.11.8
+{% if version.major >= 23 %}
+ slurm_find_node_record@Base 23.02.2
+ slurm_find_step_ids_by_container_id@Base 23.02.2
+{% endif %}
  slurm_fini@Base 20.11.2
  slurm_forward_data@Base 2.4.5
  slurm_free_accounting_update_msg@Base 1.3.8
@@ -325,6 +371,10 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_free_composite_msg@Base 15.08.0
  slurm_free_config_request_msg@Base 20.02.1
  slurm_free_config_response_msg@Base 20.02.1
+{% if version.major >= 23 %}
+ slurm_free_container_id_request_msg@Base 23.02.2
+ slurm_free_container_id_response_msg@Base 23.02.2
+{% endif %}
  slurm_free_control_status_msg@Base 18.08.0
  slurm_free_crontab_request_msg@Base 20.11.2
  slurm_free_crontab_response_msg@Base 20.11.2
@@ -410,6 +460,9 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_free_resv_desc_msg_part@Base 20.11.2
  slurm_free_resv_info_request_msg@Base 2.0.0
  slurm_free_resv_name_msg@Base 2.0.0
+{% if version.major >= 23 %}
+ slurm_free_return_code2_msg@Base 23.02.2
+{% endif %}
  slurm_free_return_code_msg@Base 1.3.8
  slurm_free_sbcast_cred_msg@Base 2.1.0
  slurm_free_set_debug_flags_msg@Base 2.3.1
@@ -425,11 +478,7 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_free_slurmd_status@Base 1.3.8
 #MISSING: 20.11.2# slurm_free_spank_env_request_msg@Base 2.3.1
 #MISSING: 20.11.2# slurm_free_spank_env_responce_msg@Base 2.3.1
-{% if version.major >= 22 %}
 #MISSING: 22.05.0# slurm_free_srun_exec_msg@Base 1.3.8
-{% else %}
- slurm_free_srun_exec_msg@Base 1.3.8
-{% endif %}
  slurm_free_srun_job_complete_msg@Base 1.3.8
  slurm_free_srun_node_fail_msg@Base 1.3.8
  slurm_free_srun_ping_msg@Base 1.3.8
@@ -442,14 +491,13 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_free_step_complete_msg@Base 1.3.8
  slurm_free_step_id@Base 20.11.2
  slurm_free_submit_response_response_msg@Base 1.3.8
+{% if version.major >= 23 %}
+ slurm_free_suspend_exc_update_msg@Base 23.02.2
+{% endif  %}
  slurm_free_suspend_int_msg@Base 2.5.3
  slurm_free_suspend_msg@Base 1.3.8
  slurm_free_task_exit_msg@Base 1.3.8
-{% if version.major >= 22 %}
 #MISSING: 22.05.0# slurm_free_task_user_managed_io_stream_msg@Base 1.3.8
-{% else %}
- slurm_free_task_user_managed_io_stream_msg@Base 1.3.8
-{% endif %}
  slurm_free_token_request_msg@Base 20.02.1
  slurm_free_token_response_msg@Base 20.02.1
  slurm_free_top_job_msg@Base 16.05.0
@@ -537,11 +585,7 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 20.11.2# slurm_get_jobcomp_port@Base 1.3.8
 #MISSING: 20.11.2# slurm_get_jobcomp_type@Base 1.3.8
 #MISSING: 20.11.2# slurm_get_jobcomp_user@Base 1.3.8
-{% if version.major >= 22 %}
 #MISSING: 22.05.0# slurm_get_keep_alive_time@Base 2.6.2
-{% else %}
- slurm_get_keep_alive_time@Base 2.6.2
-{% endif %}
 #MISSING: 20.11.2# slurm_get_kill_on_bad_exit@Base 2.0.0
 #MISSING: 20.11.2# slurm_get_kill_wait@Base 2.4.5
 #MISSING: 20.11.2# slurm_get_kvs_comm_set@Base 1.3.8
@@ -557,6 +601,9 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 20.11.2# slurm_get_mpi_params@Base 2.0.0
 #MISSING: 20.11.2# slurm_get_msg_aggr_params@Base 15.08.0
 #MISSING: 20.11.2# slurm_get_msg_timeout@Base 1.3.8
+{% if version.major >= 23 %}
+ slurm_get_next_tres@Base 23.02.2
+{% endif %}
  slurm_get_node_energy@Base 2.6.2
 #MISSING: 20.11.2# slurm_get_node_features_plugins@Base 16.05.0
  slurm_get_peer_addr@Base 1.3.8
@@ -653,11 +700,7 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 20.02.1# slurm_gmtime_r@Base 15.08.0
 #MISSING: 21.08.4# slurm_gres_2_tres_str@Base 17.11.2
 #MISSING: 21.08.4# slurm_gres_build_job_details@Base 17.11.2
-{% if version.major >= 22 %}
 #MISSING: 22.05.0# slurm_gres_device_major@Base 17.11.2
-{% else %}
- slurm_gres_device_major@Base 17.11.2
-{% endif %}
  slurm_gres_find_id@Base 21.08.4
  slurm_gres_find_sock_by_job_state@Base 21.08.4
  slurm_gres_get_job_info@Base 17.11.2
@@ -668,9 +711,7 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_gres_get_system_cnt@Base 17.11.2
  slurm_gres_get_value_by_type@Base 17.11.2
 #MISSING: 21.08.4# slurm_gres_gresid_to_gresname@Base 17.11.2
-{% if version.major >= 22 %}
  slurm_gres_job_list_delete@Base 22.05.0
-{% endif %}
 #MISSING: 21.08.4# slurm_gres_set_job_tres_cnt@Base 17.11.2
 #MISSING: 21.08.4# slurm_gres_set_node_tres_cnt@Base 17.11.2
  slurm_gres_sock_delete@Base 21.08.4
@@ -804,17 +845,13 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_list_enqueue@Base 1.3.8
  slurm_list_find@Base 1.3.8
  slurm_list_find_first@Base 1.3.8
-{% if version.major >= 22 %}
  slurm_list_find_first_ro@Base 22.05.0
-{% endif %}
  slurm_list_flip@Base 21.08.4
  slurm_list_flush@Base 2.2.0
  slurm_list_flush_max@Base 21.08.4
  slurm_list_for_each@Base 1.3.8
  slurm_list_for_each_max@Base 20.02.1
-{% if version.major >= 22 %}
  slurm_list_for_each_ro@Base 22.05.0
-{% endif %}
  slurm_list_insert@Base 1.3.8
 #MISSING: 20.02.1# slurm_list_install_fork_handlers@Base 1.3.8
  slurm_list_is_empty@Base 1.3.8
@@ -831,9 +868,7 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_list_sort@Base 1.3.8
  slurm_list_transfer@Base 1.3.8
  slurm_list_transfer_max@Base 20.02.1
-{% if version.major >= 22 %}
  slurm_list_transfer_unique@Base 22.05.0
-{% endif %}
 #MISSING: 14.11.0# slurm_listen_stream@Base 1.3.8
  slurm_load_assoc_mgr_info@Base 15.08.0
 #MISSING: 18.08.0# slurm_load_block_info@Base 2.1.0
@@ -871,7 +906,12 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_log_init@Base 1.3.8
  slurm_log_oom@Base 2.6.2
  slurm_log_reinit@Base 1.3.8
+{% if version.major >= 23 %}
+#MISSING: 23.02.2# slurm_log_set_fpfx@Base 1.3.8
+ slurm_log_set_prefix@Base 23.02.2
+{% else %}
  slurm_log_set_fpfx@Base 1.3.8
+{% endif %}
  slurm_log_var@Base 19.05.2
  slurm_make_time_str@Base 1.3.8
  slurm_mcs_fini@Base 16.05.0
@@ -885,11 +925,7 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_mins2time_str@Base 16.05.5
  slurm_mktime@Base 15.08.0
  slurm_mon_abbr@Base 16.05.5
-{% if version.major >= 22 %}
 #MISSING: 22.05.0# slurm_mpi_plugin_init@Base 2.4.5
-{% else %}
- slurm_mpi_plugin_init@Base 2.4.5
-{% endif %}
  slurm_msg_recvfrom_timeout@Base 15.08.0
  slurm_msg_sendto@Base 15.08.0
  slurm_msg_sendto_timeout@Base 15.08.0
@@ -939,13 +975,8 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_pack_list@Base 18.08.0
  slurm_pack_list_until@Base 21.08.4
  slurm_pack_selected_step@Base 20.11.2
-{% if version.major >= 22 %}
 #MISSING: 22.05.0# slurm_pack_slurm_addr@Base 1.3.8
 #MISSING: 22.05.0# slurm_pack_slurm_addr_array@Base 1.3.8
-{% else %}
- slurm_pack_slurm_addr@Base 1.3.8
- slurm_pack_slurm_addr_array@Base 1.3.8
-{% endif %}
  slurm_pack_slurm_step_layout@Base 14.03.0
  slurm_pack_slurmdbd_msg@Base 18.08.3
  slurm_pack_time@Base 1.3.8
@@ -956,11 +987,12 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_packmem@Base 1.3.8
  slurm_packmem_array@Base 1.3.8
  slurm_packstr_array@Base 1.3.8
-{% if version.major >= 22 %}
  slurm_parse_char_list@Base 22.05.0
-{% endif %}
  slurm_parse_step_str@Base 20.11.2
  slurm_parse_time@Base 16.05.5
+{% if version.major >= 23 %}
+ slurm_parse_time_make_str_utc@Base 23.02.2
+{% endif %}
 #MISSING: 17.02.0# slurm_parser@Base 1.3.8
  slurm_perror@Base 1.3.8
  slurm_persist_conn_close@Base 17.02.0
@@ -1022,11 +1054,7 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_print_job_step_info@Base 1.3.8
  slurm_print_job_step_info_msg@Base 1.3.8
  slurm_print_key_pairs@Base 2.0.0
-{% if version.major >= 22 %}
 #MISSING: 22.05.0# slurm_print_launch_task_msg@Base 1.3.8
-{% else %}
- slurm_print_launch_task_msg@Base 1.3.8
-{% endif %}
 #MISSING: 20.11.2# slurm_print_layout_info@Base 15.08.0
 #MISSING: 15.08.0# slurm_print_mem_bind_help@Base 2.0.0
  slurm_print_mem_bind_help@Base 2.0.0
@@ -1063,6 +1091,9 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_reconfigure@Base 1.3.8
  slurm_recv_timeout@Base 15.08.0
  slurm_rehash_node@Base 20.02.1
+{% if version.major >= 23 %}
+ slurm_remove_char_list_from_char_list@Base 23.02.2
+{% endif %}
  slurm_remove_crontab@Base 20.11.2
  slurm_request_crontab@Base 20.11.2
  slurm_requeue2@Base 14.11.0
@@ -1111,17 +1142,16 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_sched_info@Base 18.08.0
  slurm_sched_verbose@Base 18.08.0
  slurm_secs2time_str@Base 16.05.5
-{% if version.major >= 22 %}
 #MISSING: 22.05.0# slurm_select_fini@Base 1.3.8
 #MISSING: 22.05.0# slurm_select_init@Base 1.3.8
-{% else %}
- slurm_select_fini@Base 1.3.8
- slurm_select_init@Base 1.3.8
-{% endif %}
  slurm_send_addr_recv_msgs@Base 1.3.8
  slurm_send_fd_over_pipe@Base 20.02.1
 #MISSING: 20.11.2# slurm_send_kvs_comm_set@Base 1.3.8
+{% if version.major >= 23 %}
+#MISSING: 23.02.2# slurm_send_msg@Base 18.08.0
+{% else %}
  slurm_send_msg@Base 18.08.0
+{% endif %}
  slurm_send_msg_maybe@Base 17.11.9
  slurm_send_node_msg@Base 1.3.8
  slurm_send_only_controller_msg@Base 1.3.8
@@ -1163,6 +1193,10 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 15.08.0# slurm_set_stream_blocking@Base 1.3.8
 #MISSING: 15.08.0# slurm_set_stream_non_blocking@Base 1.3.8
 #MISSING: 20.11.2# slurm_set_select_type_param@Base 17.11.2
+{% if version.major >= 23 %}
+ slurm_set_slurmd_debug_flags@Base 23.02.2
+ slurm_set_slurmd_debug_level@Base 23.02.2
+{% endif %}
 #MISSING: 20.11.2# slurm_set_tree_width@Base 1.3.8
  slurm_set_trigger@Base 1.3.8
  slurm_setenvpf@Base 1.3.8
@@ -1185,6 +1219,7 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_sort_char_list_asc@Base 1.3.9
  slurm_sort_char_list_desc@Base 1.3.9
  slurm_sort_key_pairs@Base 2.1.0
+ slurm_sort_node_list_str@Base 22.05.9
  slurm_spank_log@Base 20.02.1
 #MISSING: 18.08.0# slurm_sprint_block_info@Base 2.1.0
  slurm_sprint_cpu_bind_type@Base 1.3.8
@@ -1227,9 +1262,7 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 17.02.0# slurm_strcasestr@Base 2.0.0
  slurm_stepd_get_x11_display@Base 17.11.2
  slurm_stepd_getgr@Base 19.05.2
-{% if version.major >= 22 %}
  slurm_stepd_gethostbyname@Base 22.05.0
-{% endif %}
  slurm_stepd_getpw@Base 19.05.2
  slurm_strerror@Base 1.3.8
  slurm_strlcpy@Base 1.3.8
@@ -1265,13 +1298,8 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_unpack_list@Base 18.08.0
  slurm_unpack_received_msg@Base 17.02.0
  slurm_unpack_selected_step@Base 20.11.2
-{% if version.major >= 22 %}
 #MISSING: 22.05.0# slurm_unpack_slurm_addr_array@Base 1.3.8
 #MISSING: 22.05.0# slurm_unpack_slurm_addr_no_alloc@Base 1.3.8
-{% else %}
- slurm_unpack_slurm_addr_array@Base 1.3.8
- slurm_unpack_slurm_addr_no_alloc@Base 1.3.8
-{% endif %}
  slurm_unpack_slurm_step_layout@Base 14.03.0
  slurm_unpack_slurmdbd_msg@Base 18.08.3
  slurm_unpack_time@Base 1.3.8
@@ -1281,10 +1309,17 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_unpacklongdouble@Base 15.08.0
 #MISSING: 20.11.2# slurm_unpackmem@Base 1.3.8
  slurm_unpackmem_array@Base 1.3.8
+{% if version.major >= 23 %}
+#MISSING: 23.02.2# slurm_unpackmem_malloc@Base 1.3.8
+{% else %}
  slurm_unpackmem_malloc@Base 1.3.8
+{% endif %}
  slurm_unpackmem_ptr@Base 1.3.8
  slurm_unpackmem_xmalloc@Base 1.3.8
  slurm_unpackstr_array@Base 1.3.8
+{% if version.major >= 23 %}
+ slurm_unpackstr_xmalloc@Base 23.02.2
+{% endif %}
  slurm_unpackstr_xmalloc_chooser@Base 17.11.5
  slurm_unpackstr_xmalloc_escaped@Base 17.11.5
  slurm_unsetenvp@Base 1.3.8
@@ -1299,6 +1334,11 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 20.11.2# slurm_update_powercap@Base 15.08.0
  slurm_update_reservation@Base 2.0.0
  slurm_update_step@Base 2.2.0
+{% if version.major >= 23 %}
+ slurm_update_suspend_exc_nodes@Base 23.02.2
+ slurm_update_suspend_exc_parts@Base 23.02.2
+ slurm_update_suspend_exc_states@Base 23.02.2
+{% endif %}
  slurm_valid_base_state@Base 21.08.4
 #MISSING: 18.08.0# slurm_valid_uid_gid@Base 15.08.1
  slurm_verbose@Base 1.3.8
@@ -1317,14 +1357,10 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_xdirname@Base 21.08.4
  slurm_xfer_buf_data@Base 1.3.8
  slurm_xfree@Base 1.3.8
-{% if version.major >= 22 %}
  slurm_xfree_array@Base 22.05.0
-{% endif %}
  slurm_xfree_ptr@Base 20.02.1
  slurm_xfree_struct_group_array@Base 19.05.2
-{% if version.major >= 22 %}
  slurm_xfree_struct_hostent@Base 22.05.0
-{% endif %}
  slurm_xfree_struct_passwd@Base 19.05.2
  slurm_xiso8601timecat@Base 21.08.4
  slurm_xlate_job_id@Base 2.6.2
@@ -1346,9 +1382,7 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_xstrcasecmp@Base 14.03.0
  slurm_xstrcasestr@Base 17.02.0
  slurm_xstrcat@Base 1.3.8
-{% if version.major >= 22 %}
  slurm_xstrcatat@Base 22.05.0
-{% endif %}
  slurm_xstrcatchar@Base 1.3.8
  slurm_xstrchr@Base 14.03.0
  slurm_xstrcmp@Base 14.03.0
@@ -1550,11 +1584,7 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurmdb_pack_federation_cond@Base 17.02.0
  slurmdb_pack_federation_rec@Base 17.02.0
  slurmdb_pack_job_cond@Base 2.3.1
-{% if version.major >= 22 %}
 #MISSING: 22.05.0# slurmdb_pack_job_modify_cond@Base 2.3.1
-{% else %}
- slurmdb_pack_job_modify_cond@Base 2.3.1
-{% endif %}
  slurmdb_pack_job_rec@Base 2.3.1
  slurmdb_pack_qos_cond@Base 2.3.1
  slurmdb_pack_qos_rec@Base 2.3.1
@@ -1607,6 +1637,9 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurmdb_res_type_str@Base 14.03.0
  slurmdb_reservations_get@Base 19.05.2
  slurmdb_send_accounting_update@Base 2.3.1
+{% if version.major >= 23 %}
+ slurmdb_send_accounting_update_persist@Base 23.02.2
+{% endif %}
 #MISSING: 16.05.0# slurmdb_set_new_tres_cnt@Base 15.08.0
  slurmdb_setup_cluster_dim_size@Base 2.3.1
  slurmdb_setup_cluster_dims@Base 2.3.1
@@ -1653,11 +1686,7 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurmdb_unpack_federation_cond@Base 17.02.0
  slurmdb_unpack_federation_rec@Base 17.02.0
  slurmdb_unpack_job_cond@Base 2.3.1
-{% if version.major >= 22 %}
 #MISSING: 22.05.0# slurmdb_unpack_job_modify_cond@Base 2.3.1
-{% else %}
- slurmdb_unpack_job_modify_cond@Base 2.3.1
-{% endif %}
  slurmdb_unpack_job_rec@Base 2.3.1
  slurmdb_unpack_qos_cond@Base 2.3.1
  slurmdb_unpack_qos_rec@Base 2.3.1
@@ -1693,4 +1722,9 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurmdb_wckeys_get@Base 19.05.2
  slurmdb_wckeys_modify@Base 19.05.2
  slurmdb_wckeys_remove@Base 19.05.2
+{% if version.major >= 23 %}
+ switch_levels@Base 23.02.2
+ switch_record_cnt@Base 23.02.2
+ switch_record_table@Base 23.02.2
+{% endif %}
  working_cluster_rec@Base 19.05.2

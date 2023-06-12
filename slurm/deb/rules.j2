@@ -4,10 +4,10 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-{% if version.major == 22 %}
+{% if version.major == 23 %}
+  {% set soname = 39 %}
+{% elif version.major == 22 %}
   {% set soname = 38 %}
-{% elif version.major == 21 %}
-  {% set soname = 37 %}
 {% endif %}
 
 export PERL_ARCHLIB := $(shell perl -MConfig -e 'print substr($$Config{vendorarch}, 1)')

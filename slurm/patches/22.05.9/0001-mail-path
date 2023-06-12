@@ -1,14 +1,14 @@
 Description: mail command absolute pathname
  This patch changes the default command to /usr/bin/mail in various
-  configuration files and manual pages.                            
+  configuration files and manual pages.
 Bug-Debian: http://bugs.debian.org/588862
 Forwarded: not-needed
-Last-Update: 2018-10-01
+Last-Update: 2023-06-09
 Author: Gennaro Oliva <oliva.g@na.icar.cnr.it>
 
 
 diff --git a/doc/man/man1/strigger.1 b/doc/man/man1/strigger.1
-index 3c74d8a..97f0d37 100644
+index 75a7d89..02d4458 100644
 --- a/doc/man/man1/strigger.1
 +++ b/doc/man/man1/strigger.1
 @@ -373,7 +373,7 @@ $ cat /usr/sbin/primary_slurmctld_failure

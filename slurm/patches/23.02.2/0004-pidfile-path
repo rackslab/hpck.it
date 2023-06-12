@@ -2,15 +2,15 @@ Description: Fix default pidfile paths
  This patch points default pidfild paths under /run
 ian: http://bugs.debian.org/885759
 Forwarded: not-needed
-Last-Update: 2018-12-13
+Last-Update: 2023-06-09
 Author: Mehdi Dogguy <mehdi@debian.org>
 
 
 diff --git a/src/common/read_config.h b/src/common/read_config.h
-index 2ebe33f..346d442 100644
+index 1bc35b4..29edede 100644
 --- a/src/common/read_config.h
 +++ b/src/common/read_config.h
-@@ -154,9 +154,9 @@ extern uint16_t drop_priv_flag;
+@@ -162,9 +162,9 @@ typedef struct node_record node_record_t;
  #  define DEFAULT_SELECT_TYPE       "select/linear"
  #endif
  #define DEFAULT_SITE_FACTOR_PLUGIN  "site_factor/none"
@@ -23,7 +23,7 @@ index 2ebe33f..346d442 100644
  #define DEFAULT_SPOOLDIR            "/var/spool/slurmd"
  #define DEFAULT_STORAGE_HOST        "localhost"
 diff --git a/src/slurmdbd/read_config.h b/src/slurmdbd/read_config.h
-index 444a0ab..2c785ef 100644
+index 3a7b932..f871f4b 100644
 --- a/src/slurmdbd/read_config.h
 +++ b/src/slurmdbd/read_config.h
 @@ -48,7 +48,7 @@
@@ -33,5 +33,5 @@ index 444a0ab..2c785ef 100644
 -#define DEFAULT_SLURMDBD_PIDFILE	"/var/run/slurmdbd.pid"
 +#define DEFAULT_SLURMDBD_PIDFILE	"/run/slurmdbd.pid"
  #define DEFAULT_SLURMDBD_ARCHIVE_DIR	"/tmp"
- //#define DEFAULT_SLURMDBD_STEP_PURGE	1
- 
+ #define DEFAULT_SLURMDBD_KEEPALIVE_INTERVAL 30
+ #define DEFAULT_SLURMDBD_KEEPALIVE_PROBES 3

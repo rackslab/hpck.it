@@ -4,7 +4,7 @@ Description: Increase size of sacctmgr read buffer
  with more than 4096 which is too small in some cases. Also removed useless
  macro definition in other related file.
 Forwarded: http://thread.gmane.org/gmane.comp.distributed.slurm.devel/5483
-Last-Update: 2019-09-06
+Last-Update: 2023-06-09
 Author: Rémi Palancher <remi@rezib.org>
 
 

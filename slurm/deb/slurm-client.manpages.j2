@@ -8,6 +8,9 @@ debian/tmp/usr/share/man/man1/sshare.1
 debian/tmp/usr/share/man/man1/scontrol.1
 debian/tmp/usr/share/man/man1/scrontab.1
 debian/tmp/usr/share/man/man1/srun.1
+{% if version.major >= 23 %}
+debian/tmp/usr/share/man/man1/scrun.1
+{% endif %}
 debian/tmp/usr/share/man/man1/sdiag.1
 debian/tmp/usr/share/man/man1/sreport.1
 debian/tmp/usr/share/man/man1/sinfo.1
