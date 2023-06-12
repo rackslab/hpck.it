@@ -12,7 +12,8 @@ Group:		System Environment/Base
 License:	GPLv2+
 URL:		https://slurm.schedmd.com/
 
-Source:		{{ source }}
+{{ sources }}
+{{ patches }}
 
 # build options		.rpmmacros options	change to default action
 # ====================  ====================	========================
@@ -53,6 +54,7 @@ Source:		{{ source }}
 %bcond_with numa
 %bcond_with pmix
 %bcond_with nvml
+%bcond_with jwt
 
 # Use debug by default on all systems
 %bcond_without debug
@@ -73,6 +75,7 @@ BuildRequires: systemd
 BuildRequires: munge-devel munge-libs
 BuildRequires: python3
 BuildRequires: readline-devel
+BuildRequires: libtool
 Obsoletes: slurm-lua <= %{version}
 Obsoletes: slurm-munge <= %{version}
 Obsoletes: slurm-plugins <= %{version}
@@ -141,6 +144,11 @@ BuildRequires: pmix
 %if %{with ucx} && "%{_with_ucx}" == "--with-ucx"
 BuildRequires: ucx-devel
 %global ucx_version %(rpm -q ucx-devel --qf "%{RPMTAG_VERSION}")
+%endif
+
+%if %{with jwt}
+BuildRequires: libjwt-devel >= 1.10.0
+Requires: libjwt >= 1.10.0
 %endif
 
 #  Allow override of sysconfdir via _slurm_sysconfdir.
@@ -330,9 +338,11 @@ notifies slurm about failed nodes.
 #############################################################################
 
 %prep
-%setup -q
+{{ prep_sources }}
+{{ prep_patches }}
 
 %build
+autoreconf -f -i
 %configure \
 	%{?_without_debug:--disable-debug} \
 	%{?_with_pam_dir} \
@@ -348,6 +358,7 @@ notifies slurm about failed nodes.
 	%{!?_with_slurmrestd:--disable-slurmrestd} \
 	%{?_without_x11:--disable-x11} \
 	%{?_with_ucx} \
+	%{?_with_jwt} \
 	%{?_with_nvml} \
 	%{?_with_cflags}
 
