@@ -8,7 +8,7 @@ Author: Gennaro Oliva <oliva.g@na.icar.cnr.it>
 
 
 diff --git a/doc/man/man1/strigger.1 b/doc/man/man1/strigger.1
-index d81a694..12012da 100644
+index 4ef063d..149b80a 100644
 --- a/doc/man/man1/strigger.1
 +++ b/doc/man/man1/strigger.1
 @@ -380,7 +380,7 @@ $ cat /usr/sbin/primary_slurmctld_failure
