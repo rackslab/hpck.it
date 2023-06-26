@@ -8,7 +8,7 @@ derivatives:
   slurm23.02: 23.02.3
   slurm22.05: 22.05.9
 rpm:
-  release: 1
-  buildargs: --with mysql
+  release: 2
+  buildargs: --with mysql --with slurmrestd --with jwt
 deb:
   release: 1
