@@ -76,6 +76,7 @@ BuildRequires: munge-devel munge-libs
 BuildRequires: python3
 BuildRequires: readline-devel
 BuildRequires: libtool
+BuildRequires: dbus-devel
 Obsoletes: slurm-lua <= %{version}
 Obsoletes: slurm-munge <= %{version}
 Obsoletes: slurm-plugins <= %{version}
