@@ -8,7 +8,7 @@ Summary:        YAML database of datacenter infrastructures
 License:        GPLv3+
 Group:          System Environment/Base
 URL:            https://github.com/rackslab/racksdb
-{{ source }}
+{{ sources }}
 {{ patches }}
 BuildArch:      noarch
 BuildRequires:  python3-devel
@@ -22,7 +22,7 @@ in a simple YAML-based database to store information about the equipments in
 your datacenters provided with tools and library to request this database.
 
 %prep
-{{ prep_sources }}
+{{ prep_sources }}
 {{ prep_patches }}
 
 %build
