@@ -1,0 +1,15 @@
+[Distribution]
+Distribution=debian
+Release=bookworm
+
+[Output]
+Format=gpt_ext4
+CompressOutput=xz
+
+[Content]
+WithDocs=yes
+Packages=
+  python3
+  iproute2
+  iputils-ping
+  libnss-resolve
