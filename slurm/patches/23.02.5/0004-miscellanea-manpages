@@ -2,7 +2,7 @@ Description: Move general info man pages to the miscellanea section (7)
  This patch moves the general information man pages slurm.1 and spank.8
  to the miscellanea section since they are not related to commands
 Forwarded: https://bugs.schedmd.com/show_bug.cgi?id=8719
-Last-Update: 2023-06-09
+Last-Update: 2023-10-02
 Author: Gennaro Oliva <oliva.g@na.icar.cnr.it>
 
 
@@ -116,10 +116,10 @@ index a3496b5..0000000
 -\fBspank\fR(8)
 -
 diff --git a/doc/man/man5/slurm.conf.5 b/doc/man/man5/slurm.conf.5
-index 062ab13..088d294 100644
+index 9ce290d..ec4ffa2 100644
 --- a/doc/man/man5/slurm.conf.5
 +++ b/doc/man/man5/slurm.conf.5
-@@ -8046,4 +8046,4 @@ details.
+@@ -8074,4 +8074,4 @@ details.
  \fBgetrlimit\fR(2), \fBgres.conf\fR(5), \fBgroup\fR(5), \fBhostname\fR(1),
  \fBscontrol\fR(1), \fBslurmctld\fR(8), \fBslurmd\fR(8),
  \fBslurmdbd\fR(8), \fBslurmdbd.conf\fR(5), \fBsrun\fR(1),
@@ -234,10 +234,10 @@ index 0000000..a2ea344
 +
 diff --git a/doc/man/man7/spank.7 b/doc/man/man7/spank.7
 new file mode 100644
-index 0000000..0c8c498
+index 0000000..43e3806
 --- /dev/null
 +++ b/doc/man/man7/spank.7
-@@ -0,0 +1,553 @@
+@@ -0,0 +1,556 @@
 +.TH SPANK "7" "Slurm Component" "July 2022" "Slurm Component"
 +
 +.SH "NAME"
@@ -758,6 +758,9 @@ index 0000000..0c8c498
 +sbatch @slurm_spank_task_init            @remote    @1        @no          @yes
 +sbatch @slurm_spank_task_exit            @remote    @0        @no          @no
 +sbatch @slurm_spank_exit                 @allocator @0        @no          @no
++=
++scrontab @slurm_spank_init               @allocator @1        @no          @no
++scrontab @slurm_spank_exit               @allocator @0        @no          @no
 +.TE
 +
 +\fBNOTE\fR: The behavior for \fBProctrackType=proctrack/pgid\fR may result in
@@ -817,10 +820,10 @@ index 8527b1c..27b5777 100644
  
 diff --git a/doc/man/man8/spank.8 b/doc/man/man8/spank.8
 deleted file mode 100644
-index 0b6b8b4..0000000
+index 113c1cc..0000000
 --- a/doc/man/man8/spank.8
 +++ /dev/null
-@@ -1,553 +0,0 @@
+@@ -1,556 +0,0 @@
 -.TH SPANK "8" "Slurm Component" "July 2022" "Slurm Component"
 -
 -.SH "NAME"
@@ -1341,6 +1344,9 @@ index 0b6b8b4..0000000
 -sbatch @slurm_spank_task_init            @remote    @1        @no          @yes
 -sbatch @slurm_spank_task_exit            @remote    @0        @no          @no
 -sbatch @slurm_spank_exit                 @allocator @0        @no          @no
+-=
+-scrontab @slurm_spank_init               @allocator @1        @no          @no
+-scrontab @slurm_spank_exit               @allocator @0        @no          @no
 -.TE
 -
 -\fBNOTE\fR: The behavior for \fBProctrackType=proctrack/pgid\fR may result in
