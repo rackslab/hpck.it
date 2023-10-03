@@ -8,6 +8,7 @@ Build-Depends:
  python3-all (>= 3.6),
  python3-setuptools,
  dh-exec,
+ pybuild-plugin-pyproject,
  dh-python,
  asciidoctor,
  python3-cairo,
