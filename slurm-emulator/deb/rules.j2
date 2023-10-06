@@ -1,0 +1,48 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+{% if version.major == 23 %}
+  {% set soname = 39 %}
+{% elif version.major == 22 %}
+  {% set soname = 38 %}
+{% endif %}
+
+export PERL_ARCHLIB := $(shell perl -MConfig -e 'print substr($$Config{vendorarch}, 1)')
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all,-bindnow
+# include defs of all DEB_HOST_*/DEB_BUILD_* vars
+include /usr/share/dpkg/architecture.mk
+
+ifneq ($(DEB_TARGET_ARCH_BITS),64)
+  ENABLEDEPRECATED = --enable-deprecated
+endif
+
+
+%:
+	dh $@ --builddirectory
+
+# We run configure with --disable-debug to avoid the default use of -O0 and
+# consequent unprotected source functions, causing lintian report
+# hardening-no-fortify-functions
+# Notice that -g in CFLAGS is still provided by dpkg-buildflags
+override_dh_auto_configure:
+	dh_auto_configure -- --sysconfdir=/etc/slurm --with-munge --enable-pam --without-rpath --disable-debug --enable-multiple-slurmd --enable-front-end --with-pmix=/usr/lib/$(DEB_HOST_MULTIARCH)/pmix2 $(ENABLEDEPRECATED) SUCMD=/bin/su SLEEP_CMD=/bin/sleep
+
+override_dh_auto_install:
+	dh_auto_install
+
+	# clear dependency_libs field in *.la files
+	# see lintian non-empty-dependency_libs-in-la-file for reference
+	sed -i "/dependency_libs/ s/'.*'/''/" `find debian/slurm-emulator/ -name '*.la'`
+
+# Many files are not installed nor required in slurm-emulator, then do not fail
+# with dh_missing.
+override_dh_missing:
+	dh_missing --list-missing
+
+override_dh_auto_test:
+
+override_dh_compress:
+	dh_compress -X.pdf -X.ttf

@@ -1,0 +1,50 @@
+/var/log/slurm/slurmd.log {
+  compress
+  missingok
+  nocopytruncate
+  nocreate
+  nodelaycompress
+  nomail
+  notifempty
+  noolddir
+  rotate 12
+  sharedscripts
+  size=5M
+  postrotate
+      /usr/sbin/invoke-rc.d --quiet slurmd reconfig >/dev/null
+      /bin/sleep 1
+  endscript
+}
+/var/log/slurm/slurmctld.log {
+  compress
+  missingok
+  nocopytruncate
+  nocreate
+  nodelaycompress
+  nomail
+  notifempty
+  noolddir
+  rotate 12
+  sharedscripts
+  size=5M
+  postrotate
+      /usr/sbin/invoke-rc.d --quiet slurmctld reconfig >/dev/null
+      /bin/sleep 1
+  endscript
+}
+/var/log/slurm/slurmdbd.log {
+  compress
+  missingok
+  nocopytruncate
+  nocreate
+  nodelaycompress
+  nomail
+  notifempty
+  noolddir
+  rotate 12
+  sharedscripts
+  size=5M
+  postrotate
+      /usr/sbin/invoke-rc.d --quiet slurmdbd reconfig >/dev/null
+  endscript
+}

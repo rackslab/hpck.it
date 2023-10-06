@@ -1,0 +1,7 @@
+etc/slurm
+etc/slurm/plugstack.conf.d
+var/lib/slurm
+var/lib/slurm/slurmd
+var/lib/slurm/slurmctld
+var/lib/slurm/checkpoint
+var/log/slurm

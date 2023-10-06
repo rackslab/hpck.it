@@ -1,0 +1,57 @@
+{% if version.major == 23 %}
+  {% set soname = 39 %}
+{% elif version.major == 22 %}
+  {% set soname = 38 %}
+{% endif %}
+Source: slurm-emulator
+Section: admin
+Priority: optional
+Maintainer: HPCKit team <maintainers@hpck.it>
+Build-Depends:
+ debhelper (>= 13),
+ libmunge-dev,
+ libncurses-dev,
+ po-debconf,
+ python3,
+ libgtk2.0-dev,
+ default-libmysqlclient-dev,
+ libpam0g-dev,
+ libperl-dev,
+ chrpath,
+ libpam0g-dev,
+ liblua5.1-0-dev,
+ libhwloc-dev,
+ dh-exec,
+ librrd-dev,
+ libipmimonitoring-dev,
+ hdf5-helpers,
+ libfreeipmi-dev,
+ libhdf5-dev,
+{% if version.major >= 22 %}
+ libpmix-dev,
+{% endif %}
+ man2html,
+ libcurl4-openssl-dev,
+ libhttp-parser-dev,
+ libyaml-dev,
+ libjson-c-dev,
+ libjwt-dev,
+ liblz4-dev,
+ libdbus-1-dev,
+Standards-Version: 4.5.1
+Homepage: http://slurm.schedmd.com
+
+Package: slurm-emulator
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+ munge,
+ ucf
+Description: Emulator of Slurm workload manager
+ SLURM stands for Simple Linux Utility for Resource Management, it
+ is an open-source cluster resource management and job scheduling system
+ that strives to be simple, scalable, portable, fault-tolerant, and
+ interconnect agnostic.
+ This package contains Slurm compiled with frontend mode enabled so it can be
+ setup to configure fake nodes and emulate large clusters.

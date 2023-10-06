@@ -1,0 +1,101 @@
+#!/bin/sh
+set -e
+
+service mariadb status
+
+echo "CREATE USER 'slurm'@'localhost' IDENTIFIED BY 'shazaam';" | mariadb
+echo "CREATE DATABASE slurm;" | mariadb
+echo "GRANT ALL PRIVILEGES ON slurm.* TO 'slurm'@'localhost';" | mariadb
+
+cat > /etc/slurm/slurmdbd.conf << EOF
+AuthType=auth/munge
+AuthInfo=/run/munge/munge.socket.2
+DbdHost=localhost
+DebugLevel=3
+StorageHost=localhost
+StorageLoc=slurm
+StoragePass=shazaam
+StorageType=accounting_storage/mysql
+StorageUser=slurm
+LogFile=/var/log/slurm/slurmdbd.log
+PidFile=/run/slurmdbd.pid
+SlurmUser=slurm
+EOF
+
+chmod 600 /etc/slurm/slurmdbd.conf
+
+chown slurm /etc/slurm/slurmdbd.conf
+
+service slurmdbd restart
+
+sleep 20
+
+service slurmdbd status
+
+cat > /etc/slurm/slurm.conf <<EOF
+ControlMachine=localhost
+AuthType=auth/munge
+CryptoType=crypto/munge
+MpiDefault=none
+ProctrackType=proctrack/pgid
+ReturnToService=1
+SlurmctldPidFile=/run/slurmctld.pid
+SlurmctldPort=6817
+SlurmdPidFile=/run/slurmd.pid
+SlurmdPort=6818
+SlurmdSpoolDir=/var/lib/slurm/slurmd
+SlurmUser=slurm
+StateSaveLocation=/var/lib/slurm/slurmctld
+SwitchType=switch/none
+TaskPlugin=task/none
+InactiveLimit=0
+KillWait=30
+MinJobAge=300
+SlurmctldTimeout=300
+SlurmdTimeout=300
+Waittime=0
+SchedulerType=sched/backfill
+SchedulerPort=7321
+SelectType=select/linear
+AccountingStorageEnforce=association
+AccountingStorageHost=localhost
+AccountingStorageType=accounting_storage/slurmdbd
+AccountingStoreJobComment=YES
+ClusterName=cluster
+JobCompType=jobcomp/linux
+JobAcctGatherFrequency=30
+JobAcctGatherType=jobacct_gather/none
+SlurmctldDebug=3
+SlurmctldLogFile=/var/log/slurm/slurmctld.log
+SlurmdDebug=3
+SlurmdLogFile=/var/log/slurm/slurmd.log
+NodeName=localhost Procs=1 State=UNKNOWN
+PartitionName=test Nodes=localhost Default=YES MaxTime=INFINITE State=UP
+EOF
+
+adduser --disabled-password --gecos "" --no-create-home --quiet slurmtest
+
+# slurmdbd needs a little time to initialize its db
+sleep 20
+
+sacctmgr -i add cluster cluster
+sacctmgr -i add account slurmtest Cluster=cluster
+sacctmgr -i add user slurmtest Account=slurmtest
+
+service slurmctld restart
+service slurmd restart
+
+sleep 10
+
+service slurmctld status
+service slurmd status
+
+sinfo
+sinfo --Node
+
+su slurmtest -c "/usr/bin/srun /bin/true"
+
+# slurmdbd needs a little time to store information
+sleep 20
+
+sacct --user=slurmtest --format=State --noheader | grep COMPLETED

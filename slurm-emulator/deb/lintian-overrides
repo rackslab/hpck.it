@@ -1,0 +1,6 @@
+slurm-emulator: manpage-has-errors-from-man
+slurm-emulator: conflicts-with-version
+slurm-emulator: hardening-no-bindnow
+slurm-emulator: spelling-error-in-binary
+slurm-emulator: hardening-no-fortify-functions
+slurm-emulator: possible-documentation-but-no-doc-base-registration

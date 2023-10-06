@@ -1,0 +1,8 @@
+# Additional options that are passed to the slurmd daemon
+#SLURMD_OPTIONS=""
+# Additional options that are passed to the slurmctld daemon
+#SLURMCTLD_OPTIONS=""
+# Additional options that are passed to the slurmdbd daemon
+#SLURMDBD_OPTIONS=""
+# Additional options that are passed to the slurmrestd daemon
+#SLURMRESTD_OPTIONS=""

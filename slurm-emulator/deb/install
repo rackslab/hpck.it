@@ -1,0 +1,5 @@
+debian/plugstack.conf etc/slurm
+debian/slurmd.service lib/systemd/system
+debian/slurmctld.service lib/systemd/system
+debian/slurmdbd.service lib/systemd/system
+debian/slurmrestd.service lib/systemd/system

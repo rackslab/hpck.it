@@ -1,0 +1,47 @@
+doc/man/man1/scancel.1
+doc/man/man1/sattach.1
+doc/man/man1/strigger.1
+doc/man/man1/sstat.1
+doc/man/man1/sprio.1
+doc/man/man1/salloc.1
+doc/man/man1/sshare.1
+doc/man/man1/scontrol.1
+doc/man/man1/scrontab.1
+doc/man/man1/srun.1
+{% if version.major >= 23 %}
+doc/man/man1/scrun.1
+{% endif %}
+doc/man/man1/sdiag.1
+doc/man/man1/sreport.1
+doc/man/man1/sinfo.1
+doc/man/man1/sbatch.1
+doc/man/man7/slurm.7
+doc/man/man1/sh5util.1
+doc/man/man1/squeue.1
+doc/man/man1/sbcast.1
+doc/man/man1/sacct.1
+doc/man/man1/sacctmgr.1
+doc/man/man7/spank.7
+doc/man/man5/ext_sensors.conf.5
+doc/man/man5/gres.conf.5
+doc/man/man5/acct_gather.conf.5
+doc/man/man5/cgroup.conf.5
+{% if version.major < 23 %}
+doc/man/man5/nonstop.conf.5
+{% endif %}
+doc/man/man5/topology.conf.5
+doc/man/man5/burst_buffer.conf.5
+doc/man/man5/job_container.conf.5
+doc/man/man5/knl.conf.5
+doc/man/man5/helpers.conf.5
+doc/man/man5/oci.conf.5
+{% if version.major >= 22 %}
+doc/man/man5/mpi.conf.5
+{% endif %}
+doc/man/man5/slurm.conf.5
+doc/man/man8/slurmd.8
+doc/man/man8/slurmstepd.8
+doc/man/man8/slurmctld.8
+doc/man/man8/slurmdbd.8
+doc/man/man5/slurmdbd.conf.5
+doc/man/man8/slurmrestd.8
