@@ -1,2 +1,3 @@
 #!/usr/bin/dh-exec
+usr/lib/python*/dist-packages
 schema/racksdb.yml => /usr/share/racksdb/schema.yml

@@ -16,14 +16,40 @@ Build-Depends:
  python3-yaml,
 Standards-Version: 4.2.1
 
-Package: racksdb
+Package: python3-racksdb
 Architecture: all
 Section: admin
 Depends:
  ${misc:Depends},
  ${python3:Depends},
-Description: RacksDB datacenter infrastructures database
+Description: Python library for datacenter infrastructures database
  RacksDB is an open source solution to modelize your datacenters
  infrastructures in a simple YAML-based database to store information about the
  equipments in your datacenters provided with tools and library to request
  this database.
+ This package provides RacksDB Python library.
+
+Package: racksdb
+Architecture: all
+Section: admin
+Depends:
+ python3-racksdb,
+Description: CLI 0for datacenter infrastructures database
+ RacksDB is an open source solution to modelize your datacenters
+ infrastructures in a simple YAML-based database to store information about the
+ equipments in your datacenters provided with tools and library to request
+ this database.
+ This package provides RacksDB CLI.
+
+Package: racksdb-rest-api
+Architecture: all
+Section: admin
+Depends:
+ python3-racksdb,
+ python3-flask,
+Description: REST API server for RacksDB datacenter infrastructures database
+ RacksDB is an open source solution to modelize your datacenters
+ infrastructures in a simple YAML-based database to store information about the
+ equipments in your datacenters provided with tools and library to request
+ this database.
+ This package provides RacksDB HTTP REST API server.
