@@ -1,0 +1,14 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+export PYBUILD_VERBOSE=1
+PACKAGES = authorizations core build settings tokens web
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+override_dh_auto_build:
+	$(foreach PACKAGE,$(PACKAGES),dh_auto_build -- --dir src/$(PACKAGE) --name rfl-$(PACKAGE);)
+
+override_dh_auto_install:
+	$(foreach PACKAGE,$(PACKAGES),dh_auto_install -- --name rfl-$(PACKAGE);)

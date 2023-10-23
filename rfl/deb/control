@@ -1,0 +1,97 @@
+Source: rfl
+Section: python
+Priority: optional
+Maintainer: HPCKit team <maintainers@hpck.it>
+Homepage: https://github.com/rackslab/RFL
+Build-Depends:
+ debhelper-compat (= 13),
+ python3-all (>= 3.6),
+ python3-setuptools,
+ python3-fake-factory,
+ dh-python,
+ pybuild-plugin-pyproject,
+ python3-yaml,
+Standards-Version: 4.2.1
+
+Package: python3-rfl
+Architecture: all
+Section: python
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+ python3-rfl-authorizations,
+ python3-rfl-build,
+ python3-rfl-core,
+ python3-rfl-settings,
+ python3-rfl-tokens,
+ python3-rfl-web,
+Description: Rackslab Foundation Library: all packages
+ RFL is a Python library and a set of common utilities useful to most Rackslab
+ software solutions.
+ This package is a metapackage to install all RFL packages.
+
+Package: python3-rfl-authorizations
+Architecture: all
+Section: python
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Description: Rackslab Foundation Library: authorizations package
+ RFL is a Python library and a set of common utilities useful to most Rackslab
+ software solutions.
+ This package includes authorizations package of RFL.
+
+Package: python3-rfl-build
+Architecture: all
+Section: python
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Description: Rackslab Foundation Library: build package
+ RFL is a Python library and a set of common utilities useful to most Rackslab
+ software solutions.
+ This package includes build package of RFL.
+
+Package: python3-rfl-core
+Architecture: all
+Section: python
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Description: Rackslab Foundation Library: core package
+ RFL is a Python library and a set of common utilities useful to most Rackslab
+ software solutions.
+ This package includes core package of RFL.
+
+Package: python3-rfl-settings
+Architecture: all
+Section: python
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Description: Rackslab Foundation Library: settings package
+ RFL is a Python library and a set of common utilities useful to most Rackslab
+ software solutions.
+ This package includes settings package of RFL.
+
+Package: python3-rfl-tokens
+Architecture: all
+Section: python
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Description: Rackslab Foundation Library: tokens package
+ RFL is a Python library and a set of common utilities useful to most Rackslab
+ software solutions.
+ This package includes tokens package of RFL.
+
+Package: python3-rfl-web
+Architecture: all
+Section: python
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Description: Rackslab Foundation Library: web package
+ RFL is a Python library and a set of common utilities useful to most Rackslab
+ software solutions.
+ This package includes web package of RFL.
