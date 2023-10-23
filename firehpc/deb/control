@@ -10,6 +10,7 @@ Build-Depends:
  python3-ansible-runner,
  python3-dasbus,
  python3-fake-factory,
+ python3-racksdb,
  dh-python,
  pybuild-plugin-pyproject,
  asciidoctor,
