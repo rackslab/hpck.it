@@ -37,11 +37,11 @@ your datacenters.
 This package contains the Python library to load the database and explore its
 content.
 
-%package -n %{name}-rest-api
+%package -n %{name}-web
 Summary:        YAML database of datacenter infrastructures: REST API
 BuildArch:      noarch
 
-%description -n %{name}-rest-api
+%description -n %{name}-web
 RacksDB is an open source solution to modelize your datacenters infrastructures
 in a simple YAML-based database to store information about the equipments in
 your datacenters.
@@ -88,8 +88,8 @@ install -p -m 0644 docs/man/*.1 %{buildroot}%{_mandir}/man1/
 %{_datadir}/racksdb
 %{_sharedstatedir}/racksdb
 
-%files -n %{name}-rest-api
-%{_bindir}/racksdb-rest-api
-%doc %{_mandir}/man1/racksdb-rest-api.*
+%files -n %{name}-web
+%{_bindir}/racksdb-web
+%doc %{_mandir}/man1/racksdb-web.*
 
 {{ changelog }}
