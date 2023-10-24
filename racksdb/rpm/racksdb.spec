@@ -19,6 +19,7 @@ BuildRequires:  asciidoctor
 
 Summary:        YAML database of datacenter infrastructures: CLI
 BuildArch:      noarch
+Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description
 RacksDB is an open source solution to modelize your datacenters infrastructures
@@ -43,6 +44,8 @@ content.
 %package -n %{name}-web
 Summary:        YAML database of datacenter infrastructures: REST API
 BuildArch:      noarch
+Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       python3-flask
 
 %description -n %{name}-web
 RacksDB is an open source solution to modelize your datacenters infrastructures
