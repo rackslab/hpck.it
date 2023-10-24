@@ -11,6 +11,9 @@ URL:            https://github.com/rackslab/RacksDB
 {{ patches }}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
+%if 0%{?rhel} && 0%{?rhel} <= 8
+BuildRequires:  python3-rfl-build
+%endif
 BuildRequires:  make
 BuildRequires:  asciidoctor
 
@@ -54,6 +57,9 @@ database and draw diagrams of its content.
 {{ prep_patches }}
 
 %build
+%if 0%{?rhel} && 0%{?rhel} <= 8
+install-setup-generator
+%endif
 %py3_build
 make -C docs man
 
