@@ -1,5 +1,10 @@
 %?python_enable_dependency_generator
 
+# This package supports both old setuptools way of building packages with the
+# setup.py script provided in RFL build package on RHEL8 and the modern way with
+# wheels and pyproject.toml on other systems with more recent versions of
+# Python, pip, setuptools and Python RPM macros.
+
 Name:           racksdb
 Version:        {{ version }}
 Release:        {{ release }}
@@ -13,6 +18,9 @@ BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 %if 0%{?rhel} && 0%{?rhel} <= 8
 BuildRequires:  python3-rfl-build
+%else
+BuildRequires:  python3-pip
+BuildRequires:  python3-wheel
 %endif
 BuildRequires:  make
 BuildRequires:  asciidoctor
@@ -28,6 +36,8 @@ your datacenters.
 
 This package contains the CLI tool to request the database and draw diagrams of
 its content.
+
+%pyproject_extras_subpkg -n python3-%{name} web
 
 %package -n python3-%{name}
 Summary:        YAML database of datacenter infrastructures: Python Library
@@ -45,6 +55,12 @@ content.
 Summary:        YAML database of datacenter infrastructures: REST API
 BuildArch:      noarch
 Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+%if ! 0%{?rhel} || 0%{?rhel} > 8
+# On systems that are not RHEL8, extra subpackages are automatically built with
+# web specific optional dependencies. This package must depend on this
+# subpackage to indirectly depend on these requirements.
+Requires:       python3-%{name}+web = %{?epoch:%{epoch}:}%{version}-%{release}
+%endif
 Requires:       python3-flask
 Recommends:     python3-flask-cors
 
@@ -63,12 +79,18 @@ database and draw diagrams of its content.
 %build
 %if 0%{?rhel} && 0%{?rhel} <= 8
 install-setup-generator
-%endif
 %py3_build
+%else
+%pyproject_wheel
+%endif
 make -C docs man
 
 %install
+%if 0%{?rhel} && 0%{?rhel} <= 8
 %py3_install
+%else
+%pyproject_install
+%endif
 
 # empty configuration directory
 install -d %{buildroot}%{_sysconfdir}/racksdb
@@ -84,6 +106,12 @@ install -d %{buildroot}%{_sharedstatedir}/racksdb
 install -d %{buildroot}%{_mandir}/man1
 install -p -m 0644 docs/man/*.1 %{buildroot}%{_mandir}/man1/
 
+%if 0%{?rhel} && 0%{?rhel} <= 8
+%define _racksdb_pysuffix egg-info
+%else
+%define _racksdb_pysuffix dist-info
+%endif
+
 %files
 %{_bindir}/racksdb
 %doc %{_mandir}/man1/racksdb.*
@@ -93,7 +121,7 @@ install -p -m 0644 docs/man/*.1 %{buildroot}%{_mandir}/man1/
 %doc README.md
 %doc examples
 %{python3_sitelib}/racksdb/
-%{python3_sitelib}/RacksDB-*.egg-info/
+%{python3_sitelib}/RacksDB-*.%{_racksdb_pysuffix}/
 %{_sysconfdir}/racksdb
 %{_datadir}/racksdb
 %{_sharedstatedir}/racksdb
