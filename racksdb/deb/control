@@ -47,6 +47,8 @@ Section: admin
 Depends:
  python3-racksdb,
  python3-flask,
+Recommends:
+ python3-flask-cors,
 Description: Web application with REST API for RacksDB
  RacksDB is an open source solution to modelize your datacenters
  infrastructures in a simple YAML-based database to store information about the

@@ -46,6 +46,7 @@ Summary:        YAML database of datacenter infrastructures: REST API
 BuildArch:      noarch
 Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:       python3-flask
+Recommends:     python3-flask-cors
 
 %description -n %{name}-web
 RacksDB is an open source solution to modelize your datacenters infrastructures
