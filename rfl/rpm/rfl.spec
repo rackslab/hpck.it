@@ -104,7 +104,7 @@ This package includes web package of RFL.
 
 %build
 # Manually copy setup.py from build package into all packages top-folders so
-# this script can be used by %py3_build and %py3_install macros on RHEL8.
+# this script can be used by py3_build and py3_install macros on RHEL8.
 %if 0%{?rhel} && 0%{?rhel} <= 8
 cp src/build/rfl/build/scripts/setup.py src/core/
 cp src/build/rfl/build/scripts/setup.py src/authorizations/
@@ -115,7 +115,7 @@ cp src/build/rfl/build/scripts/setup.py src/web/
 %endif
 
 # Note that this macro cannot be defined at the top of the spec file as global
-# because %buildsubdir which is part of py3_* and pyproject_* macros expansions
+# because buildsubdir which is part of py3_* and pyproject_* macros expansions
 # is not yet defined at this stage. It is then defined locally and lately to
 # ensure proper expansion.
 %if 0%{?rhel} && 0%{?rhel} <= 8
