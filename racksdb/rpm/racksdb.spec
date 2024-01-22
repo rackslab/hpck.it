@@ -95,9 +95,9 @@ make -C docs man
 # empty configuration directory
 install -d %{buildroot}%{_sysconfdir}/racksdb
 
-# schema
-install -d %{buildroot}%{_datadir}/racksdb
-install -p -m 0644 schema/racksdb.yml %{buildroot}%{_datadir}/racksdb/schema.yml
+# schemas
+install -d %{buildroot}%{_datadir}/racksdb/schemas
+install -p -m 0644 schemas/*.yml %{buildroot}%{_datadir}/racksdb/schemas
 
 # empty database directory
 install -d %{buildroot}%{_sharedstatedir}/racksdb
