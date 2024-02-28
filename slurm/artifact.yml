@@ -1,11 +1,11 @@
 source: https://download.schedmd.com/slurm/slurm-{{ version }}.tar.bz2
 checksums:
-  23.02.5:
-    sha1: b3f06d7030bd771a3a94be06e3c0d58a2630a21e
+  23.02.7:
+    sha1: 01eba7ba79119159e5ebe5106f4c034b6ab5438e
   22.05.9:
     sha1: cc853549724375cfab111529f7b7db0cc0dd1bbb
 derivatives:
-  slurm23.02: 23.02.5
+  slurm23.02: 23.02.7
   slurm22.05: 22.05.9
 rpm:
   release: 3

@@ -116,10 +116,10 @@ index a3496b5..0000000
 -\fBspank\fR(8)
 -
 diff --git a/doc/man/man5/slurm.conf.5 b/doc/man/man5/slurm.conf.5
-index 9ce290d..ec4ffa2 100644
+index 891485c..daaa1d4 100644
 --- a/doc/man/man5/slurm.conf.5
 +++ b/doc/man/man5/slurm.conf.5
-@@ -8074,4 +8074,4 @@ details.
+@@ -8091,4 +8091,4 @@ details.
  \fBgetrlimit\fR(2), \fBgres.conf\fR(5), \fBgroup\fR(5), \fBhostname\fR(1),
  \fBscontrol\fR(1), \fBslurmctld\fR(8), \fBslurmd\fR(8),
  \fBslurmdbd\fR(8), \fBslurmdbd.conf\fR(5), \fBsrun\fR(1),
