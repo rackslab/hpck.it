@@ -10,8 +10,10 @@ Build-Depends:
  pybuild-plugin-pyproject,
  dh-python,
  asciidoctor,
+ libpango1.0-dev,
  python3-cairo,
  python3-clustershell,
+ python3-gi,
  python3-yaml,
 {% if version.dist == "ubuntu2204" %}
  python3-rfl-build,
@@ -24,6 +26,7 @@ Section: admin
 Depends:
  ${misc:Depends},
  ${python3:Depends},
+ gir1.2-pango-1.0,
 Description: Python library for datacenter infrastructures database
  RacksDB is an open source solution to modelize your datacenters
  infrastructures in a simple YAML-based database to store information about the
