@@ -34,6 +34,25 @@ Description: Python library for datacenter infrastructures database
  this database.
  This package provides RacksDB Python library.
 
+Package: python3-racksdb-web
+Architecture: all
+Section: admin
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+ python3-racksdb (= ${binary:Version}),
+ python3-flask,
+ python3-requests-toolbelt,
+Recommends:
+ python3-flask-cors,
+Description: Meta-package for datacenter infrastructures database web app
+ RacksDB is an open source solution to modelize your datacenters
+ infrastructures in a simple YAML-based database to store information about the
+ equipments in your datacenters provided with tools and library to request
+ this database.
+ This package is a meta-package to install optional dependencies required by
+ Python library for RacksDB web application.
+
 Package: racksdb
 Architecture: all
 Section: admin
@@ -50,10 +69,7 @@ Package: racksdb-web
 Architecture: all
 Section: admin
 Depends:
- python3-racksdb (= ${binary:Version}),
- python3-flask,
-Recommends:
- python3-flask-cors,
+ python3-racksdb-web (= ${binary:Version}),
 Description: Web application with REST API for RacksDB
  RacksDB is an open source solution to modelize your datacenters
  infrastructures in a simple YAML-based database to store information about the
