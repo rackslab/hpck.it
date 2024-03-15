@@ -25,11 +25,12 @@ BuildRequires:  python3-pip
 BuildRequires:  python3-wheel
 %endif
 
-Requires:       python3-%{name}-authorizations
+Requires:       python3-%{name}-authentication
 Requires:       python3-%{name}-build
 Requires:       python3-%{name}-core
+Requires:       python3-%{name}-log
+Requires:       python3-%{name}-permissions
 Requires:       python3-%{name}-settings
-Requires:       python3-%{name}-tokens
 Requires:       python3-%{name}-web
 
 %description
@@ -38,15 +39,15 @@ software solutions.
 
 This package is a metapackage to install all RFL packages.
 
-%package -n python3-%{name}-authorizations
-Summary:        Rackslab Foundation Library: authorizations package
+%package -n python3-%{name}-authentication
+Summary:        Rackslab Foundation Library: authentication package
 BuildArch:      noarch
 
-%description -n python3-%{name}-authorizations
+%description -n python3-%{name}-authentication
 RFL is a Python library and a set of common utilities useful to most Rackslab
 software solutions.
 
-This package includes authorizations package of RFL.
+This package includes authentication package of RFL.
 
 %package -n python3-%{name}-build
 Summary:        Rackslab Foundation Library: build package
@@ -68,6 +69,26 @@ software solutions.
 
 This package includes core package of RFL.
 
+%package -n python3-%{name}-log
+Summary:        Rackslab Foundation Library: log package
+BuildArch:      noarch
+
+%description -n python3-%{name}-log
+RFL is a Python library and a set of common utilities useful to most Rackslab
+software solutions.
+
+This package includes log package of RFL.
+
+%package -n python3-%{name}-permissions
+Summary:        Rackslab Foundation Library: permissions package
+BuildArch:      noarch
+
+%description -n python3-%{name}-permissions
+RFL is a Python library and a set of common utilities useful to most Rackslab
+software solutions.
+
+This package includes permissions package of RFL.
+
 %package -n python3-%{name}-settings
 Summary:        Rackslab Foundation Library: settings package
 BuildArch:      noarch
@@ -77,16 +98,6 @@ RFL is a Python library and a set of common utilities useful to most Rackslab
 software solutions.
 
 This package includes settings package of RFL.
-
-%package -n python3-%{name}-tokens
-Summary:        Rackslab Foundation Library: tokens package
-BuildArch:      noarch
-
-%description -n python3-%{name}-tokens
-RFL is a Python library and a set of common utilities useful to most Rackslab
-software solutions.
-
-This package includes tokens package of RFL.
 
 %package -n python3-%{name}-web
 Summary:        Rackslab Foundation Library: web package
@@ -127,13 +138,15 @@ cp src/build/rfl/build/scripts/setup.py src/web/
 # start with core as other packages may depend on it.
 cd %{_builddir}/%{buildsubdir}/src/core
 %_rfl_pybuild
-cd %{_builddir}/%{buildsubdir}/src/authorizations
+cd %{_builddir}/%{buildsubdir}/src/authentication
 %_rfl_pybuild
 cd %{_builddir}/%{buildsubdir}/src/build
 %_rfl_pybuild
-cd %{_builddir}/%{buildsubdir}/src/settings
+cd %{_builddir}/%{buildsubdir}/src/log
 %_rfl_pybuild
-cd %{_builddir}/%{buildsubdir}/src/tokens
+cd %{_builddir}/%{buildsubdir}/src/permissions
+%_rfl_pybuild
+cd %{_builddir}/%{buildsubdir}/src/settings
 %_rfl_pybuild
 cd %{_builddir}/%{buildsubdir}/src/web
 %_rfl_pybuild
@@ -148,13 +161,15 @@ cd %{_builddir}/%{buildsubdir}/src/web
 
 cd %{_builddir}/%{buildsubdir}/src/core
 %_rfl_pyinstall
-cd %{_builddir}/%{buildsubdir}/src/authorizations
+cd %{_builddir}/%{buildsubdir}/src/authentication
 %_rfl_pyinstall
 cd %{_builddir}/%{buildsubdir}/src/build
 %_rfl_pyinstall
-cd %{_builddir}/%{buildsubdir}/src/settings
+cd %{_builddir}/%{buildsubdir}/src/log
 %_rfl_pyinstall
-cd %{_builddir}/%{buildsubdir}/src/tokens
+cd %{_builddir}/%{buildsubdir}/src/permissions
+%_rfl_pyinstall
+cd %{_builddir}/%{buildsubdir}/src/settings
 %_rfl_pyinstall
 cd %{_builddir}/%{buildsubdir}/src/web
 %_rfl_pyinstall
@@ -165,31 +180,37 @@ cd %{_builddir}/%{buildsubdir}/src/web
 %define _rfl_pysuffix dist-info
 %endif
 
-%files -n python3-%{name}-authorizations
-%doc src/authorizations/README.md
-%{python3_sitelib}/rfl/authorizations
-%{python3_sitelib}/RFL.authorizations-*.%{_rfl_pysuffix}/
+%files -n python3-%{name}-authentication
+%doc src/authentication/README.md
+%{python3_sitelib}/rfl/authentication
+%{python3_sitelib}/RFL.authentication-*.%{_rfl_pysuffix}/
 
 %files -n python3-%{name}-build
 %doc src/build/README.md
 %{python3_sitelib}/rfl/build
 %{python3_sitelib}/RFL.build-*.%{_rfl_pysuffix}/
-%{_bindir}/install-setup-generator
+%{_bindir}/rfl-install-setup-generator
+%{_bindir}/rfl-project-version
 
 %files -n python3-%{name}-core
 %doc src/core/README.md
 %{python3_sitelib}/rfl/core
 %{python3_sitelib}/RFL.core-*.%{_rfl_pysuffix}/
 
+%files -n python3-%{name}-log
+%doc src/log/README.md
+%{python3_sitelib}/rfl/log
+%{python3_sitelib}/RFL.log-*.%{_rfl_pysuffix}/
+
+%files -n python3-%{name}-permissions
+%doc src/permissions/README.md
+%{python3_sitelib}/rfl/permissions
+%{python3_sitelib}/RFL.permissions-*.%{_rfl_pysuffix}/
+
 %files -n python3-%{name}-settings
 %doc src/settings/README.md
 %{python3_sitelib}/rfl/settings
 %{python3_sitelib}/RFL.settings-*.%{_rfl_pysuffix}/
-
-%files -n python3-%{name}-tokens
-%doc src/tokens/README.md
-%{python3_sitelib}/rfl/tokens
-%{python3_sitelib}/RFL.tokens-*.%{_rfl_pysuffix}/
 
 %files -n python3-%{name}-web
 %doc src/web/README.md
