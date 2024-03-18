@@ -18,11 +18,8 @@ URL:            https://github.com/rackslab/RFL
 BuildArch:      noarch
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
-%if 0%{?rhel} && 0%{?rhel} <= 8
+%if 0%{?rhel}
 BuildRequires:  python3-tomli
-%else
-BuildRequires:  python3-pip
-BuildRequires:  python3-wheel
 %endif
 
 Requires:       python3-%{name}-authentication
@@ -38,6 +35,19 @@ RFL is a Python library and a set of common utilities useful to most Rackslab
 software solutions.
 
 This package is a metapackage to install all RFL packages.
+
+%if ! 0%{?rhel} || 0%{?rhel} >= 9
+%generate_buildrequires
+# Copy pyproject.toml→setup.py script converter to satify requirement of
+# pyproject_buildrequires macro in presence of pyproject.toml without project.
+#
+# Unfortunatrly, macros from pyproject-rpm-macros do not support sub-packages in
+# packages namespace like RFL, then the macro is not able to detect the test
+# dependencies. This is a reason why unit tests are not executed on package
+# build.
+cp src/build/rfl/build/scripts/setup setup.py
+%pyproject_buildrequires
+%endif
 
 %package -n python3-%{name}-authentication
 Summary:        Rackslab Foundation Library: authentication package
