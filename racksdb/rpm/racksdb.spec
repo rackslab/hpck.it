@@ -15,12 +15,8 @@ URL:            https://github.com/rackslab/RacksDB
 {{ sources }}
 {{ patches }}
 BuildRequires:  python3-devel
-BuildRequires:  python3-setuptools
-%if 0%{?rhel} && 0%{?rhel} <= 8
+%if 0%{?rhel}
 BuildRequires:  python3-rfl-build
-%else
-BuildRequires:  python3-pip
-BuildRequires:  python3-wheel
 %endif
 BuildRequires:  make
 BuildRequires:  asciidoctor
@@ -40,6 +36,16 @@ its content.
 
 %pyproject_extras_subpkg -n python3-%{name} web
 
+%if ! 0%{?rhel} || 0%{?rhel} >= 9
+%generate_buildrequires
+%if 0%{?rhel}
+rfl-install-setup-generator > /dev/null
+%endif
+# Include optional dependencies from web extra as they are required to run
+# checks.
+%pyproject_buildrequires -x web
+%endif
+
 %package -n python3-%{name}
 Summary:        YAML database of datacenter infrastructures: Python Library
 BuildArch:      noarch
@@ -53,18 +59,38 @@ your datacenters.
 This package contains the Python library to load the database and explore its
 content.
 
+{% if pkg.distribution == "el8" %}
+# Similar package is automatically generated thanks to pyproject_extras_subpkg
+# macro in other distributions. It must be defined with explicit dependencies
+# on el8 because this macro is not supported on this distribution.
+%package -n python3-%{name}-web
+Summary:        YAML database of datacenter infrastructures: Python Library for web app
+BuildArch:      noarch
+Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       python3dist(flask)
+Requires:       python3dist(requests-toolbelt)
+Provides:       python3dist(racksdb[web]) = %{?epoch:%{epoch}:}%{version}-%{release}
+
+%description -n python3-%{name}-web
+RacksDB is an open source solution to modelize your datacenters infrastructures
+in a simple YAML-based database to store information about the equipments in
+your datacenters.
+
+This package contains the Python library for the web application.
+{% endif %}
+
 %package -n %{name}-web
 Summary:        YAML database of datacenter infrastructures: REST API
 BuildArch:      noarch
 Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
-%if ! 0%{?rhel} || 0%{?rhel} > 8
+{% if pkg.distribution == "el8" %}
 # On systems that are not RHEL8, extra subpackages are automatically built with
 # web specific optional dependencies. This package must depend on this
 # subpackage to indirectly depend on these requirements.
 Requires:       python3-%{name}+web = %{?epoch:%{epoch}:}%{version}-%{release}
-%endif
-Requires:       python3-flask
-Recommends:     python3-flask-cors
+{% else %}
+Requires:       python3-%{name}-web = %{?epoch:%{epoch}:}%{version}-%{release}
+{% endif %}
 
 %description -n %{name}-web
 RacksDB is an open source solution to modelize your datacenters infrastructures
@@ -79,8 +105,10 @@ database and draw diagrams of its content.
 {{ prep_patches }}
 
 %build
-%if 0%{?rhel} && 0%{?rhel} <= 8
+%if 0%{?rhel}
 rfl-install-setup-generator
+%endif
+%if 0%{?rhel} && 0%{?rhel} <= 8
 %py3_build
 %else
 %pyproject_wheel
@@ -127,6 +155,10 @@ install -p -m 0644 docs/man/*.1 %{buildroot}%{_mandir}/man1/
 %{_sysconfdir}/racksdb
 %{_datadir}/racksdb
 %{_sharedstatedir}/racksdb
+
+{% if pkg.distribution == "el8" %}
+%files -n python3-%{name}-web
+{% endif %}
 
 %files -n %{name}-web
 %{_bindir}/racksdb-web
