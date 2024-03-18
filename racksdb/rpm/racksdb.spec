@@ -84,12 +84,15 @@ Summary:        YAML database of datacenter infrastructures: REST API
 BuildArch:      noarch
 Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
 {% if pkg.distribution == "el8" %}
-# On systems that are not RHEL8, extra subpackages are automatically built with
+# On RHEL8 systems, an additional -web meta-package is generated with all web
+# specific optional dependencies. This package must depend on this meta-package
+# to indirectly depend on these requirements.
+Requires:       python3-%{name}-web = %{?epoch:%{epoch}:}%{version}-%{release}
+{% else %}
+# On all systems except RHEL8, extra +web subpackage is automatically built with
 # web specific optional dependencies. This package must depend on this
 # subpackage to indirectly depend on these requirements.
 Requires:       python3-%{name}+web = %{?epoch:%{epoch}:}%{version}-%{release}
-{% else %}
-Requires:       python3-%{name}-web = %{?epoch:%{epoch}:}%{version}-%{release}
 {% endif %}
 
 %description -n %{name}-web
