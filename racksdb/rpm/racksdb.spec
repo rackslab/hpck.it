@@ -36,7 +36,7 @@ its content.
 
 %pyproject_extras_subpkg -n python3-%{name} web
 
-%if ! 0%{?rhel} || 0%{?rhel} >= 9
+{% if pkg.distribution != "el8" %}
 %generate_buildrequires
 %if 0%{?rhel}
 rfl-install-setup-generator > /dev/null
@@ -44,7 +44,7 @@ rfl-install-setup-generator > /dev/null
 # Include optional dependencies from web extra as they are required to run
 # checks.
 %pyproject_buildrequires -x web
-%endif
+{% endif %}
 
 %package -n python3-%{name}
 Summary:        YAML database of datacenter infrastructures: Python Library
@@ -108,20 +108,20 @@ database and draw diagrams of its content.
 %if 0%{?rhel}
 rfl-install-setup-generator
 %endif
-%if 0%{?rhel} && 0%{?rhel} <= 8
+{% if pkg.distribution == "el8" %}
 %py3_build
-%else
+{% else %}
 %pyproject_wheel
-%endif
+{% endif %}
 make -C docs man
 
 %install
-%if 0%{?rhel} && 0%{?rhel} <= 8
+{% if pkg.distribution == "el8" %}
 %py3_install
-%else
+{% else %}
 %pyproject_install
 %pyproject_save_files racksdb
-%endif
+{% endif %}
 
 # empty configuration directory
 install -d %{buildroot}%{_sysconfdir}/racksdb
@@ -137,19 +137,19 @@ install -d %{buildroot}%{_sharedstatedir}/racksdb
 install -d %{buildroot}%{_mandir}/man1
 install -p -m 0644 docs/man/*.1 %{buildroot}%{_mandir}/man1/
 
-%if 0%{?rhel} && 0%{?rhel} <= 8
+{% if pkg.distribution == "el8" %}
 %define _racksdb_pysuffix egg-info
-%else
+{% else %}
 %define _racksdb_pysuffix dist-info
-%endif
+{% endif %}
 
 # Except on RHEL8 where it is not supported, run pyproject_check_import on all
 # packages modules.
-%if !0%{?rhel} || 0%{?rhel} >= 9
+{% if pkg.distribution != "el8" %}
 %check
 %pyproject_check_import
 %{python3} -m unittest
-%endif
+{% endif %}
 
 %files
 %{_bindir}/racksdb
