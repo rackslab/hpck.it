@@ -80,7 +80,7 @@ database and draw diagrams of its content.
 
 %build
 %if 0%{?rhel} && 0%{?rhel} <= 8
-install-setup-generator
+rfl-install-setup-generator
 %py3_build
 %else
 %pyproject_wheel
