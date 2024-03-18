@@ -24,6 +24,7 @@ BuildRequires:  python3-wheel
 %endif
 BuildRequires:  make
 BuildRequires:  asciidoctor
+BuildRequires:  pango
 
 Summary:        YAML database of datacenter infrastructures: CLI
 BuildArch:      noarch
@@ -42,6 +43,7 @@ its content.
 %package -n python3-%{name}
 Summary:        YAML database of datacenter infrastructures: Python Library
 BuildArch:      noarch
+Requires:       pango
 
 %description -n python3-%{name}
 RacksDB is an open source solution to modelize your datacenters infrastructures
