@@ -120,6 +120,7 @@ make -C docs man
 %py3_install
 %else
 %pyproject_install
+%pyproject_save_files racksdb
 %endif
 
 # empty configuration directory
@@ -140,6 +141,14 @@ install -p -m 0644 docs/man/*.1 %{buildroot}%{_mandir}/man1/
 %define _racksdb_pysuffix egg-info
 %else
 %define _racksdb_pysuffix dist-info
+%endif
+
+# Except on RHEL8 where it is not supported, run pyproject_check_import on all
+# packages modules.
+%if !0%{?rhel} || 0%{?rhel} >= 9
+%check
+%pyproject_check_import
+%{python3} -m unittest
 %endif
 
 %files
