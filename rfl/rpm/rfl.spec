@@ -92,6 +92,12 @@ This package includes log package of RFL.
 %package -n python3-%{name}-permissions
 Summary:        Rackslab Foundation Library: permissions package
 BuildArch:      noarch
+# RFL tries to import cached_property from functools which is available starting
+# from Python >= 3.8, and fallback to compatible cached_property external
+# dependency otherwise. However, this optional dependency is not declared in
+# pyproject.toml, because it is not required in most cases. Then it must be
+# defined explicitely here when Python < 3.8.
+Requires:       (python3dist(cached-property) if python3 < 3.8)
 
 %description -n python3-%{name}-permissions
 RFL is a Python library and a set of common utilities useful to most Rackslab
