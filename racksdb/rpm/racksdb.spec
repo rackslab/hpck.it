@@ -50,6 +50,12 @@ rfl-install-setup-generator > /dev/null
 Summary:        YAML database of datacenter infrastructures: Python Library
 BuildArch:      noarch
 Requires:       pango
+# RPM python dependency generator automatically translate PyGObject Python
+# package to python3dist(pygobject) requirement. This requirement is satisfied
+# by python3-gobject-base RPM package but unfortunately, this package does not
+# include Cairo related stuff. This is fixed with this explicit dependency
+# declaration.
+Requires:       python3-gobject
 
 %description -n python3-%{name}
 RacksDB is an open source solution to modelize your datacenters infrastructures
