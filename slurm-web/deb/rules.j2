@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+override_dh_auto_build:
+{% if version.dist == "ubuntu2204" %}
+	rfl-install-setup-generator
+{% endif %}
+	dh_auto_build
+	npm --prefix=frontend run build
+
+override_dh_installsystemd:
+	dh_installsystemd --no-start --no-enable --name slurm-web-agent
+	dh_installsystemd --no-start --no-enable --name slurm-web-gateway

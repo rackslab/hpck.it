@@ -1,0 +1,6 @@
+---
+version: 3.0.0a1
+rpm:
+  release: 1
+deb:
+  release: 1

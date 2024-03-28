@@ -1,0 +1,67 @@
+Source: slurm-web
+Section: utils
+Priority: optional
+Maintainer: HPCKit team <maintainers@hpck.it>
+Homepage: https://github.com/rackslab/slurm-web
+Build-Depends:
+ debhelper-compat (= 13),
+ python3-all (>= 3.6),
+ python3-setuptools,
+ pybuild-plugin-pyproject,
+ dh-exec,
+ dh-python,
+ npm,
+ python3-flask,
+ python3-flask-cors,
+ python3-ldap,
+ python3-racksdb-web,
+ python3-requests,
+ python3-rfl-authentication,
+ python3-rfl-log,
+ python3-rfl-settings,
+ python3-rfl-web,
+Standards-Version: 4.2.1
+
+Package: python3-slurm-web
+Architecture: all
+Section: python
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Description: Web interface for Slurm HPC workload manager: common library
+ This software provides a web interface to monitor and manage an HPC cluster
+ running Slurm workload manager.
+ This package contains the common Python library used by all Slurm-web
+ components.
+
+Package: slurm-web-gateway
+Architecture: all
+Section: utils
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+ python3-slurm-web (= ${binary:Version}),
+ acl,
+Description: Web interface for Slurm HPC workload manager: gateway component
+ This software provides a web interface to monitor and manage an HPC cluster
+ running Slurm workload manager.
+ This package contains the gateway backend component and the frontend
+ application.
+
+Package: slurm-web-agent
+Architecture: all
+Section: utils
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+ python3-slurm-web (= ${binary:Version}),
+ python3-racksdb-web,
+ python3-redis,
+Suggests:
+ racksdb,
+ redis-server,
+ slurmrestd,
+Description: Web interface for Slurm HPC workload manager: agent component
+ This software provides a web interface to monitor and manage an HPC cluster
+ running Slurm workload manager.
+ This package contains the agent component to deploy on all clusters.

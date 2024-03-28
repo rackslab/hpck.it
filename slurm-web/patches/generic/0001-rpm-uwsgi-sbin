@@ -1,0 +1,32 @@
+Description: uwsgi in sbin on RHEL
+Formats: rpm
+Last-Update: 2024-03-26
+Author: Rémi Palancher <remi@rackslab.io>
+
+
+diff --git a/lib/wsgi/agent/slurm-web-agent-uwsgi.service b/lib/wsgi/agent/slurm-web-agent-uwsgi.service
+index 1466602..4635907 100644
+--- a/lib/wsgi/agent/slurm-web-agent-uwsgi.service
++++ b/lib/wsgi/agent/slurm-web-agent-uwsgi.service
+@@ -6,7 +6,7 @@ After=network.target
+ User=slurm
+ Group=slurm
+ RuntimeDirectory=slurm-web-agent
+-ExecStart=/usr/bin/uwsgi --ini /usr/share/slurm-web/wsgi/agent/slurm-web-agent.ini
++ExecStart=/usr/sbin/uwsgi --ini /usr/share/slurm-web/wsgi/agent/slurm-web-agent.ini
+ 
+ [Install]
+ WantedBy=multi-user.target
+diff --git a/lib/wsgi/gateway/slurm-web-gateway-uwsgi.service b/lib/wsgi/gateway/slurm-web-gateway-uwsgi.service
+index 90e28a2..8ea0716 100644
+--- a/lib/wsgi/gateway/slurm-web-gateway-uwsgi.service
++++ b/lib/wsgi/gateway/slurm-web-gateway-uwsgi.service
+@@ -6,7 +6,7 @@ After=network.target
+ User=slurm-web
+ Group=slurm-web
+ RuntimeDirectory=slurm-web-gateway
+-ExecStart=/usr/bin/uwsgi --ini /usr/share/slurm-web/wsgi/gateway/slurm-web-gateway.ini
++ExecStart=/usr/sbin/uwsgi --ini /usr/share/slurm-web/wsgi/gateway/slurm-web-gateway.ini
+ 
+ [Install]
+ WantedBy=multi-user.target
