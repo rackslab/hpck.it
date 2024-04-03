@@ -62,6 +62,7 @@ This package includes authentication package of RFL.
 %package -n python3-%{name}-build
 Summary:        Rackslab Foundation Library: build package
 BuildArch:      noarch
+Requires:       ninja-build
 
 %description -n python3-%{name}-build
 RFL is a Python library and a set of common utilities useful to most Rackslab
