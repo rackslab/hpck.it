@@ -1,0 +1,3 @@
+./docs/man/slurm-web-gateway.1
+./docs/man/slurm-web-gen-jwt-key.1
+./docs/man/slurm-web-ldap-check.1
