@@ -5,7 +5,7 @@
 
 override_dh_auto_build:
 {% if version.dist == "ubuntu2204" %}
-	install-setup-generator
+	rfl-install-setup-generator
 {% endif %}
 	dh_auto_build
 	make -C docs man
