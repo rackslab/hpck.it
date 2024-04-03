@@ -16,9 +16,7 @@ URL:            https://github.com/rackslab/slurm-web
 {{ sources }}
 {{ patches }}
 BuildRequires:  python3-devel
-%if 0%{?rhel}
 BuildRequires:  python3-rfl-build
-%endif
 {% if pkg.distribution == "el8" %}
 # On RHEL8, versions constraints must be set to ensure nodejs and npm are
 # selected from nodejs:18 DNF module.
@@ -30,6 +28,7 @@ BuildRequires:  npm
 {% endif %}
 BuildRequires:  systemd
 BuildRequires:  systemd-rpm-macros
+BuildRequires:  asciidoctor
 
 %description
 Slurm-web is a web dashboard for Slurm workload manager on HPC clusters.
@@ -94,6 +93,9 @@ rfl-install-setup-generator
 # Build frontend app
 npm --prefix=frontend run build
 
+# Generate manpages
+docs/update-materials man
+
 %install
 %if 0%{?rhel} && 0%{?rhel} <= 8
 %py3_install
@@ -133,6 +135,10 @@ install -p -D -m 0644 lib/systemd/* -t %{buildroot}%{_unitdir}
 # Install sysuser conf
 install -p -D -m 0644 lib/sysusers/* -t %{buildroot}%{_sysusersdir}
 
+# Install manpages
+install -d %{buildroot}%{_mandir}/man1
+install -p -m 0644 docs/man/*.1 %{buildroot}%{_mandir}/man1/
+
 %if 0%{?rhel} && 0%{?rhel} <= 8
 %define _pysuffix egg-info
 %else
@@ -154,6 +160,9 @@ install -p -D -m 0644 lib/sysusers/* -t %{buildroot}%{_sysusersdir}
 %{_sharedstatedir}/slurm-web
 
 %files -n %{name}-gateway
+%doc %{_mandir}/man1/slurm-web-gateway.*
+%doc %{_mandir}/man1/slurm-web-ldap-check.*
+%doc %{_mandir}/man1/slurm-web-gen-jwt-key.*
 %{_libexecdir}/slurm-web/slurm-web-gateway
 %{_libexecdir}/slurm-web/slurm-web-ldap-check
 %{_libexecdir}/slurm-web/slurm-web-gen-jwt-key
@@ -164,6 +173,7 @@ install -p -D -m 0644 lib/sysusers/* -t %{buildroot}%{_sysusersdir}
 %{_unitdir}/slurm-web-gateway.service
 
 %files -n %{name}-agent
+%doc %{_mandir}/man1/slurm-web-agent.*
 %{_libexecdir}/slurm-web/slurm-web-agent
 %{_datadir}/slurm-web/wsgi/agent
 %{_datadir}/slurm-web/conf/agent.yml
