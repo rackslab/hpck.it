@@ -49,6 +49,7 @@ Section: python
 Depends:
  ${misc:Depends},
  ${python3:Depends},
+ python3-rfl-core (= ${binary:Version}),
  ninja-build,
 Description: Rackslab Foundation Library: build package
  RFL is a Python library and a set of common utilities useful to most Rackslab
