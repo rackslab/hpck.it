@@ -8,5 +8,5 @@ override_dh_auto_build:
 	rfl-install-setup-generator
 {% endif %}
 	dh_auto_build
-	make -C docs man
+	docs/update-materials man
 
