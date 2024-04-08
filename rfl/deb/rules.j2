@@ -9,7 +9,7 @@ PACKAGES = core authentication build log permissions settings web
 
 override_dh_auto_build:
 {% if version.dist == "ubuntu2204" %}
-	$(foreach PACKAGE,$(PACKAGES),cp src/build/rfl/build/scripts/setup src/$(PACKAGE);)
+	$(foreach PACKAGE,$(PACKAGES),cp src/build/rfl/build/scripts/setup src/$(PACKAGE)/setup.py;)
 {% endif %}
 	$(foreach PACKAGE,$(PACKAGES),dh_auto_build -- --dir src/$(PACKAGE) --name rfl-$(PACKAGE);)
 
