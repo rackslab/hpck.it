@@ -1,1 +1,2 @@
 usr/bin/racksdb-web
+frontend/dist/* usr/share/racksdb/frontend

@@ -9,4 +9,16 @@ override_dh_auto_build:
 {% endif %}
 	dh_auto_build
 	docs/update-materials man
+# Move node_modules from supplemental archive in frontend/ folder and remove
+# symlink created by fatbuildr prescript patch in top folder. This is required
+# by leaflet that refuses to build with node_modules in top folder.
+	$(eval NODE_MODULES := $(shell readlink node_modules))
+	mv $(NODE_MODULES) frontend/node_modules
+	rm node_modules
 
+# Build frontend application
+	npm --prefix=frontend run build
+
+# Restore node_modules directory and symlink in their initial state.
+	mv frontend/node_modules $(NODE_MODULES)
+	ln -s $(NODE_MODULES) node_modules
