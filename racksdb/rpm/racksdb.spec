@@ -15,9 +15,15 @@ URL:            https://github.com/rackslab/RacksDB
 {{ sources }}
 {{ patches }}
 BuildRequires:  python3-devel
-%if 0%{?rhel}
 BuildRequires:  python3-rfl-build
-%endif
+{% if pkg.distribution == "el8" %}
+# PyYAML library is required for docs/update-materials script. It does not have
+# to be explicitely declared as build requirement except on el8 because it is
+# also a build requirement of RacksDB itself and is automatically detected and
+# declared by pyproject_buildrequires macro on other distributions.
+BuildRequires:  python3-pyyaml
+{% endif %}
+
 BuildRequires:  make
 BuildRequires:  asciidoctor
 BuildRequires:  pango
@@ -122,7 +128,9 @@ rfl-install-setup-generator
 {% else %}
 %pyproject_wheel
 {% endif %}
-make -C docs man
+
+# Generate manpages
+docs/update-materials man
 
 %install
 {% if pkg.distribution == "el8" %}
