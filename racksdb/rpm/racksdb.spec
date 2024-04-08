@@ -23,6 +23,15 @@ BuildRequires:  python3-rfl-build
 # declared by pyproject_buildrequires macro on other distributions.
 BuildRequires:  python3-pyyaml
 {% endif %}
+{% if pkg.distribution == "el8" %}
+# On RHEL8, versions constraints must be set to ensure nodejs and npm are
+# selected from nodejs:18 DNF module.
+BuildRequires:  nodejs(engine) >= 18
+BuildRequires:  npm(npm) >= 10
+{% else %}
+BuildRequires:  nodejs(engine)
+BuildRequires:  npm
+{% endif %}
 
 BuildRequires:  make
 BuildRequires:  asciidoctor
@@ -132,6 +141,20 @@ rfl-install-setup-generator
 # Generate manpages
 docs/update-materials man
 
+# Move node_modules from supplemental archive in frontend/ folder and remove
+# symlink created by fatbuildr prescript patch in top folder. This is required
+# by leaflet that refuses to build with node_modules in top folder.
+NODE_MODULES=$(readlink node_modules)
+mv ${NODE_MODULES} frontend/node_modules
+rm node_modules
+
+# Build frontend app
+npm --prefix=frontend run build
+
+# Restore node_modules directory and symlink in their initial state.
+mv frontend/node_modules ${NODE_MODULES}
+ln -s ${NODE_MODULES} node_modules
+
 %install
 {% if pkg.distribution == "el8" %}
 %py3_install
@@ -149,6 +172,9 @@ install -p -m 0644 schemas/*.yml %{buildroot}%{_datadir}/racksdb/schemas
 
 # empty database directory
 install -d %{buildroot}%{_sharedstatedir}/racksdb
+
+# Install frontend application in datadir
+cp -vdr --no-preserve=ownership frontend/dist %{buildroot}%{_datadir}/racksdb/frontend
 
 # man pages
 install -d %{buildroot}%{_mandir}/man1
@@ -179,7 +205,7 @@ install -p -m 0644 docs/man/*.1 %{buildroot}%{_mandir}/man1/
 %{python3_sitelib}/racksdb/
 %{python3_sitelib}/RacksDB-*.%{_racksdb_pysuffix}/
 %{_sysconfdir}/racksdb
-%{_datadir}/racksdb
+%{_datadir}/racksdb/schemas
 %{_sharedstatedir}/racksdb
 
 {% if pkg.distribution == "el8" %}
@@ -189,5 +215,6 @@ install -p -m 0644 docs/man/*.1 %{buildroot}%{_mandir}/man1/
 %files -n %{name}-web
 %{_bindir}/racksdb-web
 %doc %{_mandir}/man1/racksdb-web.*
+%{_datadir}/racksdb/frontend
 
 {{ changelog }}
