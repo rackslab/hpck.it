@@ -50,13 +50,14 @@ Description: Meta-package for datacenter infrastructures database web app
  infrastructures in a simple YAML-based database to store information about the
  equipments in your datacenters provided with tools and library to request
  this database.
- This package is a meta-package to install optional dependencies required by
+ This package is a metapackage to install optional dependencies required by
  Python library for RacksDB web application.
 
 Package: racksdb
 Architecture: all
 Section: admin
 Depends:
+ ${misc:Depends},
  python3-racksdb (= ${binary:Version}),
 Description: CLI for datacenter infrastructures database
  RacksDB is an open source solution to modelize your datacenters
@@ -69,6 +70,7 @@ Package: racksdb-web
 Architecture: all
 Section: admin
 Depends:
+ ${misc:Depends},
  python3-racksdb-web (= ${binary:Version}),
 Description: Web application with REST API for RacksDB
  RacksDB is an open source solution to modelize your datacenters
