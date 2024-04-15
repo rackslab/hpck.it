@@ -1,9 +1,9 @@
 ---
-version: 0.3.0
+version: 0.4.0
 source: https://github.com/rackslab/racksdb/archive/refs/tags/v{{ version | gittag }}.tar.gz
 checksums:
-  '0.3.0':
-    sha256: 49246d54edb6d39b79f73a824554924d26622a2496bfdc3065e5e0d69d7e6c5a
+  '0.4.0':
+    sha256: d9a1e2d9c5c4a23a24401dfdf86b5da2f4fa3c0bf3fa53f8906cd6884acb45ef
 rpm:
   release: 1
 deb:
