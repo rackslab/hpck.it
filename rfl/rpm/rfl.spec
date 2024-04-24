@@ -17,7 +17,6 @@ URL:            https://github.com/rackslab/RFL
 {{ patches }}
 BuildArch:      noarch
 BuildRequires:  python3-devel
-BuildRequires:  python3-setuptools
 %if 0%{?rhel}
 BuildRequires:  python3-tomli
 %endif
