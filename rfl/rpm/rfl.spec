@@ -131,7 +131,8 @@ This package includes web package of RFL.
 
 %build
 # Manually copy setup script from build package into all packages top-folders so
-# this script can be used by py3_build and py3_install macros on RHEL8.
+# this script can be used by py3_build/py3_install macros on RHEL8 and
+# pyproject_wheel/pyproject_install macros on RHEL9.
 %if 0%{?rhel} && 0%{?rhel} <= 9
 cp src/build/rfl/build/scripts/setup src/core/setup.py
 cp src/build/rfl/build/scripts/setup src/authentication/setup.py
