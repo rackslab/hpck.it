@@ -18,6 +18,13 @@ URL:            https://github.com/rackslab/slurm-web
 BuildRequires:  python3-devel
 BuildRequires:  python3-rfl-build
 {% if pkg.distribution == "el8" %}
+# PyYAML library is required for docs/update-materials script. It does not have
+# to be explicitely declared as build requirement except on el8 because it is
+# also a build requirement of Slurm-web itself and is automatically detected and
+# declared by pyproject_buildrequires macro on other distributions.
+BuildRequires:  python3-pyyaml
+{% endif %}
+{% if pkg.distribution == "el8" %}
 # On RHEL8, versions constraints must be set to ensure nodejs and npm are
 # selected from nodejs:18 DNF module.
 BuildRequires:  nodejs(engine) >= 18
