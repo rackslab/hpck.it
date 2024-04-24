@@ -37,14 +37,10 @@ This package is a metapackage to install all RFL packages.
 
 %if ! 0%{?rhel} || 0%{?rhel} >= 9
 %generate_buildrequires
-# Copy pyproject.toml→setup.py script converter to satisfy requirement of
-# pyproject_buildrequires macro in presence of pyproject.toml without project.
-#
 # Unfortunately, macros from pyproject-rpm-macros do not support sub-packages in
 # packages namespace like RFL, then the macro is not able to detect the test
 # dependencies. This is a reason why unit tests are not executed on package
 # build.
-cp src/build/rfl/build/scripts/setup setup.py
 %pyproject_buildrequires
 %endif
 
