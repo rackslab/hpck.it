@@ -11,6 +11,9 @@ Build-Depends:
  python3-dasbus,
  python3-fake-factory,
  python3-racksdb,
+{% if version.dist == "ubuntu2204" %}
+ python3-rfl-build,
+{% endif %}
  dh-python,
  pybuild-plugin-pyproject,
  asciidoctor,
