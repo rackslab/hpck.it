@@ -1,0 +1,14 @@
+Description: Add MANIFEST.IN to install build package data files in RPM
+ packages.
+Distributions: ubuntu22.04
+Last-update: 2024-05-08
+Author: Rémi Palancher <remi@rackslab.io>
+
+
+diff --git a/src/build/MANIFEST.in b/src/build/MANIFEST.in
+new file mode 100644
+index 0000000..93aeb49
+--- /dev/null
++++ b/src/build/MANIFEST.in
+@@ -0,0 +1 @@
++recursive-include rfl/build/scripts *
