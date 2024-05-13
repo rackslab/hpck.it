@@ -1,5 +1,9 @@
 ---
-version: 3.0.0a1
+version: 3.0.0
+source: https://github.com/rackslab/Slurm-web/archive/refs/tags/v{{ version | gittag }}.tar.gz
+checksums:
+  '3.0.0':
+    sha256: 10a85893b0428b60491f33cccd7c8a8a0f4ef7ff6cf24ef5ed55c098df2cd85b
 rpm:
   release: 1
 deb:
