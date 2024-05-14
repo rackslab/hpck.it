@@ -1,6 +1,6 @@
 Description: replace the software hard-coded version number with the
  main version provided by Fatbuildr at build time.
-Last-Update: 2023-08-29
+Last-Update: 2024-05-14
 Template: yes
 Author: Rémi Palancher <remi@rackslab.io>
 
@@ -13,7 +13,7 @@ index e777f45..a61bb0e 100644
  
  [project]
  name = "FireHPC"
--version = "1.1.0"
+-version = "1.2.0a1"
 +version = "{{ version.main }}"
  description = "Instantly fire up container-based emulated HPC cluster"
  license = {text = "GPLv3+"}
