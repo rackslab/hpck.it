@@ -1,1 +1,2 @@
 usr/sbin/slurmctld
+lib/systemd/system/slurmctld.service

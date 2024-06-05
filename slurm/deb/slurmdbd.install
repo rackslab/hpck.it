@@ -1,1 +1,2 @@
 usr/sbin/slurmdbd
+lib/systemd/system/slurmdbd.service
