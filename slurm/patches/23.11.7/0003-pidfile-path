@@ -2,18 +2,18 @@ Description: Fix default pidfile paths
  This patch points default pidfild paths under /run
 ian: http://bugs.debian.org/885759
 Forwarded: not-needed
-Last-Update: 2023-06-09
+Last-Update: 2024-06-05
 Author: Mehdi Dogguy <mehdi@debian.org>
 
 
 diff --git a/src/common/read_config.h b/src/common/read_config.h
-index 60ffe1d..1389c9c 100644
+index 446cbe7..5ba0745 100644
 --- a/src/common/read_config.h
 +++ b/src/common/read_config.h
-@@ -163,9 +163,9 @@ typedef struct node_record node_record_t;
- #  define DEFAULT_SELECT_TYPE       "select/linear"
+@@ -144,9 +144,9 @@ typedef struct node_record node_record_t;
+ #else
+ #  define DEFAULT_SELECT_TYPE       "select/cons_tres"
  #endif
- #define DEFAULT_SITE_FACTOR_PLUGIN  "site_factor/none"
 -#define DEFAULT_SLURMCTLD_PIDFILE   "/var/run/slurmctld.pid"
 +#define DEFAULT_SLURMCTLD_PIDFILE   "/run/slurmctld.pid"
  #define DEFAULT_SLURMCTLD_TIMEOUT   120
@@ -23,7 +23,7 @@ index 60ffe1d..1389c9c 100644
  #define DEFAULT_SPOOLDIR            "/var/spool/slurmd"
  #define DEFAULT_STORAGE_HOST        "localhost"
 diff --git a/src/slurmdbd/read_config.h b/src/slurmdbd/read_config.h
-index 5c3851d..4ce42b4 100644
+index 3a7b932..f871f4b 100644
 --- a/src/slurmdbd/read_config.h
 +++ b/src/slurmdbd/read_config.h
 @@ -48,7 +48,7 @@

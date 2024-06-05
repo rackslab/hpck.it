@@ -9,7 +9,7 @@ Author: Rémi Palancher <remi@rezib.org>
 
 
 diff --git a/src/sacctmgr/file_functions.c b/src/sacctmgr/file_functions.c
-index 990236a..0985c91 100644
+index 9b5d8f1..e75eda2 100644
 --- a/src/sacctmgr/file_functions.c
 +++ b/src/sacctmgr/file_functions.c
 @@ -42,7 +42,7 @@

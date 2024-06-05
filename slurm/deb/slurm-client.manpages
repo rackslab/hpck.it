@@ -8,9 +8,7 @@ debian/tmp/usr/share/man/man1/sshare.1
 debian/tmp/usr/share/man/man1/scontrol.1
 debian/tmp/usr/share/man/man1/scrontab.1
 debian/tmp/usr/share/man/man1/srun.1
-{% if version.major >= 23 %}
 debian/tmp/usr/share/man/man1/scrun.1
-{% endif %}
 debian/tmp/usr/share/man/man1/sdiag.1
 debian/tmp/usr/share/man/man1/sreport.1
 debian/tmp/usr/share/man/man1/sinfo.1
@@ -26,16 +24,11 @@ debian/tmp/usr/share/man/man5/ext_sensors.conf.5
 debian/tmp/usr/share/man/man5/gres.conf.5
 debian/tmp/usr/share/man/man5/acct_gather.conf.5
 debian/tmp/usr/share/man/man5/cgroup.conf.5
-{% if version.major < 23 %}
-debian/tmp/usr/share/man/man5/nonstop.conf.5
-{% endif %}
 debian/tmp/usr/share/man/man5/topology.conf.5
 debian/tmp/usr/share/man/man5/burst_buffer.conf.5
 debian/tmp/usr/share/man/man5/job_container.conf.5
 debian/tmp/usr/share/man/man5/knl.conf.5
 debian/tmp/usr/share/man/man5/helpers.conf.5
 debian/tmp/usr/share/man/man5/oci.conf.5
-{% if version.major >= 22 %}
 debian/tmp/usr/share/man/man5/mpi.conf.5
-{% endif %}
 debian/tmp/usr/share/man/man5/slurm.conf.5

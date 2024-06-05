@@ -1,7 +1,7 @@
-{% if version.major == 23 %}
+{% if version.main.startswith('23.11') %}
+  {% set soname = 40 %}
+{% elif version.main.startswith('23.02') %}
   {% set soname = 39 %}
-{% elif version.major == 22 %}
-  {% set soname = 38 %}
 {% endif %}
 Source: slurm
 Section: admin
@@ -318,3 +318,18 @@ Description: PAM module to authenticate users running a SLURM job and track thei
  running job. The user's connection is "adopted" into the "external"
  step of the job so that processes spawned are tracked and SLURM can
  perform a complete cleanup when the job is completed.
+
+{% if version.main.startswith('23.11') or version.major >= 24 %}
+Package: sackd
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+ slurm-wlm-basic-plugins (= ${binary:Version}),
+ adduser,
+Description: Slurm auth and cred kiosk daemon
+ The Slurm Workload Manager is an open-source cluster resource management and
+ job scheduling system that strives to be simple, scalable, portable,
+ fault-tolerant, and interconnect agnostic.
+ This package contains the Slurm auth and cred kiosk daemon
+{% endif %}

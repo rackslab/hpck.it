@@ -4,10 +4,10 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-{% if version.major == 23 %}
+{% if version.main.startswith('23.11') %}
+  {% set soname = 40 %}
+{% elif version.main.startswith('23.02') %}
   {% set soname = 39 %}
-{% elif version.major == 22 %}
-  {% set soname = 38 %}
 {% endif %}
 
 export PERL_ARCHLIB := $(shell perl -MConfig -e 'print substr($$Config{vendorarch}, 1)')
@@ -78,6 +78,9 @@ override_dh_strip:
 	dh_strip -pslurmctld
 	dh_strip -pslurmdbd
 	dh_strip -pslurmrestd
+{% if soname >= 40 %}
+	dh_strip -psackd
+{% endif %}
 	# we do not care about debug symbols for those pkgs
 	dh_strip -plibslurmdb-perl --no-automatic-dbgsym
 	dh_strip -plibslurm-perl --no-automatic-dbgsym
