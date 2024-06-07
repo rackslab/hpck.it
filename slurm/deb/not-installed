@@ -2,3 +2,6 @@ lib/security/pam_slurm.a
 lib/security/pam_slurm.la
 lib/security/pam_slurm_adopt.a
 lib/security/pam_slurm_adopt.la
+usr/lib/*/perl*/*/auto/Slurm/.packlist
+usr/lib/*/perl*/*/auto/Slurmdb/.packlist
+usr/lib/*/perl*/*/perllocal.pod

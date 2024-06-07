@@ -1,6 +1,5 @@
-#! /usr/bin/dh-exec --with=subst
-${PERL_ARCHLIB}/auto/Slurm/Slurm.so
-${PERL_ARCHLIB}/Slurm/Bitstr.pm
-${PERL_ARCHLIB}/Slurm/Constant.pm
-${PERL_ARCHLIB}/Slurm/Hostlist.pm
-${PERL_ARCHLIB}/Slurm.pm
+usr/lib/*/perl*/*/auto/Slurm/Slurm.so
+usr/lib/*/perl*/*/Slurm/Bitstr.pm
+usr/lib/*/perl*/*/Slurm/Constant.pm
+usr/lib/*/perl*/*/Slurm/Hostlist.pm
+usr/lib/*/perl*/*/Slurm.pm

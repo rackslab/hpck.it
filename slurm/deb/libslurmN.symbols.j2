@@ -1,4 +1,6 @@
-{% if version.main.startswith('23.11') %}
+{% if version.main.startswith('24.05') %}
+  {% set soname = 41 %}
+{% elif version.main.startswith('23.11') %}
   {% set soname = 40 %}
 {% elif version.main.startswith('23.02') %}
   {% set soname = 39 %}
@@ -6,7 +8,13 @@
 libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 * Build-Depends-Package: libslurm-dev
  active_node_record_count@Base 23.02.2
-{% if soname >= 40 %}
+{% if soname >= 41 %}
+#MISSING: 24.05.0# bblock_node_cnt@Base 23.11.7
+#MISSING: 24.05.0# block_levels@Base 23.11.7
+#MISSING: 24.05.0# block_record_cnt@Base 23.11.7
+#MISSING: 24.05.0# block_record_table@Base 23.11.7
+#MISSING: 24.05.0# blocks_nodes_bitmap@Base 23.11.7
+{% elif soname >= 40 %}
  bblock_node_cnt@Base 23.11.7
  block_levels@Base 23.11.7
  block_record_cnt@Base 23.11.7
@@ -17,8 +25,13 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  islurm_get_rem_time__@Base 1.3.8
  node_record_count@Base 23.02.2
  node_record_table_ptr@Base 23.02.2
+{% if soname >= 41 %}
+#MISSING: 24.05.0# plugin_context_create@Base 2.5.7
+#MISSING: 24.05.0# plugin_context_destroy@Base 2.5.7
+{% else %}
  plugin_context_create@Base 2.5.7
  plugin_context_destroy@Base 2.5.7
+{% endif %}
 {% if soname >= 40 %}
  sack_create@Base 23.11.7
  sack_verify@Base 23.11.7
@@ -34,6 +47,11 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 {% else %}
  slurm_acct_storage_fini@Base 1.3.8
  slurm_acct_storage_init@Base 1.3.8
+{% endif %}
+{% if soname >= 41 %}
+ slurm_add_key_pair@Base 24.05.0
+ slurm_add_key_pair_bool@Base 24.05.0
+ slurm_add_key_pair_own@Base 24.05.0
 {% endif %}
  slurm_add_slash_to_quotes@Base 2.2.0
  slurm_addr_is_unspec@Base 20.11.2
@@ -229,7 +247,11 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_copy_priority_factors@Base 23.02.2
 #MISSING: 23.02.2# slurm_copy_priority_factors_object@Base 15.08.0
  slurm_copy_resource_allocation_response_msg@Base 20.11.2
+{% if soname >= 41 %}
+#MISSING: 24.05.0# slurm_cray_nodelist2nids@Base 14.03.0
+{% else %}
  slurm_cray_nodelist2nids@Base 14.03.0
+{% endif %}
  slurm_create_buf@Base 1.3.8
  slurm_create_container_state_msg@Base 23.02.2
  slurm_create_mmap_buf@Base 18.08.0
@@ -374,6 +396,9 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 17.11.2# slurm_fatal_cleanup@Base 1.3.8
 #MISSING: 17.11.2# slurm_fatal_remove_cleanup@Base 1.3.8
 #MISSING: 17.11.2# slurm_fatal_remove_cleanup_job@Base 1.3.8
+{% if soname >= 41 %}
+ slurm_fd_close@Base 24.05.0
+{% endif %}
  slurm_fd_get_socket_error@Base 20.02.1
 #MISSING: 19.05.2# slurm_fd_read_n@Base 1.3.8
  slurm_fd_set_blocking@Base 1.3.8
@@ -414,11 +439,19 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 20.02.1# slurm_free_checkpoint_resp_msg@Base 1.3.8
 #MISSING: 20.02.1# slurm_free_checkpoint_task_comp_msg@Base 1.3.8
 #MISSING: 20.02.1# slurm_free_checkpoint_tasks_msg@Base 1.3.8
+{% if soname >= 41 %}
+#MISSING: 24.05.0# slurm_free_comp_msg_list@Base 15.08.0
+{% else %}
  slurm_free_comp_msg_list@Base 15.08.0
+{% endif %}
  slurm_free_complete_batch_script_msg@Base 1.3.8
  slurm_free_complete_job_allocation_msg@Base 1.3.8
  slurm_free_complete_prolog_msg@Base 14.03.0
+{% if soname >= 41 %}
+#MISSING: 24.05.0# slurm_free_composite_msg@Base 15.08.0
+{% else %}
  slurm_free_composite_msg@Base 15.08.0
+{% endif %}
  slurm_free_config_request_msg@Base 20.02.1
  slurm_free_config_response_msg@Base 20.02.1
  slurm_free_container_id_request_msg@Base 23.02.2
@@ -505,7 +538,11 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_free_partition_info_msg@Base 1.3.8
  slurm_free_ping_slurmd_resp@Base 2.5.3
 #MISSING: 20.11.2# slurm_free_powercap_info_msg@Base 15.08.0
+{% if soname >= 41 %}
+#MISSING: 24.05.0# slurm_free_priority_factors_request_msg@Base 2.0.0
+{% else %}
  slurm_free_priority_factors_request_msg@Base 2.0.0
+{% endif %}
  slurm_free_priority_factors_response_msg@Base 2.0.0
  slurm_free_prolog_launch_msg@Base 14.03.0
  slurm_free_reattach_tasks_request_msg@Base 1.3.8
@@ -549,6 +586,9 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 20.11.2# slurm_free_step_alloc_info_msg@Base 15.08.0
  slurm_free_step_complete_msg@Base 1.3.8
  slurm_free_step_id@Base 20.11.2
+{% if soname >= 41 %}
+ slurm_free_stepmgr_job_info@Base 24.05.0
+{% endif %}
  slurm_free_submit_response_response_msg@Base 1.3.8
  slurm_free_suspend_exc_update_msg@Base 23.02.2
  slurm_free_suspend_int_msg@Base 2.5.3
@@ -603,13 +643,20 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 20.02.1# slurm_get_checkpoint_dir@Base 15.08.1
 #MISSING: 20.02.1# slurm_get_checkpoint_type@Base 1.3.8
 #MISSING: 20.11.2# slurm_get_cli_filter_plugins@Base 19.05.2
+{% if soname >= 41 %}
+ slurm_get_cluster_info@Base 24.05.0
+{% endif %}
 #MISSING: 20.11.2# slurm_get_cluster_name@Base 1.3.8
 #MISSING: 20.11.2# slurm_get_comm_parameters@Base 18.08.0
 #MISSING: 20.11.2# slurm_get_complete_wait@Base 2.0.0
 #MISSING: 20.11.2# slurm_get_control_cnt@Base 18.08.0
 #MISSING: 14.11.0# slurm_get_controller_addr_spec@Base 1.3.8
  slurm_get_convert_unit_val@Base 16.05.5
+{% if soname >= 41 %}
+#MISSING: 24.05.0# slurm_get_core_spec_plugin@Base 14.03.0
+{% else %}
  slurm_get_core_spec_plugin@Base 14.03.0
+{% endif %}
 #MISSING: 20.11.2# slurm_get_cpu_freq_def@Base 14.11.0
 #MISSING: 20.11.2# slurm_get_cpu_freq_govs@Base 15.08.0
 #MISSING: 20.11.2# slurm_get_cred_type@Base 19.05.2
@@ -621,8 +668,13 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 20.11.2# slurm_get_env_timeout@Base 1.3.8
 #MISSING: 20.11.2# slurm_get_epilog_msg_time@Base 1.3.8
  slurm_get_errno@Base 1.3.8
+{% if soname >= 41 %}
+#MISSING: 24.05.0# slurm_get_ext_sensors_freq@Base 2.6.2
+#MISSING: 24.05.0# slurm_get_ext_sensors_type@Base 2.6.2
+{% else %}
  slurm_get_ext_sensors_freq@Base 2.6.2
  slurm_get_ext_sensors_type@Base 2.6.2
+{% endif %}
  slurm_get_extra_conf_path@Base 2.6.2
 #MISSING: 20.02.1# slurm_get_fast_schedule@Base 1.3.8
 #MISSING: 20.11.2# slurm_get_fs_dampening_factor@Base 14.03.0
@@ -895,10 +947,20 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_job_cpus_allocated_str_on_node@Base 15.08.0
  slurm_job_cpus_allocated_str_on_node_id@Base 15.08.0
  slurm_job_node_ready@Base 1.3.8
+{% if soname >= 41 %}
+#MISSING: 24.05.0# slurm_job_reason_num@Base 19.05.2
+#MISSING: 24.05.0# slurm_job_reason_string@Base 2.2.0
+{% else %}
  slurm_job_reason_num@Base 19.05.2
  slurm_job_reason_string@Base 2.2.0
+{% endif %}
  slurm_job_share_string@Base 16.05.0
  slurm_job_state_num@Base 2.2.0
+{% if soname >= 41 %}
+ slurm_job_state_reason_check@Base 24.05.0
+ slurm_job_state_reason_num@Base 24.05.0
+ slurm_job_state_reason_string@Base 24.05.0
+{% endif %}
  slurm_job_state_string@Base 2.2.0
  slurm_job_state_string_compact@Base 2.2.0
  slurm_job_step_create@Base 1.3.8
@@ -1033,7 +1095,11 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 {% else %}
  slurm_mcs_init@Base 16.05.0
 {% endif %}
+{% if soname >= 41 %}
+#MISSING: 24.05.0# slurm_mcs_reconfig@Base 16.05.0
+{% else %}
  slurm_mcs_reconfig@Base 16.05.0
+{% endif %}
  slurm_mcs_reset_params@Base 16.05.0
  slurm_mins2time_str@Base 16.05.5
  slurm_mktime@Base 15.08.0
@@ -1113,6 +1179,9 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 22.05.0# slurm_pack_slurm_addr_array@Base 1.3.8
  slurm_pack_slurm_step_layout@Base 14.03.0
  slurm_pack_slurmdbd_msg@Base 18.08.3
+{% if soname >= 41 %}
+ slurm_pack_stepmgr_job_info@Base 24.05.0
+{% endif %}
  slurm_pack_time@Base 1.3.8
  slurm_packbool@Base 19.05.2
  slurm_packdouble@Base 2.3.1
@@ -1135,7 +1204,11 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_persist_conn_free_thread_loc@Base 17.02.0
  slurm_persist_conn_members_destroy@Base 17.02.0
  slurm_persist_conn_open@Base 17.02.0
+{% if soname >= 41 %}
+#MISSING: 24.05.0# slurm_persist_conn_open_without_init@Base 17.02.0
+{% else %}
  slurm_persist_conn_open_without_init@Base 17.02.0
+{% endif %}
  slurm_persist_conn_process_msg@Base 17.02.0
  slurm_persist_conn_recv_server_fini@Base 17.02.0
  slurm_persist_conn_recv_server_init@Base 17.02.0
@@ -1370,8 +1443,18 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_slurmdbd_pack_fini_msg@Base 19.05.5
  slurm_sort_char_list_asc@Base 1.3.9
  slurm_sort_char_list_desc@Base 1.3.9
+{% if soname >= 41 %}
+ slurm_sort_int64_list_asc@Base 24.05.0
+ slurm_sort_int64_list_desc@Base 24.05.0
+ slurm_sort_int_list_asc@Base 24.05.0
+ slurm_sort_int_list_desc@Base 24.05.0
+{% endif %}
  slurm_sort_key_pairs@Base 2.1.0
  slurm_sort_node_list_str@Base 22.05.9
+{% if soname >= 41 %}
+ slurm_sort_uint_list_asc@Base 24.05.0
+ slurm_sort_uint_list_desc@Base 24.05.0
+{% endif %}
  slurm_spank_log@Base 20.02.1
 #MISSING: 18.08.0# slurm_sprint_block_info@Base 2.1.0
  slurm_sprint_cpu_bind_type@Base 1.3.8
@@ -1466,6 +1549,9 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
 #MISSING: 22.05.0# slurm_unpack_slurm_addr_no_alloc@Base 1.3.8
  slurm_unpack_slurm_step_layout@Base 14.03.0
  slurm_unpack_slurmdbd_msg@Base 18.08.3
+{% if soname >= 41 %}
+ slurm_unpack_stepmgr_job_info@Base 24.05.0
+{% endif %}
  slurm_unpack_time@Base 1.3.8
  slurm_unpackbool@Base 19.05.2
  slurm_unpackdouble@Base 2.3.1
@@ -1500,7 +1586,10 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_verbose@Base 1.3.8
  slurm_verify_cpu_bind@Base 2.0.0
  slurm_verify_mem_bind@Base 2.0.0
-{% if soname >= 40 %}
+{% if soname >= 41 %}
+#MISSING: 24.05.0# slurm_watts_str_to_int@Base 23.11.7
+#MISSING: 24.05.0# slurm_watts_to_str@Base 23.11.7
+{% elif soname == 40 %}
  slurm_watts_str_to_int@Base 23.11.7
  slurm_watts_to_str@Base 23.11.7
 {% endif %}
@@ -1509,6 +1598,9 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_write_stream@Base 1.3.8
 #MISSING: 20.11.2# slurm_write_stream_timeout@Base 1.3.8
  slurm_xassert_failed@Base 1.3.8
+{% if soname >= 41 %}
+ slurm_xbase64_from_base64url@Base 24.05.0
+{% endif %}
  slurm_xbasename@Base 1.3.8
  slurm_xcalloc@Base 19.05.2
 #MISSING: 21.08.4# slurm_xcgroup_config_read_mutex@Base 19.05.2
@@ -1523,7 +1615,11 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_xfree_struct_hostent@Base 22.05.0
  slurm_xfree_struct_passwd@Base 19.05.2
  slurm_xiso8601timecat@Base 21.08.4
+{% if soname >= 41 %}
+#MISSING: 24.05.0# slurm_xlate_job_id@Base 2.6.2
+{% else %}
  slurm_xlate_job_id@Base 2.6.2
+{% endif %}
 #MISSING: 19.05.2# slurm_xmalloc@Base 1.3.8
  slurm_xmemcat@Base 1.3.8
 #MISSING: 19.05.2# slurm_xrealloc@Base 1.3.8
@@ -1548,6 +1644,9 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_xstrcmp@Base 14.03.0
  slurm_xstrdup@Base 1.3.8
  slurm_xstrdup_printf@Base 1.3.8
+{% if soname >= 41 %}
+ slurm_xstrdup_vprintf@Base 24.05.0
+{% endif %}
  slurm_xstrfmtcat@Base 1.3.8
  slurm_xstrfmtcatat@Base 19.05.2
  slurm_xstrftimecat@Base 1.3.8
@@ -1568,6 +1667,9 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurmdb_accounts_get@Base 19.05.2
  slurmdb_accounts_modify@Base 19.05.2
  slurmdb_accounts_remove@Base 19.05.2
+{% if soname >= 41 %}
+ slurmdb_acct_flags_2_str@Base 24.05.0
+{% endif %}
  slurmdb_add_accounting_to_tres_list@Base 15.08.0
  slurmdb_add_cluster_accounting_to_tres_list@Base 15.08.0
  slurmdb_add_time_from_count_to_tres_list@Base 15.08.0
@@ -1575,6 +1677,9 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurmdb_admin_level_str@Base 2.3.1
  slurmdb_archive@Base 19.05.2
  slurmdb_archive_load@Base 19.05.2
+{% if soname >= 41 %}
+ slurmdb_assoc_flags_2_str@Base 24.05.0
+{% endif %}
  slurmdb_associations_add@Base 19.05.2
  slurmdb_associations_get@Base 19.05.2
  slurmdb_associations_modify@Base 19.05.2
@@ -1841,10 +1946,14 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurmdb_send_accounting_update@Base 2.3.1
  slurmdb_send_accounting_update_persist@Base 23.02.2
 #MISSING: 16.05.0# slurmdb_set_new_tres_cnt@Base 15.08.0
- slurmdb_setup_cluster_dim_size@Base 2.3.1
  slurmdb_setup_cluster_dims@Base 2.3.1
  slurmdb_setup_cluster_flags@Base 2.3.1
+ slurmdb_setup_cluster_dim_size@Base 2.3.1
+{% if soname >= 41 %}
+#MISSING: 24.05.0# slurmdb_setup_cluster_name_dims@Base 2.3.1
+{% else %}
  slurmdb_setup_cluster_name_dims@Base 2.3.1
+{% endif %}
  slurmdb_setup_cluster_rec@Base 17.11.2
 {% if soname >= 40 %}
 #MISSING: 23.11.7# slurmdb_setup_plugin_id_select@Base 16.05.0
@@ -1939,7 +2048,13 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurmdb_wckeys_get@Base 19.05.2
  slurmdb_wckeys_modify@Base 19.05.2
  slurmdb_wckeys_remove@Base 19.05.2
+{% if soname >= 41 %}
+#MISSING: 24.05.0# switch_levels@Base 23.02.2
+#MISSING: 24.05.0# switch_record_cnt@Base 23.02.2
+#MISSING: 24.05.0# switch_record_table@Base 23.02.2
+{% else %}
  switch_levels@Base 23.02.2
  switch_record_cnt@Base 23.02.2
  switch_record_table@Base 23.02.2
+{% endif %}
  working_cluster_rec@Base 19.05.2

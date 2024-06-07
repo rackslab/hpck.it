@@ -1,3 +1,10 @@
+{% if version.main.startswith('24.05') %}
+  {% set soname = 41 %}
+{% elif version.main.startswith('23.11') %}
+  {% set soname = 40 %}
+{% elif version.main.startswith('23.02') %}
+  {% set soname = 39 %}
+{% endif %}
 debian/tmp/usr/share/man/man1/scancel.1
 debian/tmp/usr/share/man/man1/sattach.1
 debian/tmp/usr/share/man/man1/strigger.1
@@ -20,7 +27,9 @@ debian/tmp/usr/share/man/man1/sbcast.1
 debian/tmp/usr/share/man/man1/sacct.1
 debian/tmp/usr/share/man/man1/sacctmgr.1
 debian/tmp/usr/share/man/man7/spank.7
+{% if soname < 41 %}
 debian/tmp/usr/share/man/man5/ext_sensors.conf.5
+{% endif %}
 debian/tmp/usr/share/man/man5/gres.conf.5
 debian/tmp/usr/share/man/man5/acct_gather.conf.5
 debian/tmp/usr/share/man/man5/cgroup.conf.5

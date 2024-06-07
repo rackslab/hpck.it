@@ -4,13 +4,14 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-{% if version.main.startswith('23.11') %}
+{% if version.main.startswith('24.05') %}
+  {% set soname = 41 %}
+{% elif version.main.startswith('23.11') %}
   {% set soname = 40 %}
 {% elif version.main.startswith('23.02') %}
   {% set soname = 39 %}
 {% endif %}
 
-export PERL_ARCHLIB := $(shell perl -MConfig -e 'print substr($$Config{vendorarch}, 1)')
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all,-bindnow
 # include defs of all DEB_HOST_*/DEB_BUILD_* vars
 include /usr/share/dpkg/architecture.mk
@@ -40,8 +41,7 @@ override_dh_auto_install:
 	
 	# run make install for libslurm[db]-perl pkgs
 	$(MAKE) -C obj-$(DEB_BUILD_GNU_TYPE)/contribs/perlapi install DESTDIR=$(CURDIR)/debian/tmp PERL_MM_OPT="INSTALLDIRS=vendor"
-	find debian/tmp/$(PERL_ARCHLIB) -type f -name "*.so" | xargs chrpath -d
-	
+
 	# run make install for slurm-torque pkg
 	$(MAKE) -C obj-$(DEB_BUILD_GNU_TYPE)/contribs/torque install DESTDIR=$(CURDIR)/debian/tmp
 
