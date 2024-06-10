@@ -3,8 +3,9 @@
 # is GPLv2+.
 #
 # Please refer to upstream DISCLAIMER file for copyrights.
-
-{% if version.startswith('23.11') %}
+{% if version.startswith('24.05') %}
+  {% set soname = 41 %}
+{% elif version.startswith('23.11') %}
   {% set soname = 40 %}
 {% elif version.startswith('23.02') %}
   {% set soname = 39 %}
@@ -25,12 +26,16 @@ URL:		https://slurm.schedmd.com/
 # build options		.rpmmacros options	change to default action
 # ====================  ====================	========================
 # --prefix		%_prefix path		install path for commands, libraries, etc.
+{% if soname < 41 %}
 # --with cray		%_with_cray 1		build for a Cray Aries system
 # --with cray_network	%_with_cray_network 1	build for a non-Cray system with a Cray network
+{% endif %}
 # --with cray_shasta	%_with_cray_shasta 1	build for a Cray Shasta system
 # --with slurmrestd	%_with_slurmrestd 1	build slurmrestd
 # --with yaml		%_with_yaml 1		build with yaml serializer
+{% if soname < 41 %}
 # --with slurmsmwd      %_with_slurmsmwd 1      build slurmsmwd
+{% endif %}
 # --without debug	%_without_debug 1	don't compile with debugging symbols
 # --with hdf5		%_with_hdf5 path	require hdf5 support
 # --with hwloc		%_with_hwloc 1		require hwloc support
@@ -47,11 +52,15 @@ URL:		https://slurm.schedmd.com/
 #
 
 #  Options that are off by default (enable with --with <opt>)
+{% if soname < 41 %}
 %bcond_with cray
 %bcond_with cray_network
+{% endif %}
 %bcond_with cray_shasta
 %bcond_with slurmrestd
+{% if soname < 41 %}
 %bcond_with slurmsmwd
+{% endif %}
 %bcond_with multiple_slurmd
 %bcond_with ucx
 
@@ -82,6 +91,20 @@ URL:		https://slurm.schedmd.com/
 # Disable Link Time Optimization (LTO)
 %define _lto_cflags %{nil}
 
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  gcc
+BuildRequires:  make
+%if %{defined suse_version}
+BuildRequires: pkg-config
+%else
+%if (0%{?rhel} != 7)
+BuildRequires:  pkgconf
+%else
+BuildRequires:  pkgconfig
+%endif
+%endif
+
 Requires: munge
 
 %{?systemd_requires}
@@ -92,7 +115,15 @@ BuildRequires: readline-devel
 # libtool is required to run autoreconf, so that patches in
 # autoconf macros make effect.
 BuildRequires: libtool
+# glib2-devel is required to have AM_PATH_GLIB_2_0 macro during autoreconf.
 BuildRequires: glib2-devel
+{% if soname < 40 %}
+# gtk2-devel is required to have AM_PATH_GTK_2_0 macro on el9 with slurm 23.02.
+# It is not required on more recent versions of Slurm (m4 macros have changed in
+# latest versions of Slurm) and older versions on RHEL (probably due to dep
+# change regarding glib2/gtk2).
+BuildRequires: gtk2-devel
+{% endif %}
 Obsoletes: slurm-lua <= %{version}
 Obsoletes: slurm-munge <= %{version}
 Obsoletes: slurm-plugins <= %{version}
@@ -133,6 +164,7 @@ BuildRequires: mariadb-devel >= 5.0.0
 %endif
 %endif
 
+{% if soname < 41 %}
 %if %{with cray}
 BuildRequires: cray-libalpscomm_cn-devel
 BuildRequires: cray-libalpscomm_sn-devel
@@ -152,6 +184,7 @@ BuildRequires: gtk2-devel
 BuildRequires: glib2-devel
 BuildRequires: pkgconfig
 %endif
+{% endif %}
 
 BuildRequires: perl(ExtUtils::MakeMaker)
 
@@ -391,6 +424,7 @@ BuildRequires: json-c-devel
 Provides a REST interface to Slurm.
 %endif
 
+{% if soname < 41 %}
 %if %{with slurmsmwd}
 %package slurmsmwd
 Summary: support daemons and software for the Cray SMW
@@ -400,6 +434,7 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 support daemons and software for the Cray SMW.  Includes slurmsmwd which
 notifies slurm about failed nodes.
 %endif
+{% endif %}
 
 #############################################################################
 
@@ -411,12 +446,14 @@ notifies slurm about failed nodes.
 autoreconf -f -i
 %configure \
 	--with-systemdsystemunitdir=%{_unitdir} \
+	--enable-pkgconfig \
 	%{?_without_debug:--disable-debug} \
 	%{?_with_pam_dir} \
-	%{?_with_cpusetdir} \
 	%{?_with_mysql_config} \
+{% if soname < 41 %}
 	%{?_without_cray:--enable-really-no-cray}\
 	%{?_with_cray_network:--enable-cray-network}\
+{% endif %}
 	%{?_with_multiple_slurmd:--enable-multiple-slurmd} \
 	%{?_with_selinux:--enable-selinux} \
 	%{?_with_pmix} \
@@ -456,11 +493,16 @@ make install-contrib DESTDIR=%{buildroot}
 # Do not package Slurm's version of libpmi on Cray systems in the usual location.
 # Cray's version of libpmi should be used. Move it elsewhere if the site still
 # wants to use it with other MPI stacks.
+{% if soname >= 41 %}
+%if %{with cray_shasta}
+{% else %}
 %if %{with cray} || %{with cray_shasta}
+{% endif %}
    mkdir %{buildroot}/%{_libdir}/slurmpmi
    mv %{buildroot}/%{_libdir}/libpmi* %{buildroot}/%{_libdir}/slurmpmi
 %endif
 
+{% if soname < 41 %}
 %if %{with cray}
    install -D -m644 contribs/cray/plugstack.conf.template %{buildroot}/%{_sysconfdir}/plugstack.conf.template
    install -D -m644 contribs/cray/slurm.conf.template %{buildroot}/%{_sysconfdir}/slurm.conf.template
@@ -483,6 +525,7 @@ make install-contrib DESTDIR=%{buildroot}
    rm -f %{buildroot}/%{_sbindir}/slurmsmwd
    rm -f contribs/cray/slurmsmwd/slurmsmwd.service
 %endif
+{% endif %}
 
 install -D -m644 etc/cgroup.conf.example %{buildroot}/%{_sysconfdir}/cgroup.conf.example
 install -D -m644 etc/prolog.example %{buildroot}/%{_sysconfdir}/prolog.example
@@ -536,6 +579,7 @@ test -f %{buildroot}/opt/modulefiles/slurm/.version &&
   echo /opt/modulefiles/slurm/.version >> $LIST
 
 
+{% if soname < 41 %}
 LIST=./example.configs
 touch $LIST
 %if %{with cray}
@@ -555,6 +599,7 @@ Description: Slurm API
 Name: %{name}
 Version: %{version}
 EOF
+{% endif %}
 
 LIST=./pam.files
 touch $LIST
@@ -602,18 +647,26 @@ rm -rf %{buildroot}
 %exclude %{_mandir}/man1/sjobexit*
 %exclude %{_mandir}/man1/sjstat*
 %dir %{_libdir}/slurm/src
+{% if soname < 41 %}
 %if %{with cray}
 %dir /opt/modulefiles/slurm
 %endif
+{% endif %}
 #############################################################################
 
+{% if soname >= 41 %}
+%files example-configs
+{% else %}
 %files -f example.configs example-configs
+{% endif %}
 %defattr(-,root,root,0755)
 %dir %{_sysconfdir}
+{% if soname < 41 %}
 %if %{with cray}
 %config %{_sysconfdir}/plugstack.conf.template
 %config %{_sysconfdir}/slurm.conf.template
 %endif
+{% endif %}
 %config %{_sysconfdir}/cgroup.conf.example
 %config %{_sysconfdir}/job_submit.lua.example
 %config %{_sysconfdir}/prolog.example
@@ -674,7 +727,11 @@ rm -rf %{buildroot}
 
 %files libpmi
 %defattr(-,root,root)
+{% if soname >= 41 %}
+%if %{with cray_shasta}
+{% else %}
 %if %{with cray} || %{with cray_shasta}
+{% endif %}
 %{_libdir}/slurmpmi/*
 %else
 %{_libdir}/libpmi*
@@ -728,13 +785,14 @@ rm -rf %{buildroot}
 %endif
 #############################################################################
 
+{% if soname < 41 %}
 %if %{with slurmsmwd}
 %files slurmsmwd
 %{_sbindir}/slurmsmwd
 %{_unitdir}/slurmsmwd.service
 %endif
 #############################################################################
-
+{% endif %}
 %pre
 
 %post
