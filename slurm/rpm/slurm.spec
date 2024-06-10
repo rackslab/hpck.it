@@ -124,6 +124,8 @@ BuildRequires: glib2-devel
 # change regarding glib2/gtk2).
 BuildRequires: gtk2-devel
 {% endif %}
+# Required for cgroup v2 support
+BuildRequires: dbus-devel
 Obsoletes: slurm-lua <= %{version}
 Obsoletes: slurm-munge <= %{version}
 Obsoletes: slurm-plugins <= %{version}

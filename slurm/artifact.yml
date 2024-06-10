@@ -11,7 +11,7 @@ derivatives:
   slurm23.11: 23.11.7
   slurm23.02: 23.02.7
 rpm:
-  release: 1
+  release: 2
   buildargs: --with mysql --with slurmrestd --with jwt
 deb:
   release: 1
