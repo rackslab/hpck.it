@@ -1500,7 +1500,11 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_stepd_gethostbyname@Base 22.05.0
  slurm_stepd_getpw@Base 19.05.2
  slurm_strerror@Base 1.3.8
+{% if version.main.dist != "deb12" %}
+#MISSING: 23.02.7# slurm_strlcpy@Base 1.3.8
+{% else %}
  slurm_strlcpy@Base 1.3.8
+{% endif %}
  slurm_submit_batch_het_job@Base 20.02.1
  slurm_submit_batch_job@Base 1.3.8
 #MISSING: 20.02.1# slurm_submit_batch_pack_job@Base 17.11.2
