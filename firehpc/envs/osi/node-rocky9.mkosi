@@ -1,0 +1,20 @@
+[Distribution]
+Distribution=rocky
+Release=9
+Repositories=epel
+
+[Output]
+Format=disk
+CompressOutput=xz
+
+[Content]
+WithDocs=yes
+Packages=
+  systemd
+  systemd-networkd
+  systemd-resolved
+  rpm
+  dnf
+  python3
+  iproute
+  iputils
