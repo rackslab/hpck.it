@@ -3,13 +3,13 @@ Distribution=debian
 Release=bookworm
 
 [Output]
-Format=gpt_ext4
+Format=disk
 CompressOutput=xz
 
 [Content]
 WithDocs=yes
 Packages=
+  systemd
   python3
   iproute2
   iputils-ping
-  libnss-resolve

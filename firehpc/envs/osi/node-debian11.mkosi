@@ -3,7 +3,7 @@ Distribution=debian
 Release=bullseye
 
 [Output]
-Format=gpt_ext4
+Format=disk
 CompressOutput=xz
 
 [Content]

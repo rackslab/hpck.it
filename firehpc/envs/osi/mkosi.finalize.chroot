@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ $DISTRIBUTION == "rocky" ]; then
+
+    systemctl enable systemd-resolved.service
+    /usr/bin/rpmdb --rebuilddb
+
+fi

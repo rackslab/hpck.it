@@ -1,14 +1,19 @@
 [Distribution]
 Distribution=rocky
 Release=8
+Repositories=epel
 
 [Output]
-Format=gpt_ext4
+Format=disk
 CompressOutput=xz
 
 [Content]
 WithDocs=yes
 Packages=
-  NetworkManager
+  systemd
+  systemd-networkd
+  rpm
+  dnf
+  python3
   iproute
   iputils
