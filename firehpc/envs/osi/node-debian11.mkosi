@@ -9,7 +9,12 @@ CompressOutput=xz
 [Content]
 WithDocs=yes
 Packages=
+  systemd
+  dbus
+  apt
+  ca-certificates
   python3
   iproute2
   iputils-ping
   libnss-resolve
+  tzdata

@@ -10,6 +10,11 @@ CompressOutput=xz
 WithDocs=yes
 Packages=
   systemd
+  systemd-resolved
+  dbus
+  apt
+  ca-certificates
   python3
   iproute2
   iputils-ping
+  tzdata
