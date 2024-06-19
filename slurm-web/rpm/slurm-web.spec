@@ -146,6 +146,12 @@ install -p -D -m 0644 lib/sysusers/* -t %{buildroot}%{_sysusersdir}
 install -d %{buildroot}%{_mandir}/man1
 install -p -m 0644 docs/man/*.1 %{buildroot}%{_mandir}/man1/
 
+# Install configuration examples
+install -d %{buildroot}%{_docdir}/slurm-web-gateway/examples
+install -d %{buildroot}%{_docdir}/slurm-web-agent/examples
+install -p -m 0644 docs/modules/conf/examples/gateway.ini %{buildroot}%{_docdir}/slurm-web-gateway/examples
+install -p -m 0644 docs/modules/conf/examples/agent.ini %{buildroot}%{_docdir}/slurm-web-agent/examples
+
 %if 0%{?rhel} && 0%{?rhel} <= 8
 %define _pysuffix egg-info
 %else
@@ -170,6 +176,7 @@ install -p -m 0644 docs/man/*.1 %{buildroot}%{_mandir}/man1/
 %doc %{_mandir}/man1/slurm-web-gateway.*
 %doc %{_mandir}/man1/slurm-web-ldap-check.*
 %doc %{_mandir}/man1/slurm-web-gen-jwt-key.*
+%doc %{_docdir}/slurm-web-gateway/examples/gateway.ini
 %{_libexecdir}/slurm-web/slurm-web-gateway
 %{_libexecdir}/slurm-web/slurm-web-ldap-check
 %{_libexecdir}/slurm-web/slurm-web-gen-jwt-key
@@ -181,6 +188,7 @@ install -p -m 0644 docs/man/*.1 %{buildroot}%{_mandir}/man1/
 
 %files -n %{name}-agent
 %doc %{_mandir}/man1/slurm-web-agent.*
+%doc %{_docdir}/slurm-web-agent/examples/agent.ini
 %{_libexecdir}/slurm-web/slurm-web-agent
 %{_datadir}/slurm-web/wsgi/agent
 %{_datadir}/slurm-web/conf/agent.yml
