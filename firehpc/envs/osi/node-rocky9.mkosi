@@ -16,6 +16,7 @@ Packages=
   rpm
   dnf
   python3
+  procps-ng
   iproute
   iputils
   glibc-langpack-en
