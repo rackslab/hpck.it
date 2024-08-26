@@ -1500,7 +1500,7 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurm_stepd_gethostbyname@Base 22.05.0
  slurm_stepd_getpw@Base 19.05.2
  slurm_strerror@Base 1.3.8
-{% if version.main.dist != "deb12" %}
+{% if version.dist != "deb12" %}
 #MISSING: 23.02.7# slurm_strlcpy@Base 1.3.8
 {% else %}
  slurm_strlcpy@Base 1.3.8
@@ -1745,6 +1745,9 @@ libslurm.so.{{ soname }} libslurm{{ soname }} #MINVER#
  slurmdb_destroy_instance_rec@Base 23.11.7
 {% endif %}
  slurmdb_destroy_job_cond@Base 2.3.1
+{% if soname >= 40 %}
+ slurmdb_destroy_job_cond_members@Base 23.11.9
+{% endif %}
 #MISSING: 20.02.1# slurmdb_destroy_job_modify_cond@Base 2.3.1
  slurmdb_destroy_job_rec@Base 2.3.1
  slurmdb_destroy_print_tree@Base 2.3.1

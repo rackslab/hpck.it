@@ -7,10 +7,10 @@ Author: Mehdi Dogguy <mehdi@debian.org>
 
 
 diff --git a/src/common/read_config.h b/src/common/read_config.h
-index 446cbe7..5ba0745 100644
+index a2c1cb0..fedc612 100644
 --- a/src/common/read_config.h
 +++ b/src/common/read_config.h
-@@ -144,9 +144,9 @@ typedef struct node_record node_record_t;
+@@ -146,9 +146,9 @@ typedef struct node_record node_record_t;
  #else
  #  define DEFAULT_SELECT_TYPE       "select/cons_tres"
  #endif
