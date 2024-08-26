@@ -116,10 +116,10 @@ index 74810d8..0000000
 -\fBspank\fR(8)
 -
 diff --git a/doc/man/man5/slurm.conf.5 b/doc/man/man5/slurm.conf.5
-index c2a53db..b71ce0c 100644
+index 06af1af..adbbaa0 100644
 --- a/doc/man/man5/slurm.conf.5
 +++ b/doc/man/man5/slurm.conf.5
-@@ -2510,7 +2510,7 @@ This provides support for a highly configurable set of plugins to
+@@ -2533,7 +2533,7 @@ This provides support for a highly configurable set of plugins to
  be called before and/or after execution of each task spawned as
  part of a user's job step. Default location is "plugstack.conf"
  in the same directory as the system slurm.conf. For more information
@@ -128,7 +128,7 @@ index c2a53db..b71ce0c 100644
  .IP
  
  .TP
-@@ -8037,4 +8037,4 @@ details.
+@@ -8084,4 +8084,4 @@ details.
  \fBgetrlimit\fR(2), \fBgres.conf\fR(5), \fBgroup\fR(5), \fBhostname\fR(1),
  \fBscontrol\fR(1), \fBslurmctld\fR(8), \fBslurmd\fR(8),
  \fBslurmdbd\fR(8), \fBslurmdbd.conf\fR(5), \fBsrun\fR(1),
