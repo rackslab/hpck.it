@@ -27,3 +27,9 @@ for SLURM_ARTIFACT in ${SLURM_ARTIFACTS}; do
   done
 done
 ```
+
+Remove empty distributions in repository:
+
+```
+sudo -u fatbuildr reprepro --basedir /var/lib/fatbuildr/registry/hpckit/deb clearvanished
+```
