@@ -35,14 +35,13 @@ software solutions.
 
 This package is a metapackage to install all RFL packages.
 
-%if ! 0%{?rhel} || 0%{?rhel} >= 9
+{# %pyproject_buildrequires macro is not supported on el8 #}
+{% if pkg.distribution != "el8" %}
 %generate_buildrequires
-# Unfortunately, macros from pyproject-rpm-macros do not support sub-packages in
-# packages namespace like RFL, then the macro is not able to detect the test
-# dependencies. This is a reason why unit tests are not executed on package
-# build.
-%pyproject_buildrequires
-%endif
+# Install build requirement declared in main pyproject.toml (empty in RFL as
+# dependencies are declared in namespace packages) and in tox configuration.
+%pyproject_buildrequires -t
+{% endif %}
 
 %package -n python3-%{name}-authentication
 Summary:        Rackslab Foundation Library: authentication package
@@ -193,6 +192,14 @@ cd %{_builddir}/%{buildsubdir}/src/web
 %else
 %define _rfl_pysuffix dist-info
 %endif
+
+{# %tox macro is not supported on el8 and there is no macro to automatically #}
+{# install tests requirements then unit tests are not executed on this #}
+{# distribution. #}
+{% if pkg.distribution != "el8" %}
+%check
+%tox
+{% endif %}
 
 %files -n python3-%{name}-authentication
 %doc src/authentication/README.md
