@@ -1,0 +1,31 @@
+Description: Adapt tox configuration to RPM build environments
+ requirements. The %pyproject_buildrequires macro does not detect build
+ requirements declared pyproject.toml namespace packages. Then
+ dependencies are declared in tox configuration so that
+ %pyproject_buildrequires with -t options install them anyway. Not that
+ pytest-sugar is removed as it is not available in el9. Also
+ remove command_pre with pip install that is not supported nor required
+ in RPM build environments
+Last-Update: 2024-07-31
+Forwarded: no
+Formats: rpm
+Author: Rémi Palancher <remi@rackslab.io>
+
+
+diff --git a/pyproject.toml b/pyproject.toml
+index 89cca65..7cafc8e 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -27,9 +27,9 @@ skip_missing_interpreters = true
+ description = install pytest in a virtual environment and invoke it on the tests folder
+ deps =
+   pytest
+-  pytest-sugar
+-commands_pre =
+-  pip install src/core src/authentication src/build src/log src/permissions src/settings src/web
++  PyJWT
++  python-ldap
++  PyYAML
+ # --import-mode=importlib is required to import all packages in namespace
+ # properly.
+ commands =
