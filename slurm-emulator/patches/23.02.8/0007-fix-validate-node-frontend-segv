@@ -5,10 +5,10 @@ Author: Rémi Palancher <remi@rackslab.io>
 
 
 diff --git a/src/slurmctld/node_mgr.c b/src/slurmctld/node_mgr.c
-index 14ce84f..12323bb 100644
+index 6ea8a0a..f595615 100644
 --- a/src/slurmctld/node_mgr.c
 +++ b/src/slurmctld/node_mgr.c
-@@ -3611,7 +3611,7 @@ extern int validate_nodes_via_front_end(
+@@ -3622,7 +3622,7 @@ extern int validate_nodes_via_front_end(
  	list_iterator_destroy(job_iterator);
  
  	(void) gres_node_config_unpack(reg_msg->gres_info,
