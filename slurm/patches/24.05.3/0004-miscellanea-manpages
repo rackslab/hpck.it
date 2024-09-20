@@ -116,7 +116,7 @@ index 74810d8..0000000
 -\fBspank\fR(8)
 -
 diff --git a/doc/man/man5/slurm.conf.5 b/doc/man/man5/slurm.conf.5
-index 06af1af..adbbaa0 100644
+index 86d0e69..f01a100 100644
 --- a/doc/man/man5/slurm.conf.5
 +++ b/doc/man/man5/slurm.conf.5
 @@ -2533,7 +2533,7 @@ This provides support for a highly configurable set of plugins to
@@ -128,7 +128,7 @@ index 06af1af..adbbaa0 100644
  .IP
  
  .TP
-@@ -8084,4 +8084,4 @@ details.
+@@ -8085,4 +8085,4 @@ details.
  \fBgetrlimit\fR(2), \fBgres.conf\fR(5), \fBgroup\fR(5), \fBhostname\fR(1),
  \fBscontrol\fR(1), \fBslurmctld\fR(8), \fBslurmd\fR(8),
  \fBslurmdbd\fR(8), \fBslurmdbd.conf\fR(5), \fBsrun\fR(1),

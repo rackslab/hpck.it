@@ -1,8 +1,9 @@
 Description: Check slurmrestd is not running as SlurmUser after load of
  Slurm configuration with SlurmUser identity.
 Last-Update: 2024-08-26
-Author: Rémi Palancher <remi@rackslab.io>
 Forwarded: https://support.schedmd.com/show_bug.cgi?id=20773
+Author: Rémi Palancher <remi@rackslab.io>
+
 
 diff --git a/src/slurmrestd/slurmrestd.c b/src/slurmrestd/slurmrestd.c
 index d41bc47..4a399eb 100644
