@@ -1,0 +1,23 @@
+Description: Fix SEGV when when killing steps with failing frontend
+ node.
+Last-Updated: 2024-10-23
+Forwarded: https://bugs.schedmd.com/show_bug.cgi?id=18608
+Author: Rémi Palancher <remi@rackslab.io>
+
+
+diff --git a/src/stepmgr/stepmgr.c b/src/stepmgr/stepmgr.c
+index 220d4d9..de660fd 100644
+--- a/src/stepmgr/stepmgr.c
++++ b/src/stepmgr/stepmgr.c
+@@ -2806,7 +2806,11 @@ static void _step_dealloc_lps(step_record_t *step_ptr)
+ 	     (node_ptr = next_node_bitmap(job_resrcs_ptr->node_bitmap, &i));
+ 	     i++) {
+ 		job_node_inx++;
++#ifdef HAVE_FRONT_END
++		if (!bit_test(step_ptr->job_ptr->node_bitmap, i))
++#else
+ 		if (!bit_test(step_ptr->step_node_bitmap, i))
++#endif
+ 			continue;
+ 		step_node_inx++;
+ 		if (job_node_inx >= job_resrcs_ptr->nhosts)

@@ -1,0 +1,19 @@
+Description: Remove google search script in documentation to fix
+ privacy issue.
+Last-Updated: 2023-10-02
+Forwarded: no
+Author: Rémi Palancher <remi@rackslab.io>
+
+
+diff --git a/doc/html/header.txt b/doc/html/header.txt
+index 602b9ee..6bfa365 100644
+--- a/doc/html/header.txt
++++ b/doc/html/header.txt
+@@ -25,7 +25,6 @@
+ 		});
+ 	});
+ 	</script>
+-	<script async src="https://cse.google.com/cse.js?cx=011890816164765777536:jvrtxrd3f0w"></script>
+ </head>
+ 
+ <body>

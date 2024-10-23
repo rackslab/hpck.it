@@ -1,9 +1,9 @@
 source: https://download.schedmd.com/slurm/slurm-{{ version }}.tar.bz2
 checksums:
-  23.02.8:
-    sha1: de18b413dd2bbb09309a7bb246f02497ecc1c945
+  24.05.3:
+    sha1: 8eee47b2517ee3a31d4f281de179d6a60fbdcb14
 derivatives:
-  slurm23.02: 23.02.8
+  slurm24.05: 24.05.3
 rpm:
   release: 1
   buildargs: --with mysql --with slurmrestd --with jwt
