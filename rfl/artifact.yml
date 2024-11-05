@@ -1,9 +1,9 @@
 ---
-version: 1.1.0
+version: 1.1.1
 source: https://github.com/rackslab/RFL/archive/refs/tags/v{{ version | gittag }}.tar.gz
 checksums:
-  '1.1.0':
-    sha256: 8fcfb57ac00c122eb78cf8eeb9f4f5cfdc5c201ebf8187407bd1c6b56a086d13
+  '1.1.1':
+    sha256: fdf7aad9fc80652ee6abbfa9e32f055f5ce698774d165748d0f562d50a478643
 rpm:
   release: 1
 deb:
