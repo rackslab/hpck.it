@@ -3,7 +3,9 @@
 # is GPLv2+.
 #
 # Please refer to upstream DISCLAIMER file for copyrights.
-{% if version.startswith('24.05') %}
+{% if version.startswith('24.11') %}
+  {% set soname = 42 %}
+{% elif version.startswith('24.05') %}
   {% set soname = 41 %}
 {% elif version.startswith('23.11') %}
   {% set soname = 40 %}
@@ -12,7 +14,7 @@
 {% endif %}
 
 Name:		slurm
-Version:	{{ version }}
+Version:	{{ version | rpm_version }}
 Release:	{{ release }}
 Summary:	Slurm Workload Manager
 
@@ -39,12 +41,14 @@ URL:		https://slurm.schedmd.com/
 # --without debug	%_without_debug 1	don't compile with debugging symbols
 # --with hdf5		%_with_hdf5 path	require hdf5 support
 # --with hwloc		%_with_hwloc 1		require hwloc support
+# --with libcurl	%_with_libcurl 1	require libcurl support
 # --with lua		%_with_lua path		build Slurm lua bindings
+# --without munge	%_without_munge 1	disable support for munge
 # --with numa		%_with_numa 1		require NUMA support
 # --without pam		%_without_pam 1		don't require pam-devel RPM to be installed
 # --without x11		%_without_x11 1		disable internal X11 support
 # --with ucx		%_with_ucx path		require ucx support
-# --with pmix		%_with_pmix path	require pmix support
+# --with pmix		%_with_pmix path	build with pmix support
 # --with nvml		%_with_nvml path	require nvml support
 # --with jwt		%_with_jwt 1		require jwt support
 # --with freeipmi	%_with_freeipmi 1	require freeipmi support
@@ -62,15 +66,16 @@ URL:		https://slurm.schedmd.com/
 %bcond_with slurmsmwd
 {% endif %}
 %bcond_with multiple_slurmd
+%bcond_with pmix
 %bcond_with ucx
 
 # These options are only here to force there to be these on the build.
 # If they are not set they will still be compiled if the packages exist.
 %bcond_with hwloc
 %bcond_with hdf5
+%bcond_with libcurl
 %bcond_with lua
 %bcond_with numa
-%bcond_with pmix
 %bcond_with nvml
 %bcond_with jwt
 %bcond_with yaml
@@ -80,6 +85,7 @@ URL:		https://slurm.schedmd.com/
 %bcond_without debug
 
 # Options enabled by default
+%bcond_without munge
 %bcond_without pam
 %bcond_without x11
 
@@ -105,11 +111,15 @@ BuildRequires:  pkgconfig
 %endif
 %endif
 
+%if %{with munge}
 Requires: munge
+BuildRequires: munge-devel munge-libs
+%endif
+
+Requires: bash-completion
 
 %{?systemd_requires}
 BuildRequires: systemd
-BuildRequires: munge-devel munge-libs
 BuildRequires: python3
 BuildRequires: readline-devel
 # libtool is required to run autoreconf, so that patches in
@@ -189,12 +199,17 @@ BuildRequires: pkgconfig
 {% endif %}
 
 BuildRequires: perl(ExtUtils::MakeMaker)
+%if %{defined suse_version}
+BuildRequires: perl
+%else
+BuildRequires: perl-devel
+%endif
 
 %if %{with lua}
 BuildRequires: pkgconfig(lua) >= 5.1.0
 %endif
 
-%if %{with hwloc}
+%if %{with hwloc} && "%{_with_hwloc}" == "--with-hwloc"
 BuildRequires: hwloc-devel
 %endif
 
@@ -214,6 +229,15 @@ BuildRequires: pmix
 %if %{with ucx} && "%{_with_ucx}" == "--with-ucx"
 BuildRequires: ucx-devel
 %global ucx_version %(rpm -q ucx-devel --qf "%{RPMTAG_VERSION}")
+%endif
+
+%if %{with libcurl}
+%if %{defined suse_version}
+Requires: libcurl
+%else
+Requires: libcurl4
+%endif
+BuildRequires: libcurl-devel
 %endif
 
 %if %{with jwt}
@@ -461,14 +485,17 @@ autoreconf -f -i
 	%{?_with_pmix} \
 	%{?_with_freeipmi} \
 	%{?_with_hdf5} \
+  %{?_with_hwloc} \
 	%{?_with_shared_libslurm} \
 	%{!?_with_slurmrestd:--disable-slurmrestd} \
 	%{?_without_x11:--disable-x11} \
+  %{?_with_libcurl} \
 	%{?_with_ucx} \
 	%{?_with_jwt} \
 	%{?_with_yaml} \
 	%{?_with_nvml} \
 	%{?_with_freeipmi} \
+  %{!?with_munge:--without-munge} \
 	%{?_with_cflags}
 
 make %{?_smp_mflags}
@@ -482,7 +509,7 @@ export QA_RPATHS=0x5
 # Strip out some dependencies
 
 cat > find-requires.sh <<'EOF'
-exec %{__find_requires} "$@" | egrep -v '^libpmix.so|libevent|libnvidia-ml'
+exec %{__find_requires} "$@" | grep -E -v '^libpmix.so|libevent|libnvidia-ml'
 EOF
 chmod +x find-requires.sh
 %global _use_internal_dependency_generator 0
@@ -556,52 +583,31 @@ rm -f %{buildroot}/%{_perlarchlibdir}/perllocal.pod
 rm -f %{buildroot}/%{_perldir}/perllocal.pod
 rm -f %{buildroot}/%{_perldir}/auto/Slurmdb/.packlist
 rm -f %{buildroot}/%{_perldir}/auto/Slurmdb/Slurmdb.bs
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/sacct
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/sacctmgr
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/salloc
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/sattach
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/sbatch
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/sbcast
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/scancel
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/scontrol
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/scrontab
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/sdiag
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/sinfo
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/slurmrestd
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/sprio
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/squeue
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/sreport
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/srun
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/sshare
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/sstat
+rm -f %{buildroot}/%{_datadir}/bash-completion/completions/strigger
 
 # Build man pages that are generated directly by the tools
 rm -f %{buildroot}/%{_mandir}/man1/sjobexitmod.1
 %{buildroot}/%{_bindir}/sjobexitmod --roff > %{buildroot}/%{_mandir}/man1/sjobexitmod.1
 rm -f %{buildroot}/%{_mandir}/man1/sjstat.1
 %{buildroot}/%{_bindir}/sjstat --roff > %{buildroot}/%{_mandir}/man1/sjstat.1
-
-# Build conditional file list for main package
-LIST=./slurm.files
-touch $LIST
-test -f %{buildroot}/%{_libexecdir}/slurm/cr_checkpoint.sh   &&
-  echo %{_libexecdir}/slurm/cr_checkpoint.sh	        >> $LIST
-test -f %{buildroot}/%{_libexecdir}/slurm/cr_restart.sh      &&
-  echo %{_libexecdir}/slurm/cr_restart.sh	        >> $LIST
-test -f %{buildroot}/%{_sbindir}/capmc_suspend		&&
-  echo %{_sbindir}/capmc_suspend			>> $LIST
-test -f %{buildroot}/%{_sbindir}/capmc_resume		&&
-  echo %{_sbindir}/capmc_resume				>> $LIST
-
-test -f %{buildroot}/opt/modulefiles/slurm/%{version}-%{rel} &&
-  echo /opt/modulefiles/slurm/%{version}-%{rel} >> $LIST
-test -f %{buildroot}/opt/modulefiles/slurm/.version &&
-  echo /opt/modulefiles/slurm/.version >> $LIST
-
-
-{% if soname < 41 %}
-LIST=./example.configs
-touch $LIST
-%if %{with cray}
-   test -f %{buildroot}/%{_sbindir}/slurmconfgen.py	&&
-	echo %{_sbindir}/slurmconfgen.py		>>$LIST
-%endif
-
-# Make pkg-config file
-mkdir -p %{buildroot}/%{_libdir}/pkgconfig
-cat >%{buildroot}/%{_libdir}/pkgconfig/slurm.pc <<EOF
-includedir=%{_prefix}/include
-libdir=%{_libdir}
-
-Cflags: -I\${includedir}
-Libs: -L\${libdir} -lslurm
-Description: Slurm API
-Name: %{name}
-Version: %{version}
-EOF
-{% endif %}
 
 LIST=./pam.files
 touch $LIST
@@ -630,7 +636,7 @@ touch $LIST
 rm -rf %{buildroot}
 #############################################################################
 
-%files -f slurm.files
+%files
 %defattr(-,root,root,0755)
 %{_datadir}/doc
 %{_bindir}/s*
@@ -649,6 +655,7 @@ rm -rf %{buildroot}
 %exclude %{_mandir}/man1/sjobexit*
 %exclude %{_mandir}/man1/sjstat*
 %dir %{_libdir}/slurm/src
+%{_datadir}/bash-completion/completions/slurm_completion.sh
 {% if soname < 41 %}
 %if %{with cray}
 %dir /opt/modulefiles/slurm
@@ -799,11 +806,51 @@ rm -rf %{buildroot}
 
 %post
 /sbin/ldconfig
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,sacct}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,sacctmgr}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,salloc}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,sattach}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,sbatch}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,sbcast}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,scancel}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,scontrol}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,scrontab}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,sdiag}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,sinfo}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,slurmrestd}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,sprio}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,squeue}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,sreport}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,srun}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,sshare}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,sstat}
+ln -sf %{_datadir}/bash-completion/completions/{slurm_completion.sh,strigger}
 
 %preun
 
 %postun
 /sbin/ldconfig
+if [ $1 -eq 0 ]; then
+	rm -f %{_datadir}/bash-completion/completions/sacct
+	rm -f %{_datadir}/bash-completion/completions/sacctmgr
+	rm -f %{_datadir}/bash-completion/completions/salloc
+	rm -f %{_datadir}/bash-completion/completions/sattach
+	rm -f %{_datadir}/bash-completion/completions/sbatch
+	rm -f %{_datadir}/bash-completion/completions/sbcast
+	rm -f %{_datadir}/bash-completion/completions/scancel
+	rm -f %{_datadir}/bash-completion/completions/scontrol
+	rm -f %{_datadir}/bash-completion/completions/scrontab
+	rm -f %{_datadir}/bash-completion/completions/sdiag
+	rm -f %{_datadir}/bash-completion/completions/sinfo
+	rm -f %{_datadir}/bash-completion/completions/slurmrestd
+	rm -f %{_datadir}/bash-completion/completions/sprio
+	rm -f %{_datadir}/bash-completion/completions/squeue
+	rm -f %{_datadir}/bash-completion/completions/sreport
+	rm -f %{_datadir}/bash-completion/completions/srun
+	rm -f %{_datadir}/bash-completion/completions/sshare
+	rm -f %{_datadir}/bash-completion/completions/sstat
+	rm -f %{_datadir}/bash-completion/completions/strigger
+fi
 
 {% if soname >= 40 %}
 %post sackd

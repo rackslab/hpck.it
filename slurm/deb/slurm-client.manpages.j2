@@ -1,4 +1,6 @@
-{% if version.main.startswith('24.05') %}
+{% if version.main.startswith('24.11') %}
+  {% set soname = 42 %}
+{% elif version.main.startswith('24.05') %}
   {% set soname = 41 %}
 {% elif version.main.startswith('23.11') %}
   {% set soname = 40 %}

@@ -1,0 +1,37 @@
+Description: Fix default pidfile paths
+ This patch points default pidfild paths under /run
+ian: http://bugs.debian.org/885759
+Forwarded: not-needed
+Last-Update: 2024-06-05
+Author: Mehdi Dogguy <mehdi@debian.org>
+
+
+diff --git a/src/common/read_config.h b/src/common/read_config.h
+index 443285a..88ca793 100644
+--- a/src/common/read_config.h
++++ b/src/common/read_config.h
+@@ -135,9 +135,9 @@ typedef struct node_record node_record_t;
+ #define DEFAULT_SCHED_TIME_SLICE    30
+ #define DEFAULT_SCHEDTYPE           "sched/backfill"
+ #define DEFAULT_SELECT_TYPE         "select/cons_tres"
+-#define DEFAULT_SLURMCTLD_PIDFILE   "/var/run/slurmctld.pid"
++#define DEFAULT_SLURMCTLD_PIDFILE   "/run/slurmctld.pid"
+ #define DEFAULT_SLURMCTLD_TIMEOUT   120
+-#define DEFAULT_SLURMD_PIDFILE      "/var/run/slurmd.pid"
++#define DEFAULT_SLURMD_PIDFILE      "/run/slurmd.pid"
+ #define DEFAULT_SLURMD_TIMEOUT      300
+ #define DEFAULT_SPOOLDIR            "/var/spool/slurmd"
+ #define DEFAULT_STORAGE_HOST        "localhost"
+diff --git a/src/slurmdbd/read_config.h b/src/slurmdbd/read_config.h
+index 653ae72..97b30b4 100644
+--- a/src/slurmdbd/read_config.h
++++ b/src/slurmdbd/read_config.h
+@@ -48,7 +48,7 @@
+ 
+ #define DEFAULT_SLURMDBD_AUTHTYPE	"auth/munge"
+ //#define DEFAULT_SLURMDBD_JOB_PURGE	12
+-#define DEFAULT_SLURMDBD_PIDFILE	"/var/run/slurmdbd.pid"
++#define DEFAULT_SLURMDBD_PIDFILE	"/run/slurmdbd.pid"
+ #define DEFAULT_SLURMDBD_ARCHIVE_DIR	"/tmp"
+ #define DEFAULT_SLURMDBD_KEEPALIVE_INTERVAL 30
+ #define DEFAULT_SLURMDBD_KEEPALIVE_PROBES 3
