@@ -16,6 +16,7 @@ URL:            https://github.com/rackslab/slurm-web
 {{ sources }}
 {{ patches }}
 BuildRequires:  python3-devel
+BuildRequires:  python3dist(pytest)
 BuildRequires:  python3-rfl-build
 {% if pkg.distribution == "el8" %}
 # PyYAML library is required for docs/update-materials script. It does not have
@@ -164,10 +165,11 @@ install -p -m 0644 docs/modules/conf/examples/agent.ini %{buildroot}%{_docdir}/s
 %define _pysuffix dist-info
 %endif
 
-# Except on RHEL8, try to import all modules to check dependencies.
+# Except on RHEL8, try to import all modules to check dependencies and run unit tests.
 %if !0%{?rhel} || 0%{?rhel} >= 9
 %check
 %pyproject_check_import
+%pytest
 %endif
 
 %files -n python3-%{name}
