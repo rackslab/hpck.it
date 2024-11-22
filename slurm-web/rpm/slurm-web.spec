@@ -167,9 +167,11 @@ install -p -m 0644 docs/modules/conf/examples/agent.ini %{buildroot}%{_docdir}/s
 %files -n python3-%{name}
 %license LICENSE
 %doc README.md
+%doc %{_mandir}/man1/slurm-web-show-conf.*
 %{python3_sitelib}/slurmweb/
 %{python3_sitelib}/Slurm_web-*.%{_pysuffix}/
 %{_sysconfdir}/slurm-web
+%{_libexecdir}/slurm-web/slurm-web-show-conf
 %{_sharedstatedir}/slurm-web
 
 %files -n %{name}-gateway
