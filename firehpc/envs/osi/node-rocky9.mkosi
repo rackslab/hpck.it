@@ -17,6 +17,7 @@ Packages=
   dnf
   python3
   procps-ng
+  findutils
   iproute
   iputils
   glibc-langpack-en
