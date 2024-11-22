@@ -118,7 +118,9 @@ docs/update-materials man
 # Install vendor configuration files definitions
 install -d %{buildroot}%{_datadir}/slurm-web
 install -d %{buildroot}%{_datadir}/slurm-web/conf
-install -p -m 0644 conf/vendor/* %{buildroot}%{_datadir}/slurm-web/conf/
+install -d %{buildroot}%{_datadir}/slurm-web/templates
+install -p -m 0644 conf/vendor/*.{yml,ini} %{buildroot}%{_datadir}/slurm-web/conf/
+install -p -m 0644 conf/vendor/templates/* %{buildroot}%{_datadir}/slurm-web/templates/
 
 # Install example WSGI scripts
 install -d %{buildroot}%{_datadir}/slurm-web/wsgi
@@ -189,6 +191,7 @@ install -p -m 0644 docs/modules/conf/examples/agent.ini %{buildroot}%{_docdir}/s
 %{_datadir}/slurm-web/frontend
 %{_datadir}/slurm-web/wsgi/gateway
 %{_datadir}/slurm-web/conf/gateway.yml
+%{_datadir}/slurm-web/templates
 %{_sysusersdir}/slurm-web-gateway.conf
 %{_unitdir}/slurm-web-gateway.service
 
