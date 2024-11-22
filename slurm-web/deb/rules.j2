@@ -1,5 +1,10 @@
 #!/usr/bin/make -f
 
+# Avoid pybuild automatic test arguments 'tests' in presence of tests/ folder
+# which restricts tests discovery in this folder which only contains assets in
+# Slurm-web.
+export PYBUILD_TEST_ARGS=
+
 %:
 	dh $@ --with python3 --buildsystem=pybuild
 
