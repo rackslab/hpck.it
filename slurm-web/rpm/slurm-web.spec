@@ -45,7 +45,7 @@ Slurm-web is a web dashboard for Slurm workload manager on HPC clusters.
 %if 0%{?rhel}
 rfl-install-setup-generator > /dev/null
 %endif
-%pyproject_buildrequires -x agent
+%pyproject_buildrequires -x agent -x gateway
 %endif
 
 %package -n python3-%{name}
@@ -61,6 +61,8 @@ components.
 Summary:        Web dashboard for Slurm HPC workload manager: gateway
 BuildArch:      noarch
 Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       python3dist(aiohttp)
+Requires:       python3dist(markdown)
 %description -n %{name}-gateway
 Slurm-web is a web dashboard for Slurm workload manager on HPC clusters.
 
@@ -71,6 +73,8 @@ interface.
 Summary:        Web dashboard for Slurm HPC workload manager: agent
 BuildArch:      noarch
 Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       python3dist(clustershell)
+Requires:       python3dist(prometheus-client)
 Requires:       python3dist(racksdb[web])
 Requires:       python3dist(redis)
 Suggests:       racksdb
