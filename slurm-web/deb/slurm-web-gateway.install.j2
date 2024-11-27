@@ -2,7 +2,9 @@ usr/bin/slurm-web-gateway usr/libexec/slurm-web
 usr/bin/slurm-web-ldap-check usr/libexec/slurm-web
 usr/bin/slurm-web-gen-jwt-key usr/libexec/slurm-web
 conf/vendor/gateway.yml usr/share/slurm-web/conf
+{% if version.major | int > 3 %}
 conf/vendor/templates usr/share/slurm-web
+{% endif %}
 frontend/dist/* usr/share/slurm-web/frontend
 lib/systemd/slurm-web-gateway.service usr/lib/systemd/system
 lib/sysusers/slurm-web-gateway.conf usr/lib/sysusers.d

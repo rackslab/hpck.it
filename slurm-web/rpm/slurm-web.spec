@@ -16,7 +16,9 @@ URL:            https://github.com/rackslab/slurm-web
 {{ sources }}
 {{ patches }}
 BuildRequires:  python3-devel
+{% if pkg.version.major | int > 3 %}
 BuildRequires:  python3dist(pytest)
+{% endif %}
 BuildRequires:  python3-rfl-build
 {% if pkg.distribution == "el8" %}
 # PyYAML library is required for docs/update-materials script. It does not have
@@ -46,7 +48,11 @@ Slurm-web is a web dashboard for Slurm workload manager on HPC clusters.
 %if 0%{?rhel}
 rfl-install-setup-generator > /dev/null
 %endif
+{% if pkg.version.major | int > 3 %}
 %pyproject_buildrequires -x agent -x gateway
+{% else %}
+%pyproject_buildrequires -x agent
+{% endif %}
 %endif
 
 %package -n python3-%{name}
@@ -62,8 +68,10 @@ components.
 Summary:        Web dashboard for Slurm HPC workload manager: gateway
 BuildArch:      noarch
 Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+{% if pkg.version.major | int > 3 %}
 Requires:       python3dist(aiohttp)
 Requires:       python3dist(markdown)
+{% endif %}
 %description -n %{name}-gateway
 Slurm-web is a web dashboard for Slurm workload manager on HPC clusters.
 
@@ -119,9 +127,13 @@ docs/update-materials man
 # Install vendor configuration files definitions
 install -d %{buildroot}%{_datadir}/slurm-web
 install -d %{buildroot}%{_datadir}/slurm-web/conf
+{% if pkg.version.major | int > 3 %}
 install -d %{buildroot}%{_datadir}/slurm-web/templates
+{% endif %}
 install -p -m 0644 conf/vendor/*.{yml,ini} %{buildroot}%{_datadir}/slurm-web/conf/
+{% if pkg.version.major | int > 3 %}
 install -p -m 0644 conf/vendor/templates/* %{buildroot}%{_datadir}/slurm-web/templates/
+{% endif %}
 
 # Install example WSGI scripts
 install -d %{buildroot}%{_datadir}/slurm-web/wsgi
@@ -169,17 +181,23 @@ install -p -m 0644 docs/modules/conf/examples/agent.ini %{buildroot}%{_docdir}/s
 %if !0%{?rhel} || 0%{?rhel} >= 9
 %check
 %pyproject_check_import
+{% if pkg.version.major | int > 3 %}
 %pytest
+{% endif %}
 %endif
 
 %files -n python3-%{name}
 %license LICENSE
 %doc README.md
+{% if pkg.version.major | int > 3 %}
 %doc %{_mandir}/man1/slurm-web-show-conf.*
+{% endif %}
 %{python3_sitelib}/slurmweb/
 %{python3_sitelib}/Slurm_web-*.%{_pysuffix}/
 %{_sysconfdir}/slurm-web
+{% if pkg.version.major | int > 3 %}
 %{_libexecdir}/slurm-web/slurm-web-show-conf
+{% endif %}
 %{_sharedstatedir}/slurm-web
 
 %files -n %{name}-gateway
@@ -193,7 +211,9 @@ install -p -m 0644 docs/modules/conf/examples/agent.ini %{buildroot}%{_docdir}/s
 %{_datadir}/slurm-web/frontend
 %{_datadir}/slurm-web/wsgi/gateway
 %{_datadir}/slurm-web/conf/gateway.yml
+{% if pkg.version.major | int > 3 %}
 %{_datadir}/slurm-web/templates
+{% endif %}
 %{_sysusersdir}/slurm-web-gateway.conf
 %{_unitdir}/slurm-web-gateway.service
 

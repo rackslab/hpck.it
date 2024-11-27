@@ -1,0 +1,30 @@
+Description: requests.exceptions.JSONDecodeError landed in requests
+ 2.31. On RHEL8, requests version is 2.20. With this old version,
+ Slurm-web receives raw json.decoder.JSONDecodeError w/o translation by
+ requests. This difference is handled by this patch.
+Distributions: el8 el9
+Last-Update: 2024-11-26
+Author: Rémi Palancher <remi@rackslab.io>
+
+
+diff --git a/slurmweb/apps/gateway.py b/slurmweb/apps/gateway.py
+index eacf17d..a11331e 100644
+--- a/slurmweb/apps/gateway.py
++++ b/slurmweb/apps/gateway.py
+@@ -5,6 +5,7 @@
+ # SPDX-License-Identifier: GPL-3.0-or-later
+ 
+ import time
++import json
+ import logging
+ 
+ from rfl.web.tokens import RFLTokenizedWebApp
+@@ -82,7 +83,7 @@ class SlurmwebAppGateway(SlurmwebWebApp, RFLTokenizedWebApp):
+                 agent = self._agent_info(url.geturl())
+             except (
+                 requests.exceptions.ConnectionError,
+-                requests.exceptions.JSONDecodeError,
++                json.decoder.JSONDecodeError,
+                 SlurmwebAgentError,
+             ) as err:
+                 logger.error(
