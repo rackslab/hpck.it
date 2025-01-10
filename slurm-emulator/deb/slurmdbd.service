@@ -1,17 +1,19 @@
-[Unit]
 Description=Slurm DBD accounting daemon
-After=network.target munge.service
+After=network-online.target remote-fs.target munge.service mysql.service mysqld.service mariadb.service sssd.service
+Wants=network-online.target
 ConditionPathExists=/etc/slurm/slurmdbd.conf
-Documentation=man:slurmdbd(8)
 
 [Service]
 Type=simple
-EnvironmentFile=-/etc/default/slurm-emulator
-ExecStart=/usr/sbin/slurmdbd -D $SLURMDBD_OPTIONS
+EnvironmentFile=-/etc/sysconfig/slurmdbd
+EnvironmentFile=-/etc/default/slurmdbd
+User=slurm
+Group=slurm
+RuntimeDirectory=slurmdbd
+RuntimeDirectoryMode=0755
+ExecStart=/usr/sbin/slurmdbd -D -s $SLURMDBD_OPTIONS
 ExecReload=/bin/kill -HUP $MAINPID
-PIDFile=/run/slurmdbd.pid
 LimitNOFILE=65536
-TasksMax=infinity
 
 [Install]
 WantedBy=multi-user.target
