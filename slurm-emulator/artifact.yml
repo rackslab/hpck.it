@@ -5,7 +5,7 @@ checksums:
 derivatives:
   slurm24.05: 24.05.3
 rpm:
-  release: 1
+  release: 3
   buildargs: --with mysql --with slurmrestd --with jwt
 deb:
-  release: 1
+  release: 3
