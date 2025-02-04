@@ -6,19 +6,21 @@ Description: Adapt tox configuration to RPM build environments
  pytest-sugar is removed as it is not available in el9. Also
  remove command_pre with pip install that is not supported nor required
  in RPM build environments
-Last-Update: 2024-07-31
+Last-Update: 2025-02-03
 Forwarded: no
 Formats: rpm
 Author: Rémi Palancher <remi@rackslab.io>
 
 
 diff --git a/pyproject.toml b/pyproject.toml
-index 89cca65..7cafc8e 100644
+index a7747f6..535f5ee 100644
 --- a/pyproject.toml
 +++ b/pyproject.toml
-@@ -27,9 +27,9 @@ skip_missing_interpreters = true
+@@ -26,10 +26,11 @@ skip_missing_interpreters = true
+ [testenv]
  description = install pytest in a virtual environment and invoke it on the tests folder
  deps =
++  Flask
    pytest
 -  pytest-sugar
 -commands_pre =

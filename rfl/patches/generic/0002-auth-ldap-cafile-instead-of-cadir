@@ -2,15 +2,15 @@ Description: ldap set_option(ldap.OPT_X_TLS_CACERTDIR) does not work on el8 for
  unknown reason. It is replaced by set_option(ldap.OPT_X_TLS_CACERTFILE) with
  SSL default cafile.
 Distributions: el8
-Last-update: 2024-03-26
+Last-update: 2025-02-03
 Author: Rémi Palancher <remi@rackslab.io>
 
 
 diff --git a/src/authentication/rfl/authentication/ldap.py b/src/authentication/rfl/authentication/ldap.py
-index e3a0a25..5e9cafa 100644
+index 6e79d89..6d69a3a 100644
 --- a/src/authentication/rfl/authentication/ldap.py
 +++ b/src/authentication/rfl/authentication/ldap.py
-@@ -70,12 +70,12 @@ class LDAPAuthentifier:
+@@ -72,12 +72,12 @@ class LDAPAuthentifier:
                  import ssl
  
                  logger.debug(
