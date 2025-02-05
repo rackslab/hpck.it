@@ -1,12 +1,12 @@
 ---
 source: https://github.com/rackslab/Slurm-web/archive/refs/tags/v{{ version | gittag }}.tar.gz
 checksums:
-  '4.0.0':
-    sha256: 3a2c537c40056a64c9663c5c14009c8f2740efa44ad77e3c3a43fabfe90829ea
+  '4.1.0':
+    sha256: 1efc2a731897fa573ec7707773673888878be8075343d57755206d03872af351
   '3.2.0':
     sha256: 4cedd068d67261f5896c55d3a9d4bde101c8839bd5cb030ade3716f24773fd0c
 derivatives:
-  main: 4.0.0
+  main: 4.1.0
   slurmweb-3: 3.2.0
 rpm:
   release: 1
