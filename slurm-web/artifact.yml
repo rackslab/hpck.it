@@ -9,6 +9,6 @@ derivatives:
   main: 4.1.0
   slurmweb-3: 3.2.0
 rpm:
-  release: 1
+  release: 2
 deb:
-  release: 1
+  release: 2

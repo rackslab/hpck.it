@@ -8,7 +8,7 @@ Author: Rémi Palancher <remi@rackslab.io>
 
 
 diff --git a/slurmweb/apps/gateway.py b/slurmweb/apps/gateway.py
-index eacf17d..a11331e 100644
+index f7abbf1..6f90eaf 100644
 --- a/slurmweb/apps/gateway.py
 +++ b/slurmweb/apps/gateway.py
 @@ -5,6 +5,7 @@
