@@ -1,3 +1,4 @@
+[Unit]
 Description=Slurm DBD accounting daemon
 After=network-online.target remote-fs.target munge.service mysql.service mysqld.service mariadb.service sssd.service
 Wants=network-online.target
