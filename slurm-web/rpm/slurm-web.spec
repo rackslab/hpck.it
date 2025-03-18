@@ -58,6 +58,7 @@ rfl-install-setup-generator > /dev/null
 %package -n python3-%{name}
 Summary:        Web dashboard for Slurm HPC workload manager: common backend library
 BuildArch:      noarch
+Requires:       (python3dist(importlib-metadata) if python3 < 3.8)
 %description -n python3-%{name}
 Slurm-web is a web dashboard for Slurm workload manager on HPC clusters.
 
