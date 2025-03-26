@@ -4,9 +4,6 @@
 	dh $@ --with python3 --buildsystem=pybuild
 
 override_dh_auto_build:
-{% if version.dist == "ubuntu2204" %}
-	rfl-install-setup-generator
-{% endif %}
 	dh_auto_build
 	docs/update-materials man
 # Move node_modules from supplemental archive in frontend/ folder and remove
