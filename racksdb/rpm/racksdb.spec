@@ -36,7 +36,7 @@ BuildRequires:  npm
 BuildRequires:  make
 BuildRequires:  asciidoctor
 BuildRequires:  pango
-
+BuildRequires:  python3-gobject
 Summary:        YAML database of datacenter infrastructures: CLI
 BuildArch:      noarch
 Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
@@ -58,7 +58,7 @@ rfl-install-setup-generator > /dev/null
 %endif
 # Include optional dependencies from web extra as they are required to run
 # checks.
-%pyproject_buildrequires -x web
+%pyproject_buildrequires -x web -x tests
 {% endif %}
 
 %package -n python3-%{name}
@@ -71,6 +71,14 @@ Requires:       pango
 # include Cairo related stuff. This is fixed with this explicit dependency
 # declaration.
 Requires:       python3-gobject
+# RacksDB tries to import cached_property from functools which is available
+# starting from Python >= 3.8, and fallback to compatible cached_property
+# external dependency otherwise. However, this optional dependency is not
+# declared in pyproject.toml, because it is not required in most cases. Then it
+# must be defined explicitely here when Python < 3.8. The same rationale applies
+# to importlib-metadata as well.
+Requires:       (python3dist(cached-property) if python3 < 3.8)
+Requires:       (python3dist(importlib-metadata) if python3 < 3.8)
 
 %description -n python3-%{name}
 RacksDB is an open source solution to modelize your datacenters infrastructures
@@ -187,11 +195,11 @@ install -p -m 0644 docs/man/*.1 %{buildroot}%{_mandir}/man1/
 {% endif %}
 
 # Except on RHEL8 where it is not supported, run pyproject_check_import on all
-# packages modules.
+# packages modules and pytest to execute unit tests.
 {% if pkg.distribution != "el8" %}
 %check
 %pyproject_check_import
-%{python3} -m unittest
+%pytest
 {% endif %}
 
 %files
