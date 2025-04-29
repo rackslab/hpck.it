@@ -199,6 +199,7 @@ install -p -m 0644 docs/modules/conf/examples/agent.ini %{buildroot}%{_docdir}/s
 {% if pkg.version.major | int > 3 %}
 %{_libexecdir}/slurm-web/slurm-web-show-conf
 {% endif %}
+%{_sysusersdir}/slurm-web.conf
 %{_sharedstatedir}/slurm-web
 
 %files -n %{name}-gateway
@@ -215,20 +216,21 @@ install -p -m 0644 docs/modules/conf/examples/agent.ini %{buildroot}%{_docdir}/s
 {% if pkg.version.major | int > 3 %}
 %{_datadir}/slurm-web/templates
 {% endif %}
-%{_sysusersdir}/slurm-web-gateway.conf
 %{_unitdir}/slurm-web-gateway.service
 
 %files -n %{name}-agent
 %doc %{_mandir}/man1/slurm-web-agent.*
+%doc %{_mandir}/man1/slurm-web-connect-check.*
 %doc %{_docdir}/slurm-web-agent/examples/agent.ini
 %{_libexecdir}/slurm-web/slurm-web-agent
+%{_libexecdir}/slurm-web/slurm-web-connect-check
 %{_datadir}/slurm-web/wsgi/agent
 %{_datadir}/slurm-web/conf/agent.yml
 %{_datadir}/slurm-web/conf/policy.yml
 %{_datadir}/slurm-web/conf/policy.ini
 %{_unitdir}/slurm-web-agent.service
 
-%post -n %{name}-gateway
-systemd-sysusers %{_sysusersdir}/slurm-web-gateway.conf
+%post -n python3-%{name}
+systemd-sysusers %{_sysusersdir}/slurm-web.conf
 
 {{ changelog }}

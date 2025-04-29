@@ -1,4 +1,5 @@
 usr/bin/slurm-web-agent usr/libexec/slurm-web
+usr/bin/slurm-web-connect-check usr/libexec/slurm-web
 conf/vendor/agent.yml usr/share/slurm-web/conf
 conf/vendor/policy.* usr/share/slurm-web/conf
 lib/systemd/slurm-web-agent.service lib/systemd/system
