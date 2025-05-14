@@ -3,14 +3,14 @@
 # is GPLv2+.
 #
 # Please refer to upstream DISCLAIMER file for copyrights.
-{% if version.startswith('24.11') %}
+{% if version.startswith('25.05') %}
+  {% set soname = 43 %}
+{% elif version.startswith('24.11') %}
   {% set soname = 42 %}
 {% elif version.startswith('24.05') %}
   {% set soname = 41 %}
 {% elif version.startswith('23.11') %}
   {% set soname = 40 %}
-{% elif version.startswith('23.02') %}
-  {% set soname = 39 %}
 {% endif %}
 
 Name:		slurm
@@ -127,13 +127,6 @@ BuildRequires: readline-devel
 BuildRequires: libtool
 # glib2-devel is required to have AM_PATH_GLIB_2_0 macro during autoreconf.
 BuildRequires: glib2-devel
-{% if soname < 40 %}
-# gtk2-devel is required to have AM_PATH_GTK_2_0 macro on el9 with slurm 23.02.
-# It is not required on more recent versions of Slurm (m4 macros have changed in
-# latest versions of Slurm) and older versions on RHEL (probably due to dep
-# change regarding glib2/gtk2).
-BuildRequires: gtk2-devel
-{% endif %}
 # Required for cgroup v2 support
 BuildRequires: dbus-devel
 Obsoletes: slurm-lua <= %{version}
@@ -336,7 +329,6 @@ Group: Development/System
 %description example-configs
 Example configuration files for Slurm.
 
-{% if soname >= 40 %}
 %package sackd
 Summary: Slurm authentication daemon
 Group: System Environment/Base
@@ -344,7 +336,6 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 %description sackd
 Slurm authentication daemon. Used on login nodes that are not running slurmd
 daemons to allow authentication to the cluster.
-{% endif %}
 
 %package slurmctld
 Summary: Slurm controller daemon
@@ -710,13 +701,11 @@ rm -rf %{buildroot}
 
 #############################################################################
 
-{% if soname >= 40 %}
 %files sackd
 %defattr(-,root,root)
 %{_sbindir}/sackd
 %{_unitdir}/sackd.service
 #############################################################################
-{% endif %}
 
 %files slurmctld
 %defattr(-,root,root)
@@ -856,14 +845,12 @@ if [ $1 -eq 0 ]; then
 	rm -f %{_bashcompdir}/bash-completion/completions/strigger
 fi
 
-{% if soname >= 40 %}
 %post sackd
 %systemd_post sackd.service
 %preun sackd
 %systemd_preun sackd.service
 %postun sackd
 %systemd_postun_with_restart sackd.service
-{% endif %}
 
 %post slurmctld
 %systemd_post slurmctld.service
