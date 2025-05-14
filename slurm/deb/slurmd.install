@@ -1,3 +1,0 @@
-usr/sbin/slurmd
-usr/sbin/slurmstepd
-lib/systemd/system/slurmd.service

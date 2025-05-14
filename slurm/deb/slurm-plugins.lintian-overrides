@@ -1,3 +1,0 @@
-slurm-plugins: hardening-no-fortify-functions
-slurm-plugins: spelling-error-in-binary
-hardening-no-bindnow

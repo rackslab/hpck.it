@@ -1,2 +1,0 @@
-usr/sbin/slurmrestd
-lib/systemd/system/slurmrestd.service

@@ -1,2 +1,0 @@
-# Additional options that are passed to the slurmd daemon
-#SLURMD_OPTIONS=""

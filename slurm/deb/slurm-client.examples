@@ -1,3 +1,0 @@
-debian/examples/slurm.conf.simple
-usr/lib/${DEB_BUILD_GNU_TYPE}/slurm/src/sattach/sattach.wrapper.c
-usr/lib/${DEB_BUILD_GNU_TYPE}/slurm/src/srun/srun.wrapper.c

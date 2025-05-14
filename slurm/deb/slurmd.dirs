@@ -1,5 +1,0 @@
-var/lib/slurm
-var/lib/slurm/slurmd
-var/lib/slurm/checkpoint
-var/log/slurm
-etc/slurm
