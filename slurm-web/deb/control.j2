@@ -12,21 +12,18 @@ Build-Depends:
  dh-python,
  asciidoctor,
  npm,
-{% if version.major | int > 3 %}
  python3-aiohttp,
-{% endif %}
  python3-flask,
  python3-flask-cors,
  python3-ldap,
-{% if version.major | int > 3 %}
  python3-markdown,
+{% if version.major | int > 4 %}
+ python3-parameterized,
+{% endif %}
  python3-prometheus-client,
  python3-pytest,
-{% endif %}
  python3-racksdb-web,
-{% if version.major | int > 3 %}
  python3-redis,
-{% endif %}
  python3-requests,
  python3-rfl-build,
  python3-rfl-authentication,
