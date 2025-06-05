@@ -1,0 +1,1917 @@
+Description: The gpu GRES reported by Slurm may or may not contain model
+ name (eg. gpu:2 or gpu:h100:2). The parsing logic is updated to
+ properly support both cases. Slurm-web reports model 'unknown' when
+ not defined in Slurm.
+Last-Update: 2025-06-05
+Forwarded: https://github.com/rackslab/Slurm-web/pull/586
+Author: Micah Halter <micah.halter@gtri.gatech.edu>
+
+
+diff --git a/frontend/src/composables/GatewayAPI.ts b/frontend/src/composables/GatewayAPI.ts
+index a7eed3b..4c64542 100644
+--- a/frontend/src/composables/GatewayAPI.ts
++++ b/frontend/src/composables/GatewayAPI.ts
+@@ -472,16 +472,19 @@ interface NodeGPU {
+   count: number
+ }
+ 
++const gpumatcher = new RegExp('^gpu(?::([^:]*))?(?::([^:]*))$')
++
+ export function getNodeGPUFromGres(fullGres: string): NodeGPU[] {
+   if (!fullGres.length) return []
+   const results: NodeGPU[] = []
+   fullGres.split(',').forEach((gres) => {
+-    const [type, model, end] = gres.split(':')
+-    if (type != 'gpu') return
++    const matched = gpumatcher.exec(gres.replace(/\([^)]*\)$/g, ''))
++    if (matched === null) return
++    const [, model, end] = matched
+     let count = -1
+     if (end.includes('(')) count = parseInt(end.split('(')[0])
+     else count = parseInt(end)
+-    results.push({ model: model, count: count })
++    results.push({ model: model || 'unknown', count: count })
+   })
+   return results
+ }
+diff --git a/frontend/tests/composables/GatewayAPI.spec.ts b/frontend/tests/composables/GatewayAPI.spec.ts
+index 00bade7..11a5d53 100644
+--- a/frontend/tests/composables/GatewayAPI.spec.ts
++++ b/frontend/tests/composables/GatewayAPI.spec.ts
+@@ -31,6 +31,10 @@ import nodeMixed from '../assets/node-mixed.json'
+ import nodeWithGpusAllocated from '../assets/node-with-gpus-allocated.json'
+ import nodeWithGpusIdle from '../assets/node-with-gpus-idle.json'
+ import nodeWithGpusMixed from '../assets/node-with-gpus-mixed.json'
++import nodeWithGpusModelAllocated from '../assets/node-with-gpus-model-allocated.json'
++import nodeWithGpusModelIdle from '../assets/node-with-gpus-model-idle.json'
++import nodeWithGpusModelMixed from '../assets/node-with-gpus-model-mixed.json'
++
+ import nodeWithoutGpu from '../assets/node-without-gpu.json'
+ 
+ describe('compareClusterJobSorter', () => {
+@@ -584,19 +588,27 @@ describe('getNodeGPUFromGres', () => {
+     expect(getNodeGPUFromGres('')).toStrictEqual([])
+   })
+   test('simple', () => {
++    expect(getNodeGPUFromGres('gpu:2')).toStrictEqual([{ model: 'unknown', count: 2 }])
++  })
++  test('with model', () => {
+     expect(getNodeGPUFromGres('gpu:h100:4')).toStrictEqual([{ model: 'h100', count: 4 }])
+   })
+   test('with index', () => {
++    expect(getNodeGPUFromGres('gpu:2(IDX:0-1)')).toStrictEqual([{ model: 'unknown', count: 2 }])
++  })
++  test('with model and index', () => {
+     expect(getNodeGPUFromGres('gpu:h100:2(IDX:0-1)')).toStrictEqual([{ model: 'h100', count: 2 }])
+   })
+   test('multiple types', () => {
+-    expect(getNodeGPUFromGres('gpu:h100:2,gpu:h200:4')).toStrictEqual([
++    expect(getNodeGPUFromGres('gpu:1,gpu:h100:2,gpu:h200:4')).toStrictEqual([
++      { model: 'unknown', count: 1 },
+       { model: 'h100', count: 2 },
+       { model: 'h200', count: 4 }
+     ])
+   })
+   test('multiple types with index', () => {
+-    expect(getNodeGPUFromGres('gpu:h100:1(IDX:0),gpu:h200:0(IDX:N/A)')).toStrictEqual([
++    expect(getNodeGPUFromGres('gpu:1(IDX:0),gpu:h100:1(IDX:1),gpu:h200:0(IDX:N/A)')).toStrictEqual([
++      { model: 'unknown', count: 1 },
+       { model: 'h100', count: 1 },
+       { model: 'h200', count: 0 }
+     ])
+@@ -611,6 +623,15 @@ describe('getNodeGPUFromGres', () => {
+       getNodeGPUFromGres(node.gres_used).reduce((total, current) => total + current.count, 0)
+     ).toBeGreaterThan(0)
+   })
++  test('node with gpu model allocated', () => {
++    const node = { ...nodeWithGpusModelAllocated }
++    expect(
++      getNodeGPUFromGres(node.gres).reduce((total, current) => total + current.count, 0)
++    ).toBeGreaterThan(0)
++    expect(
++      getNodeGPUFromGres(node.gres_used).reduce((total, current) => total + current.count, 0)
++    ).toBeGreaterThan(0)
++  })
+   test('node with gpu mixed', () => {
+     const node = { ...nodeWithGpusMixed }
+     expect(
+@@ -620,6 +641,15 @@ describe('getNodeGPUFromGres', () => {
+       getNodeGPUFromGres(node.gres_used).reduce((total, current) => total + current.count, 0)
+     ).toBeGreaterThan(0)
+   })
++  test('node with gpu momdel mixed', () => {
++    const node = { ...nodeWithGpusModelMixed }
++    expect(
++      getNodeGPUFromGres(node.gres).reduce((total, current) => total + current.count, 0)
++    ).toBeGreaterThan(0)
++    expect(
++      getNodeGPUFromGres(node.gres_used).reduce((total, current) => total + current.count, 0)
++    ).toBeGreaterThan(0)
++  })
+   test('node with gpu idle', () => {
+     const node = { ...nodeWithGpusIdle }
+     expect(
+@@ -629,6 +659,15 @@ describe('getNodeGPUFromGres', () => {
+       getNodeGPUFromGres(node.gres_used).reduce((total, current) => total + current.count, 0)
+     ).toBe(0)
+   })
++  test('node with gpu model idle', () => {
++    const node = { ...nodeWithGpusModelIdle }
++    expect(
++      getNodeGPUFromGres(node.gres).reduce((total, current) => total + current.count, 0)
++    ).toBeGreaterThan(0)
++    expect(
++      getNodeGPUFromGres(node.gres_used).reduce((total, current) => total + current.count, 0)
++    ).toBe(0)
++  })
+   test('node without gpu', () => {
+     const node = { ...nodeWithoutGpu }
+     expect(getNodeGPUFromGres(node.gres).reduce((total, current) => total + current.count, 0)).toBe(
+@@ -739,16 +778,27 @@ describe('getNodeGPU', () => {
+     expect(getNodeGPU('')).toStrictEqual([])
+   })
+   test('simple', () => {
++    expect(getNodeGPU('gpu:2')).toStrictEqual(['2 x unknown'])
++  })
++  test('with model', () => {
+     expect(getNodeGPU('gpu:h100:4')).toStrictEqual(['4 x h100'])
+   })
+   test('with index', () => {
++    expect(getNodeGPU('gpu:2(IDX:0-1)')).toStrictEqual(['2 x unknown'])
++  })
++  test('with model and index', () => {
+     expect(getNodeGPU('gpu:h100:2(IDX:0-1)')).toStrictEqual(['2 x h100'])
+   })
+   test('multiple types', () => {
+-    expect(getNodeGPU('gpu:h100:2,gpu:h200:4')).toStrictEqual(['2 x h100', '4 x h200'])
++    expect(getNodeGPU('gpu:1,gpu:h100:2,gpu:h200:4')).toStrictEqual([
++      '1 x unknown',
++      '2 x h100',
++      '4 x h200'
++    ])
+   })
+   test('multiple types with index', () => {
+-    expect(getNodeGPU('gpu:h100:1(IDX:0),gpu:h200:0(IDX:N/A)')).toStrictEqual([
++    expect(getNodeGPU('gpu:1(IDX:0),gpu:h100:1(IDX:1),gpu:h200:0(IDX:N/A)')).toStrictEqual([
++      '1 x unknown',
+       '1 x h100',
+       '0 x h200'
+     ])
+@@ -759,11 +809,21 @@ describe('getNodeGPU', () => {
+     expect(getNodeGPU(node.gres).length).toBeGreaterThan(0)
+     expect(getNodeGPU(node.gres_used).length).toBeGreaterThan(0)
+   })
++  test('node with gpu model allocated', () => {
++    const node = { ...nodeWithGpusModelAllocated }
++    expect(getNodeGPU(node.gres).length).toBeGreaterThan(0)
++    expect(getNodeGPU(node.gres_used).length).toBeGreaterThan(0)
++  })
+   test('node with gpu mixed', () => {
+     const node = { ...nodeWithGpusMixed }
+     expect(getNodeGPU(node.gres).length).toBeGreaterThan(0)
+     expect(getNodeGPU(node.gres_used).length).toBeGreaterThan(0)
+   })
++  test('node with gpu model mixed', () => {
++    const node = { ...nodeWithGpusModelMixed }
++    expect(getNodeGPU(node.gres).length).toBeGreaterThan(0)
++    expect(getNodeGPU(node.gres_used).length).toBeGreaterThan(0)
++  })
+   test('node with gpu idle', () => {
+     const node = { ...nodeWithGpusIdle }
+     expect(getNodeGPU(node.gres).length).toBeGreaterThan(0)
+@@ -772,6 +832,14 @@ describe('getNodeGPU', () => {
+       expect(gpu[0]).toBe('0')
+     })
+   })
++  test('node with gpu model idle', () => {
++    const node = { ...nodeWithGpusModelIdle }
++    expect(getNodeGPU(node.gres).length).toBeGreaterThan(0)
++    expect(getNodeGPU(node.gres_used).length).toBeGreaterThan(0)
++    getNodeGPU(node.gres_used).forEach((gpu) => {
++      expect(gpu[0]).toBe('0')
++    })
++  })
+   test('node without gpu', () => {
+     const node = { ...nodeWithoutGpu }
+     expect(getNodeGPU(node.gres).length).toBe(0)
+diff --git a/tests/assets/gateway/node-with-gpus-allocated.json b/tests/assets/gateway/node-with-gpus-allocated.json
+index 2784f5d..fca154d 100644
+--- a/tests/assets/gateway/node-with-gpus-allocated.json
++++ b/tests/assets/gateway/node-with-gpus-allocated.json
+@@ -1,7 +1,7 @@
+ {
+-  "alloc_cpus": 1,
+-  "alloc_idle_cpus": 31,
+-  "alloc_memory": 512,
++  "alloc_cpus": 0,
++  "alloc_idle_cpus": 32,
++  "alloc_memory": 0,
+   "architecture": "x86_64",
+   "boot_time": {
+     "infinite": false,
+@@ -10,14 +10,14 @@
+   },
+   "cores": 16,
+   "cpus": 32,
+-  "gres": "gpu:h100:4",
+-  "gres_used": "gpu:h100:4(IDX:0-3)",
++  "gres": "gpu:4",
++  "gres_used": "gpu:4",
+   "last_busy": {
+     "infinite": false,
+-    "number": 1747754445,
++    "number": 1749108801,
+     "set": true
+   },
+-  "name": "gpu2",
++  "name": "gpu1",
+   "operating_system": "Linux 6.1.0-31-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.128-1 (2025-02-07)",
+   "partitions": [
+     "normal"
+@@ -26,7 +26,7 @@
+   "reason": "",
+   "sockets": 2,
+   "state": [
+-    "MIXED"
++    "ALLOCATED"
+   ],
+   "threads": 1
+ }
+diff --git a/tests/assets/gateway/node-with-gpus-idle.json b/tests/assets/gateway/node-with-gpus-idle.json
+index 9a9d466..33a30e5 100644
+--- a/tests/assets/gateway/node-with-gpus-idle.json
++++ b/tests/assets/gateway/node-with-gpus-idle.json
+@@ -10,11 +10,11 @@
+   },
+   "cores": 16,
+   "cpus": 32,
+-  "gres": "gpu:h100:4",
+-  "gres_used": "gpu:h100:0(IDX:N/A)",
++  "gres": "gpu:4",
++  "gres_used": "gpu:0",
+   "last_busy": {
+     "infinite": false,
+-    "number": 1747776069,
++    "number": 1749123356,
+     "set": true
+   },
+   "name": "gpu1",
+diff --git a/tests/assets/gateway/node-with-gpus-mixed.json b/tests/assets/gateway/node-with-gpus-mixed.json
+index 4a5c31a..7f396dd 100644
+--- a/tests/assets/gateway/node-with-gpus-mixed.json
++++ b/tests/assets/gateway/node-with-gpus-mixed.json
+@@ -10,11 +10,11 @@
+   },
+   "cores": 16,
+   "cpus": 32,
+-  "gres": "gpu:h100:4",
+-  "gres_used": "gpu:h100:1(IDX:0)",
++  "gres": "gpu:4",
++  "gres_used": "gpu:1",
+   "last_busy": {
+     "infinite": false,
+-    "number": 1747754448,
++    "number": 1749072186,
+     "set": true
+   },
+   "name": "gpu1",
+diff --git a/tests/assets/gateway/node-with-gpus-model-allocated.json b/tests/assets/gateway/node-with-gpus-model-allocated.json
+new file mode 100644
+index 0000000..2784f5d
+--- /dev/null
++++ b/tests/assets/gateway/node-with-gpus-model-allocated.json
+@@ -0,0 +1,32 @@
++{
++  "alloc_cpus": 1,
++  "alloc_idle_cpus": 31,
++  "alloc_memory": 512,
++  "architecture": "x86_64",
++  "boot_time": {
++    "infinite": false,
++    "number": 1741793226,
++    "set": true
++  },
++  "cores": 16,
++  "cpus": 32,
++  "gres": "gpu:h100:4",
++  "gres_used": "gpu:h100:4(IDX:0-3)",
++  "last_busy": {
++    "infinite": false,
++    "number": 1747754445,
++    "set": true
++  },
++  "name": "gpu2",
++  "operating_system": "Linux 6.1.0-31-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.128-1 (2025-02-07)",
++  "partitions": [
++    "normal"
++  ],
++  "real_memory": 524288,
++  "reason": "",
++  "sockets": 2,
++  "state": [
++    "MIXED"
++  ],
++  "threads": 1
++}
+diff --git a/tests/assets/gateway/node-with-gpus-model-idle.json b/tests/assets/gateway/node-with-gpus-model-idle.json
+new file mode 100644
+index 0000000..9a9d466
+--- /dev/null
++++ b/tests/assets/gateway/node-with-gpus-model-idle.json
+@@ -0,0 +1,33 @@
++{
++  "alloc_cpus": 0,
++  "alloc_idle_cpus": 32,
++  "alloc_memory": 0,
++  "architecture": "x86_64",
++  "boot_time": {
++    "infinite": false,
++    "number": 1741793226,
++    "set": true
++  },
++  "cores": 16,
++  "cpus": 32,
++  "gres": "gpu:h100:4",
++  "gres_used": "gpu:h100:0(IDX:N/A)",
++  "last_busy": {
++    "infinite": false,
++    "number": 1747776069,
++    "set": true
++  },
++  "name": "gpu1",
++  "operating_system": "Linux 6.1.0-31-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.128-1 (2025-02-07)",
++  "partitions": [
++    "normal"
++  ],
++  "real_memory": 524288,
++  "reason": "",
++  "sockets": 2,
++  "state": [
++    "IDLE",
++    "COMPLETING"
++  ],
++  "threads": 1
++}
+diff --git a/tests/assets/gateway/node-with-gpus-model-mixed.json b/tests/assets/gateway/node-with-gpus-model-mixed.json
+new file mode 100644
+index 0000000..4a5c31a
+--- /dev/null
++++ b/tests/assets/gateway/node-with-gpus-model-mixed.json
+@@ -0,0 +1,32 @@
++{
++  "alloc_cpus": 0,
++  "alloc_idle_cpus": 32,
++  "alloc_memory": 0,
++  "architecture": "x86_64",
++  "boot_time": {
++    "infinite": false,
++    "number": 1741793226,
++    "set": true
++  },
++  "cores": 16,
++  "cpus": 32,
++  "gres": "gpu:h100:4",
++  "gres_used": "gpu:h100:1(IDX:0)",
++  "last_busy": {
++    "infinite": false,
++    "number": 1747754448,
++    "set": true
++  },
++  "name": "gpu1",
++  "operating_system": "Linux 6.1.0-31-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.128-1 (2025-02-07)",
++  "partitions": [
++    "normal"
++  ],
++  "real_memory": 524288,
++  "reason": "",
++  "sockets": 2,
++  "state": [
++    "ALLOCATED"
++  ],
++  "threads": 1
++}
+diff --git a/tests/assets/gateway/status.json b/tests/assets/gateway/status.json
+index 93a7e25..b518bd2 100644
+--- a/tests/assets/gateway/status.json
++++ b/tests/assets/gateway/status.json
+@@ -135,6 +135,18 @@
+     "content-type": "application/json",
+     "status": 200
+   },
++  "node-with-gpus-model-allocated": {
++    "content-type": "application/json",
++    "status": 200
++  },
++  "node-with-gpus-model-idle": {
++    "content-type": "application/json",
++    "status": 200
++  },
++  "node-with-gpus-model-mixed": {
++    "content-type": "application/json",
++    "status": 200
++  },
+   "node-without-gpu": {
+     "content-type": "application/json",
+     "status": 200
+diff --git a/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-allocated.json b/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-allocated.json
+index 9799b2c..2662cec 100644
+--- a/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-allocated.json
++++ b/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-allocated.json
+@@ -13,11 +13,11 @@
+       "cores": 16,
+       "specialized_cores": 0,
+       "cpu_binding": 0,
+-      "cpu_load": 18,
++      "cpu_load": 35,
+       "free_mem": {
+         "set": true,
+         "infinite": false,
+-        "number": 3313
++        "number": 2939
+       },
+       "cpus": 32,
+       "effective_cpus": 32,
+@@ -40,26 +40,26 @@
+       "features": [],
+       "active_features": [],
+       "gpu_spec": "",
+-      "gres": "gpu:h100:4",
++      "gres": "gpu:4",
+       "gres_drained": "N/A",
+-      "gres_used": "gpu:h100:4(IDX:0-3)",
++      "gres_used": "gpu:4",
+       "instance_id": "",
+       "instance_type": "",
+       "last_busy": {
+         "set": true,
+         "infinite": false,
+-        "number": 1747754445
++        "number": 1749069208
+       },
+       "mcs_label": "",
+       "specialized_memory": 0,
+-      "name": "gpu2",
++      "name": "gpu1",
+       "next_state_after_reboot": [
+         "INVALID"
+       ],
+-      "address": "gpu2",
+-      "hostname": "gpu2",
++      "address": "gpu1",
++      "hostname": "gpu1",
+       "state": [
+-        "MIXED"
++        "ALLOCATED"
+       ],
+       "operating_system": "Linux 6.1.0-31-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.128-1 (2025-02-07)",
+       "owner": "",
+@@ -83,15 +83,15 @@
+         "number": 0
+       },
+       "reservation": "",
+-      "alloc_memory": 512,
+-      "alloc_cpus": 1,
+-      "alloc_idle_cpus": 31,
+-      "tres_used": "cpu=1,mem=512M",
+-      "tres_weighted": 1.0,
++      "alloc_memory": 0,
++      "alloc_cpus": 0,
++      "alloc_idle_cpus": 32,
++      "tres_used": "",
++      "tres_weighted": 0.0,
+       "slurmd_start_time": {
+         "set": true,
+         "infinite": false,
+-        "number": 1747256521
++        "number": 1749065118
+       },
+       "sockets": 2,
+       "threads": 1,
+@@ -104,7 +104,7 @@
+   "last_update": {
+     "set": true,
+     "infinite": false,
+-    "number": 1747754448
++    "number": 1749069211
+   },
+   "meta": {
+     "plugin": {
+diff --git a/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-idle.json b/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-idle.json
+index 2b2e296..02441bc 100644
+--- a/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-idle.json
++++ b/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-idle.json
+@@ -13,11 +13,11 @@
+       "cores": 16,
+       "specialized_cores": 0,
+       "cpu_binding": 0,
+-      "cpu_load": 18,
++      "cpu_load": 70,
+       "free_mem": {
+         "set": true,
+         "infinite": false,
+-        "number": 3313
++        "number": 2978
+       },
+       "cpus": 32,
+       "effective_cpus": 32,
+@@ -40,15 +40,15 @@
+       "features": [],
+       "active_features": [],
+       "gpu_spec": "",
+-      "gres": "gpu:h100:4",
++      "gres": "gpu:4",
+       "gres_drained": "N/A",
+-      "gres_used": "gpu:h100:0(IDX:N/A)",
++      "gres_used": "gpu:0",
+       "instance_id": "",
+       "instance_type": "",
+       "last_busy": {
+         "set": true,
+         "infinite": false,
+-        "number": 1747754453
++        "number": 1749072191
+       },
+       "mcs_label": "",
+       "specialized_memory": 0,
+@@ -92,7 +92,7 @@
+       "slurmd_start_time": {
+         "set": true,
+         "infinite": false,
+-        "number": 1747256520
++        "number": 1749065118
+       },
+       "sockets": 2,
+       "threads": 1,
+@@ -105,7 +105,7 @@
+   "last_update": {
+     "set": true,
+     "infinite": false,
+-    "number": 1747754453
++    "number": 1749072191
+   },
+   "meta": {
+     "plugin": {
+diff --git a/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-mixed.json b/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-mixed.json
+index 0e90b41..174bbb2 100644
+--- a/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-mixed.json
++++ b/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-mixed.json
+@@ -13,11 +13,11 @@
+       "cores": 16,
+       "specialized_cores": 0,
+       "cpu_binding": 0,
+-      "cpu_load": 18,
++      "cpu_load": 70,
+       "free_mem": {
+         "set": true,
+         "infinite": false,
+-        "number": 3313
++        "number": 2978
+       },
+       "cpus": 32,
+       "effective_cpus": 32,
+@@ -40,15 +40,15 @@
+       "features": [],
+       "active_features": [],
+       "gpu_spec": "",
+-      "gres": "gpu:h100:4",
++      "gres": "gpu:4",
+       "gres_drained": "N/A",
+-      "gres_used": "gpu:h100:1(IDX:0)",
++      "gres_used": "gpu:1",
+       "instance_id": "",
+       "instance_type": "",
+       "last_busy": {
+         "set": true,
+         "infinite": false,
+-        "number": 1747754448
++        "number": 1749072186
+       },
+       "mcs_label": "",
+       "specialized_memory": 0,
+@@ -91,7 +91,7 @@
+       "slurmd_start_time": {
+         "set": true,
+         "infinite": false,
+-        "number": 1747256520
++        "number": 1749065118
+       },
+       "sockets": 2,
+       "threads": 1,
+@@ -104,7 +104,7 @@
+   "last_update": {
+     "set": true,
+     "infinite": false,
+-    "number": 1747754451
++    "number": 1749072189
+   },
+   "meta": {
+     "plugin": {
+diff --git a/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-model-allocated.json b/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-model-allocated.json
+new file mode 100644
+index 0000000..9799b2c
+--- /dev/null
++++ b/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-model-allocated.json
+@@ -0,0 +1,134 @@
++{
++  "nodes": [
++    {
++      "architecture": "x86_64",
++      "burstbuffer_network_address": "",
++      "boards": 1,
++      "boot_time": {
++        "set": true,
++        "infinite": false,
++        "number": 1741793226
++      },
++      "cluster_name": "",
++      "cores": 16,
++      "specialized_cores": 0,
++      "cpu_binding": 0,
++      "cpu_load": 18,
++      "free_mem": {
++        "set": true,
++        "infinite": false,
++        "number": 3313
++      },
++      "cpus": 32,
++      "effective_cpus": 32,
++      "specialized_cpus": "",
++      "energy": {
++        "average_watts": 0,
++        "base_consumed_energy": 0,
++        "consumed_energy": 0,
++        "current_watts": {
++          "set": true,
++          "infinite": false,
++          "number": 0
++        },
++        "previous_consumed_energy": 0,
++        "last_collected": 0
++      },
++      "external_sensors": {},
++      "extra": "",
++      "power": {},
++      "features": [],
++      "active_features": [],
++      "gpu_spec": "",
++      "gres": "gpu:h100:4",
++      "gres_drained": "N/A",
++      "gres_used": "gpu:h100:4(IDX:0-3)",
++      "instance_id": "",
++      "instance_type": "",
++      "last_busy": {
++        "set": true,
++        "infinite": false,
++        "number": 1747754445
++      },
++      "mcs_label": "",
++      "specialized_memory": 0,
++      "name": "gpu2",
++      "next_state_after_reboot": [
++        "INVALID"
++      ],
++      "address": "gpu2",
++      "hostname": "gpu2",
++      "state": [
++        "MIXED"
++      ],
++      "operating_system": "Linux 6.1.0-31-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.128-1 (2025-02-07)",
++      "owner": "",
++      "partitions": [
++        "normal"
++      ],
++      "port": 6818,
++      "real_memory": 524288,
++      "res_cores_per_gpu": 0,
++      "comment": "",
++      "reason": "",
++      "reason_changed_at": {
++        "set": true,
++        "infinite": false,
++        "number": 0
++      },
++      "reason_set_by_user": "",
++      "resume_after": {
++        "set": true,
++        "infinite": false,
++        "number": 0
++      },
++      "reservation": "",
++      "alloc_memory": 512,
++      "alloc_cpus": 1,
++      "alloc_idle_cpus": 31,
++      "tres_used": "cpu=1,mem=512M",
++      "tres_weighted": 1.0,
++      "slurmd_start_time": {
++        "set": true,
++        "infinite": false,
++        "number": 1747256521
++      },
++      "sockets": 2,
++      "threads": 1,
++      "temporary_disk": 0,
++      "weight": 1,
++      "tres": "cpu=32,mem=512G,billing=32",
++      "version": "24.11.5"
++    }
++  ],
++  "last_update": {
++    "set": true,
++    "infinite": false,
++    "number": 1747754448
++  },
++  "meta": {
++    "plugin": {
++      "type": "openapi/slurmctld",
++      "name": "Slurm OpenAPI slurmctld",
++      "data_parser": "data_parser/v0.0.41",
++      "accounting_storage": "accounting_storage/slurmdbd"
++    },
++    "client": {
++      "source": "unix:/run/slurmrestd/slurmrestd.socket(fd:20)",
++      "user": "root",
++      "group": "root"
++    },
++    "command": [],
++    "slurm": {
++      "version": {
++        "major": "24",
++        "micro": "5",
++        "minor": "11"
++      },
++      "release": "24.11.5",
++      "cluster": "hpc"
++    }
++  },
++  "errors": [],
++  "warnings": []
++}
+diff --git a/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-model-idle.json b/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-model-idle.json
+new file mode 100644
+index 0000000..2b2e296
+--- /dev/null
++++ b/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-model-idle.json
+@@ -0,0 +1,135 @@
++{
++  "nodes": [
++    {
++      "architecture": "x86_64",
++      "burstbuffer_network_address": "",
++      "boards": 1,
++      "boot_time": {
++        "set": true,
++        "infinite": false,
++        "number": 1741793226
++      },
++      "cluster_name": "",
++      "cores": 16,
++      "specialized_cores": 0,
++      "cpu_binding": 0,
++      "cpu_load": 18,
++      "free_mem": {
++        "set": true,
++        "infinite": false,
++        "number": 3313
++      },
++      "cpus": 32,
++      "effective_cpus": 32,
++      "specialized_cpus": "",
++      "energy": {
++        "average_watts": 0,
++        "base_consumed_energy": 0,
++        "consumed_energy": 0,
++        "current_watts": {
++          "set": true,
++          "infinite": false,
++          "number": 0
++        },
++        "previous_consumed_energy": 0,
++        "last_collected": 0
++      },
++      "external_sensors": {},
++      "extra": "",
++      "power": {},
++      "features": [],
++      "active_features": [],
++      "gpu_spec": "",
++      "gres": "gpu:h100:4",
++      "gres_drained": "N/A",
++      "gres_used": "gpu:h100:0(IDX:N/A)",
++      "instance_id": "",
++      "instance_type": "",
++      "last_busy": {
++        "set": true,
++        "infinite": false,
++        "number": 1747754453
++      },
++      "mcs_label": "",
++      "specialized_memory": 0,
++      "name": "gpu1",
++      "next_state_after_reboot": [
++        "INVALID"
++      ],
++      "address": "gpu1",
++      "hostname": "gpu1",
++      "state": [
++        "IDLE",
++        "COMPLETING"
++      ],
++      "operating_system": "Linux 6.1.0-31-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.128-1 (2025-02-07)",
++      "owner": "",
++      "partitions": [
++        "normal"
++      ],
++      "port": 6818,
++      "real_memory": 524288,
++      "res_cores_per_gpu": 0,
++      "comment": "",
++      "reason": "",
++      "reason_changed_at": {
++        "set": true,
++        "infinite": false,
++        "number": 0
++      },
++      "reason_set_by_user": "",
++      "resume_after": {
++        "set": true,
++        "infinite": false,
++        "number": 0
++      },
++      "reservation": "",
++      "alloc_memory": 0,
++      "alloc_cpus": 0,
++      "alloc_idle_cpus": 32,
++      "tres_used": "",
++      "tres_weighted": 0.0,
++      "slurmd_start_time": {
++        "set": true,
++        "infinite": false,
++        "number": 1747256520
++      },
++      "sockets": 2,
++      "threads": 1,
++      "temporary_disk": 0,
++      "weight": 1,
++      "tres": "cpu=32,mem=512G,billing=32",
++      "version": "24.11.5"
++    }
++  ],
++  "last_update": {
++    "set": true,
++    "infinite": false,
++    "number": 1747754453
++  },
++  "meta": {
++    "plugin": {
++      "type": "openapi/slurmctld",
++      "name": "Slurm OpenAPI slurmctld",
++      "data_parser": "data_parser/v0.0.41",
++      "accounting_storage": "accounting_storage/slurmdbd"
++    },
++    "client": {
++      "source": "unix:/run/slurmrestd/slurmrestd.socket(fd:20)",
++      "user": "root",
++      "group": "root"
++    },
++    "command": [],
++    "slurm": {
++      "version": {
++        "major": "24",
++        "micro": "5",
++        "minor": "11"
++      },
++      "release": "24.11.5",
++      "cluster": "hpc"
++    }
++  },
++  "errors": [],
++  "warnings": []
++}
+diff --git a/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-model-mixed.json b/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-model-mixed.json
+new file mode 100644
+index 0000000..0e90b41
+--- /dev/null
++++ b/tests/assets/slurmrestd/24.11/slurm-node-with-gpus-model-mixed.json
+@@ -0,0 +1,134 @@
++{
++  "nodes": [
++    {
++      "architecture": "x86_64",
++      "burstbuffer_network_address": "",
++      "boards": 1,
++      "boot_time": {
++        "set": true,
++        "infinite": false,
++        "number": 1741793226
++      },
++      "cluster_name": "",
++      "cores": 16,
++      "specialized_cores": 0,
++      "cpu_binding": 0,
++      "cpu_load": 18,
++      "free_mem": {
++        "set": true,
++        "infinite": false,
++        "number": 3313
++      },
++      "cpus": 32,
++      "effective_cpus": 32,
++      "specialized_cpus": "",
++      "energy": {
++        "average_watts": 0,
++        "base_consumed_energy": 0,
++        "consumed_energy": 0,
++        "current_watts": {
++          "set": true,
++          "infinite": false,
++          "number": 0
++        },
++        "previous_consumed_energy": 0,
++        "last_collected": 0
++      },
++      "external_sensors": {},
++      "extra": "",
++      "power": {},
++      "features": [],
++      "active_features": [],
++      "gpu_spec": "",
++      "gres": "gpu:h100:4",
++      "gres_drained": "N/A",
++      "gres_used": "gpu:h100:1(IDX:0)",
++      "instance_id": "",
++      "instance_type": "",
++      "last_busy": {
++        "set": true,
++        "infinite": false,
++        "number": 1747754448
++      },
++      "mcs_label": "",
++      "specialized_memory": 0,
++      "name": "gpu1",
++      "next_state_after_reboot": [
++        "INVALID"
++      ],
++      "address": "gpu1",
++      "hostname": "gpu1",
++      "state": [
++        "ALLOCATED"
++      ],
++      "operating_system": "Linux 6.1.0-31-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.128-1 (2025-02-07)",
++      "owner": "",
++      "partitions": [
++        "normal"
++      ],
++      "port": 6818,
++      "real_memory": 524288,
++      "res_cores_per_gpu": 0,
++      "comment": "",
++      "reason": "",
++      "reason_changed_at": {
++        "set": true,
++        "infinite": false,
++        "number": 0
++      },
++      "reason_set_by_user": "",
++      "resume_after": {
++        "set": true,
++        "infinite": false,
++        "number": 0
++      },
++      "reservation": "",
++      "alloc_memory": 0,
++      "alloc_cpus": 0,
++      "alloc_idle_cpus": 32,
++      "tres_used": "",
++      "tres_weighted": 0.0,
++      "slurmd_start_time": {
++        "set": true,
++        "infinite": false,
++        "number": 1747256520
++      },
++      "sockets": 2,
++      "threads": 1,
++      "temporary_disk": 0,
++      "weight": 1,
++      "tres": "cpu=32,mem=512G,billing=32",
++      "version": "24.11.5"
++    }
++  ],
++  "last_update": {
++    "set": true,
++    "infinite": false,
++    "number": 1747754451
++  },
++  "meta": {
++    "plugin": {
++      "type": "openapi/slurmctld",
++      "name": "Slurm OpenAPI slurmctld",
++      "data_parser": "data_parser/v0.0.41",
++      "accounting_storage": "accounting_storage/slurmdbd"
++    },
++    "client": {
++      "source": "unix:/run/slurmrestd/slurmrestd.socket(fd:20)",
++      "user": "root",
++      "group": "root"
++    },
++    "command": [],
++    "slurm": {
++      "version": {
++        "major": "24",
++        "micro": "5",
++        "minor": "11"
++      },
++      "release": "24.11.5",
++      "cluster": "hpc"
++    }
++  },
++  "errors": [],
++  "warnings": []
++}
+diff --git a/tests/assets/slurmrestd/24.11/status.json b/tests/assets/slurmrestd/24.11/status.json
+index 7f37375..7b9ab16 100644
+--- a/tests/assets/slurmrestd/24.11/status.json
++++ b/tests/assets/slurmrestd/24.11/status.json
+@@ -119,6 +119,18 @@
+     "content-type": "application/json",
+     "status": 200
+   },
++  "slurm-node-with-gpus-model-allocated": {
++    "content-type": "application/json",
++    "status": 200
++  },
++  "slurm-node-with-gpus-model-idle": {
++    "content-type": "application/json",
++    "status": 200
++  },
++  "slurm-node-with-gpus-model-mixed": {
++    "content-type": "application/json",
++    "status": 200
++  },
+   "slurm-node-without-gpu": {
+     "content-type": "application/json",
+     "status": 200
+diff --git a/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-allocated.json b/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-allocated.json
+deleted file mode 100644
+index dcceffc..0000000
+--- a/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-allocated.json
++++ /dev/null
+@@ -1,134 +0,0 @@
+-{
+-  "nodes": [
+-    {
+-      "architecture": "x86_64",
+-      "burstbuffer_network_address": "",
+-      "boards": 1,
+-      "boot_time": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 1741793226
+-      },
+-      "cluster_name": "",
+-      "cores": 16,
+-      "specialized_cores": 0,
+-      "cpu_binding": 0,
+-      "cpu_load": 34,
+-      "free_mem": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 3231
+-      },
+-      "cpus": 32,
+-      "effective_cpus": 32,
+-      "specialized_cpus": "",
+-      "energy": {
+-        "average_watts": 0,
+-        "base_consumed_energy": 0,
+-        "consumed_energy": 0,
+-        "current_watts": {
+-          "set": true,
+-          "infinite": false,
+-          "number": 0
+-        },
+-        "previous_consumed_energy": 0,
+-        "last_collected": 0
+-      },
+-      "external_sensors": {},
+-      "extra": "",
+-      "power": {},
+-      "features": [],
+-      "active_features": [],
+-      "gpu_spec": "",
+-      "gres": "gpu:h100:2,gpu:h200:4",
+-      "gres_drained": "N/A",
+-      "gres_used": "gpu:h100:2(IDX:0-1),gpu:h200:4(IDX:2-5)",
+-      "instance_id": "",
+-      "instance_type": "",
+-      "last_busy": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 1747755330
+-      },
+-      "mcs_label": "",
+-      "specialized_memory": 0,
+-      "name": "ia2",
+-      "next_state_after_reboot": [
+-        "INVALID"
+-      ],
+-      "address": "ia2",
+-      "hostname": "ia2",
+-      "state": [
+-        "ALLOCATED"
+-      ],
+-      "operating_system": "Linux 6.1.0-31-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.128-1 (2025-02-07)",
+-      "owner": "",
+-      "partitions": [
+-        "standard"
+-      ],
+-      "port": 6818,
+-      "real_memory": 524288,
+-      "res_cores_per_gpu": 0,
+-      "comment": "",
+-      "reason": "",
+-      "reason_changed_at": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 0
+-      },
+-      "reason_set_by_user": "",
+-      "resume_after": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 0
+-      },
+-      "reservation": "",
+-      "alloc_memory": 0,
+-      "alloc_cpus": 0,
+-      "alloc_idle_cpus": 32,
+-      "tres_used": "",
+-      "tres_weighted": 0.0,
+-      "slurmd_start_time": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 1747748741
+-      },
+-      "sockets": 2,
+-      "threads": 1,
+-      "temporary_disk": 0,
+-      "weight": 1,
+-      "tres": "cpu=32,mem=512G,billing=32",
+-      "version": "25.05.0-0rc1"
+-    }
+-  ],
+-  "last_update": {
+-    "set": true,
+-    "infinite": false,
+-    "number": 1747755332
+-  },
+-  "meta": {
+-    "plugin": {
+-      "type": "openapi/slurmctld",
+-      "name": "Slurm OpenAPI slurmctld",
+-      "data_parser": "data_parser/v0.0.41",
+-      "accounting_storage": "accounting_storage/slurmdbd"
+-    },
+-    "client": {
+-      "source": "admin:6820(fd:9)",
+-      "user": "root",
+-      "group": "root"
+-    },
+-    "command": [],
+-    "slurm": {
+-      "version": {
+-        "major": "25",
+-        "micro": "0",
+-        "minor": "05"
+-      },
+-      "release": "25.05.0-0rc1",
+-      "cluster": "hpc"
+-    }
+-  },
+-  "errors": [],
+-  "warnings": []
+-}
+diff --git a/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-idle.json b/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-idle.json
+deleted file mode 100644
+index 09463c7..0000000
+--- a/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-idle.json
++++ /dev/null
+@@ -1,135 +0,0 @@
+-{
+-  "nodes": [
+-    {
+-      "architecture": "x86_64",
+-      "burstbuffer_network_address": "",
+-      "boards": 1,
+-      "boot_time": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 1741793226
+-      },
+-      "cluster_name": "",
+-      "cores": 16,
+-      "specialized_cores": 0,
+-      "cpu_binding": 0,
+-      "cpu_load": 28,
+-      "free_mem": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 3246
+-      },
+-      "cpus": 32,
+-      "effective_cpus": 32,
+-      "specialized_cpus": "",
+-      "energy": {
+-        "average_watts": 0,
+-        "base_consumed_energy": 0,
+-        "consumed_energy": 0,
+-        "current_watts": {
+-          "set": true,
+-          "infinite": false,
+-          "number": 0
+-        },
+-        "previous_consumed_energy": 0,
+-        "last_collected": 0
+-      },
+-      "external_sensors": {},
+-      "extra": "",
+-      "power": {},
+-      "features": [],
+-      "active_features": [],
+-      "gpu_spec": "",
+-      "gres": "gpu:h100:2,gpu:h200:4",
+-      "gres_drained": "N/A",
+-      "gres_used": "gpu:h100:0(IDX:N/A),gpu:h200:0(IDX:N/A)",
+-      "instance_id": "",
+-      "instance_type": "",
+-      "last_busy": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 1747755336
+-      },
+-      "mcs_label": "",
+-      "specialized_memory": 0,
+-      "name": "ia1",
+-      "next_state_after_reboot": [
+-        "INVALID"
+-      ],
+-      "address": "ia1",
+-      "hostname": "ia1",
+-      "state": [
+-        "IDLE",
+-        "COMPLETING"
+-      ],
+-      "operating_system": "Linux 6.1.0-31-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.128-1 (2025-02-07)",
+-      "owner": "",
+-      "partitions": [
+-        "standard"
+-      ],
+-      "port": 6818,
+-      "real_memory": 524288,
+-      "res_cores_per_gpu": 0,
+-      "comment": "",
+-      "reason": "",
+-      "reason_changed_at": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 0
+-      },
+-      "reason_set_by_user": "",
+-      "resume_after": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 0
+-      },
+-      "reservation": "",
+-      "alloc_memory": 0,
+-      "alloc_cpus": 0,
+-      "alloc_idle_cpus": 32,
+-      "tres_used": "",
+-      "tres_weighted": 0.0,
+-      "slurmd_start_time": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 1747748740
+-      },
+-      "sockets": 2,
+-      "threads": 1,
+-      "temporary_disk": 0,
+-      "weight": 1,
+-      "tres": "cpu=32,mem=512G,billing=32",
+-      "version": "25.05.0-0rc1"
+-    }
+-  ],
+-  "last_update": {
+-    "set": true,
+-    "infinite": false,
+-    "number": 1747755337
+-  },
+-  "meta": {
+-    "plugin": {
+-      "type": "openapi/slurmctld",
+-      "name": "Slurm OpenAPI slurmctld",
+-      "data_parser": "data_parser/v0.0.41",
+-      "accounting_storage": "accounting_storage/slurmdbd"
+-    },
+-    "client": {
+-      "source": "admin:6820(fd:9)",
+-      "user": "root",
+-      "group": "root"
+-    },
+-    "command": [],
+-    "slurm": {
+-      "version": {
+-        "major": "25",
+-        "micro": "0",
+-        "minor": "05"
+-      },
+-      "release": "25.05.0-0rc1",
+-      "cluster": "hpc"
+-    }
+-  },
+-  "errors": [],
+-  "warnings": []
+-}
+diff --git a/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-mixed.json b/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-mixed.json
+deleted file mode 100644
+index 3b63ff6..0000000
+--- a/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-mixed.json
++++ /dev/null
+@@ -1,134 +0,0 @@
+-{
+-  "nodes": [
+-    {
+-      "architecture": "x86_64",
+-      "burstbuffer_network_address": "",
+-      "boards": 1,
+-      "boot_time": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 1741793226
+-      },
+-      "cluster_name": "",
+-      "cores": 16,
+-      "specialized_cores": 0,
+-      "cpu_binding": 0,
+-      "cpu_load": 28,
+-      "free_mem": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 3246
+-      },
+-      "cpus": 32,
+-      "effective_cpus": 32,
+-      "specialized_cpus": "",
+-      "energy": {
+-        "average_watts": 0,
+-        "base_consumed_energy": 0,
+-        "consumed_energy": 0,
+-        "current_watts": {
+-          "set": true,
+-          "infinite": false,
+-          "number": 0
+-        },
+-        "previous_consumed_energy": 0,
+-        "last_collected": 0
+-      },
+-      "external_sensors": {},
+-      "extra": "",
+-      "power": {},
+-      "features": [],
+-      "active_features": [],
+-      "gpu_spec": "",
+-      "gres": "gpu:h100:2,gpu:h200:4",
+-      "gres_drained": "N/A",
+-      "gres_used": "gpu:h100:1(IDX:0),gpu:h200:0(IDX:N/A)",
+-      "instance_id": "",
+-      "instance_type": "",
+-      "last_busy": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 1747755333
+-      },
+-      "mcs_label": "",
+-      "specialized_memory": 0,
+-      "name": "ia1",
+-      "next_state_after_reboot": [
+-        "INVALID"
+-      ],
+-      "address": "ia1",
+-      "hostname": "ia1",
+-      "state": [
+-        "ALLOCATED"
+-      ],
+-      "operating_system": "Linux 6.1.0-31-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.128-1 (2025-02-07)",
+-      "owner": "",
+-      "partitions": [
+-        "standard"
+-      ],
+-      "port": 6818,
+-      "real_memory": 524288,
+-      "res_cores_per_gpu": 0,
+-      "comment": "",
+-      "reason": "",
+-      "reason_changed_at": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 0
+-      },
+-      "reason_set_by_user": "",
+-      "resume_after": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 0
+-      },
+-      "reservation": "",
+-      "alloc_memory": 0,
+-      "alloc_cpus": 0,
+-      "alloc_idle_cpus": 32,
+-      "tres_used": "",
+-      "tres_weighted": 0.0,
+-      "slurmd_start_time": {
+-        "set": true,
+-        "infinite": false,
+-        "number": 1747748740
+-      },
+-      "sockets": 2,
+-      "threads": 1,
+-      "temporary_disk": 0,
+-      "weight": 1,
+-      "tres": "cpu=32,mem=512G,billing=32",
+-      "version": "25.05.0-0rc1"
+-    }
+-  ],
+-  "last_update": {
+-    "set": true,
+-    "infinite": false,
+-    "number": 1747755335
+-  },
+-  "meta": {
+-    "plugin": {
+-      "type": "openapi/slurmctld",
+-      "name": "Slurm OpenAPI slurmctld",
+-      "data_parser": "data_parser/v0.0.41",
+-      "accounting_storage": "accounting_storage/slurmdbd"
+-    },
+-    "client": {
+-      "source": "admin:6820(fd:9)",
+-      "user": "root",
+-      "group": "root"
+-    },
+-    "command": [],
+-    "slurm": {
+-      "version": {
+-        "major": "25",
+-        "micro": "0",
+-        "minor": "05"
+-      },
+-      "release": "25.05.0-0rc1",
+-      "cluster": "hpc"
+-    }
+-  },
+-  "errors": [],
+-  "warnings": []
+-}
+diff --git a/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-model-allocated.json b/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-model-allocated.json
+new file mode 100644
+index 0000000..f82eb12
+--- /dev/null
++++ b/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-model-allocated.json
+@@ -0,0 +1,134 @@
++{
++  "nodes": [
++    {
++      "architecture": "x86_64",
++      "burstbuffer_network_address": "",
++      "boards": 1,
++      "boot_time": {
++        "set": true,
++        "infinite": false,
++        "number": 1741793226
++      },
++      "cluster_name": "",
++      "cores": 16,
++      "specialized_cores": 0,
++      "cpu_binding": 0,
++      "cpu_load": 46,
++      "free_mem": {
++        "set": true,
++        "infinite": false,
++        "number": 3001
++      },
++      "cpus": 32,
++      "effective_cpus": 32,
++      "specialized_cpus": "",
++      "energy": {
++        "average_watts": 0,
++        "base_consumed_energy": 0,
++        "consumed_energy": 0,
++        "current_watts": {
++          "set": true,
++          "infinite": false,
++          "number": 0
++        },
++        "previous_consumed_energy": 0,
++        "last_collected": 0
++      },
++      "external_sensors": {},
++      "extra": "",
++      "power": {},
++      "features": [],
++      "active_features": [],
++      "gpu_spec": "",
++      "gres": "gpu:h100:2,gpu:h200:4",
++      "gres_drained": "N/A",
++      "gres_used": "gpu:h100:2(IDX:0-1),gpu:h200:4(IDX:2-5)",
++      "instance_id": "",
++      "instance_type": "",
++      "last_busy": {
++        "set": true,
++        "infinite": false,
++        "number": 1749072969
++      },
++      "mcs_label": "",
++      "specialized_memory": 0,
++      "name": "ia1",
++      "next_state_after_reboot": [
++        "INVALID"
++      ],
++      "address": "ia1",
++      "hostname": "ia1",
++      "state": [
++        "ALLOCATED"
++      ],
++      "operating_system": "Linux 6.1.0-31-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.128-1 (2025-02-07)",
++      "owner": "",
++      "partitions": [
++        "standard"
++      ],
++      "port": 6818,
++      "real_memory": 524288,
++      "res_cores_per_gpu": 0,
++      "comment": "",
++      "reason": "",
++      "reason_changed_at": {
++        "set": true,
++        "infinite": false,
++        "number": 0
++      },
++      "reason_set_by_user": "",
++      "resume_after": {
++        "set": true,
++        "infinite": false,
++        "number": 0
++      },
++      "reservation": "",
++      "alloc_memory": 0,
++      "alloc_cpus": 0,
++      "alloc_idle_cpus": 32,
++      "tres_used": "",
++      "tres_weighted": 0.0,
++      "slurmd_start_time": {
++        "set": true,
++        "infinite": false,
++        "number": 1748264252
++      },
++      "sockets": 2,
++      "threads": 1,
++      "temporary_disk": 0,
++      "weight": 1,
++      "tres": "cpu=32,mem=512G,billing=32",
++      "version": "25.05.0-0rc1"
++    }
++  ],
++  "last_update": {
++    "set": true,
++    "infinite": false,
++    "number": 1749072970
++  },
++  "meta": {
++    "plugin": {
++      "type": "openapi/slurmctld",
++      "name": "Slurm OpenAPI slurmctld",
++      "data_parser": "data_parser/v0.0.41",
++      "accounting_storage": "accounting_storage/slurmdbd"
++    },
++    "client": {
++      "source": "admin:6820(fd:18)",
++      "user": "root",
++      "group": "root"
++    },
++    "command": [],
++    "slurm": {
++      "version": {
++        "major": "25",
++        "micro": "0",
++        "minor": "05"
++      },
++      "release": "25.05.0-0rc1",
++      "cluster": "hpc"
++    }
++  },
++  "errors": [],
++  "warnings": []
++}
+diff --git a/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-model-idle.json b/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-model-idle.json
+new file mode 100644
+index 0000000..c22a3fa
+--- /dev/null
++++ b/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-model-idle.json
+@@ -0,0 +1,135 @@
++{
++  "nodes": [
++    {
++      "architecture": "x86_64",
++      "burstbuffer_network_address": "",
++      "boards": 1,
++      "boot_time": {
++        "set": true,
++        "infinite": false,
++        "number": 1741793226
++      },
++      "cluster_name": "",
++      "cores": 16,
++      "specialized_cores": 0,
++      "cpu_binding": 0,
++      "cpu_load": 46,
++      "free_mem": {
++        "set": true,
++        "infinite": false,
++        "number": 3001
++      },
++      "cpus": 32,
++      "effective_cpus": 32,
++      "specialized_cpus": "",
++      "energy": {
++        "average_watts": 0,
++        "base_consumed_energy": 0,
++        "consumed_energy": 0,
++        "current_watts": {
++          "set": true,
++          "infinite": false,
++          "number": 0
++        },
++        "previous_consumed_energy": 0,
++        "last_collected": 0
++      },
++      "external_sensors": {},
++      "extra": "",
++      "power": {},
++      "features": [],
++      "active_features": [],
++      "gpu_spec": "",
++      "gres": "gpu:h100:2,gpu:h200:4",
++      "gres_drained": "N/A",
++      "gres_used": "gpu:h100:0(IDX:N/A),gpu:h200:0(IDX:N/A)",
++      "instance_id": "",
++      "instance_type": "",
++      "last_busy": {
++        "set": true,
++        "infinite": false,
++        "number": 1749072975
++      },
++      "mcs_label": "",
++      "specialized_memory": 0,
++      "name": "ia2",
++      "next_state_after_reboot": [
++        "INVALID"
++      ],
++      "address": "ia2",
++      "hostname": "ia2",
++      "state": [
++        "IDLE",
++        "COMPLETING"
++      ],
++      "operating_system": "Linux 6.1.0-31-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.128-1 (2025-02-07)",
++      "owner": "",
++      "partitions": [
++        "standard"
++      ],
++      "port": 6818,
++      "real_memory": 524288,
++      "res_cores_per_gpu": 0,
++      "comment": "",
++      "reason": "",
++      "reason_changed_at": {
++        "set": true,
++        "infinite": false,
++        "number": 0
++      },
++      "reason_set_by_user": "",
++      "resume_after": {
++        "set": true,
++        "infinite": false,
++        "number": 0
++      },
++      "reservation": "",
++      "alloc_memory": 0,
++      "alloc_cpus": 0,
++      "alloc_idle_cpus": 32,
++      "tres_used": "",
++      "tres_weighted": 0.0,
++      "slurmd_start_time": {
++        "set": true,
++        "infinite": false,
++        "number": 1748264254
++      },
++      "sockets": 2,
++      "threads": 1,
++      "temporary_disk": 0,
++      "weight": 1,
++      "tres": "cpu=32,mem=512G,billing=32",
++      "version": "25.05.0-0rc1"
++    }
++  ],
++  "last_update": {
++    "set": true,
++    "infinite": false,
++    "number": 1749072976
++  },
++  "meta": {
++    "plugin": {
++      "type": "openapi/slurmctld",
++      "name": "Slurm OpenAPI slurmctld",
++      "data_parser": "data_parser/v0.0.41",
++      "accounting_storage": "accounting_storage/slurmdbd"
++    },
++    "client": {
++      "source": "admin:6820(fd:18)",
++      "user": "root",
++      "group": "root"
++    },
++    "command": [],
++    "slurm": {
++      "version": {
++        "major": "25",
++        "micro": "0",
++        "minor": "05"
++      },
++      "release": "25.05.0-0rc1",
++      "cluster": "hpc"
++    }
++  },
++  "errors": [],
++  "warnings": []
++}
+diff --git a/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-model-mixed.json b/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-model-mixed.json
+new file mode 100644
+index 0000000..93e531d
+--- /dev/null
++++ b/tests/assets/slurmrestd/25.05/slurm-node-with-gpus-model-mixed.json
+@@ -0,0 +1,134 @@
++{
++  "nodes": [
++    {
++      "architecture": "x86_64",
++      "burstbuffer_network_address": "",
++      "boards": 1,
++      "boot_time": {
++        "set": true,
++        "infinite": false,
++        "number": 1741793226
++      },
++      "cluster_name": "",
++      "cores": 16,
++      "specialized_cores": 0,
++      "cpu_binding": 0,
++      "cpu_load": 46,
++      "free_mem": {
++        "set": true,
++        "infinite": false,
++        "number": 3001
++      },
++      "cpus": 32,
++      "effective_cpus": 32,
++      "specialized_cpus": "",
++      "energy": {
++        "average_watts": 0,
++        "base_consumed_energy": 0,
++        "consumed_energy": 0,
++        "current_watts": {
++          "set": true,
++          "infinite": false,
++          "number": 0
++        },
++        "previous_consumed_energy": 0,
++        "last_collected": 0
++      },
++      "external_sensors": {},
++      "extra": "",
++      "power": {},
++      "features": [],
++      "active_features": [],
++      "gpu_spec": "",
++      "gres": "gpu:h100:2,gpu:h200:4",
++      "gres_drained": "N/A",
++      "gres_used": "gpu:h100:1(IDX:0),gpu:h200:0(IDX:N/A)",
++      "instance_id": "",
++      "instance_type": "",
++      "last_busy": {
++        "set": true,
++        "infinite": false,
++        "number": 1749072966
++      },
++      "mcs_label": "",
++      "specialized_memory": 0,
++      "name": "ia2",
++      "next_state_after_reboot": [
++        "INVALID"
++      ],
++      "address": "ia2",
++      "hostname": "ia2",
++      "state": [
++        "ALLOCATED"
++      ],
++      "operating_system": "Linux 6.1.0-31-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.128-1 (2025-02-07)",
++      "owner": "",
++      "partitions": [
++        "standard"
++      ],
++      "port": 6818,
++      "real_memory": 524288,
++      "res_cores_per_gpu": 0,
++      "comment": "",
++      "reason": "",
++      "reason_changed_at": {
++        "set": true,
++        "infinite": false,
++        "number": 0
++      },
++      "reason_set_by_user": "",
++      "resume_after": {
++        "set": true,
++        "infinite": false,
++        "number": 0
++      },
++      "reservation": "",
++      "alloc_memory": 0,
++      "alloc_cpus": 0,
++      "alloc_idle_cpus": 32,
++      "tres_used": "",
++      "tres_weighted": 0.0,
++      "slurmd_start_time": {
++        "set": true,
++        "infinite": false,
++        "number": 1748264254
++      },
++      "sockets": 2,
++      "threads": 1,
++      "temporary_disk": 0,
++      "weight": 1,
++      "tres": "cpu=32,mem=512G,billing=32",
++      "version": "25.05.0-0rc1"
++    }
++  ],
++  "last_update": {
++    "set": true,
++    "infinite": false,
++    "number": 1749072973
++  },
++  "meta": {
++    "plugin": {
++      "type": "openapi/slurmctld",
++      "name": "Slurm OpenAPI slurmctld",
++      "data_parser": "data_parser/v0.0.41",
++      "accounting_storage": "accounting_storage/slurmdbd"
++    },
++    "client": {
++      "source": "admin:6820(fd:18)",
++      "user": "root",
++      "group": "root"
++    },
++    "command": [],
++    "slurm": {
++      "version": {
++        "major": "25",
++        "micro": "0",
++        "minor": "05"
++      },
++      "release": "25.05.0-0rc1",
++      "cluster": "hpc"
++    }
++  },
++  "errors": [],
++  "warnings": []
++}
+diff --git a/tests/assets/slurmrestd/25.05/status.json b/tests/assets/slurmrestd/25.05/status.json
+index ebed74a..822ca90 100644
+--- a/tests/assets/slurmrestd/25.05/status.json
++++ b/tests/assets/slurmrestd/25.05/status.json
+@@ -123,15 +123,15 @@
+     "content-type": "application/json",
+     "status": 200
+   },
+-  "slurm-node-with-gpus-allocated": {
++  "slurm-node-with-gpus-model-allocated": {
+     "content-type": "application/json",
+     "status": 200
+   },
+-  "slurm-node-with-gpus-idle": {
++  "slurm-node-with-gpus-model-idle": {
+     "content-type": "application/json",
+     "status": 200
+   },
+-  "slurm-node-with-gpus-mixed": {
++  "slurm-node-with-gpus-model-mixed": {
+     "content-type": "application/json",
+     "status": 200
+   },
