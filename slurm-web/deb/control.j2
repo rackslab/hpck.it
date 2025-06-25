@@ -52,6 +52,7 @@ Depends:
  ${python3:Depends},
  python3-slurm-web (= ${binary:Version}),
 {% if version.major | int > 3 %}
+ python3-markdown,
  python3-aiohttp,
 {% endif %}
  acl,
@@ -69,7 +70,6 @@ Depends:
  ${python3:Depends},
  python3-slurm-web (= ${binary:Version}),
 {% if version.major | int > 3 %}
- python3-markdown,
  python3-prometheus-client,
 {% endif %}
  python3-racksdb-web,
