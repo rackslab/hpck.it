@@ -16,3 +16,7 @@ override_dh_auto_build:
 override_dh_installsystemd:
 	dh_installsystemd --no-start --no-enable --name slurm-web-agent
 	dh_installsystemd --no-start --no-enable --name slurm-web-gateway
+
+# Can be dropped in compat level 14
+execute_after_dh_installinit:
+	dh_installsysusers
