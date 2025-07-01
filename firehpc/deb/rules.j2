@@ -10,3 +10,6 @@ override_dh_auto_build:
 	dh_auto_build
 	make -C docs man
 
+# Can be dropped in compat level 14
+execute_after_dh_installinit:
+	dh_installsysusers
