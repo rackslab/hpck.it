@@ -63,7 +63,9 @@ components.
 Summary:        Web dashboard for Slurm HPC workload manager: gateway
 BuildArch:      noarch
 Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+{% if pkg.version.major | int < 5 %}
 Requires:       python3dist(aiohttp)
+{% endif %}
 Requires:       python3dist(markdown)
 %description -n %{name}-gateway
 Slurm-web is a web dashboard for Slurm workload manager on HPC clusters.
@@ -79,6 +81,7 @@ Requires:       python3dist(clustershell)
 Requires:       python3dist(prometheus-client)
 Requires:       python3dist(racksdb[web])
 Requires:       python3dist(redis)
+Requires:       python3dist(requests)
 Suggests:       racksdb
 Suggests:       slurm-slurmrestd
 Suggests:       redis
