@@ -1,0 +1,20 @@
+[Distribution]
+Distribution=debian
+Release=forky
+
+[Output]
+Format=disk
+CompressOutput=xz
+
+[Content]
+WithDocs=yes
+Packages=
+  systemd
+  systemd-resolved
+  dbus
+  apt
+  ca-certificates
+  python3
+  iproute2
+  iputils-ping
+  tzdata
