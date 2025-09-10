@@ -40,6 +40,7 @@ export SLURM_VERSION=25.05
 export BUILD_MESSAGE="New upstream release ${SLURM_VERSION}"
 fatbuildrctl build -a slurm -d bookworm -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d trixie -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
+fatbuildrctl build -a slurm -d forky -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d sid -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el8 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el9 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
@@ -48,6 +49,7 @@ export SLURM_VERSION=24.11
 export BUILD_MESSAGE="New upstream release ${SLURM_VERSION}"
 fatbuildrctl build -a slurm -d bookworm -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d trixie -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
+fatbuildrctl build -a slurm -d forky -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d sid -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el8 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el9 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
@@ -56,6 +58,7 @@ export SLURM_VERSION=24.05
 export BUILD_MESSAGE="New upstream release ${SLURM_VERSION}"
 fatbuildrctl build -a slurm -d bookworm -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d trixie -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
+fatbuildrctl build -a slurm -d forky -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d sid -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el8 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el9 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
@@ -64,6 +67,7 @@ export SLURM_VERSION=23.11
 export BUILD_MESSAGE="New upstream release ${SLURM_VERSION}"
 fatbuildrctl build -a slurm -d bookworm -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d trixie -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
+fatbuildrctl build -a slurm -d forky -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d sid -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el8 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el9 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
