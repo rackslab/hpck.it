@@ -1,4 +1,4 @@
-Description: Restore license metadata to foramt deprecated by PEP 639
+Description: Restore license metadata to format deprecated by PEP 639
  to stay compatible with old versions of setuptools < 0.77.0.
 Last-Update: 2025-06-27
 Forwarded: no
