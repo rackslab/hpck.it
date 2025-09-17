@@ -1,7 +1,7 @@
 ---
 versions:
   firehpc: 1.1.0
-  ansible-connection-machinectl: 0.0.2
+  ansible-connection-machinectl: 0.0.3
 sources:
   firehpc: https://github.com/rackslab/firehpc/archive/refs/tags/v{{ version | gittag }}.tar.gz
   ansible-connection-machinectl: https://github.com/rackslab/ansible-connection-machinectl/archive/refs/tags/v{{ version | gittag }}.tar.gz
@@ -10,8 +10,8 @@ checksums:
     1.1.0:
       sha256: 716882f4518bf899d5f05c40715e226aa7c8b8be36a16a848c2c08ee74a33e1c
   ansible-connection-machinectl:
-    0.0.2:
-      sha256: 6db016aa211de605508b6a846c8de848041f184825a955c41171b47250859223
+    0.0.3:
+      sha256: 395df485a945f7cd60b88627e220b0ea776ce2ba4ab0318cf9f1c808a0ecfcf4
 rpm:
   release: 1
 deb:
