@@ -14,7 +14,7 @@ derivatives:
   slurm24.05: 24.05.8
   slurm23.11: 23.11.11
 rpm:
-  release: 1
-  buildargs: --with mysql --with slurmrestd --with jwt --with libcurl
+  release: 2
+  buildargs: --with mysql --with slurmrestd --with jwt --with libcurl --with lua
 deb:
   release: 1
