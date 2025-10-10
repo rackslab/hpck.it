@@ -1,6 +1,6 @@
 Description: Restore license metadata to format deprecated by PEP 639
  to stay compatible with old versions of setuptools < 0.77.0.
-Last-Update: 2025-06-27
+Last-Update: 2025-10-10
 Forwarded: no
 Distributions: bookworm ubuntu24.04 fc41 fc42
 Author: Rémi Palancher <remi@rackslab.io>
@@ -12,10 +12,10 @@ index 7636a45..82e7bc2 100644
 +++ b/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL"
- version = "1.5.0"
+ version = "1.6.0"
  description = "Rackslab Foundation Library"
--license = "GPL-3.0-or-later"
-+license = {text = "GPL-3.0-or-later"}
+-license = "LGPL-3.0-or-later"
++license = {text = "LGPL-3.0-or-later"}
  requires-python = ">=3.6"
  
  [tool.ruff.lint]
@@ -25,10 +25,10 @@ index 05a6a3e..db2b62e 100644
 +++ b/src/authentication/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.authentication"
- version = "1.5.0"
+ version = "1.6.0"
  description = "Rackslab Foundation Library: authentication package"
--license = "GPL-3.0-or-later"
-+license = {text = "GPL-3.0-or-later"}
+-license = "LGPL-3.0-or-later"
++license = {text = "LGPL-3.0-or-later"}
  requires-python = ">=3.6"
  keywords = ["utility", "basic"]
  authors = [
@@ -38,10 +38,10 @@ index 1ff8453..4323be6 100644
 +++ b/src/build/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.build"
- version = "1.5.0"
+ version = "1.6.0"
  description = "Rackslab Foundation Library: build package"
--license = "GPL-3.0-or-later"
-+license = {text = "GPL-3.0-or-later"}
+-license = "LGPL-3.0-or-later"
++license = {text = "LGPL-3.0-or-later"}
  requires-python = ">=3.6"
  keywords = ["utility", "basic"]
  authors = [
@@ -51,10 +51,10 @@ index f73fcf1..271c0f5 100644
 +++ b/src/core/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.core"
- version = "1.5.0"
+ version = "1.6.0"
  description = "Rackslab Foundation Library: core package"
--license = "GPL-3.0-or-later"
-+license = {text = "GPL-3.0-or-later"}
+-license = "LGPL-3.0-or-later"
++license = {text = "LGPL-3.0-or-later"}
  requires-python = ">=3.6"
  keywords = ["utility", "basic"]
  authors = [
@@ -64,10 +64,10 @@ index 4891017..641f42a 100644
 +++ b/src/log/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.log"
- version = "1.5.0"
+ version = "1.6.0"
  description = "Rackslab Foundation Library: log package"
--license = "GPL-3.0-or-later"
-+license = {text = "GPL-3.0-or-later"}
+-license = "LGPL-3.0-or-later"
++license = {text = "LGPL-3.0-or-later"}
  requires-python = ">=3.6"
  keywords = ["utility", "basic"]
  authors = [
@@ -77,10 +77,10 @@ index cc18f6c..7f4080e 100644
 +++ b/src/permissions/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.permissions"
- version = "1.5.0"
+ version = "1.6.0"
  description = "Rackslab Foundation Library: permissions package"
--license = "GPL-3.0-or-later"
-+license = {text = "GPL-3.0-or-later"}
+-license = "LGPL-3.0-or-later"
++license = {text = "LGPL-3.0-or-later"}
  requires-python = ">=3.6"
  keywords = ["utility", "basic"]
  authors = [
@@ -90,10 +90,10 @@ index b9cf645..6f60d90 100644
 +++ b/src/settings/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.settings"
- version = "1.5.0"
+ version = "1.6.0"
  description = "Rackslab Foundation Library: settings package"
--license = "GPL-3.0-or-later"
-+license = {text = "GPL-3.0-or-later"}
+-license = "LGPL-3.0-or-later"
++license = {text = "LGPL-3.0-or-later"}
  requires-python = ">=3.6"
  keywords = ["utility", "basic"]
  authors = [
@@ -103,10 +103,10 @@ index e40d051..c6ef6fe 100644
 +++ b/src/web/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.web"
- version = "1.5.0"
+ version = "1.6.0"
  description = "Rackslab Foundation Library: web package"
--license = "GPL-3.0-or-later"
-+license = {text = "GPL-3.0-or-later"}
+-license = "LGPL-3.0-or-later"
++license = {text = "LGPL-3.0-or-later"}
  requires-python = ">=3.6"
  keywords = ["utility", "basic"]
  authors = [
