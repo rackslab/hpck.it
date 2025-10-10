@@ -1,0 +1,20 @@
+Description: Skip hard-coded loading of YAML plugin to avoid failure
+ slurm is built without YAML support.
+Last-Update: 2025-05-20
+Author: Rémi Palancher <remi@rackslab.io>
+Forwarded: https://support.schedmd.com/show_bug.cgi?id=22795
+
+
+diff --git a/src/slurmrestd/slurmrestd.c b/src/slurmrestd/slurmrestd.c
+index 3c13926..4325ffe 100644
+--- a/src/slurmrestd/slurmrestd.c
++++ b/src/slurmrestd/slurmrestd.c
+@@ -721,8 +721,6 @@ int main(int argc, char **argv)
+ 	/* Load serializers if they are present */
+ 	(void) serializer_g_init(MIME_TYPE_JSON_PLUGIN,
+ 				 getenv("SLURMRESTD_JSON"));
+-	(void) serializer_g_init(MIME_TYPE_YAML_PLUGIN,
+-				 getenv("SLURMRESTD_YAML"));
+ 	(void) serializer_g_init(MIME_TYPE_URL_ENCODED_PLUGIN, NULL);
+ 
+ 	/* This checks if slurmrestd is running in inetd mode */
