@@ -10,7 +10,7 @@ Version:        {{ version }}
 Release:        {{ release }}
 Summary:        Rackslab Foundation Library
 
-License:        GPLv3+
+License:        LGPLv3+
 Group:          System Environment/Base
 URL:            https://github.com/rackslab/RFL
 {{ sources }}
