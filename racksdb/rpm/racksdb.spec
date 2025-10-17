@@ -9,7 +9,7 @@ Name:           racksdb
 Version:        {{ version }}
 Release:        {{ release }}
 
-License:        GPLv3+
+License:        MIT
 Group:          System Environment/Base
 URL:            https://github.com/rackslab/RacksDB
 {{ sources }}
