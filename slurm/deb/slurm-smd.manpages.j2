@@ -5,7 +5,9 @@ debian/tmp/usr/share/man/man5/cgroup.conf.5
 debian/tmp/usr/share/man/man5/gres.conf.5
 debian/tmp/usr/share/man/man5/helpers.conf.5
 debian/tmp/usr/share/man/man5/job_container.conf.5
+{% if not version.main.startswith('25.11') %}
 debian/tmp/usr/share/man/man5/knl.conf.5
+{% endif %}
 debian/tmp/usr/share/man/man5/mpi.conf.5
 debian/tmp/usr/share/man/man5/oci.conf.5
 debian/tmp/usr/share/man/man5/slurm.conf.5

@@ -1,5 +1,7 @@
 source: https://download.schedmd.com/slurm/slurm-{{ version }}.tar.bz2
 checksums:
+  25.11.0-0rc1:
+    sha1: 428eba8eaec971441a5af1cc769d89026021a549
   25.05.4:
     sha1: 8a7318085a19f4048ed573c7d8e14fe48a6b9814
   24.11.5:
@@ -9,12 +11,13 @@ checksums:
   23.11.11:
     sha1: a74b756d398c072ddb26d3480040c749d223e559
 derivatives:
+  slurm25.11: 25.11.0-0rc1
   slurm25.05: 25.05.4
   slurm24.11: 24.11.5
   slurm24.05: 24.05.8
   slurm23.11: 23.11.11
 rpm:
   release: 1
-  buildargs: --with mysql --with slurmrestd --with jwt --with libcurl --with lua
+  buildargs: --with mysql --with slurmrestd --with jwt --with libcurl --with lua --with cgroupv2
 deb:
   release: 1

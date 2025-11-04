@@ -3,7 +3,9 @@
 # is GPLv2+.
 #
 # Please refer to upstream DISCLAIMER file for copyrights.
-{% if version.startswith('25.05') %}
+{% if version.startswith('25.11') %}
+  {% set soname = 44 %}
+{% elif version.startswith('25.05') %}
   {% set soname = 43 %}
 {% elif version.startswith('24.11') %}
   {% set soname = 42 %}
@@ -32,6 +34,9 @@ URL:		https://slurm.schedmd.com/
 # --with cray		%_with_cray 1		build for a Cray Aries system
 # --with cray_network	%_with_cray_network 1	build for a non-Cray system with a Cray network
 {% endif %}
+{% if soname >= 44 %}
+# --with cgroupv2	%_with_cgroupv2 1	require cgroup v2 support
+{% endif %}
 # --with cray_shasta	%_with_cray_shasta 1	build for a Cray Shasta system
 # --with slurmrestd	%_with_slurmrestd 1	build slurmrestd
 # --with yaml		%_with_yaml 1		build with yaml serializer
@@ -59,6 +64,9 @@ URL:		https://slurm.schedmd.com/
 {% if soname < 41 %}
 %bcond_with cray
 %bcond_with cray_network
+{% endif %}
+{% if soname >= 44 %}
+%bcond_with cgroupv2
 {% endif %}
 %bcond_with cray_shasta
 %bcond_with slurmrestd
@@ -111,6 +119,20 @@ BuildRequires:  pkgconfig
 %endif
 %endif
 
+{% if soname >= 44 %}
+%if %{with cgroupv2}
+Requires: libbpf
+BuildRequires: kernel-headers
+%if %{defined suse_version}
+Requires: dbus-1
+BuildRequires: dbus-1-devel
+%else
+Requires: dbus
+BuildRequires: dbus-devel
+%endif
+%endif
+{% endif %}
+
 %if %{with munge}
 Requires: munge
 BuildRequires: munge-devel munge-libs
@@ -127,8 +149,6 @@ BuildRequires: readline-devel
 BuildRequires: libtool
 # glib2-devel is required to have AM_PATH_GLIB_2_0 macro during autoreconf.
 BuildRequires: glib2-devel
-# Required for cgroup v2 support
-BuildRequires: dbus-devel
 Obsoletes: slurm-lua <= %{version}
 Obsoletes: slurm-munge <= %{version}
 Obsoletes: slurm-plugins <= %{version}
@@ -239,8 +259,8 @@ Requires: libjwt >= 1.10.0
 %endif
 
 %if %{with yaml}
-Requires: libyaml >= 0.2.5
-BuildRequires: libyaml-devel >= 0.2.5
+Requires: libyaml >= 0.1.7
+BuildRequires: libyaml-devel >= 0.1.7
 %endif
 
 %if %{with freeipmi}
@@ -268,7 +288,7 @@ BuildRequires: libselinux-devel
 %define _mandir %{_slurm_mandir}
 
 #  Allow override of bashcompdir via _slurm_bashcompdir.
-%{!?_slurm_bashcompdir: %global _slurm_bashcompdir /usr/share}
+%{!?_slurm_bashcompdir: %global _slurm_bashcompdir %{_datadir}}
 %define _bashcompdir %{_slurm_bashcompdir}
 
 #
@@ -469,6 +489,9 @@ autoreconf -f -i
 	--with-systemdsystemunitdir=%{_unitdir} \
 	--enable-pkgconfig \
 	%{?_without_debug:--disable-debug} \
+{% if soname >= 44 %}
+	%{?_with_cgroupv2:--enable-cgroupv2} \
+{% endif %}
 	%{?_with_pam_dir} \
 	%{?_with_mysql_config} \
 {% if soname < 41 %}
@@ -489,7 +512,6 @@ autoreconf -f -i
 	%{?_with_jwt} \
 	%{?_with_yaml} \
 	%{?_with_nvml} \
-	%{?_with_freeipmi} \
 	%{!?with_munge:--without-munge} \
 	%{?_with_cflags}
 
@@ -650,7 +672,7 @@ rm -rf %{buildroot}
 %exclude %{_mandir}/man1/sjobexit*
 %exclude %{_mandir}/man1/sjstat*
 %dir %{_libdir}/slurm/src
-%{_datadir}/bash-completion/completions/slurm_completion.sh
+%{_bashcompdir}/bash-completion/completions/slurm_completion.sh
 {% if soname < 41 %}
 %if %{with cray}
 %dir /opt/modulefiles/slurm
@@ -872,5 +894,14 @@ fi
 %systemd_preun slurmdbd.service
 %postun slurmdbd
 %systemd_postun_with_restart slurmdbd.service
+
+%if %{with slurmrestd}
+%post slurmrestd
+%systemd_post slurmrestd.service
+%preun slurmrestd
+%systemd_preun slurmrestd.service
+%postun slurmrestd
+%systemd_postun_with_restart slurmrestd.service
+%endif
 
 {{ changelog }}
