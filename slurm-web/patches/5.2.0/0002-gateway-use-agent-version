@@ -1,0 +1,20 @@
+Description: Use agent provided version instead of agent minimal version
+ from settings to reverse proxy the requests
+Last-Update: 2025-11-05
+Author: Rémi Palancher <remi@rackslab.io>
+Forwarded: https://github.com/rackslab/Slurm-web/pull/657
+
+
+diff --git a/slurmweb/views/gateway.py b/slurmweb/views/gateway.py
+index 57f2228..eb6d03d 100644
+--- a/slurmweb/views/gateway.py
++++ b/slurmweb/views/gateway.py
+@@ -203,7 +203,7 @@ def request_agent(
+         if with_version:
+             url = (
+                 f"{current_app.agents[cluster].url}/"
+-                f"v{current_app.settings.agents.version}/{query}"
++                f"v{current_app.agents[cluster].version}/{query}"
+             )
+         else:
+             url = f"{current_app.agents[cluster].url}/{query}"
