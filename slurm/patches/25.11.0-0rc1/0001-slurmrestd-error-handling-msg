@@ -1,0 +1,112 @@
+Description: Fix missing descriptive error message and HTTP headers on
+ requests error in slurmrestd.
+Last-Update: 2025-11-06
+Author: Rémi Palancher <remi@rackslab.io>
+Forwarded: https://support.schedmd.com/show_bug.cgi?id=24052
+
+
+diff --git a/src/common/http_con.c b/src/common/http_con.c
+index 521786f..5c93989 100644
+--- a/src/common/http_con.c
++++ b/src/common/http_con.c
+@@ -33,6 +33,8 @@
+  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA.
+ \*****************************************************************************/
+ 
++#include "slurm/slurm_errno.h"
++
+ #include "src/common/http_con.h"
+ #include "src/common/http.h"
+ #include "src/common/pack.h"
+@@ -622,6 +624,9 @@ static int _send_reject(http_con_t *hcon, slurm_err_t error_number)
+ {
+ 	http_con_request_t *request = &hcon->request;
+ 	bool close_header = false;
++	const char *error = slurm_strerror(error_number);
++	const size_t error_len = strlen(error);
++	const buf_t body = SHADOW_BUF_INITIALIZER(error, error_len);
+ 
+ 	xassert(hcon->magic == MAGIC);
+ 
+@@ -641,7 +646,8 @@ static int _send_reject(http_con_t *hcon, slurm_err_t error_number)
+ 
+ 	(void) http_con_send_response(hcon,
+ 				      http_status_from_error(error_number),
+-				      NULL, close_header, NULL, NULL);
++				      NULL, close_header, &body,
++				      MIME_TYPE_TEXT);
+ 
+ 	/* ensure connection gets closed */
+ 	conmgr_con_queue_close(hcon->con);
+diff --git a/src/common/slurm_errno.c b/src/common/slurm_errno.c
+index e3430db..2293ef8 100644
+--- a/src/common/slurm_errno.c
++++ b/src/common/slurm_errno.c
+@@ -1303,7 +1303,7 @@ slurm_errtab_t slurm_errtab[] = {
+ 	},
+ 	{
+ 		ERRTAB_ENTRY(ESLURM_REST_UNKNOWN_URL),
+-		"Unable to find requested URL endpoint.",
++		"Unable to find requested URL endpoint. Please query the '/openapi/v3' endpoint or visit 'https://slurm.schedmd.com/rest_api.html' for the OpenAPI specification which includes a list of all possible slurmrestd endpoints.",
+ 	},
+ 	{
+ 		ERRTAB_ENTRY(ESLURM_REST_UNKNOWN_URL_METHOD),
+diff --git a/src/slurmctld/http.c b/src/slurmctld/http.c
+index 7b75947..656462d 100644
+--- a/src/slurmctld/http.c
++++ b/src/slurmctld/http.c
+@@ -73,7 +73,7 @@ static int _reply_error(http_con_t *hcon, const char *name,
+ static int _req_not_found(http_con_t *hcon, const char *name,
+ 			  const http_con_request_t *request, void *arg)
+ {
+-	return _reply_error(hcon, name, request, ESLURM_REST_UNKNOWN_URL);
++	return _reply_error(hcon, name, request, ESLURM_URL_INVALID_PATH);
+ }
+ 
+ static int _req_root(http_con_t *hcon, const char *name,
+diff --git a/src/slurmd/slurmd/http.c b/src/slurmd/slurmd/http.c
+index 7094c51..68f72af 100644
+--- a/src/slurmd/slurmd/http.c
++++ b/src/slurmd/slurmd/http.c
+@@ -68,7 +68,7 @@ static int _reply_error(http_con_t *hcon, const char *name,
+ static int _req_not_found(http_con_t *hcon, const char *name,
+ 			  const http_con_request_t *request, void *arg)
+ {
+-	return _reply_error(hcon, name, request, ESLURM_REST_UNKNOWN_URL);
++	return _reply_error(hcon, name, request, ESLURM_URL_INVALID_PATH);
+ }
+ 
+ static int _req_root(http_con_t *hcon, const char *name,
+diff --git a/src/slurmrestd/operations.c b/src/slurmrestd/operations.c
+index 395047e..9a1d6ed 100644
+--- a/src/slurmrestd/operations.c
++++ b/src/slurmrestd/operations.c
+@@ -232,8 +232,8 @@ static int _operations_router_reject(on_http_request_args_t *args,
+ 		.headers = list_create(NULL),
+ 		.http_major = args->http_major,
+ 		.http_minor = args->http_minor,
+-		.body_encoding = (body_encoding ? body_encoding : "text/plain"),
+-		.body_length = (err ? strlen(err) : 0),
++		.body_encoding =
++			(body_encoding ? body_encoding : MIME_TYPE_TEXT),
+ 	};
+ 	http_header_t close = {
+ 		.magic = HTTP_HEADER_MAGIC,
+@@ -249,6 +249,8 @@ static int _operations_router_reject(on_http_request_args_t *args,
+ 	else
+ 		send_args.body = err;
+ 
++	send_args.body_length = strlen(send_args.body);
++
+ 	/* Always warn that connection will be closed after the body is sent */
+ 	list_append(send_args.headers, &close);
+ 
+@@ -279,7 +281,7 @@ static int _resolve_path(on_http_request_args_t *args, int *path_tag,
+ 
+ 	if (*path_tag == -1)
+ 		return _operations_router_reject(args, NULL,
+-						 ESLURM_URL_INVALID_PATH, NULL);
++						 ESLURM_REST_UNKNOWN_URL, NULL);
+ 	else if (*path_tag == -2)
+ 		return _operations_router_reject(args, NULL,
+ 						 ESLURM_REST_UNKNOWN_URL_METHOD,
