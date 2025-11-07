@@ -35,17 +35,17 @@ sudo -u fatbuildr reprepro --basedir /var/lib/fatbuildr/registry/hpckit/deb clea
 ```
 
 ```sh
-export export FATBUILDR_URI=dbus://system/hpckit
+export FATBUILDR_URI=dbus://system/hpckit
 export SLURM_VERSION=25.11
 export BUILD_MESSAGE="New upstream release ${SLURM_VERSION}"
-fatbuildrctl build -a slurm -d bookworm -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
+#fatbuildrctl build -a slurm -d bookworm -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d trixie -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d forky -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d sid -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el8 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el9 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 
-export export FATBUILDR_URI=dbus://system/hpckit
+export FATBUILDR_URI=dbus://system/hpckit
 export SLURM_VERSION=25.05
 export BUILD_MESSAGE="New upstream release ${SLURM_VERSION}"
 fatbuildrctl build -a slurm -d bookworm -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
