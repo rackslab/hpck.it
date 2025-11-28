@@ -1,0 +1,5 @@
+{% if version.major | int > 5 %}
+usr/libexec/slurm-web/slurm-web-compat usr/libexec/slurm-web/slurm-web-gateway
+usr/libexec/slurm-web/slurm-web-compat usr/libexec/slurm-web/slurm-web-ldap-check
+usr/libexec/slurm-web/slurm-web-compat usr/libexec/slurm-web/slurm-web-gen-jwt-key
+{% endif %}

@@ -136,7 +136,17 @@ install -p -m 0644 lib/wsgi/agent/* %{buildroot}%{_datadir}/slurm-web/wsgi/agent
 
 # Move executables in libexec dedicated subdir
 install -d %{buildroot}%{_libexecdir}/slurm-web
+{% if pkg.version.major | int < 6 %}
 mv %{buildroot}%{_bindir}/* %{buildroot}%{_libexecdir}/slurm-web/
+{% else %}
+install -p -m 0755 lib/exec/slurm-web-compat %{buildroot}%{_libexecdir}/slurm-web/
+ln -s slurm-web-compat %{buildroot}%{_libexecdir}/slurm-web/slurm-web-agent
+ln -s slurm-web-compat %{buildroot}%{_libexecdir}/slurm-web/slurm-web-connect-check
+ln -s slurm-web-compat %{buildroot}%{_libexecdir}/slurm-web/slurm-web-gateway
+ln -s slurm-web-compat %{buildroot}%{_libexecdir}/slurm-web/slurm-web-gen-jwt-key
+ln -s slurm-web-compat %{buildroot}%{_libexecdir}/slurm-web/slurm-web-ldap-check
+ln -s slurm-web-compat %{buildroot}%{_libexecdir}/slurm-web/slurm-web-show-conf
+{% endif %}
 
 # Install frontend application in datadir
 cp -vdr --no-preserve=ownership frontend/dist %{buildroot}%{_datadir}/slurm-web/frontend
@@ -179,10 +189,15 @@ install -p -m 0644 docs/modules/conf/examples/agent.ini %{buildroot}%{_docdir}/s
 %files -n python3-%{name}
 %license LICENSE
 %doc README.md
+%doc %{_mandir}/man1/slurm-web.*
 %doc %{_mandir}/man1/slurm-web-show-conf.*
 %{python3_sitelib}/slurmweb/
 %{python3_sitelib}/Slurm_web-*.%{_pysuffix}/
 %{_sysconfdir}/slurm-web
+%{_bindir}/slurm-web
+{% if pkg.version.major | int > 5 %}
+%{_libexecdir}/slurm-web/slurm-web-compat
+{% endif %}
 %{_libexecdir}/slurm-web/slurm-web-show-conf
 %{_sysusersdir}/slurm-web.conf
 %{_sharedstatedir}/slurm-web

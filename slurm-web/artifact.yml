@@ -1,14 +1,17 @@
 ---
 source: https://github.com/rackslab/Slurm-web/archive/refs/tags/v{{ version | gittag }}.tar.gz
 checksums:
+  '6.0.0':
+    sha256: 5ebfdf63332cce372d1c7cb9e7f6d18d835c85b4bd3b6e90578b22510cf29870
   '5.2.0':
     sha256: 9cb1e6cd9d3f186c3cf89b4716d337df2bc95661f9b3a06bd2acac8f78b27328
   '4.2.0':
     sha256: 7029ca92a4e0b8db57ea3c35578058f7023dd15432b15b9512a93f319a073ced
 derivatives:
+  slurmweb-6: 6.0.0
   slurmweb-5: 5.2.0
   slurmweb-4: 4.2.0
 rpm:
-  release: 2
+  release: 1
 deb:
-  release: 2
+  release: 1

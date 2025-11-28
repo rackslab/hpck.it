@@ -1,5 +1,8 @@
 usr/lib/python*/dist-packages
-{% if version.major | int > 3 %}
+{% if version.major | int > 5 %}
+usr/bin/slurm-web
+{% else %}
 usr/bin/slurm-web-show-conf usr/libexec/slurm-web
 {% endif %}
 lib/sysusers/slurm-web.conf usr/lib/sysusers.d
+lib/exec/slurm-web-compat usr/libexec/slurm-web
