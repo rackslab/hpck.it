@@ -158,7 +158,9 @@ Obsoletes: slurm-plugins <= %{version}
 
 %define use_mysql_devel %(perl -e '`rpm -q mysql-devel`; print !$?;')
 # Default for OpenSUSE/SLES builds
-%define use_libmariadb_devel %(perl -e '`rpm -q libmariadb-devel`; print !$?;')
+%if %{defined suse_version}
+%define use_libmariadb_devel 1
+%endif
 # Package name from the official MariaDB version
 %define use_MariaDB_devel %(perl -e '`rpm -q MariaDB-devel`; print !$?;')
 # Oracle mysql community

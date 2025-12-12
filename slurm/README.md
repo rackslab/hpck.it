@@ -44,6 +44,9 @@ fatbuildrctl build -a slurm -d forky -m "${BUILD_MESSAGE}" --derivative slurm${S
 fatbuildrctl build -a slurm -d sid -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el8 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el9 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
+fatbuildrctl build -a slurm -d suse15 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
+fatbuildrctl build -a slurm -d suse16 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
+
 
 export FATBUILDR_URI=dbus://system/hpckit
 export SLURM_VERSION=25.05
@@ -54,6 +57,8 @@ fatbuildrctl build -a slurm -d forky -m "${BUILD_MESSAGE}" --derivative slurm${S
 fatbuildrctl build -a slurm -d sid -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el8 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el9 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
+fatbuildrctl build -a slurm -d suse15 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
+fatbuildrctl build -a slurm -d suse16 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 
 export SLURM_VERSION=24.11
 export BUILD_MESSAGE="New upstream release ${SLURM_VERSION}"
@@ -63,6 +68,8 @@ fatbuildrctl build -a slurm -d forky -m "${BUILD_MESSAGE}" --derivative slurm${S
 fatbuildrctl build -a slurm -d sid -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el8 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el9 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
+fatbuildrctl build -a slurm -d suse15 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
+fatbuildrctl build -a slurm -d suse16 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 
 export SLURM_VERSION=24.05
 export BUILD_MESSAGE="New upstream release ${SLURM_VERSION}"
@@ -72,6 +79,8 @@ fatbuildrctl build -a slurm -d forky -m "${BUILD_MESSAGE}" --derivative slurm${S
 fatbuildrctl build -a slurm -d sid -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el8 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el9 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
+fatbuildrctl build -a slurm -d suse15 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
+fatbuildrctl build -a slurm -d suse16 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 
 export SLURM_VERSION=23.11
 export BUILD_MESSAGE="New upstream release ${SLURM_VERSION}"
@@ -82,3 +91,7 @@ fatbuildrctl build -a slurm -d sid -m "${BUILD_MESSAGE}" --derivative slurm${SLU
 fatbuildrctl build -a slurm -d el8 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el9 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 ```
+
+Unfortunately, openSUSE does not distribute libjwt in its repositories. Then
+`--with jwt` must be removed for _buildargs_ when building for these
+distributions.
