@@ -13,6 +13,8 @@ $ fatbuildrctl --uri dbus://system/hpckit build --artifact node-debian13 --distr
 $ fatbuildrctl --uri dbus://system/hpckit build --artifact node-debian14 --distribution firehpc --subdir firehpc/envs
 $ fatbuildrctl --uri dbus://system/hpckit build --artifact node-rocky8 --distribution firehpc --subdir firehpc/envs
 $ fatbuildrctl --uri dbus://system/hpckit build --artifact node-rocky9 --distribution firehpc --subdir firehpc/envs
+$ fatbuildrctl --uri dbus://system/hpckit build --artifact node-opensuse15 --distribution firehpc --subdir firehpc/envs
+$ fatbuildrctl --uri dbus://system/hpckit build --artifact node-opensuse16 --distribution firehpc --subdir firehpc/envs
 ```
 
 Export to remote repository:

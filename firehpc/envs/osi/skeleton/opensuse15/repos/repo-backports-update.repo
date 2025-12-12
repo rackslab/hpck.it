@@ -1,0 +1,8 @@
+[repo-backports-update]
+name=Update repository of openSUSE Backports
+enabled=0
+autorefresh=1
+baseurl=http://download.opensuse.org/update/leap/$releasever/backports/
+path=/
+type=rpm-md
+keeppackages=0

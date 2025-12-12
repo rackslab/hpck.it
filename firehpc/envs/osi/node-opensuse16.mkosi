@@ -1,0 +1,28 @@
+[Distribution]
+Distribution=opensuse
+Release=16.0
+
+[Output]
+Format=disk
+CompressOutput=xz
+
+[Content]
+SkeletonTrees=
+  /usr/share/distribution-gpg-keys/opensuse/RPM-GPG-KEY-openSUSE-Backports-2023:/usr/lib/rpm/gpupg/keys/gpg-pubkey-suse-backports
+  skeleton/opensuse16/repos:/etc/zypp/repos.d
+WithDocs=yes
+Packages=
+  ca-certificates
+  ca-certificates-mozilla
+  findutils
+  glibc-locale-base
+  iproute2
+  iputils
+  Leap-release
+  python313-base
+  procps
+  rpm
+  systemd
+  systemd-networkd
+  systemd-resolved
+  zypper

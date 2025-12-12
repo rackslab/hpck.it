@@ -1,0 +1,6 @@
+[repo-non-oss-debug]
+name=repo-non-oss-debug (${releasever})
+enabled=0
+autorefresh=1
+baseurl=http://cdn.opensuse.org/debug/distribution/leap/${releasever}/repo/non-oss/$basearch
+gpgkey=http://cdn.opensuse.org/debug/distribution/leap/${releasever}/repo/non-oss/$basearch/repodata/repomd.xml.key

@@ -1,8 +1,13 @@
 #!/bin/sh
 
-if [ $DISTRIBUTION == "rocky" ]; then
+if [ $DISTRIBUTION == "rocky" ] || [ $DISTRIBUTION == "opensuse" ]; then
 
+    systemctl enable systemd-networkd.service
     systemctl enable systemd-resolved.service
     /usr/bin/rpmdb --rebuilddb
 
+fi
+
+if [ $DISTRIBUTION == "opensuse" ]; then
+  rpm --import /usr/lib/rpm/gpupg/keys/gpg-pubkey-suse-backports
 fi
