@@ -1,0 +1,10 @@
+---
+version: 25.3
+source: https://github.com/systemd/mkosi/archive/v{{ version }}/mkosi-{{ version }}.tar.gz
+checksums:
+  "25.3":
+    sha256: 7b039fb3b34e1680173a7f4af1bc24b475465afe335c8b21c213167734061e35
+rpm:
+  release: 1
+deb:
+  release: 1

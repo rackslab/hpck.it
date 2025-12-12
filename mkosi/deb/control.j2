@@ -1,0 +1,79 @@
+Source: mkosi
+Maintainer: Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+Uploaders: Felipe Sateler <fsateler@debian.org>,
+           Luca Boccassi <bluca@debian.org>,
+Section: admin
+Priority: optional
+Build-Depends: debhelper-compat (= 13),
+               dh-sequence-python3,
+               bash-completion,
+               pandoc <!nodoc>,
+               python3-all,
+               pybuild-plugin-pyproject,
+               python3-pytest <!nocheck>,
+               python3-setuptools,
+Standards-Version: 4.7.2
+Vcs-Browser: https://salsa.debian.org/systemd-team/mkosi
+Vcs-Git: https://salsa.debian.org/systemd-team/mkosi.git
+Homepage: https://github.com/systemd/mkosi
+Rules-Requires-Root: no
+
+Package: mkosi
+Architecture: all
+Depends: systemd (>= 254~),
+         systemd-boot-efi,
+{% if version.dist == "ubuntu2404" %}
+         systemd-boot,
+{% else %}
+         systemd-boot-tools,
+{% endif %}
+         systemd-container (>= 254~),
+         systemd-repart,
+         systemd-ukify,
+         python3-cryptography,
+         python3-pefile,
+         fdisk,
+         apt,
+         debian-archive-keyring | ubuntu-keyring,
+         cryptsetup-bin,
+         dosfstools,
+         mtools,
+         cpio,
+         kmod,
+         btrfs-progs,
+         e2fsprogs,
+         erofs-utils,
+         squashfs-tools,
+         xz-utils,
+         zstd,
+         gnupg,
+         pesign,
+         tpm2-tools,
+         efitools,
+         openssl,
+         jq,
+         ${misc:Depends},
+         ${python3:Depends},
+Recommends: ovmf,
+            qemu-system,
+            ipxe-qemu,
+            virtiofsd,
+            uidmap,
+            systemd-timesyncd,
+            archlinux-keyring,
+            debian-archive-keyring,
+{% if version.dist != "ubuntu2404" %}
+            distribution-gpg-keys,
+{% endif %}
+            ubuntu-keyring,
+            dnf,
+            pacman-package-manager,
+            zypper,
+Description: build Bespoke OS Images
+ A fancy wrapper around "dnf --installroot", "apt", "zypper" and
+ "pacstrap", that may generate disk images with a number of
+ bells and whistles.
+ .
+ Generated images are "legacy-free". This means only GPT disk
+ labels (and no MBR disk labels) are supported, and only
+ systemd based images may be generated.

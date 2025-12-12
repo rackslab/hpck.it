@@ -1,0 +1,6 @@
+# It is read by a mkosi command, so it is shipped with the package
+mkosi: package-contains-documentation-outside-usr-share-doc [usr/lib/python3/dist-packages/mkosi/resources/man/*]
+# The same mkosi.conf.d pattern is reused, this is fine
+mkosi: repeated-path-segment *
+# Changelog in manpage format
+mkosi: bad-whatis-entry [usr/share/man/man7/mkosi.news.7.gz]

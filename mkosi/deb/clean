@@ -1,0 +1,4 @@
+debian/bash-completion
+debian/mkosi.fish
+debian/_mkosi
+mkosi/resources/mkosi.1

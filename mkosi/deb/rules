@@ -1,0 +1,20 @@
+#!/usr/bin/make -f
+
+#export DH_VERBOSE = 1
+
+include /usr/share/dpkg/pkg-info.mk
+
+export PYBUILD_NAME=mkosi
+
+%:
+	dh $@ --buildsystem=pybuild --with bash-completion
+
+execute_before_dh_auto_build:
+ifeq (,$(findstring nodoc,$(DEB_BUILD_PROFILES)))
+	$(CURDIR)/tools/make-man-page.sh
+endif
+
+execute_after_dh_auto_build:
+	USER=nonexistent HOME=/ python3 -m mkosi completion bash > $(CURDIR)/debian/bash-completion
+	USER=nonexistent HOME=/ python3 -m mkosi completion fish > $(CURDIR)/debian/mkosi.fish
+	USER=nonexistent HOME=/ python3 -m mkosi completion zsh > $(CURDIR)/debian/_mkosi

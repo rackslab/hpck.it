@@ -1,0 +1,138 @@
+#!/bin/sh
+# Build a minimal system image with mkosi matching the distribution/release
+# of the host system, and boot it to run a simple smoke test that checks
+# whether building an image, booting it in qemu and file sharing via virtiofsd
+# work as expected.
+
+set -e
+set -x
+
+if dpkg --compare-versions "$(uname -r)" lt 5.12; then
+    echo "Skipping test, kernel too old for mount_setattr()"
+    exit 77
+fi
+
+RELEASE=$(
+    # shellcheck disable=SC1091
+    . /etc/os-release;
+    if [ "$ID" = "ubuntu" ]; then
+        echo "$VERSION_CODENAME"
+    elif [ "$ID" = "debian" ]; then
+        if [ -n "$VERSION_ID" ] && [ -n "$VERSION_CODENAME" ]; then
+            echo "$VERSION_CODENAME"
+        else
+            debian_version="$(cat /etc/debian_version)"
+            if [ "${debian_version#*/}" = sid ]; then
+                if [ ! -f /etc/apt/preferences.d/autopkgtest-unstable.pref ] && ( [ "$VERSION_CODENAME" = sid ] || grep -q -r sid /etc/apt/sources.list* || grep -q -r unstable /etc/apt/sources.list* ); then
+                    echo "sid"
+                else
+                    echo "$VERSION_CODENAME"
+                fi
+            fi
+        fi
+    fi
+)
+
+# systemd-boot is in universe on Ubuntu
+REPOS=$(
+    # shellcheck disable=SC1091
+    . /etc/os-release;
+    if [ "$ID" = "ubuntu" ]; then
+        echo "--repositories=universe"
+    else
+        echo "--repositories=main"
+    fi
+)
+
+cleanup () {
+    rm -rf "$workdir" || true
+}
+
+export PATH="/usr/sbin:$PATH"
+
+# apparmor is not compatible with swtpm
+aa-teardown >/dev/null 2>&1 || true
+# we need user namespaces for some tests running in nspawn
+sysctl -we kernel.apparmor_restrict_unprivileged_unconfined=0
+sysctl -we kernel.apparmor_restrict_unprivileged_userns=0
+
+if [ "${INTERACTIVE:-}" = "1" ]; then
+    workdir=/var/tmp/mkosi-smoke-test
+    mkdir -p "$workdir"
+else
+    workdir="$(mktemp --directory --tmpdir=/var/tmp mkosi-smoke-test.XXXXXXXXXX)"
+    trap cleanup EXIT
+fi
+cd "$workdir"
+
+mkdir -p mkosi.cache/
+
+mkdir -p mkosi.extra/usr/lib/systemd/system/
+cat <<EOF >mkosi.extra/usr/lib/systemd/system/mkosi-smoke-test.service
+[Unit]
+After=multi-user.target
+Requires=multi-user.target
+FailureAction=poweroff
+SuccessAction=poweroff
+
+[Service]
+Type=oneshot
+ExecStart=test -f /work/src/marker-outer
+ExecStart=touch /work/src/marker-inner
+EOF
+
+# Default ESP of 512M is too small for Ubuntu kernels
+mkdir -p mkosi.repart
+cat <<EOF >mkosi.repart/00-esp.conf
+[Partition]
+Type=esp
+Format=vfat
+CopyFiles=/boot:/
+CopyFiles=/efi:/
+SizeMinBytes=1G
+SizeMaxBytes=1G
+EOF
+
+cat <<EOF >mkosi.repart/10-root.conf
+[Partition]
+Type=root
+Format=ext4
+CopyFiles=/
+Minimize=guess
+EOF
+
+# Build the image first, this is the slow bit, so we do it outside of the timeout invocation
+mkosi \
+    ${RELEASE:+"--release=${RELEASE}"} \
+    --tools-tree="" \
+    --sandbox-tree=/etc/apt \
+    "${REPOS}" \
+    --bootable=yes \
+    --bootloader=systemd-boot \
+    --package=systemd-boot \
+    --package=linux-image-generic \
+    --kernel-command-line=systemd.unit=mkosi-smoke-test.service \
+    build
+
+modprobe kvm || true
+if [ ! -e /dev/kvm ]; then
+    echo "kvm not available, booting would be too slow, skipping"
+    exit 77
+fi
+
+touch marker-outer
+rm -f marker-inner
+
+# Using script to pretend qemu is attached to a TTY causes more bugs to surface.
+# Ensure that the test doesn't hang forever, a few seconds should be enough on
+# normal machines, use 10 minutes to account for slow platforms. But shorter for
+# interactive runs.
+timeout="10m"
+if [ "${INTERACTIVE:-}" = "1" ]; then
+    timeout="2m"
+fi
+timeout --foreground "${timeout}" \
+    script --return --quiet --command \
+    "mkosi ${RELEASE:+"--release=${RELEASE}"} --tools-tree="" --runtime-build-sources=yes --runtime-scratch=no --register=no qemu"
+
+test -f marker-inner

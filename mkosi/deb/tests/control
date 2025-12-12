@@ -1,0 +1,32 @@
+Tests: python3-tests
+Depends: @builddeps@, python3-all:any,
+
+# Dummy test so that changes to key packages trigger our autopkgtests on ci.debian.net
+Features: test-name=hint-testsuite-triggers
+Test-Command: /bin/true
+Depends:
+  linux-image-generic,
+  linux-image-amd64 [amd64],
+  linux-image-arm64 [arm64],
+  linux-image-loong64 [loong64],
+  linux-image-riscv64 [riscv64],
+Restrictions: hint-testsuite-triggers
+
+Tests: mkosi
+Depends:
+ mkosi,
+ virtiofsd,
+ binutils,
+ bsdutils,
+ file,
+ gzip,
+ systemd-boot,
+ systemd-container,
+ kmod,
+ ipxe-qemu,
+ qemu-system-amd64 [amd64], ovmf [amd64],
+ qemu-system-arm64 [arm64], qemu-efi-aarch64 [arm64],
+ qemu-system-loong64 [loong64], qemu-efi-loongarch64 [loong64],
+ qemu-system-riscv64 [riscv64], qemu-efi-riscv64 [riscv64],
+Restrictions: needs-root, isolation-machine, needs-internet, allow-stderr, skippable
+Architecture: amd64 arm64 riscv64 loong64
