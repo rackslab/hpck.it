@@ -1,4 +1,4 @@
-%?python_enable_dependency_generator
+%{?python_enable_dependency_generator}
 
 # This package supports both old setuptools way of building packages with the
 # setup.py script provided in RFL build package on RHEL8 and the modern way with
@@ -23,6 +23,30 @@ BuildRequires:  python3-rfl-build
 # declared by pyproject_buildrequires macro on other distributions.
 BuildRequires:  python3-pyyaml
 {% endif %}
+{% if pkg.distribution in ["suse15", "suse16"] %}
+BuildRequires:  python-rpm-macros
+BuildRequires:  python-rpm-generators
+BuildRequires:  fdupes
+BuildRequires:  python3-pip
+BuildRequires:  python3-setuptools
+BuildRequires:  python3-wheel
+# PyYAML library is required for docs/update-materials script. It does not have
+# to be explicitely declared as build requirement except on suse because it is
+# also a build requirement of RacksDB itself and is automatically detected and
+# declared by pyproject_buildrequires macro on other distributions
+BuildRequires:  python3-PyYAML
+# pyproject_buildrequires macro is not supported on openSUSE, build and tests
+# dependencies must be explicitely declared for these distributions.
+BuildRequires:  pango-devel
+BuildRequires:  python3-cairo
+BuildRequires:  python3-clustershell
+BuildRequires:  python3-Flask
+BuildRequires:  python3-gobject-cairo
+BuildRequires:  python3-parameterized
+BuildRequires:  python3-pytest
+BuildRequires:  python3-requests-toolbelt
+BuildRequires:  python3-rfl-log
+{% endif %}
 {% if pkg.distribution == "el8" %}
 # On RHEL8, versions constraints must be set to ensure nodejs and npm are
 # selected from nodejs:18 DNF module.
@@ -34,7 +58,13 @@ BuildRequires:  npm
 {% endif %}
 
 BuildRequires:  make
+{% if pkg.distribution == "suse15" %}
+BuildRequires:  ruby2.5-rubygem-asciidoctor
+{% elif pkg.distribution == "suse16" %}
+BuildRequires:  ruby3.4-rubygem-asciidoctor
+{% else %}
 BuildRequires:  asciidoctor
+{% endif %}
 BuildRequires:  pango
 BuildRequires:  python3-gobject
 Summary:        YAML database of datacenter infrastructures: CLI
@@ -49,9 +79,13 @@ your datacenters.
 This package contains the CLI tool to request the database and draw diagrams of
 its content.
 
+{# This macro is not supported on openSUSE #}
+{% if pkg.distribution not in ["suse15", "suse16"] %}
 %pyproject_extras_subpkg -n python3-%{name} web
+{% endif %}
 
-{% if pkg.distribution != "el8" %}
+{# %pyproject_buildrequires macro is not supported on el8 and suse #}
+{% if pkg.distribution not in ["el8", "suse15", "suse16"] %}
 %generate_buildrequires
 %if 0%{?rhel}
 rfl-install-setup-generator > /dev/null
@@ -65,20 +99,41 @@ rfl-install-setup-generator > /dev/null
 Summary:        YAML database of datacenter infrastructures: Python Library
 BuildArch:      noarch
 Requires:       pango
+{% if pkg.distribution in ["suse15", "suse16"] %}
+Requires:       typelib(Pango)
+{% endif %}
 # RPM python dependency generator automatically translate PyGObject Python
 # package to python3dist(pygobject) requirement. This requirement is satisfied
 # by python3-gobject-base RPM package but unfortunately, this package does not
 # include Cairo related stuff. This is fixed with this explicit dependency
 # declaration.
 Requires:       python3-gobject
+{% if pkg.distribution == "suse15" %}
+# Automatic dependency generator does not work on suse15, dependencies must
+# be explicitely declared for this distribution.
+Requires:       python3-cairo
+Requires:       python3-clustershell
+Requires:       python3-gobject-cairo
+Requires:       python3-PyYAML
+Requires:       python3-rfl-log
 # RacksDB tries to import cached_property from functools which is available
 # starting from Python >= 3.8, and fallback to compatible cached_property
-# external dependency otherwise. However, this optional dependency is not
-# declared in pyproject.toml, because it is not required in most cases. Then it
-# must be defined explicitely here when Python < 3.8. The same rationale applies
-# to importlib-metadata as well.
-Requires:       (python3dist(cached-property) if python3 < 3.8)
-Requires:       (python3dist(importlib-metadata) if python3 < 3.8)
+# external dependency otherwise. This optional dependency is not declared in
+# pyproject.toml, because it is not required in most cases. Then it
+# must be defined explicitely here for suse15 with Python 3.6. The same
+# rationale applies to importlib-metadata as well.
+Requires:       python3-cached-property
+Requires:       python3-importlib-metadata
+{% elif pkg.distribution == "el8" %}
+# RacksDB tries to import cached_property from functools which is available
+# starting from Python >= 3.8, and fallback to compatible cached_property
+# external dependency otherwise. This optional dependency is not declared in
+# pyproject.toml, because it is not required in most cases. Then it
+# must be defined explicitely here for el8 with Python 3.6. The same rationale
+# applies to importlib-metadata as well.
+Requires:       python3dist(cached-property)
+Requires:       python3dist(importlib-metadata)
+{% endif %}
 
 %description -n python3-%{name}
 RacksDB is an open source solution to modelize your datacenters infrastructures
@@ -88,17 +143,22 @@ your datacenters.
 This package contains the Python library to load the database and explore its
 content.
 
-{% if pkg.distribution == "el8" %}
+{% if pkg.distribution in ["el8", "suse15", "suse16"] %}
 # Similar package is automatically generated thanks to pyproject_extras_subpkg
 # macro in other distributions. It must be defined with explicit dependencies
-# on el8 because this macro is not supported on this distribution.
+# on el8 and openSUSE because this macro is not supported on this distribution.
 %package -n python3-%{name}-web
 Summary:        YAML database of datacenter infrastructures: Python Library for web app
 BuildArch:      noarch
 Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+{% if pkg.distribution == "el8" %}
 Requires:       python3dist(flask)
 Requires:       python3dist(requests-toolbelt)
 Provides:       python3dist(racksdb[web]) = %{?epoch:%{epoch}:}%{version}-%{release}
+{% elif pkg.distribution in ["suse15", "suse16"] %}
+Requires:       python3-Flask
+Requires:       python3-requests-toolbelt
+{% endif %}
 
 %description -n python3-%{name}-web
 RacksDB is an open source solution to modelize your datacenters infrastructures
@@ -112,15 +172,15 @@ This package contains the Python library for the web application.
 Summary:        YAML database of datacenter infrastructures: REST API
 BuildArch:      noarch
 Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
-{% if pkg.distribution == "el8" %}
-# On RHEL8 systems, an additional -web meta-package is generated with all web
-# specific optional dependencies. This package must depend on this meta-package
-# to indirectly depend on these requirements.
+{% if pkg.distribution in ["el8", "suse15", "suse16"] %}
+# On RHEL8 and openSUSE systems, an additional -web meta-package is generated
+# with all web specific optional dependencies. This package must depend on this
+# subpackage to indirectly depend on these requirements.
 Requires:       python3-%{name}-web = %{?epoch:%{epoch}:}%{version}-%{release}
 {% else %}
-# On all systems except RHEL8, extra +web subpackage is automatically built with
-# web specific optional dependencies. This package must depend on this
-# subpackage to indirectly depend on these requirements.
+# On all systems except RHEL >= 9 and Fedora, extra +web subpackage is
+# automatically built with web specific optional dependencies. This package must
+# depend on this subpackage to indirectly depend on these requirements.
 Requires:       python3-%{name}+web = %{?epoch:%{epoch}:}%{version}-%{release}
 {% endif %}
 
@@ -137,9 +197,9 @@ database and draw diagrams of its content.
 {{ prep_patches }}
 
 %build
-%if 0%{?rhel}
+{% if pkg.distribution in ["el8", "el9", "suse15"] %}
 rfl-install-setup-generator
-%endif
+{% endif %}
 {% if pkg.distribution == "el8" %}
 %py3_build
 {% else %}
@@ -168,7 +228,13 @@ ln -s ${NODE_MODULES} node_modules
 %py3_install
 {% else %}
 %pyproject_install
+{% if pkg.distribution not in ["suse15", "suse16"] %}
 %pyproject_save_files racksdb
+{% endif %}
+{% endif %}
+
+{% if pkg.distribution in ["suse15", "suse16"] %}
+%python_expand %fdupes %{buildroot}%{$python_sitelib}
 {% endif %}
 
 # empty configuration directory
@@ -194,11 +260,16 @@ install -p -m 0644 docs/man/*.1 %{buildroot}%{_mandir}/man1/
 %define _racksdb_pysuffix dist-info
 {% endif %}
 
-# Except on RHEL8 where it is not supported, run pyproject_check_import on all
-# packages modules and pytest to execute unit tests.
 {% if pkg.distribution != "el8" %}
 %check
+{% if pkg.distribution not in ["suse15", "suse16"] %}
+# Except on RHEL8 and openSUSE where it is not supported, run
+# pyproject_check_import on all packages modules.
 %pyproject_check_import
+{% endif %}
+# Run pytest to execute unit tests, except on RHEL8 because testing dependencies
+# are not automatically installed by generate_buildrequires macro on this
+# distribution.
 %pytest
 {% endif %}
 
@@ -211,12 +282,12 @@ install -p -m 0644 docs/man/*.1 %{buildroot}%{_mandir}/man1/
 %doc README.md
 %doc examples
 %{python3_sitelib}/racksdb/
-%{python3_sitelib}/RacksDB-*.%{_racksdb_pysuffix}/
+%{python3_sitelib}/*-*.%{_racksdb_pysuffix}/
 %{_sysconfdir}/racksdb
 %{_datadir}/racksdb/schemas
 %{_sharedstatedir}/racksdb
 
-{% if pkg.distribution == "el8" %}
+{% if pkg.distribution in ["el8", "suse15", "suse16"] %}
 %files -n python3-%{name}-web
 {% endif %}
 
