@@ -1,8 +1,8 @@
 Description: uwsgi in sbin on RHEL
 Formats: rpm
 Last-Update: 2025-05-26
-Author: Rémi Palancher <remi@rackslab.io>
 Forwarded: no
+Author: Rémi Palancher <remi@rackslab.io>
 
 
 diff --git a/lib/wsgi/agent/slurm-web-agent-uwsgi.service b/lib/wsgi/agent/slurm-web-agent-uwsgi.service

@@ -1,4 +1,4 @@
-%?python_enable_dependency_generator
+%{?python_enable_dependency_generator}
 
 # This package supports both old setuptools way of building packages with the
 # setup.py script provided in RFL build package on RHEL8 and the modern way with
@@ -10,21 +10,13 @@ Version:        {{ version }}
 Release:        {{ release }}
 Summary:        Web dashboard for Slurm HPC workload manager
 
-License:        GPLv3+
+License:        MIT
 Group:          System Environment/Base
 URL:            https://github.com/rackslab/slurm-web
 {{ sources }}
 {{ patches }}
 BuildRequires:  python3-devel
-BuildRequires:  python3dist(pytest)
 BuildRequires:  python3-rfl-build
-{% if pkg.distribution == "el8" %}
-# PyYAML library is required for docs/update-materials script. It does not have
-# to be explicitely declared as build requirement except on el8 because it is
-# also a build requirement of Slurm-web itself and is automatically detected and
-# declared by pyproject_buildrequires macro on other distributions.
-BuildRequires:  python3-pyyaml
-{% endif %}
 {% if pkg.distribution == "el8" %}
 # On RHEL8, versions constraints must be set to ensure nodejs and npm are
 # selected from nodejs:18 DNF module.
@@ -34,25 +26,88 @@ BuildRequires:  npm(npm) >= 10
 BuildRequires:  nodejs(engine)
 BuildRequires:  npm
 {% endif %}
+{% if pkg.distribution == "el8" %}
+# PyYAML library is required for docs/update-materials script. It does not have
+# to be explicitely declared as build requirement except on el8 because it is
+# also a build requirement of Slurm-web itself and is automatically detected and
+# declared by pyproject_buildrequires macro on other distributions.
+BuildRequires:  python3-pyyaml
+{% elif pkg.distribution in ["suse15", "suse16"] %}
+BuildRequires:  python-rpm-macros
+BuildRequires:  python-rpm-generators
+BuildRequires:  fdupes
+BuildRequires:  python3-pip
+BuildRequires:  python3-setuptools
+BuildRequires:  python3-wheel
+# pyproject_buildrequires macro is not supported on openSUSE, build and tests
+# dependencies must be explicitely declared for these distributions.
+BuildRequires:  python3-PyYAML
+BuildRequires:  python3-aiohttp
+BuildRequires:  python3-clustershell
+BuildRequires:  python3-Flask
+BuildRequires:  python3-rfl-authentication
+BuildRequires:  python3-rfl-core
+BuildRequires:  python3-rfl-log
+BuildRequires:  python3-rfl-settings
+BuildRequires:  python3-rfl-web
+BuildRequires:  python3-Markdown
+BuildRequires:  python3-parameterized
+BuildRequires:  python3-prometheus-client
+BuildRequires:  python3-pytest
+BuildRequires:  python3-racksdb-web
+BuildRequires:  python3-redis
+BuildRequires:  python3-requests
+{% endif %}
 BuildRequires:  systemd
 BuildRequires:  systemd-rpm-macros
+{% if pkg.distribution == "suse15" %}
+BuildRequires:  ruby2.5-rubygem-asciidoctor
+{% elif pkg.distribution == "suse16" %}
+BuildRequires:  ruby3.4-rubygem-asciidoctor
+{% else %}
 BuildRequires:  asciidoctor
+{% endif %}
 
 %description
 Slurm-web is a web dashboard for Slurm workload manager on HPC clusters.
 
-%if ! 0%{?rhel} || 0%{?rhel} >= 9
+{# %pyproject_buildrequires macro is not supported on el8 and suse #}
+{% if pkg.distribution not in ["el8", "suse15", "suse16"] %}
 %generate_buildrequires
 %if 0%{?rhel}
 rfl-install-setup-generator > /dev/null
 %endif
 %pyproject_buildrequires -x agent -x gateway -x tests
-%endif
+{% endif %}
 
 %package -n python3-%{name}
 Summary:        Web dashboard for Slurm HPC workload manager: common backend library
 BuildArch:      noarch
-Requires:       (python3dist(importlib-metadata) if python3 < 3.8)
+{% if pkg.distribution == "el8" %}
+# Slurm-web tries to import importlib_metadata from functools which is available
+# starting from Python >= 3.8, and fallback to compatible external dependency
+# otherwise. This optional dependency is not declared in pyproject.toml, because
+# it is not required in most cases. Then it must be defined explicitely here for
+# el8 with Python 3.6.
+Requires:       python3dist(importlib-metadata)
+{% elif pkg.distribution == "suse15" %}
+# Automatic dependency generator does not work on suse15, dependencies must be
+# explicitely declared for this distribution.
+Requires:       python3-aiohttp
+Requires:       python3-Flask
+Requires:       python3-rfl-authentication
+Requires:       python3-rfl-core
+Requires:       python3-rfl-log
+Requires:       python3-rfl-settings
+Requires:       python3-rfl-web
+# Slurm-web tries to import importlib_metadata from functools which is available
+# starting from Python >= 3.8, and fallback to compatible external dependency
+# otherwise. This optional dependency is not declared in pyproject.toml, because
+# it is not required in most cases. Then it must be defined explicitely here for
+# suse15 with Python 3.6.
+Requires:       python3-importlib-metadata
+{% endif %}
+
 %description -n python3-%{name}
 Slurm-web is a web dashboard for Slurm workload manager on HPC clusters.
 
@@ -63,10 +118,11 @@ components.
 Summary:        Web dashboard for Slurm HPC workload manager: gateway
 BuildArch:      noarch
 Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
-{% if pkg.version.major | int < 5 %}
-Requires:       python3dist(aiohttp)
-{% endif %}
+{% if pkg.distribution in ["suse15", "suse16"] %}
+Requires:       python3-Markdown
+{% else %}
 Requires:       python3dist(markdown)
+{% endif %}
 %description -n %{name}-gateway
 Slurm-web is a web dashboard for Slurm workload manager on HPC clusters.
 
@@ -77,11 +133,19 @@ interface.
 Summary:        Web dashboard for Slurm HPC workload manager: agent
 BuildArch:      noarch
 Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+{% if pkg.distribution in ["suse15", "suse16"] %}
+Requires:       python3-clustershell
+Requires:       python3-prometheus-client
+Requires:       python3-racksdb-web
+Requires:       python3-redis
+Requires:       python3-requests
+{% else %}
 Requires:       python3dist(clustershell)
 Requires:       python3dist(prometheus-client)
 Requires:       python3dist(racksdb[web])
 Requires:       python3dist(redis)
 Requires:       python3dist(requests)
+{% endif %}
 Suggests:       racksdb
 Suggests:       slurm-slurmrestd
 Suggests:       redis
@@ -97,14 +161,14 @@ This package contains the backend agent component.
 {{ prep_patches }}
 
 %build
-%if 0%{?rhel}
+{% if pkg.distribution in ["el8", "el9", "suse15"] %}
 rfl-install-setup-generator
-%endif
-%if 0%{?rhel} && 0%{?rhel} <= 8
+{% endif %}
+{% if pkg.distribution == "el8" %}
 %py3_build
-%else
+{% else %}
 %pyproject_wheel
-%endif
+{% endif %}
 
 # Build frontend app
 npm --prefix=frontend run build
@@ -113,12 +177,18 @@ npm --prefix=frontend run build
 docs/update-materials man
 
 %install
-%if 0%{?rhel} && 0%{?rhel} <= 8
+{% if pkg.distribution == "el8" %}
 %py3_install
-%else
+{% else %}
 %pyproject_install
+{% if pkg.distribution not in ["suse15", "suse16"] %}
 %pyproject_save_files slurmweb
-%endif
+{% endif %}
+{% endif %}
+
+{% if pkg.distribution in ["suse15", "suse16"] %}
+%python_expand %fdupes %{buildroot}%{$python_sitelib}
+{% endif %}
 
 # Install vendor configuration files definitions
 install -d %{buildroot}%{_datadir}/slurm-web
@@ -173,28 +243,38 @@ install -d %{buildroot}%{_docdir}/slurm-web-agent/examples
 install -p -m 0644 docs/modules/conf/examples/gateway.ini %{buildroot}%{_docdir}/slurm-web-gateway/examples
 install -p -m 0644 docs/modules/conf/examples/agent.ini %{buildroot}%{_docdir}/slurm-web-agent/examples
 
-%if 0%{?rhel} && 0%{?rhel} <= 8
+{% if pkg.distribution == "el8" %}
 %define _pysuffix egg-info
-%else
+{% else %}
 %define _pysuffix dist-info
-%endif
+{% endif %}
 
-# Except on RHEL8, try to import all modules to check dependencies and run unit tests.
-%if !0%{?rhel} || 0%{?rhel} >= 9
+{% if pkg.distribution != "el8" %}
 %check
+{% if pkg.distribution not in ["suse15", "suse16"] %}
+# Except on RHEL8 and openSUSE where it is not supported, run
+# pyproject_check_import on all packages modules.
 %pyproject_check_import -e 'slurmweb.tests*'
+{% endif %}
+# Run pytest to execute unit tests, except on RHEL8 because testing dependencies
+# are not automatically installed by generate_buildrequires macro on this
+# distribution.
 %pytest
-%endif
+{% endif %}
 
 %files -n python3-%{name}
 %license LICENSE
 %doc README.md
+{% if pkg.version.major | int > 5 %}
 %doc %{_mandir}/man1/slurm-web.*
+{% endif %}
 %doc %{_mandir}/man1/slurm-web-show-conf.*
 %{python3_sitelib}/slurmweb/
-%{python3_sitelib}/Slurm_web-*.%{_pysuffix}/
+%{python3_sitelib}/*-*.%{_pysuffix}/
 %{_sysconfdir}/slurm-web
+{% if pkg.version.major | int > 5 %}
 %{_bindir}/slurm-web
+{% endif %}
 {% if pkg.version.major | int > 5 %}
 %{_libexecdir}/slurm-web/slurm-web-compat
 {% endif %}

@@ -1,0 +1,43 @@
+Description: Change expected error messages to match those produced by
+ libs on openSUSE Leap 15.
+Last-Update: 2025-12-10
+Author: Rémi Palancher <remi@rackslab.io>
+Forwarded: no
+Distributions: suse15
+
+
+diff --git a/slurmweb/tests/apps/test_gateway.py b/slurmweb/tests/apps/test_gateway.py
+index 2e1a400..628ea16 100644
+--- a/slurmweb/tests/apps/test_gateway.py
++++ b/slurmweb/tests/apps/test_gateway.py
+@@ -139,7 +139,7 @@ class TestGatewayApp(TestGatewayBase):
+             [
+                 "ERROR:slurmweb.apps.gateway:Unable to retrieve agent info from url "
+                 "http://localhost: [ContentTypeError] 0, message='', "
+-                "url='http://localhost/info'"
++                "url='http://localhost/info"
+             ],
+         )
+ 
+@@ -206,7 +206,7 @@ class TestGatewayApp(TestGatewayBase):
+             [
+                 "ERROR:slurmweb.apps.gateway:Unable to retrieve agent info from url "
+                 "http://localhost: [ClientConnectorSSLError] Cannot connect to host "
+-                "localhost:443 ssl:default [None]"
++                "localhost:443 ssl:None [None]"
+             ],
+         )
+ 
+diff --git a/slurmweb/tests/views/test_gateway.py b/slurmweb/tests/views/test_gateway.py
+index c1db2c1..b665cb7 100644
+--- a/slurmweb/tests/views/test_gateway.py
++++ b/slurmweb/tests/views/test_gateway.py
+@@ -139,7 +139,7 @@ class TestGatewayViews(TestGatewayBase):
+                 "code": 500,
+                 "description": (
+                     "Unsupported Content-Type for agent foo URL http://localhost/info: "
+-                    "0, message='', url='http://localhost/info'"
++                    "0, message='', url='http://localhost/info"
+                 ),
+                 "name": "Internal Server Error",
+             },
