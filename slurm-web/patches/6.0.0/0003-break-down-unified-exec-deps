@@ -1,0 +1,625 @@
+Description: Lazy import apps modules to break down agent and gateway
+ specific dependencies when setting up CLI arguments.
+Last-Update: 2025-12-18
+Author: Rémi Palancher <remi@rackslab.io>
+Forwarded: https://github.com/rackslab/Slurm-web/pull/691
+
+
+diff --git a/lib/wsgi/agent/slurm-web-agent.py b/lib/wsgi/agent/slurm-web-agent.py
+index 69ca847..459d8e5 100644
+--- a/lib/wsgi/agent/slurm-web-agent.py
++++ b/lib/wsgi/agent/slurm-web-agent.py
+@@ -8,6 +8,7 @@
+ 
+ from slurmweb.apps import SlurmwebAppSeed
+ from slurmweb.apps.agent import SlurmwebAppAgent
++from slurmweb.apps._defaults import SlurmwebAppDefaults
+ 
+ application = SlurmwebAppAgent(
+     SlurmwebAppSeed.with_parameters(
+@@ -15,7 +16,7 @@ application = SlurmwebAppAgent(
+         log_flags=["ALL"],
+         log_component=None,
+         debug_flags=[],
+-        conf_defs=SlurmwebAppAgent.SETTINGS_DEFINITION,
+-        conf=SlurmwebAppAgent.SITE_CONFIGURATION,
++        conf_defs=SlurmwebAppDefaults.AGENT.settings_definition,
++        conf=SlurmwebAppDefaults.AGENT.site_configuration,
+     )
+ )
+diff --git a/lib/wsgi/gateway/slurm-web-gateway.py b/lib/wsgi/gateway/slurm-web-gateway.py
+index 2fc4ea6..8caf767 100644
+--- a/lib/wsgi/gateway/slurm-web-gateway.py
++++ b/lib/wsgi/gateway/slurm-web-gateway.py
+@@ -8,6 +8,7 @@
+ 
+ from slurmweb.apps import SlurmwebAppSeed
+ from slurmweb.apps.gateway import SlurmwebAppGateway
++from slurmweb.apps._defaults import SlurmwebAppDefaults
+ 
+ application = SlurmwebAppGateway(
+     SlurmwebAppSeed.with_parameters(
+@@ -15,7 +16,7 @@ application = SlurmwebAppGateway(
+         log_flags=["ALL"],
+         log_component=None,
+         debug_flags=[],
+-        conf_defs=SlurmwebAppGateway.SETTINGS_DEFINITION,
+-        conf=SlurmwebAppGateway.SITE_CONFIGURATION,
++        conf_defs=SlurmwebAppDefaults.GATEWAY.settings_definition,
++        conf=SlurmwebAppDefaults.GATEWAY.site_configuration,
+     )
+ )
+diff --git a/slurmweb/apps/__init__.py b/slurmweb/apps/__init__.py
+index 2ae8138..39e626c 100644
+--- a/slurmweb/apps/__init__.py
++++ b/slurmweb/apps/__init__.py
+@@ -65,8 +65,6 @@ class SlurmwebAppSeed:
+ 
+ class SlurmwebGenericApp:
+     NAME = None
+-    SITE_CONFIGURATION = None
+-    SETTINGS_DEFINITION = None
+ 
+     def __init__(self, seed: SlurmwebAppSeed):
+         # load configuration files
+diff --git a/slurmweb/apps/_defaults.py b/slurmweb/apps/_defaults.py
+new file mode 100644
+index 0000000..09ece41
+--- /dev/null
++++ b/slurmweb/apps/_defaults.py
+@@ -0,0 +1,22 @@
++# Copyright (c) 2025 Rackslab
++#
++# This file is part of Slurm-web.
++#
++# SPDX-License-Identifier: MIT
++
++
++class SlurmwebAppDefaultsSettings:
++    def __init__(self, site_configuration: str, settings_definition: str):
++        self.site_configuration = site_configuration
++        self.settings_definition = settings_definition
++
++
++class SlurmwebAppDefaults:
++    GATEWAY = SlurmwebAppDefaultsSettings(
++        site_configuration="/etc/slurm-web/gateway.ini",
++        settings_definition="/usr/share/slurm-web/conf/gateway.yml",
++    )
++    AGENT = SlurmwebAppDefaultsSettings(
++        site_configuration="/etc/slurm-web/agent.ini",
++        settings_definition="/usr/share/slurm-web/conf/agent.yml",
++    )
+diff --git a/slurmweb/apps/agent.py b/slurmweb/apps/agent.py
+index 03b2acd..26b7aad 100644
+--- a/slurmweb/apps/agent.py
++++ b/slurmweb/apps/agent.py
+@@ -35,8 +35,6 @@ logger = logging.getLogger(__name__)
+ 
+ class SlurmwebAppAgent(SlurmwebWebApp, RFLTokenizedRBACWebApp):
+     NAME = "slurm-web agent"
+-    SITE_CONFIGURATION = "/etc/slurm-web/agent.ini"
+-    SETTINGS_DEFINITION = "/usr/share/slurm-web/conf/agent.yml"
+     VIEWS = {
+         SlurmwebAppRoute("/version", views.version),
+         SlurmwebAppRoute("/info", views.info),
+diff --git a/slurmweb/apps/gateway.py b/slurmweb/apps/gateway.py
+index 8a7e457..c2e9cac 100644
+--- a/slurmweb/apps/gateway.py
++++ b/slurmweb/apps/gateway.py
+@@ -107,8 +107,6 @@ def version_greater_or_equal(reference_s: str, version_s: str) -> bool:
+ 
+ class SlurmwebAppGateway(SlurmwebWebApp, RFLTokenizedWebApp):
+     NAME = "slurm-web gateway"
+-    SITE_CONFIGURATION = "/etc/slurm-web/gateway.ini"
+-    SETTINGS_DEFINITION = "/usr/share/slurm-web/conf/gateway.yml"
+     VIEWS = {
+         SlurmwebAppRoute("/api/version", views.version),
+         SlurmwebAppRoute("/api/login", views.login, methods=["POST"]),
+diff --git a/slurmweb/exec/agent.py b/slurmweb/exec/agent.py
+index 69390c6..8edbe5e 100644
+--- a/slurmweb/exec/agent.py
++++ b/slurmweb/exec/agent.py
+@@ -10,7 +10,7 @@ from pathlib import Path
+ from ..version import get_version
+ from . import SlurmwebExecBase
+ from ..apps import SlurmwebAppSeed
+-from ..apps.agent import SlurmwebAppAgent
++from ..apps._defaults import SlurmwebAppDefaults
+ 
+ 
+ class SlurmwebExecAgent(SlurmwebExecBase):
+@@ -24,7 +24,7 @@ class SlurmwebExecAgent(SlurmwebExecBase):
+         parser = subparsers.add_parser(
+             "agent",
+             help="Start Slurm-web agent component",
+-            description=SlurmwebAppAgent.NAME,
++            description="slurm-web agent",
+         )
+         parser.add_argument(
+             "-v",
+@@ -62,13 +62,13 @@ class SlurmwebExecAgent(SlurmwebExecBase):
+             help=(
+                 "Path to configuration settings definition file (default: %(default)s)"
+             ),
+-            default=SlurmwebAppAgent.SETTINGS_DEFINITION,
++            default=SlurmwebAppDefaults.AGENT.settings_definition,
+             type=Path,
+         )
+         parser.add_argument(
+             "--conf",
+             help="Path to configuration file (default: %(default)s)",
+-            default=SlurmwebAppAgent.SITE_CONFIGURATION,
++            default=SlurmwebAppDefaults.AGENT.site_configuration,
+             type=Path,
+         )
+         parser.set_defaults(app=SlurmwebExecAgent.app)
+@@ -76,4 +76,6 @@ class SlurmwebExecAgent(SlurmwebExecBase):
+ 
+     @staticmethod
+     def app(seed: SlurmwebAppSeed):
++        from ..apps.agent import SlurmwebAppAgent
++
+         return SlurmwebAppAgent(seed)
+diff --git a/slurmweb/exec/connect.py b/slurmweb/exec/connect.py
+index ab8acda..077e396 100644
+--- a/slurmweb/exec/connect.py
++++ b/slurmweb/exec/connect.py
+@@ -10,8 +10,7 @@ from pathlib import Path
+ from ..version import get_version
+ from . import SlurmwebExecBase
+ from ..apps import SlurmwebAppSeed
+-from ..apps.connect import SlurmwebAppConnectCheck
+-from ..apps.agent import SlurmwebAppAgent
++from ..apps._defaults import SlurmwebAppDefaults
+ 
+ 
+ class SlurmwebExecConnectCheck(SlurmwebExecBase):
+@@ -27,7 +26,7 @@ class SlurmwebExecConnectCheck(SlurmwebExecBase):
+         parser = subparsers.add_parser(
+             "connect-check",
+             help="Check connection from Slurm-web agent to slurmrestd",
+-            description=SlurmwebAppConnectCheck.NAME,
++            description="slurm-web connect-check",
+         )
+         parser.add_argument(
+             "-v",
+@@ -65,13 +64,13 @@ class SlurmwebExecConnectCheck(SlurmwebExecBase):
+             help=(
+                 "Path to configuration settings definition file (default: %(default)s)"
+             ),
+-            default=SlurmwebAppAgent.SETTINGS_DEFINITION,
++            default=SlurmwebAppDefaults.AGENT.settings_definition,
+             type=Path,
+         )
+         parser.add_argument(
+             "--conf",
+             help="Path to configuration file (default: %(default)s)",
+-            default=SlurmwebAppAgent.SITE_CONFIGURATION,
++            default=SlurmwebAppDefaults.AGENT.site_configuration,
+             type=Path,
+         )
+ 
+@@ -80,4 +79,6 @@ class SlurmwebExecConnectCheck(SlurmwebExecBase):
+ 
+     @staticmethod
+     def app(seed: SlurmwebAppSeed):
++        from ..apps.connect import SlurmwebAppConnectCheck
++
+         return SlurmwebAppConnectCheck(seed)
+diff --git a/slurmweb/exec/gateway.py b/slurmweb/exec/gateway.py
+index 3be4fb1..3aadd93 100644
+--- a/slurmweb/exec/gateway.py
++++ b/slurmweb/exec/gateway.py
+@@ -10,7 +10,7 @@ from pathlib import Path
+ from ..version import get_version
+ from . import SlurmwebExecBase
+ from ..apps import SlurmwebAppSeed
+-from ..apps.gateway import SlurmwebAppGateway
++from ..apps._defaults import SlurmwebAppDefaults
+ 
+ 
+ class SlurmwebExecGateway(SlurmwebExecBase):
+@@ -24,7 +24,7 @@ class SlurmwebExecGateway(SlurmwebExecBase):
+         parser = subparsers.add_parser(
+             "gateway",
+             help="Start Slurm-web gateway component",
+-            description=SlurmwebAppGateway.NAME,
++            description="slurm-web gateway",
+         )
+         parser.add_argument(
+             "-v",
+@@ -62,13 +62,13 @@ class SlurmwebExecGateway(SlurmwebExecBase):
+             help=(
+                 "Path to configuration settings definition file (default: %(default)s)"
+             ),
+-            default=SlurmwebAppGateway.SETTINGS_DEFINITION,
++            default=SlurmwebAppDefaults.GATEWAY.settings_definition,
+             type=Path,
+         )
+         parser.add_argument(
+             "--conf",
+             help="Path to configuration file (default: %(default)s)",
+-            default=SlurmwebAppGateway.SITE_CONFIGURATION,
++            default=SlurmwebAppDefaults.GATEWAY.site_configuration,
+             type=Path,
+         )
+ 
+@@ -77,4 +77,6 @@ class SlurmwebExecGateway(SlurmwebExecBase):
+ 
+     @staticmethod
+     def app(seed: SlurmwebAppSeed):
++        from ..apps.gateway import SlurmwebAppGateway
++
+         return SlurmwebAppGateway(seed)
+diff --git a/slurmweb/exec/genjwt.py b/slurmweb/exec/genjwt.py
+index 1e9df57..43bb228 100644
+--- a/slurmweb/exec/genjwt.py
++++ b/slurmweb/exec/genjwt.py
+@@ -10,8 +10,7 @@ from pathlib import Path
+ from ..version import get_version
+ from . import SlurmwebExecBase
+ from ..apps import SlurmwebAppSeed
+-from ..apps.genjwt import SlurmwebAppGenJWT
+-from ..apps.gateway import SlurmwebAppGateway
++from ..apps._defaults import SlurmwebAppDefaults
+ 
+ 
+ class SlurmwebExecGenJWT(SlurmwebExecBase):
+@@ -25,7 +24,7 @@ class SlurmwebExecGenJWT(SlurmwebExecBase):
+         parser = subparsers.add_parser(
+             "gen-jwt-key",
+             help="Generate secret JWT signing key for Slurm-web",
+-            description=SlurmwebAppGenJWT.NAME,
++            description="slurm-web gen-jwt-key",
+         )
+         parser.add_argument(
+             "-v",
+@@ -63,13 +62,13 @@ class SlurmwebExecGenJWT(SlurmwebExecBase):
+             help=(
+                 "Path to configuration settings definition file (default: %(default)s)"
+             ),
+-            default=SlurmwebAppGateway.SETTINGS_DEFINITION,
++            default=SlurmwebAppDefaults.GATEWAY.settings_definition,
+             type=Path,
+         )
+         parser.add_argument(
+             "--conf",
+             help="Path to configuration file (default: %(default)s)",
+-            default=SlurmwebAppGateway.SITE_CONFIGURATION,
++            default=SlurmwebAppDefaults.GATEWAY.site_configuration,
+             type=Path,
+         )
+         parser.add_argument(
+@@ -84,4 +83,6 @@ class SlurmwebExecGenJWT(SlurmwebExecBase):
+ 
+     @staticmethod
+     def app(seed: SlurmwebAppSeed):
++        from ..apps.genjwt import SlurmwebAppGenJWT
++
+         return SlurmwebAppGenJWT(seed)
+diff --git a/slurmweb/exec/ldap.py b/slurmweb/exec/ldap.py
+index 8eb7919..2bece4a 100644
+--- a/slurmweb/exec/ldap.py
++++ b/slurmweb/exec/ldap.py
+@@ -10,8 +10,7 @@ from pathlib import Path
+ from ..version import get_version
+ from . import SlurmwebExecBase
+ from ..apps import SlurmwebAppSeed
+-from ..apps.ldap import SlurmwebAppLDAPCheck
+-from ..apps.gateway import SlurmwebAppGateway
++from ..apps._defaults import SlurmwebAppDefaults
+ 
+ 
+ class SlurmwebExecLDAPCheck(SlurmwebExecBase):
+@@ -25,7 +24,7 @@ class SlurmwebExecLDAPCheck(SlurmwebExecBase):
+         parser = subparsers.add_parser(
+             "ldap-check",
+             help="Check LDAP settings for Slurm-web",
+-            description=SlurmwebAppLDAPCheck.NAME,
++            description="slurm-web ldap-check",
+         )
+         parser.add_argument(
+             "-v",
+@@ -63,13 +62,13 @@ class SlurmwebExecLDAPCheck(SlurmwebExecBase):
+             help=(
+                 "Path to configuration settings definition file (default: %(default)s)"
+             ),
+-            default=SlurmwebAppGateway.SETTINGS_DEFINITION,
++            default=SlurmwebAppDefaults.GATEWAY.settings_definition,
+             type=Path,
+         )
+         parser.add_argument(
+             "--conf",
+             help="Path to configuration file (default: %(default)s)",
+-            default=SlurmwebAppGateway.SITE_CONFIGURATION,
++            default=SlurmwebAppDefaults.GATEWAY.site_configuration,
+             type=Path,
+         )
+ 
+@@ -78,4 +77,6 @@ class SlurmwebExecLDAPCheck(SlurmwebExecBase):
+ 
+     @staticmethod
+     def app(seed: SlurmwebAppSeed):
++        from ..apps.ldap import SlurmwebAppLDAPCheck
++
+         return SlurmwebAppLDAPCheck(seed)
+diff --git a/slurmweb/exec/showconf.py b/slurmweb/exec/showconf.py
+index 08453b3..67407b4 100644
+--- a/slurmweb/exec/showconf.py
++++ b/slurmweb/exec/showconf.py
+@@ -10,9 +10,7 @@ from pathlib import Path
+ from ..version import get_version
+ from . import SlurmwebExecBase
+ from ..apps import SlurmwebAppSeed
+-from ..apps.showconf import SlurmwebAppShowConf
+-from ..apps.gateway import SlurmwebAppGateway
+-from ..apps.agent import SlurmwebAppAgent
++from ..apps._defaults import SlurmwebAppDefaults
+ 
+ 
+ class SlurmwebExecShowConf(SlurmwebExecBase):
+@@ -26,7 +24,7 @@ class SlurmwebExecShowConf(SlurmwebExecBase):
+         parser = subparsers.add_parser(
+             "show-conf",
+             help="Dump Slurm-web components configuration settings",
+-            description=SlurmwebAppShowConf.NAME,
++            description="slurm-web show-conf",
+         )
+         parser.add_argument(
+             "-v",
+@@ -82,12 +80,15 @@ class SlurmwebExecShowConf(SlurmwebExecBase):
+     def app(seed: SlurmwebAppSeed):
+         if seed.component == "gateway":
+             if seed.conf is None:
+-                seed.conf = Path(SlurmwebAppGateway.SITE_CONFIGURATION)
++                seed.conf = Path(SlurmwebAppDefaults.GATEWAY.site_configuration)
+             if seed.conf_defs is None:
+-                seed.conf_defs = Path(SlurmwebAppGateway.SETTINGS_DEFINITION)
++                seed.conf_defs = Path(SlurmwebAppDefaults.GATEWAY.settings_definition)
+         else:
+             if seed.conf is None:
+-                seed.conf = Path(SlurmwebAppAgent.SITE_CONFIGURATION)
++                seed.conf = Path(SlurmwebAppDefaults.AGENT.site_configuration)
+             if seed.conf_defs is None:
+-                seed.conf_defs = Path(SlurmwebAppAgent.SETTINGS_DEFINITION)
++                seed.conf_defs = Path(SlurmwebAppDefaults.AGENT.settings_definition)
++
++        from ..apps.showconf import SlurmwebAppShowConf
++
+         return SlurmwebAppShowConf(seed)
+diff --git a/slurmweb/tests/exec/test_agent.py b/slurmweb/tests/exec/test_agent.py
+index 37fbc21..89bd7e4 100644
+--- a/slurmweb/tests/exec/test_agent.py
++++ b/slurmweb/tests/exec/test_agent.py
+@@ -13,7 +13,7 @@ from slurmweb.version import get_version
+ from slurmweb.exec.main import SlurmwebExecMain
+ from slurmweb.exec.agent import SlurmwebExecAgent
+ from slurmweb.apps import SlurmwebAppSeed
+-from slurmweb.apps.agent import SlurmwebAppAgent
++from slurmweb.apps._defaults import SlurmwebAppDefaults
+ 
+ 
+ class TestAgentExec(unittest.TestCase):
+@@ -29,9 +29,11 @@ class TestAgentExec(unittest.TestCase):
+         self.assertEqual(seed.log_component, None)
+         self.assertEqual(seed.debug_flags, "slurmweb")
+         self.assertIsInstance(seed.conf_defs, Path)
+-        self.assertEqual(seed.conf_defs, Path(SlurmwebAppAgent.SETTINGS_DEFINITION))
++        self.assertEqual(
++            seed.conf_defs, Path(SlurmwebAppDefaults.AGENT.settings_definition)
++        )
+         self.assertIsInstance(seed.conf, Path)
+-        self.assertEqual(seed.conf, Path(SlurmwebAppAgent.SITE_CONFIGURATION))
++        self.assertEqual(seed.conf, Path(SlurmwebAppDefaults.AGENT.site_configuration))
+ 
+     def test_seed_version(self):
+         with mock.patch("sys.stdout", new=io.StringIO()) as stdout:
+@@ -57,7 +59,7 @@ class TestAgentExec(unittest.TestCase):
+         with self.assertRaisesRegex(SystemExit, "2"):
+             self._parse(["--fail"])
+ 
+-    @mock.patch("slurmweb.exec.agent.SlurmwebAppAgent")
++    @mock.patch("slurmweb.apps.agent.SlurmwebAppAgent")
+     def test_app(self, mock_slurmweb_app):
+         seed = self._parse([])
+         app = SlurmwebExecAgent.app(seed)
+diff --git a/slurmweb/tests/exec/test_connect.py b/slurmweb/tests/exec/test_connect.py
+index b4dd77f..a6b1f59 100644
+--- a/slurmweb/tests/exec/test_connect.py
++++ b/slurmweb/tests/exec/test_connect.py
+@@ -13,7 +13,7 @@ from slurmweb.version import get_version
+ from slurmweb.exec.main import SlurmwebExecMain
+ from slurmweb.exec.connect import SlurmwebExecConnectCheck
+ from slurmweb.apps import SlurmwebAppSeed
+-from slurmweb.apps.agent import SlurmwebAppAgent
++from slurmweb.apps._defaults import SlurmwebAppDefaults
+ 
+ 
+ class TestConnectCheckExec(unittest.TestCase):
+@@ -29,9 +29,11 @@ class TestConnectCheckExec(unittest.TestCase):
+         self.assertEqual(seed.log_component, None)
+         self.assertEqual(seed.debug_flags, "slurmweb")
+         self.assertIsInstance(seed.conf_defs, Path)
+-        self.assertEqual(seed.conf_defs, Path(SlurmwebAppAgent.SETTINGS_DEFINITION))
++        self.assertEqual(
++            seed.conf_defs, Path(SlurmwebAppDefaults.AGENT.settings_definition)
++        )
+         self.assertIsInstance(seed.conf, Path)
+-        self.assertEqual(seed.conf, Path(SlurmwebAppAgent.SITE_CONFIGURATION))
++        self.assertEqual(seed.conf, Path(SlurmwebAppDefaults.AGENT.site_configuration))
+ 
+     def test_seed_version(self):
+         with mock.patch("sys.stdout", new=io.StringIO()) as stdout:
+@@ -57,7 +59,7 @@ class TestConnectCheckExec(unittest.TestCase):
+         with self.assertRaisesRegex(SystemExit, "2"):
+             self._parse(["--fail"])
+ 
+-    @mock.patch("slurmweb.exec.connect.SlurmwebAppConnectCheck")
++    @mock.patch("slurmweb.apps.connect.SlurmwebAppConnectCheck")
+     def test_app(self, mock_slurmweb_app):
+         seed = self._parse([])
+         app = SlurmwebExecConnectCheck.app(seed)
+diff --git a/slurmweb/tests/exec/test_gateway.py b/slurmweb/tests/exec/test_gateway.py
+index 783fc8f..c9e2b48 100644
+--- a/slurmweb/tests/exec/test_gateway.py
++++ b/slurmweb/tests/exec/test_gateway.py
+@@ -13,7 +13,7 @@ from slurmweb.version import get_version
+ from slurmweb.exec.main import SlurmwebExecMain
+ from slurmweb.exec.gateway import SlurmwebExecGateway
+ from slurmweb.apps import SlurmwebAppSeed
+-from slurmweb.apps.gateway import SlurmwebAppGateway
++from slurmweb.apps._defaults import SlurmwebAppDefaults
+ 
+ 
+ class TestGatewayExec(unittest.TestCase):
+@@ -29,9 +29,13 @@ class TestGatewayExec(unittest.TestCase):
+         self.assertEqual(seed.log_component, None)
+         self.assertEqual(seed.debug_flags, "slurmweb")
+         self.assertIsInstance(seed.conf_defs, Path)
+-        self.assertEqual(seed.conf_defs, Path(SlurmwebAppGateway.SETTINGS_DEFINITION))
++        self.assertEqual(
++            seed.conf_defs, Path(SlurmwebAppDefaults.GATEWAY.settings_definition)
++        )
+         self.assertIsInstance(seed.conf, Path)
+-        self.assertEqual(seed.conf, Path(SlurmwebAppGateway.SITE_CONFIGURATION))
++        self.assertEqual(
++            seed.conf, Path(SlurmwebAppDefaults.GATEWAY.site_configuration)
++        )
+ 
+     def test_seed_version(self):
+         with mock.patch("sys.stdout", new=io.StringIO()) as stdout:
+@@ -57,7 +61,7 @@ class TestGatewayExec(unittest.TestCase):
+         with self.assertRaisesRegex(SystemExit, "2"):
+             self._parse(["--fail"])
+ 
+-    @mock.patch("slurmweb.exec.gateway.SlurmwebAppGateway")
++    @mock.patch("slurmweb.apps.gateway.SlurmwebAppGateway")
+     def test_app(self, mock_slurmweb_app):
+         seed = self._parse([])
+         app = SlurmwebExecGateway.app(seed)
+diff --git a/slurmweb/tests/exec/test_genjwt.py b/slurmweb/tests/exec/test_genjwt.py
+index fadd261..7a1a001 100644
+--- a/slurmweb/tests/exec/test_genjwt.py
++++ b/slurmweb/tests/exec/test_genjwt.py
+@@ -13,7 +13,7 @@ from slurmweb.version import get_version
+ from slurmweb.exec.main import SlurmwebExecMain
+ from slurmweb.exec.genjwt import SlurmwebExecGenJWT
+ from slurmweb.apps import SlurmwebAppSeed
+-from slurmweb.apps.gateway import SlurmwebAppGateway
++from slurmweb.apps._defaults import SlurmwebAppDefaults
+ 
+ 
+ class TestGenJWTExec(unittest.TestCase):
+@@ -29,9 +29,13 @@ class TestGenJWTExec(unittest.TestCase):
+         self.assertEqual(seed.log_component, None)
+         self.assertEqual(seed.debug_flags, "slurmweb")
+         self.assertIsInstance(seed.conf_defs, Path)
+-        self.assertEqual(seed.conf_defs, Path(SlurmwebAppGateway.SETTINGS_DEFINITION))
++        self.assertEqual(
++            seed.conf_defs, Path(SlurmwebAppDefaults.GATEWAY.settings_definition)
++        )
+         self.assertIsInstance(seed.conf, Path)
+-        self.assertEqual(seed.conf, Path(SlurmwebAppGateway.SITE_CONFIGURATION))
++        self.assertEqual(
++            seed.conf, Path(SlurmwebAppDefaults.GATEWAY.site_configuration)
++        )
+         self.assertEqual(seed.with_slurm, False)
+ 
+     def test_seed_version(self):
+@@ -63,7 +67,7 @@ class TestGenJWTExec(unittest.TestCase):
+         with self.assertRaisesRegex(SystemExit, "2"):
+             self._parse(["--fail"])
+ 
+-    @mock.patch("slurmweb.exec.genjwt.SlurmwebAppGenJWT")
++    @mock.patch("slurmweb.apps.genjwt.SlurmwebAppGenJWT")
+     def test_app(self, mock_slurmweb_app):
+         seed = self._parse([])
+         app = SlurmwebExecGenJWT.app(seed)
+diff --git a/slurmweb/tests/exec/test_ldap.py b/slurmweb/tests/exec/test_ldap.py
+index 9333f57..c0a1702 100644
+--- a/slurmweb/tests/exec/test_ldap.py
++++ b/slurmweb/tests/exec/test_ldap.py
+@@ -13,7 +13,7 @@ from slurmweb.version import get_version
+ from slurmweb.exec.main import SlurmwebExecMain
+ from slurmweb.exec.ldap import SlurmwebExecLDAPCheck
+ from slurmweb.apps import SlurmwebAppSeed
+-from slurmweb.apps.gateway import SlurmwebAppGateway
++from slurmweb.apps._defaults import SlurmwebAppDefaults
+ 
+ 
+ class TestLDAPCheckExec(unittest.TestCase):
+@@ -29,9 +29,13 @@ class TestLDAPCheckExec(unittest.TestCase):
+         self.assertEqual(seed.log_component, None)
+         self.assertEqual(seed.debug_flags, "slurmweb")
+         self.assertIsInstance(seed.conf_defs, Path)
+-        self.assertEqual(seed.conf_defs, Path(SlurmwebAppGateway.SETTINGS_DEFINITION))
++        self.assertEqual(
++            seed.conf_defs, Path(SlurmwebAppDefaults.GATEWAY.settings_definition)
++        )
+         self.assertIsInstance(seed.conf, Path)
+-        self.assertEqual(seed.conf, Path(SlurmwebAppGateway.SITE_CONFIGURATION))
++        self.assertEqual(
++            seed.conf, Path(SlurmwebAppDefaults.GATEWAY.site_configuration)
++        )
+ 
+     def test_seed_version(self):
+         with mock.patch("sys.stdout", new=io.StringIO()) as stdout:
+@@ -57,7 +61,7 @@ class TestLDAPCheckExec(unittest.TestCase):
+         with self.assertRaisesRegex(SystemExit, "2"):
+             self._parse(["--fail"])
+ 
+-    @mock.patch("slurmweb.exec.ldap.SlurmwebAppLDAPCheck")
++    @mock.patch("slurmweb.apps.ldap.SlurmwebAppLDAPCheck")
+     def test_app(self, mock_slurmweb_app):
+         seed = self._parse([])
+         app = SlurmwebExecLDAPCheck.app(seed)
+diff --git a/slurmweb/tests/exec/test_main.py b/slurmweb/tests/exec/test_main.py
+index f1f168f..9504df6 100644
+--- a/slurmweb/tests/exec/test_main.py
++++ b/slurmweb/tests/exec/test_main.py
+@@ -45,7 +45,7 @@ class TestMainExec(unittest.TestCase):
+             # Check error about invalid subcommand
+             self.assertIn("invalid-subcommand", stderr.getvalue())
+ 
+-    @mock.patch("slurmweb.exec.agent.SlurmwebAppAgent")
++    @mock.patch("slurmweb.apps.agent.SlurmwebAppAgent")
+     def test_run_with_subcommand_agent(self, mock_slurmweb_app):
+         """Test that run() correctly delegates to agent subcommand."""
+         mock_app_instance = mock.Mock()
+diff --git a/slurmweb/tests/exec/test_showconf.py b/slurmweb/tests/exec/test_showconf.py
+index fd41b34..dea55d1 100644
+--- a/slurmweb/tests/exec/test_showconf.py
++++ b/slurmweb/tests/exec/test_showconf.py
+@@ -13,7 +13,7 @@ from slurmweb.version import get_version
+ from slurmweb.exec.main import SlurmwebExecMain
+ from slurmweb.exec.showconf import SlurmwebExecShowConf
+ from slurmweb.apps import SlurmwebAppSeed
+-from slurmweb.apps.gateway import SlurmwebAppGateway
++from slurmweb.apps._defaults import SlurmwebAppDefaults
+ 
+ 
+ class TestShowConfExec(unittest.TestCase):
+@@ -71,7 +71,7 @@ class TestShowConfExec(unittest.TestCase):
+         with self.assertRaisesRegex(SystemExit, "2"):
+             self._parse(["--fail"])
+ 
+-    @mock.patch("slurmweb.exec.showconf.SlurmwebAppShowConf")
++    @mock.patch("slurmweb.apps.showconf.SlurmwebAppShowConf")
+     def test_app(self, mock_slurmweb_app):
+         seed = self._parse(["gateway"])
+         app = SlurmwebExecShowConf.app(seed)
+@@ -80,7 +80,11 @@ class TestShowConfExec(unittest.TestCase):
+         called_seed = mock_slurmweb_app.call_args[0][0]
+         self.assertIsInstance(called_seed, SlurmwebAppSeed)
+         self.assertEqual(
+-            called_seed.conf_defs, Path(SlurmwebAppGateway.SETTINGS_DEFINITION)
++            called_seed.conf_defs,
++            Path(SlurmwebAppDefaults.GATEWAY.settings_definition),
++        )
++        self.assertEqual(
++            called_seed.conf,
++            Path(SlurmwebAppDefaults.GATEWAY.site_configuration),
+         )
+-        self.assertEqual(called_seed.conf, Path(SlurmwebAppGateway.SITE_CONFIGURATION))
+         self.assertEqual(app, mock_slurmweb_app.return_value)
