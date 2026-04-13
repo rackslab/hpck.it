@@ -17,4 +17,6 @@ Packages=
   python3
   iproute2
   iputils-ping
+  openssh-client
+  openssh-server
   tzdata

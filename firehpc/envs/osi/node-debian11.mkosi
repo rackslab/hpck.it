@@ -17,4 +17,6 @@ Packages=
   iproute2
   iputils-ping
   libnss-resolve
+  openssh-client
+  openssh-server
   tzdata
