@@ -46,9 +46,14 @@ This package is a metapackage to install all RFL packages.
 {# %pyproject_buildrequires macro is not supported on el8 and suse #}
 {% if pkg.distribution not in ["el8", "suse15", "suse16"] %}
 %generate_buildrequires
-# Install build requirement declared in main pyproject.toml (empty in RFL as
-# dependencies are declared in namespace packages) and in tox configuration.
-%pyproject_buildrequires -t
+{% if pkg.distribution in ["el9"] %}
+# Manually copy setup script from build package for pyproject_buildrequires
+# macro on RHEL9 because pyproject.toml is not supported on this version.
+cp src/build/rfl/build/scripts/setup setup.py
+{% endif %}
+# Install build and tests requirements declared in main pyproject.toml (actual
+# runtime dependencies are declared in namespace packages in RFL).
+%pyproject_buildrequires -x tests
 {% endif %}
 
 %package -n python3-%{name}-authentication
@@ -256,12 +261,15 @@ cd %{_builddir}/%{buildsubdir}/src/web
 %define _rfl_pysuffix dist-info
 {% endif %}
 
-{# %tox macro is not supported on el8 and there is no macro to automatically #}
-{# install tests requirements then unit tests are not executed on this #}
-{# distribution. #}
+{# Macro pyproject_buildrequires is not supported on el8 and suse, so there #}
+{# is no way to install tests requirements, hence run unit tests, on these  #}
+{# distributions. #}
 {% if pkg.distribution not in ["el8", "suse15", "suse16"] %}
 %check
-%tox
+# Run pytest to execute unit tests, except on RHEL8 because testing dependencies
+# are not automatically installed by generate_buildrequires macro on this
+# distribution.
+%pytest --import-mode=importlib
 {% endif %}
 
 %files -n python3-%{name}-authentication
