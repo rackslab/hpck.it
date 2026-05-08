@@ -7,10 +7,10 @@ Author: Rémi Palancher <remi@rackslab.io>
 
 
 diff --git a/src/authentication/rfl/authentication/ldap.py b/src/authentication/rfl/authentication/ldap.py
-index 9b90532..d43e20d 100644
+index 04bd7de..e7e1df4 100644
 --- a/src/authentication/rfl/authentication/ldap.py
 +++ b/src/authentication/rfl/authentication/ldap.py
-@@ -93,12 +93,12 @@ class LDAPAuthentifier:
+@@ -94,12 +94,12 @@ class LDAPAuthentifier:
                  import ssl
  
                  logger.debug(
