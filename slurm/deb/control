@@ -39,7 +39,8 @@ Package: slurm-smd
 Architecture: any
 Depends:
  ${shlibs:Depends},
- munge
+Recommends:
+ munge,
 Conflicts:
  slurm-wlm,
  slurm-wlm-basic-plugins,
@@ -64,8 +65,9 @@ Architecture: any
 Depends:
  ${shlibs:Depends},
  slurm-smd (= ${binary:Version}),
- munge,
  bash-completion
+Recommends:
+ munge,
 Conflicts:
  slurm-client,
  slurm-client-emulator
@@ -76,7 +78,8 @@ Package: slurm-smd-dev
 Architecture: any
 Depends:
  slurm-smd (= ${binary:Version}),
- munge
+Recommends:
+ munge,
 Conflicts:
  slurm-wlm-basic-plugins-dev,
  slurm-wlm-elasticsearch-plugin-dev,
@@ -107,7 +110,8 @@ Architecture: any
 Depends:
  ${shlibs:Depends},
  slurm-smd (= ${binary:Version}),
- munge
+Recommends:
+ munge,
 Conflicts:
  slurmctld
 Description: Slurm controller daemon.
@@ -119,7 +123,8 @@ Architecture: any
 Depends:
  ${shlibs:Depends},
  slurm-smd (= ${binary:Version}),
- munge
+Recommends:
+ munge,
 Conflicts:
  slurmd
 Description: Slurm compute node daemon
@@ -130,7 +135,8 @@ Architecture: any
 Depends:
  ${shlibs:Depends},
  slurm-smd (= ${binary:Version}),
- munge
+Recommends:
+ munge,
 Conflicts:
  slurmdbd
 Description: Slurm database daemon.
