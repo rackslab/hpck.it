@@ -31,6 +31,24 @@ Description: Rackslab Foundation Library: all packages
  software solutions.
  This package is a metapackage to install all RFL packages.
 
+# python3-rfl-authentication — transitional packaging (step 1 of 3)
+#
+# Step 1 (current): this binary still hard-Depends on -jwt and -ldap so existing
+# dependents (e.g. slurm-web) that only require python3-rfl-authentication keep
+# JWT/LDAP support on upgrade without an apt dependency cycle (extras must not
+# Depends on this package while it pulls them in).
+#
+# Step 2: every in-repo and published dependent that needs JWT/LDAP/OIDC must
+# depend on python3-rfl-authentication-all or the relevant python3-rfl-authentication-*
+# extra (not this package alone for optional features).
+#
+# Step 3 (light base): remove the two Depends lines on -jwt and -ldap below; keep
+# only python3-rfl-core and ${python3:Depends}. Each python3-rfl-authentication-*
+# extra must Depends on python3-rfl-authentication (= ${binary:Version}) instead of
+# python3-rfl-core alone (the base package owns the rfl.authentication module).
+# Optional: Suggests: python3-rfl-authentication-all on this package for softer
+# upgrades where APT installs Suggests. Do not apply step 3 until step 2 is complete.
+
 Package: python3-rfl-authentication
 Architecture: all
 Section: python
@@ -38,10 +56,79 @@ Depends:
  ${misc:Depends},
  ${python3:Depends},
  python3-rfl-core (= ${binary:Version}),
+ python3-rfl-authentication-jwt (= ${binary:Version}),
+ python3-rfl-authentication-ldap (= ${binary:Version}),
 Description: Rackslab Foundation Library: authentication package
  RFL is a Python library and a set of common utilities useful to most Rackslab
  software solutions.
+ .
  This package includes authentication package of RFL.
+ .
+ This is a transitional package: it installs the base authentication module and
+ pulls jwt and ldap optional dependencies for backward compatibility. New
+ packages must depend on python3-rfl-authentication-all or specific extra
+ subpackages instead.
+
+Package: python3-rfl-authentication-jwt
+Architecture: all
+Section: python
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+ python3-rfl-core (= ${binary:Version}),
+ python3-jwt,
+Description: Rackslab Foundation Library: authentication JWT extra
+ RFL is a Python library and a set of common utilities useful to most Rackslab
+ software solutions.
+ .
+ This package provides JWT optional dependencies for RFL authentication.
+
+Package: python3-rfl-authentication-ldap
+Architecture: all
+Section: python
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+ python3-rfl-core (= ${binary:Version}),
+ python3-ldap,
+Description: Rackslab Foundation Library: authentication LDAP extra
+ RFL is a Python library and a set of common utilities useful to most Rackslab
+ software solutions.
+ .
+ This package provides LDAP optional dependencies for RFL authentication.
+
+Package: python3-rfl-authentication-oidc
+Architecture: all
+Section: python
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+ python3-rfl-core (= ${binary:Version}),
+ python3-authlib,
+ python3-flask,
+ python3-requests,
+Description: Rackslab Foundation Library: authentication OIDC extra
+ RFL is a Python library and a set of common utilities useful to most Rackslab
+ software solutions.
+ .
+ This package provides OIDC optional dependencies for RFL authentication.
+
+Package: python3-rfl-authentication-all
+Architecture: all
+Section: python
+Depends:
+ ${misc:Depends},
+ python3-rfl-authentication (= ${binary:Version}),
+ python3-rfl-authentication-jwt (= ${binary:Version}),
+ python3-rfl-authentication-ldap (= ${binary:Version}),
+ python3-rfl-authentication-oidc (= ${binary:Version}),
+Description: Rackslab Foundation Library: authentication all extras
+ RFL is a Python library and a set of common utilities useful to most Rackslab
+ software solutions.
+ .
+ This metapackage installs all RFL authentication optional dependencies (jwt,
+ ldap, oidc). New packages requiring full authentication support must depend on
+ this package.
 
 Package: python3-rfl-build
 Architecture: all
@@ -110,7 +197,7 @@ Section: python
 Depends:
  ${misc:Depends},
  ${python3:Depends},
- python3-rfl-authentication (= ${binary:Version}),
+ python3-rfl-authentication-jwt (= ${binary:Version}),
  python3-rfl-permissions (= ${binary:Version}),
 Description: Rackslab Foundation Library: web package
  RFL is a Python library and a set of common utilities useful to most Rackslab

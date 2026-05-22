@@ -43,7 +43,7 @@ software solutions.
 
 This package is a metapackage to install all RFL packages.
 
-{# %pyproject_buildrequires macro is not supported on el8 and suse #}
+{# pyproject_buildrequires macro is not supported on el8 and suse #}
 {% if pkg.distribution not in ["el8", "suse15", "suse16"] %}
 %generate_buildrequires
 {% if pkg.distribution in ["el9"] %}
@@ -56,15 +56,46 @@ cp src/build/rfl/build/scripts/setup setup.py
 %pyproject_buildrequires -x tests
 {% endif %}
 
+# python3-rfl-authentication — transitional packaging (step 1 of 3)
+#
+# Step 1 (current): this subpackage still hard-Requires -jwt and -ldap so existing
+# dependents (e.g. slurm-web) that only require python3-rfl-authentication keep
+# JWT/LDAP support on upgrade. Extra subpackages must not Require this package
+# while it pulls them in (same constraint as Debian: avoid a Requires cycle).
+#
+# Step 2: every in-repo and published dependent that needs JWT/LDAP/OIDC must
+# require the all-extras subpackage or a specific extra (on el9+/Fedora:
+# python3-rfl-authentication+all or +EXTRA; on el8/openSUSE: -all, -jwt, -ldap, -oidc).
+#
+# Step 3 (light base): remove the two Requires lines on -jwt and -ldap below; keep
+# only python3-rfl-core (and distribution-specific Requires above). Each
+# python3-rfl-authentication-* extra must Require python3-rfl-authentication
+# (= {version}-{release}) instead of python3-rfl-core alone (this subpackage
+# owns the rfl.authentication module). Optional: Suggests: python3-rfl-authentication+all
+# (or -all on el8/openSUSE) on this subpackage for softer upgrades. Do not apply step 3
+# until step 2 is complete.
+
+{# auth_legacy_extras: el8 and openSUSE lack %pyproject_extras_subpkg (+EXTRA naming).
+   Use hyphenated RPM subpackages (-jwt, -ldap, -oidc on suse16, -all) with explicit
+   Requires instead of python3-rfl-authentication+EXTRA / +all from dist-info. #}
+{% set auth_legacy_extras = pkg.distribution in ["el8", "suse15", "suse16"] %}
+{# auth_suse_extras: within the legacy branch, openSUSE uses python3-* RPM names for
+   optional libraries; el8 uses python3dist(...) (RHEL-style generator names). #}
+{% set auth_suse_extras = pkg.distribution in ["suse15", "suse16"] %}
+
 %package -n python3-%{name}-authentication
 Summary:        Rackslab Foundation Library: authentication package
 BuildArch:      noarch
-{% if pkg.distribution == "suse15" %}
-# Automatic dependency generator does not work on suse15, dependencies must
-# be explicitely declared for this distribution.
+# Python dependency generator does not set core requirement on every distribution.
 Requires:       python3-%{name}-core = %{?epoch:%{epoch}:}%{version}-%{release}
-Requires:       python3-PyJWT
-Requires:       python3-ldap
+{% if auth_legacy_extras %}
+# Transitional (step 1): hyphenated extra subpackages (el8/openSUSE: no +EXTRA macro).
+Requires:       python3-%{name}-authentication-jwt = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       python3-%{name}-authentication-ldap = %{?epoch:%{epoch}:}%{version}-%{release}
+{% else %}
+# Transitional (step 1): extras subpackages are python3-rfl-authentication+EXTRA.
+Requires:       python3-%{name}-authentication+jwt = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       python3-%{name}-authentication+ldap = %{?epoch:%{epoch}:}%{version}-%{release}
 {% endif %}
 
 %description -n python3-%{name}-authentication
@@ -72,6 +103,98 @@ RFL is a Python library and a set of common utilities useful to most Rackslab
 software solutions.
 
 This package includes authentication package of RFL.
+
+This is a transitional package: it installs the base authentication module and
+pulls jwt and ldap optional dependencies for backward compatibility. New
+packages must depend on python3-rfl-authentication+all (or -all on el8/openSUSE)
+or specific extra subpackages instead.
+
+{# %pyproject_extras_subpkg is not supported on el8 and openSUSE. #}
+{% if auth_legacy_extras %}
+%package -n python3-%{name}-authentication-jwt
+Summary:        Rackslab Foundation Library: authentication JWT extra
+BuildArch:      noarch
+Requires:       python3-%{name}-core = %{?epoch:%{epoch}:}%{version}-%{release}
+{% if auth_suse_extras %}
+Requires:       python3-PyJWT
+{% else %}
+Requires:       python3dist(pyjwt)
+{% endif %}
+{% if pkg.distribution == "el8" %}
+Provides:       python3dist(rfl-authentication[jwt]) = %{?epoch:%{epoch}:}%{version}-%{release}
+Provides:       python%{python3_version}dist(rfl-authentication[jwt]) = %{?epoch:%{epoch}:}%{version}-%{release}
+{% endif %}
+
+%description -n python3-%{name}-authentication-jwt
+RFL is a Python library and a set of common utilities useful to most Rackslab
+software solutions.
+
+This package provides JWT optional dependencies for RFL authentication.
+
+%package -n python3-%{name}-authentication-ldap
+Summary:        Rackslab Foundation Library: authentication LDAP extra
+BuildArch:      noarch
+Requires:       python3-%{name}-core = %{?epoch:%{epoch}:}%{version}-%{release}
+{% if auth_suse_extras %}
+Requires:       python3-ldap
+{% else %}
+Requires:       python3dist(python-ldap)
+{% endif %}
+{% if pkg.distribution == "el8" %}
+Provides:       python3dist(rfl-authentication[ldap]) = %{?epoch:%{epoch}:}%{version}-%{release}
+Provides:       python%{python3_version}dist(rfl-authentication[ldap]) = %{?epoch:%{epoch}:}%{version}-%{release}
+{% endif %}
+
+%description -n python3-%{name}-authentication-ldap
+RFL is a Python library and a set of common utilities useful to most Rackslab
+software solutions.
+
+This package provides LDAP optional dependencies for RFL authentication.
+
+{% if pkg.distribution == "suse16" %}
+%package -n python3-%{name}-authentication-oidc
+Summary:        Rackslab Foundation Library: authentication OIDC extra
+BuildArch:      noarch
+Requires:       python3-%{name}-core = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       python3-Authlib
+Requires:       python3-Flask
+Requires:       python3-requests
+
+%description -n python3-%{name}-authentication-oidc
+RFL is a Python library and a set of common utilities useful to most Rackslab
+software solutions.
+
+This package provides OIDC optional dependencies for RFL authentication.
+{% endif %}
+
+%package -n python3-%{name}-authentication-all
+Summary:        Rackslab Foundation Library: authentication all extras
+BuildArch:      noarch
+Requires:       python3-%{name}-authentication = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       python3-%{name}-authentication-jwt = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       python3-%{name}-authentication-ldap = %{?epoch:%{epoch}:}%{version}-%{release}
+{% if pkg.distribution == "suse16" %}
+Requires:       python3-%{name}-authentication-oidc = %{?epoch:%{epoch}:}%{version}-%{release}
+{% endif %}
+{% if pkg.distribution == "el8" %}
+Provides:       python3dist(rfl-authentication[all]) = %{?epoch:%{epoch}:}%{version}-%{release}
+Provides:       python%{python3_version}dist(rfl-authentication[all]) = %{?epoch:%{epoch}:}%{version}-%{release}
+{% endif %}
+
+%description -n python3-%{name}-authentication-all
+RFL is a Python library and a set of common utilities useful to most Rackslab
+software solutions.
+
+This metapackage installs all RFL authentication optional dependencies. New
+packages requiring full authentication support must depend on this package.
+{% else %}
+{# -i glob must match installed dist-info (Fedora: PEP 503 rfl_authentication-*; RHEL: RFL.authentication-*). #}
+{% if pkg.distribution.startswith("fc") %}
+%pyproject_extras_subpkg -n python3-%{name}-authentication -i %{python3_sitelib}/rfl_authentication-*.dist-info jwt ldap oidc all
+{% else %}
+%pyproject_extras_subpkg -n python3-%{name}-authentication -i %{python3_sitelib}/RFL.authentication-*.dist-info jwt ldap oidc all
+{% endif %}
+{% endif %}
 
 %package -n python3-%{name}-build
 Summary:        Rackslab Foundation Library: build package
@@ -170,12 +293,13 @@ This package includes settings package of RFL.
 %package -n python3-%{name}-web
 Summary:        Rackslab Foundation Library: web package
 BuildArch:      noarch
+{% if auth_legacy_extras %}
+# el8/openSUSE: hyphenated extra subpackages; declare JWT extra explicitly.
+Requires:       python3-%{name}-authentication-jwt = %{?epoch:%{epoch}:}%{version}-%{release}
 {% if pkg.distribution == "suse15" %}
-# Automatic dependency generator does not work on suse15, dependencies must be
-# explicitely declared for this distribution.
-Requires:       python3-%{name}-authentication = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:       python3-%{name}-permissions = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:       python3-Flask
+{% endif %}
 {% endif %}
 
 %description -n python3-%{name}-web
@@ -276,6 +400,15 @@ cd %{_builddir}/%{buildsubdir}/src/web
 %doc src/authentication/README.md
 %{python3_sitelib}/rfl/authentication
 %{python3_sitelib}/*authentication-*.%{_rfl_pysuffix}/
+
+{% if auth_legacy_extras %}
+%files -n python3-%{name}-authentication-jwt
+%files -n python3-%{name}-authentication-ldap
+{% if pkg.distribution == "suse16" %}
+%files -n python3-%{name}-authentication-oidc
+{% endif %}
+%files -n python3-%{name}-authentication-all
+{% endif %}
 
 %files -n python3-%{name}-build
 %doc src/build/README.md
