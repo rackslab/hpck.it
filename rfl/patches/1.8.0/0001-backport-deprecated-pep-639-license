@@ -1,6 +1,6 @@
 Description: Restore license metadata to format deprecated by PEP 639
  to stay compatible with old versions of setuptools < 0.77.0.
-Last-Update: 2026-05-08
+Last-Update: 2026-05-22
 Forwarded: no
 Distributions: bookworm ubuntu24.04 el10 fc41 fc42
 Author: Rémi Palancher <remi@rackslab.io>
@@ -12,7 +12,7 @@ index 6c41860..f267345 100644
 +++ b/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL"
- version = "1.7.0"
+ version = "1.8.0"
  description = "Rackslab Foundation Library"
 -license = "LGPL-3.0-or-later"
 +license = {text = "LGPL-3.0-or-later"}
@@ -25,7 +25,7 @@ index 6de4e8d..faa8327 100644
 +++ b/src/authentication/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.authentication"
- version = "1.7.0"
+ version = "1.8.0"
  description = "Rackslab Foundation Library: authentication package"
 -license = "LGPL-3.0-or-later"
 +license = {text = "LGPL-3.0-or-later"}
@@ -38,7 +38,7 @@ index 9b5d853..c61d4c5 100644
 +++ b/src/build/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.build"
- version = "1.7.0"
+ version = "1.8.0"
  description = "Rackslab Foundation Library: build package"
 -license = "LGPL-3.0-or-later"
 +license = {text = "LGPL-3.0-or-later"}
@@ -51,7 +51,7 @@ index fe7c6ab..0c6e326 100644
 +++ b/src/core/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.core"
- version = "1.7.0"
+ version = "1.8.0"
  description = "Rackslab Foundation Library: core package"
 -license = "LGPL-3.0-or-later"
 +license = {text = "LGPL-3.0-or-later"}
@@ -64,7 +64,7 @@ index 438cf80..913cacd 100644
 +++ b/src/log/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.log"
- version = "1.7.0"
+ version = "1.8.0"
  description = "Rackslab Foundation Library: log package"
 -license = "LGPL-3.0-or-later"
 +license = {text = "LGPL-3.0-or-later"}
@@ -77,7 +77,7 @@ index 95f502d..63ff802 100644
 +++ b/src/permissions/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.permissions"
- version = "1.7.0"
+ version = "1.8.0"
  description = "Rackslab Foundation Library: permissions package"
 -license = "LGPL-3.0-or-later"
 +license = {text = "LGPL-3.0-or-later"}
@@ -90,7 +90,7 @@ index cae5674..35cf7a5 100644
 +++ b/src/settings/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.settings"
- version = "1.7.0"
+ version = "1.8.0"
  description = "Rackslab Foundation Library: settings package"
 -license = "LGPL-3.0-or-later"
 +license = {text = "LGPL-3.0-or-later"}
@@ -103,7 +103,7 @@ index 6ac6970..02807f1 100644
 +++ b/src/web/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.web"
- version = "1.7.0"
+ version = "1.8.0"
  description = "Rackslab Foundation Library: web package"
 -license = "LGPL-3.0-or-later"
 +license = {text = "LGPL-3.0-or-later"}
