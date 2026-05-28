@@ -36,9 +36,7 @@ URL:		https://slurm.schedmd.com/
 # --with cray		%_with_cray 1		build for a Cray Aries system
 # --with cray_network	%_with_cray_network 1	build for a non-Cray system with a Cray network
 {% endif %}
-{% if soname >= 44 %}
 # --with cgroupv2	%_with_cgroupv2 1	require cgroup v2 support
-{% endif %}
 # --with cray_shasta	%_with_cray_shasta 1	build for a Cray Shasta system
 # --with slurmrestd	%_with_slurmrestd 1	build slurmrestd
 # --with yaml		%_with_yaml 1		build with yaml serializer
@@ -67,9 +65,7 @@ URL:		https://slurm.schedmd.com/
 %bcond_with cray
 %bcond_with cray_network
 {% endif %}
-{% if soname >= 44 %}
 %bcond_with cgroupv2
-{% endif %}
 %bcond_with cray_shasta
 %bcond_with slurmrestd
 {% if soname < 41 %}
@@ -122,13 +118,11 @@ BuildRequires:  pkgconfig
 %endif
 %endif
 
-{% if soname >= 44 %}
 %if %{with cgroupv2}
 Requires: libbpf
 BuildRequires: kernel-headers
 BuildRequires: pkgconfig(dbus-1)
 %endif
-{% endif %}
 
 %if %{with munge}
 Recommends: munge
@@ -474,9 +468,7 @@ autoreconf -f -i
 	--with-systemdsystemunitdir=%{_unitdir} \
 	--enable-pkgconfig \
 	%{?_without_debug:--disable-debug} \
-{% if soname >= 44 %}
 	%{?_with_cgroupv2:--enable-cgroupv2} \
-{% endif %}
 	%{?_with_pam_dir} \
 	%{?_with_mysql_config} \
 {% if soname < 41 %}
