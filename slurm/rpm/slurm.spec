@@ -400,7 +400,11 @@ according to the Slurm
 Summary: Slurm REST API translator
 Group: System Environment/Base
 Requires: %{name}%{?_isa} = %{version}-%{release}
+{% if soname >= 45 %}
+BuildRequires: (llhttp-devel or http-parser-devel)
+{% else %}
 BuildRequires: http-parser-devel
+{% endif %}
 BuildRequires: pkgconfig(json-c)
 %description slurmrestd
 Provides a REST interface to Slurm.

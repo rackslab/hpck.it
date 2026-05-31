@@ -1,7 +1,7 @@
 source: https://download.schedmd.com/slurm/slurm-{{ version }}.tar.bz2
 checksums:
-  26.05.0-0rc1:
-    sha256: 03b7a7e4713d941820632eb29624a52d5d689817ac7569390654a8c1b9e0df7e
+  26.05.0:
+    sha256: 767f0f7f9bc0fb61bb3f67e27882ec190d1ba5a9b2814b7177388e5793c0dae6
   25.11.5:
     sha256: c95361df00a035571c101834cd3988c224a38c4a3c8c67252aedb7527d447277
   25.05.7:
@@ -13,7 +13,7 @@ checksums:
   23.11.11:
     sha1: a74b756d398c072ddb26d3480040c749d223e559
 derivatives:
-  slurm26.05: 26.05.0-0rc1
+  slurm26.05: 26.05.0
   slurm25.11: 25.11.5
   slurm25.05: 25.05.7
   slurm24.11: 24.11.7

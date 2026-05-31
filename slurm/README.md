@@ -43,6 +43,7 @@ fatbuildrctl build -a slurm -d forky -m "${BUILD_MESSAGE}" --derivative slurm${S
 fatbuildrctl build -a slurm -d sid -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el8 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el9 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
+fatbuildrctl build -a slurm -d el10 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 
 export FATBUILDR_URI=dbus://system/hpckit
 export SLURM_VERSION=25.11
