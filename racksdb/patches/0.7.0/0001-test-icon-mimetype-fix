@@ -1,15 +1,15 @@
 Description: Change expected mimetype in tests on SUSE.
-Last-Update: 2025-12-09
-Author: Rémi Palancher <remi@rackslab.io>
+Last-Update: 2026-06-04
 Forwarded: no
 Distributions: suse15 suse16
+Author: Rémi Palancher <remi@rackslab.io>
 
 
 diff --git a/racksdb/tests/web/test_app.py b/racksdb/tests/web/test_app.py
-index 2ca2e32..be0f236 100644
+index 71720e8..2739023 100644
 --- a/racksdb/tests/web/test_app.py
 +++ b/racksdb/tests/web/test_app.py
-@@ -89,7 +89,7 @@ class TestRacksDBWebAppEndpoints(unittest.TestCase):
+@@ -93,7 +93,7 @@ class TestRacksDBWebAppEndpoints(unittest.TestCase):
      def test_static_ui(self):
          response = self.client.get("/favicon.ico")
          self.assertEqual(response.status_code, 200)

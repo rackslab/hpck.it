@@ -49,7 +49,7 @@ BuildRequires:  python3-rfl-log
 {% endif %}
 {% if pkg.distribution == "el8" %}
 # On RHEL8, versions constraints must be set to ensure nodejs and npm are
-# selected from nodejs:18 DNF module.
+# selected from nodejs:20 DNF module.
 BuildRequires:  nodejs(engine) >= 18
 BuildRequires:  npm(npm) >= 10
 {% else %}
@@ -67,6 +67,11 @@ BuildRequires:  asciidoctor
 {% endif %}
 BuildRequires:  pango
 BuildRequires:  python3-gobject
+{% if pkg.distribution.startswith("fc") %}
+# On Fedora, dependency on gobject-introspection must be explicitely set, it is
+# not installed automatically by indirect dependency anymore.
+BuildRequires:  gobject-introspection
+{% endif %}
 Summary:        YAML database of datacenter infrastructures: CLI
 BuildArch:      noarch
 Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
@@ -108,6 +113,11 @@ Requires:       typelib(Pango)
 # include Cairo related stuff. This is fixed with this explicit dependency
 # declaration.
 Requires:       python3-gobject
+{% if pkg.distribution.startswith("fc") %}
+# On Fedora, dependency on gobject-introspection must be explicitely set, it is
+# not installed automatically by indirect dependency anymore.
+Requires:       gobject-introspection
+{% endif %}
 {% if pkg.distribution == "suse15" %}
 # Automatic dependency generator does not work on suse15, dependencies must
 # be explicitely declared for this distribution.
@@ -240,14 +250,19 @@ ln -s ${NODE_MODULES} node_modules
 # empty configuration directory
 install -d %{buildroot}%{_sysconfdir}/racksdb
 
-# schemas
+{% if pkg.distribution in ["el8", "el9", "suse15"] %}
+# RFL.build setup generator does not support data-files in pyproject.toml, then
+# schemas files must be installed manually on distributions that need this
+# generator.
 install -d %{buildroot}%{_datadir}/racksdb/schemas
 install -p -m 0644 schemas/*.yml %{buildroot}%{_datadir}/racksdb/schemas
+{% endif %}
 
 # empty database directory
 install -d %{buildroot}%{_sharedstatedir}/racksdb
 
 # Install frontend application in datadir
+install -d %{buildroot}%{_datadir}/racksdb
 cp -vdr --no-preserve=ownership frontend/dist %{buildroot}%{_datadir}/racksdb/frontend
 
 # man pages
