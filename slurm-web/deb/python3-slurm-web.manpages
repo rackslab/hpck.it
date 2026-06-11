@@ -1,4 +1,2 @@
-{% if version.major | int > 5 %}
 ./docs/man/slurm-web.1
-{% endif %}
 ./docs/man/slurm-web-show-conf.1

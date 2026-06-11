@@ -17,7 +17,7 @@ Build-Depends:
  python3-flask-cors,
  python3-ldap,
  python3-markdown,
-{% if version.major | int > 4 %}
+{% if version.major | int < 7 %}
  python3-parameterized,
 {% endif %}
  python3-prometheus-client,
@@ -52,8 +52,9 @@ Depends:
  ${python3:Depends},
  python3-slurm-web (= ${binary:Version}),
  python3-markdown,
-{% if version.major | int < 5 %}
- python3-aiohttp,
+{% if version.major | int > 6 %}
+ python3-rfl-authentication-ldap,
+ python3-rfl-authentication-oidc,
 {% endif %}
  acl,
 Description: Web interface for Slurm HPC workload manager: gateway component

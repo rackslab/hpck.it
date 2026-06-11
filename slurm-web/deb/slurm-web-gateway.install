@@ -1,8 +1,3 @@
-{% if version.major | int < 6 %}
-usr/bin/slurm-web-gateway usr/libexec/slurm-web
-usr/bin/slurm-web-ldap-check usr/libexec/slurm-web
-usr/bin/slurm-web-gen-jwt-key usr/libexec/slurm-web
-{% endif %}
 conf/vendor/gateway.yml usr/share/slurm-web/conf
 conf/vendor/templates usr/share/slurm-web
 frontend/dist/* usr/share/slurm-web/frontend

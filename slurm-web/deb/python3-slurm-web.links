@@ -1,3 +1,1 @@
-{% if version.major | int > 5 %}
 usr/libexec/slurm-web/slurm-web-compat usr/libexec/slurm-web/slurm-web-show-conf
-{% endif %}

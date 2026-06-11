@@ -1,3 +1,6 @@
 ./docs/man/slurm-web-gateway.1
 ./docs/man/slurm-web-gen-jwt-key.1
+{% if version.major | int > 6 %}
+./docs/man/slurm-web-gen-session-key.1
+{% endif %}
 ./docs/man/slurm-web-ldap-check.1

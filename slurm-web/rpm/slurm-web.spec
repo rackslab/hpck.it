@@ -20,7 +20,7 @@ BuildRequires:  python3-rfl-build
 {% if pkg.distribution == "el8" %}
 # On RHEL8, versions constraints must be set to ensure nodejs and npm are
 # selected from nodejs:18 DNF module.
-BuildRequires:  nodejs(engine) >= 18
+BuildRequires:  nodejs(engine) >= 20
 BuildRequires:  npm(npm) >= 10
 {% else %}
 BuildRequires:  nodejs(engine)
@@ -96,6 +96,7 @@ Requires:       python3dist(importlib-metadata)
 Requires:       python3-aiohttp
 Requires:       python3-Flask
 Requires:       python3-rfl-authentication
+Requires:       python3-rfl-authentication-jwt
 Requires:       python3-rfl-core
 Requires:       python3-rfl-log
 Requires:       python3-rfl-settings
@@ -120,8 +121,16 @@ BuildArch:      noarch
 Requires:       python3-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
 {% if pkg.distribution in ["suse15", "suse16"] %}
 Requires:       python3-Markdown
+Requires:       python3-rfl-authentication-ldap
+{% if pkg.distribution == "suse16" %}
+Requires:       python3-rfl-authentication-oidc
+{% endif %}
 {% else %}
 Requires:       python3dist(markdown)
+Requires:       python3dist(rfl-authentication[ldap])
+{% if pkg.distribution != "el8" %}
+Requires:       python3dist(rfl-authentication[oidc])
+{% endif %}
 {% endif %}
 %description -n %{name}-gateway
 Slurm-web is a web dashboard for Slurm workload manager on HPC clusters.
@@ -214,6 +223,9 @@ ln -s slurm-web-compat %{buildroot}%{_libexecdir}/slurm-web/slurm-web-agent
 ln -s slurm-web-compat %{buildroot}%{_libexecdir}/slurm-web/slurm-web-connect-check
 ln -s slurm-web-compat %{buildroot}%{_libexecdir}/slurm-web/slurm-web-gateway
 ln -s slurm-web-compat %{buildroot}%{_libexecdir}/slurm-web/slurm-web-gen-jwt-key
+{% if pkg.version.major | int > 6 %}
+ln -s slurm-web-compat %{buildroot}%{_libexecdir}/slurm-web/slurm-web-gen-session-key
+{% endif %}
 ln -s slurm-web-compat %{buildroot}%{_libexecdir}/slurm-web/slurm-web-ldap-check
 ln -s slurm-web-compat %{buildroot}%{_libexecdir}/slurm-web/slurm-web-show-conf
 {% endif %}
@@ -286,10 +298,16 @@ install -p -m 0644 docs/modules/conf/examples/agent.ini %{buildroot}%{_docdir}/s
 %doc %{_mandir}/man1/slurm-web-gateway.*
 %doc %{_mandir}/man1/slurm-web-ldap-check.*
 %doc %{_mandir}/man1/slurm-web-gen-jwt-key.*
+{% if pkg.version.major | int > 6 %}
+%doc %{_mandir}/man1/slurm-web-gen-session-key.*
+{% endif %}
 %doc %{_docdir}/slurm-web-gateway/examples/gateway.ini
 %{_libexecdir}/slurm-web/slurm-web-gateway
 %{_libexecdir}/slurm-web/slurm-web-ldap-check
 %{_libexecdir}/slurm-web/slurm-web-gen-jwt-key
+{% if pkg.version.major | int > 6 %}
+%{_libexecdir}/slurm-web/slurm-web-gen-session-key
+{% endif %}
 %{_datadir}/slurm-web/frontend
 %{_datadir}/slurm-web/wsgi/gateway
 %{_datadir}/slurm-web/conf/gateway.yml
