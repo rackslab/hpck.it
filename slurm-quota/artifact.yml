@@ -1,9 +1,9 @@
 ---
-version: 3.0.0
+version: 3.0.1
 source: https://github.com/rackslab/slurm-quota/archive/refs/tags/v{{ version | gittag }}.tar.gz
 checksums:
-  '3.0.0':
-    sha256: 23528440447747130962c9bad812e5ec3ec6c73cad29bdfa603e8788618bde9e
+  '3.0.1':
+    sha256: d70e7098249b8b8bba4fd59a0cd6b1e63705dfccf51916521c69e04f042bd097
 rpm:
   release: 1
 deb:
