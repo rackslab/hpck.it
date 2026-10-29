@@ -1,18 +1,18 @@
 Description: Restore license metadata to format deprecated by PEP 639
  to stay compatible with old versions of setuptools < 0.77.0.
-Last-Update: 2026-05-22
+Last-Update: 2026-10-29
 Forwarded: no
 Distributions: bookworm ubuntu24.04 el10 fc41 fc42
 Author: Rémi Palancher <remi@rackslab.io>
 
 
 diff --git a/pyproject.toml b/pyproject.toml
-index 5f7e7d4..e675229 100644
+index 194552e..497463d 100644
 --- a/pyproject.toml
 +++ b/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL"
- version = "1.9.0"
+ version = "1.10.0"
  description = "Rackslab Foundation Library"
 -license = "LGPL-3.0-or-later"
 +license = {text = "LGPL-3.0-or-later"}
@@ -20,12 +20,12 @@ index 5f7e7d4..e675229 100644
  authors = [
      {name = "Rémi Palancher", email = "remi@rackslab.io"},
 diff --git a/src/authentication/pyproject.toml b/src/authentication/pyproject.toml
-index c1f2aef..d05dbfa 100644
+index 336ebe0..a6b529c 100644
 --- a/src/authentication/pyproject.toml
 +++ b/src/authentication/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.authentication"
- version = "1.9.0"
+ version = "1.10.0"
  description = "Rackslab Foundation Library: authentication package"
 -license = "LGPL-3.0-or-later"
 +license = {text = "LGPL-3.0-or-later"}
@@ -33,12 +33,12 @@ index c1f2aef..d05dbfa 100644
  keywords = ["utility", "basic"]
  authors = [
 diff --git a/src/build/pyproject.toml b/src/build/pyproject.toml
-index 87fa8bf..6bb5df0 100644
+index 9a179e2..415ff13 100644
 --- a/src/build/pyproject.toml
 +++ b/src/build/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.build"
- version = "1.9.0"
+ version = "1.10.0"
  description = "Rackslab Foundation Library: build package"
 -license = "LGPL-3.0-or-later"
 +license = {text = "LGPL-3.0-or-later"}
@@ -46,12 +46,12 @@ index 87fa8bf..6bb5df0 100644
  keywords = ["utility", "basic"]
  authors = [
 diff --git a/src/core/pyproject.toml b/src/core/pyproject.toml
-index a69a789..ad0fb02 100644
+index b55702d..07434ee 100644
 --- a/src/core/pyproject.toml
 +++ b/src/core/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.core"
- version = "1.9.0"
+ version = "1.10.0"
  description = "Rackslab Foundation Library: core package"
 -license = "LGPL-3.0-or-later"
 +license = {text = "LGPL-3.0-or-later"}
@@ -59,12 +59,12 @@ index a69a789..ad0fb02 100644
  keywords = ["utility", "basic"]
  authors = [
 diff --git a/src/log/pyproject.toml b/src/log/pyproject.toml
-index 2b59b99..5cf92c5 100644
+index aa6879d..7ee6107 100644
 --- a/src/log/pyproject.toml
 +++ b/src/log/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.log"
- version = "1.9.0"
+ version = "1.10.0"
  description = "Rackslab Foundation Library: log package"
 -license = "LGPL-3.0-or-later"
 +license = {text = "LGPL-3.0-or-later"}
@@ -72,12 +72,12 @@ index 2b59b99..5cf92c5 100644
  keywords = ["utility", "basic"]
  authors = [
 diff --git a/src/permissions/pyproject.toml b/src/permissions/pyproject.toml
-index 0990998..8cf430f 100644
+index 0a47476..11ad3d9 100644
 --- a/src/permissions/pyproject.toml
 +++ b/src/permissions/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.permissions"
- version = "1.9.0"
+ version = "1.10.0"
  description = "Rackslab Foundation Library: permissions package"
 -license = "LGPL-3.0-or-later"
 +license = {text = "LGPL-3.0-or-later"}
@@ -85,12 +85,12 @@ index 0990998..8cf430f 100644
  keywords = ["utility", "basic"]
  authors = [
 diff --git a/src/settings/pyproject.toml b/src/settings/pyproject.toml
-index 4f65855..a162503 100644
+index 10636c4..1fecfb5 100644
 --- a/src/settings/pyproject.toml
 +++ b/src/settings/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.settings"
- version = "1.9.0"
+ version = "1.10.0"
  description = "Rackslab Foundation Library: settings package"
 -license = "LGPL-3.0-or-later"
 +license = {text = "LGPL-3.0-or-later"}
@@ -98,12 +98,12 @@ index 4f65855..a162503 100644
  keywords = ["utility", "basic"]
  authors = [
 diff --git a/src/web/pyproject.toml b/src/web/pyproject.toml
-index ef10d59..9601e34 100644
+index 84fa7c6..223b37f 100644
 --- a/src/web/pyproject.toml
 +++ b/src/web/pyproject.toml
 @@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
  name = "RFL.web"
- version = "1.9.0"
+ version = "1.10.0"
  description = "Rackslab Foundation Library: web package"
 -license = "LGPL-3.0-or-later"
 +license = {text = "LGPL-3.0-or-later"}
