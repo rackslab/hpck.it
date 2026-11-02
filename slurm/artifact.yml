@@ -10,15 +10,12 @@ checksums:
     sha256: 8bcbaae09f4962b72fb322b6ef97b77cc2633f59fda151e90338cf5d9187b9cf
   24.05.8:
     sha1: 78e3838b4f295dcdda272afb0de4f9e91ef12fd4
-  23.11.11:
-    sha1: a74b756d398c072ddb26d3480040c749d223e559
 derivatives:
   slurm26.05: 26.05.0
   slurm25.11: 25.11.5
   slurm25.05: 25.05.7
   slurm24.11: 24.11.7
   slurm24.05: 24.05.8
-  slurm23.11: 23.11.11
 rpm:
   release: 1
   buildargs: --with mysql --with slurmrestd --with jwt --with libcurl --with lua --with cgroupv2
