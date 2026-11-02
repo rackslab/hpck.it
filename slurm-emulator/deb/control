@@ -1,0 +1,317 @@
+Source: slurm-emulator
+Section: admin
+Priority: optional
+Maintainer: HPCKit team <maintainers@hpck.it>
+Build-Depends:
+ bash-completion,
+ debhelper (>= 12),
+ dh-exec,
+ hdf5-helpers,
+ libcurl4-openssl-dev,
+ libdbus-1-dev,
+ libfreeipmi-dev,
+ libgtk2.0-dev,
+ libhdf5-dev,
+ libhttp-parser-dev,
+ libhwloc-dev,
+ libipmimonitoring-dev,
+ libjson-c-dev,
+ libjwt-dev,
+ liblua5.3-dev,
+ liblz4-dev,
+ libmariadb-dev | libmysqlclient-dev,
+ libmunge-dev,
+ libncurses-dev,
+ libpam0g-dev,
+ libperl-dev,
+ libpmix-dev,
+ librdkafka-dev,
+ librrd-dev,
+ libyaml-dev,
+ man2html-base,
+ po-debconf,
+ python3,
+Homepage: http://slurm.schedmd.com
+Vcs-Browser: https://github.com/SchedMD/slurm
+Vcs-Git: https://github.com/SchedMD/slurm.git
+
+Package: slurm-emulator
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+Recommends:
+ munge,
+Conflicts:
+ slurm-smd,
+ slurm-wlm,
+ slurm-wlm-basic-plugins,
+ slurm-wlm-elasticsearch-plugin,
+ slurm-wlm-emulator,
+ slurm-wlm-hdf5-plugin,
+ slurm-wlm-influxdb-plugin,
+ slurm-wlm-ipmi-plugins,
+ slurm-wlm-jwt-plugin,
+ slurm-wlm-mysql-plugin,
+ slurm-wlm-plugins,
+ slurm-wlm-rrd-plugin,
+ slurm-wlm-rsmi-plugin
+Replaces:
+ slurm-smd
+Description: Slurm Workload Manager
+ Slurm is an open source, fault-tolerant, and highly scalable
+ cluster management and job scheduling system for Linux clusters.
+ Components include machine status, partition management,
+ job management, scheduling and accounting modules.
+ .
+ This build is compiled with multiple slurmd so several slurmd
+ daemons can run on one host.
+
+Package: slurm-emulator-client
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ slurm-emulator (= ${binary:Version}),
+ bash-completion
+Recommends:
+ munge,
+Conflicts:
+ slurm-smd-client,
+ slurm-client,
+ slurm-client-emulator
+Replaces:
+ slurm-smd-client
+Description: Slurm Workload Manager client commands.
+ This package contains the Slurm client commands (excluding sview).
+
+Package: slurm-emulator-dev
+Architecture: any
+Depends:
+ slurm-emulator (= ${binary:Version}),
+Recommends:
+ munge,
+Conflicts:
+ slurm-smd-dev,
+ slurm-wlm-basic-plugins-dev,
+ slurm-wlm-elasticsearch-plugin-dev,
+ slurm-wlm-hdf5-plugin-dev,
+ slurm-wlm-influxdb-plugin-dev,
+ slurm-wlm-ipmi-plugins-dev,
+ slurm-wlm-jwt-plugin-dev,
+ slurm-wlm-mysql-plugin-dev,
+ slurm-wlm-plugins-dev,
+ slurm-wlm-rrd-plugin-dev,
+ slurm-wlm-rsmi-plugin-dev,
+ libslurm-dev
+Replaces:
+ slurm-smd-dev
+Description: Development package for Slurm emulator.
+ This package includes the header files and static libraries for the Slurm API.
+
+Package: slurm-emulator-doc
+Section: doc
+Architecture: all
+Depends:
+ ${misc:Depends}
+Conflicts:
+ slurm-smd-doc,
+ slurm-wlm-doc
+Replaces:
+ slurm-smd-doc
+Description: Slurm HTML documentation
+ This package contains the Slurm html documentation.
+
+Package: slurm-emulator-slurmctld
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ slurm-emulator (= ${binary:Version}),
+Recommends:
+ munge,
+Conflicts:
+ slurm-smd-slurmctld,
+ slurmctld
+Replaces:
+ slurm-smd-slurmctld
+Description: Slurm controller daemon.
+ Used to manage the job queue, schedule jobs, and dispatch RPC messages to the
+ slurmd processon the compute nodes to launch jobs.
+
+Package: slurm-emulator-slurmd
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ slurm-emulator (= ${binary:Version}),
+Recommends:
+ munge,
+Conflicts:
+ slurm-smd-slurmd,
+ slurmd
+Replaces:
+ slurm-smd-slurmd
+Description: Slurm compute node daemon
+  Used to launch jobs on compute nodes.
+
+Package: slurm-emulator-slurmdbd
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ slurm-emulator (= ${binary:Version}),
+Recommends:
+ munge,
+Conflicts:
+ slurm-smd-slurmdbd,
+ slurmdbd
+Replaces:
+ slurm-smd-slurmdbd
+Description: Slurm database daemon.
+ Used to accept and process database RPCs and upload database changes to
+ slurmctld daemons on each cluster.
+
+Package: slurm-emulator-slurmrestd
+Architecture: any
+Depends:
+ slurm-emulator (= ${binary:Version}),
+ ${shlibs:Depends},
+ ${misc:Depends},
+Conflicts:
+ slurm-smd-slurmrestd,
+ slurmrestd
+Replaces:
+ slurm-smd-slurmrestd
+Description: Slurm REST API daemon
+ Provides a REST interface to Slurm using the REST API daemon slurmrestd.
+
+Package: slurm-emulator-sackd
+Architecture: any
+Depends:
+ slurm-emulator (= ${binary:Version}),
+ ${shlibs:Depends}
+Replaces:
+ slurm-smd-sackd
+Conflicts:
+ slurm-smd-sackd
+Description: Slurm authentication daemon.
+ Used on login nodes that are not running slurmd daemons to allow authentication
+ to the cluster.
+
+Package: slurm-emulator-sview
+Architecture: any
+Depends:
+ slurm-emulator (= ${binary:Version}),
+ ${shlibs:Depends},
+ ${misc:Depends},
+Conflicts:
+ slurm-smd-sview,
+ sview
+Replaces:
+ slurm-smd-sview
+Description: GUI to view or modify Slurm state information.
+ This package contains sview, a GUI for viewing Slurm configuration, job, node,
+ and partition state information.  Can be used to modify some information by
+ authorized users.
+
+Package: slurm-emulator-libnss-slurm
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends}
+Replaces:
+ slurm-smd-libnss-slurm
+Conflicts:
+ slurm-smd-libnss-slurm
+Description: Slurm NSS plugin
+  This plugin can permit passwd, group, and cloud node host resolution for a job
+  to be serviced through the local slurmstepd process.
+
+Package: slurm-emulator-libpam-slurm-adopt
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends}
+Conflicts:
+ slurm-smd-libpam-slurm-adopt,
+ libpam-slurm-adopt
+Replaces:
+ slurm-smd-libpam-slurm-adopt
+Description: Slurm's pam_slurm_adopt module
+  This module restricts access to compute nodes in a cluster where Slurm is in
+  use.  Access is granted to root, any user with an Slurm-launched job currently
+  running on the node, or any user who has allocated resources on the node
+  according to the Slurm
+
+Package: slurm-emulator-libpmi0
+Section: libs
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends:
+  slurm-emulator (= ${binary:Version}),
+  ${shlibs:Depends},
+  ${misc:Depends}
+Replaces:
+ slurm-smd-libpmi0
+Conflicts:
+ slurm-smd-libpmi0
+Description: Slurm PMI library implementation
+  The Slurm PMI library.
+
+Package: slurm-emulator-libpmi2-0
+Section: libs
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends:
+  slurm-emulator (= ${binary:Version}),
+  ${shlibs:Depends},
+  ${misc:Depends}
+Replaces:
+ slurm-smd-libpmi2-0
+Conflicts:
+ slurm-smd-libpmi2-0
+Description: Slurm PMI2 library implementation
+  The Slurm PMI2 library.  For systems using Slurm, this version is preferred
+  over the compatibility libraries shipped by the PMIx project.
+
+Package: slurm-emulator-libslurm-perl
+Section: perl
+Architecture: any
+Depends:
+ ${perl:Depends},
+ ${misc:Depends},
+ ${shlibs:Depends}
+Conflicts: slurm-smd-libslurm-perl, libslurmdb-perl
+Replaces:
+ slurm-smd-libslurm-perl
+Description: Perl API for Slurm
+  This package includes the perl API to provide a helpful interface to Slurm
+  through Perl
+
+Package: slurm-emulator-openlava
+Architecture: all
+Depends:
+ slurm-emulator (>= ${source:Version}),
+ slurm-emulator-libslurm-perl (>= ${source:Version}),
+ libswitch-perl,
+ ${perl:Depends},
+ ${misc:Depends}
+Replaces:
+ slurm-smd-openlava
+Conflicts:
+ slurm-smd-openlava
+Description: OpenLava compatibility wrappers for Slurm
+  OpenLava wrapper scripts used for helping migrate from OpenLava/LFS to Slurm
+
+Package: slurm-emulator-torque
+Architecture: all
+Depends:
+ slurm-emulator (>= ${source:Version}),
+ slurm-emulator-libslurm-perl (>= ${source:Version}),
+ libswitch-perl,
+ ${shlibs:Depends},
+ ${perl:Depends},
+ ${misc:Depends}
+Conflicts: slurm-smd-torque, gridengine-client, torque-client, torque-client-x11
+Replaces:
+ slurm-smd-torque
+Description: Torque compatibility wrappers for Slurm
+  Torque wrapper scripts used for helping migrate from Torque/PBS to Slurm
