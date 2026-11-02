@@ -4,12 +4,6 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-{% if version.major == 23 %}
-  {% set soname = 39 %}
-{% elif version.major == 22 %}
-  {% set soname = 38 %}
-{% endif %}
-
 export PERL_ARCHLIB := $(shell perl -MConfig -e 'print substr($$Config{vendorarch}, 1)')
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all,-bindnow
 # include defs of all DEB_HOST_*/DEB_BUILD_* vars
