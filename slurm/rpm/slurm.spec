@@ -119,11 +119,6 @@ Requires: bash-completion
 BuildRequires: systemd
 BuildRequires: python3
 BuildRequires: readline-devel
-# libtool is required to run autoreconf, so that patches in
-# autoconf macros make effect.
-BuildRequires: libtool
-# glib2-devel is required to have AM_PATH_GLIB_2_0 macro during autoreconf.
-BuildRequires: glib2-devel
 Obsoletes: slurm-lua <= %{version}
 Obsoletes: slurm-munge <= %{version}
 Obsoletes: slurm-plugins <= %{version}
@@ -417,7 +412,6 @@ Provides a REST interface to Slurm.
 {{ prep_patches }}
 
 %build
-autoreconf -f -i
 %configure \
 	--with-systemdsystemunitdir=%{_unitdir} \
 	--enable-pkgconfig \
