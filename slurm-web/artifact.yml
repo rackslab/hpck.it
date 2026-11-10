@@ -1,12 +1,12 @@
 ---
 source: https://github.com/rackslab/Slurm-web/archive/refs/tags/v{{ version | gittag }}.tar.gz
 checksums:
-  '7.0.0':
-    sha256: 03173a2b5df5ed5381e0d78bb4b13cd7979d04f3f88b3ed1fed085696596818c
+  '7.1.0':
+    sha256: b980f890a18369ab0b9296b07c1ae3b61b24d467cc881ff9b71b308209f75864
   '6.1.0':
     sha256: 9f3bdd3fce3a19d116d76d5fc60ca436fff45b3c769f01b53aadec6db6cec716
 derivatives:
-  slurmweb-7: 7.0.0
+  slurmweb-7: 7.1.0
   slurmweb-6: 6.1.0
 rpm:
   release: 1

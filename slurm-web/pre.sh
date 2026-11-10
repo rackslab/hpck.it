@@ -5,5 +5,5 @@
 #PRESCRIPT_DEPS npm
 #PRESCRIPT_TARBALLS node_modules
 
-npm --prefix frontend --cache /tmp ci
+npm --prefix frontend --cache /tmp ci --loglevel http
 mv frontend/node_modules .
