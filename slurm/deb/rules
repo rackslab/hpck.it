@@ -4,6 +4,10 @@ include /usr/share/dpkg/architecture.mk
 
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all,-bindnow
 
+# Install Perl modules in vendor directory with Slurm >= 26.11, ignored with
+# previous versions.
+export SLURM_PERL_INSTALLDIRS = vendor
+
 %:
 	dh $@ --builddirectory --with bash-completion
 

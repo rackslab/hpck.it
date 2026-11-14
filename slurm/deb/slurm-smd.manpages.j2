@@ -10,6 +10,12 @@ debian/tmp/usr/share/man/man5/knl.conf.5
 {% endif %}
 debian/tmp/usr/share/man/man5/mpi.conf.5
 debian/tmp/usr/share/man/man5/oci.conf.5
+{% if version.major > 26 or version.main.startswith('26.11') %}
+debian/tmp/usr/share/man/man5/resctrl.yaml.5
+{% endif %}
 debian/tmp/usr/share/man/man5/slurm.conf.5
 debian/tmp/usr/share/man/man5/topology.conf.5
+{% if version.major > 26 or version.main.startswith('26.11') %}
+debian/tmp/usr/share/man/man5/tpu.yaml.5
+{% endif %}
 debian/tmp/usr/share/man/man8/spank.8
