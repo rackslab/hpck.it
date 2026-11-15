@@ -3,7 +3,9 @@
 # is GPLv2+.
 #
 # Please refer to upstream DISCLAIMER file for copyrights.
-{% if version.startswith('26.05') %}
+{% if version.startswith('26.11') %}
+  {% set soname = 46 %}
+{% elif version.startswith('26.05') %}
   {% set soname = 45 %}
 {% elif version.startswith('25.11') %}
   {% set soname = 44 %}
@@ -250,6 +252,16 @@ BuildRequires: pkgconfig(libselinux)
 # cause errors with rpm 4.13 and on. Turn that check off.
 %define _empty_manifest_terminate_build 0
 
+{% if soname >= 46 %}
+# Install Perl modules in Perl's vendor directory ($Config{installvendorarch}),
+# always in @INC for the system Perl.
+%define _perldir %(perl -MConfig -e 'print $Config{installvendorarch}')
+%define _perlman3dir %(perl -MConfig -e 'print $Config{installvendorman3dir}')
+# _perlarchlibdir is used only to clean up the perllocal.pod that
+# Makefile.PL drops alongside core Perl's archlib regardless of which
+# INSTALLDIRS tier is active, so it must point at $Config{installarchlib}.
+%define _perlarchlibdir %(perl -MConfig -e 'print $Config{installarchlib}')
+{% else %}
 # First we remove $prefix/local and then just prefix to make
 # sure we get the correct installdir
 %define _perlarch %(perl -e 'use Config; $T=$Config{installsitearch}; $P=$Config{installprefix}; $P1="$P/local"; $T =~ s/$P1//; $T =~ s/$P//; print $T;')
@@ -261,6 +273,7 @@ BuildRequires: pkgconfig(libselinux)
 %define _perldir %{_prefix}%{_perlarch}
 %define _perlman3dir %{_prefix}%{_perlman3}
 %define _perlarchlibdir %{_prefix}%{_perlarchlib}
+{% endif %}
 
 %description
 Slurm is an open source, fault-tolerant, and highly scalable
@@ -451,6 +464,9 @@ Provides a REST interface to Slurm.
 	%{!?with_munge:--without-munge} \
 	%{?_with_cflags}
 
+{% if soname >= 46 %}
+export SLURM_PERL_INSTALLDIRS=vendor
+{% endif %}
 make %{?_smp_mflags}
 
 %install
@@ -464,6 +480,9 @@ export QA_RPATHS=0x5
 %global __requires_exclude ^libpmix.so|libevent|libnvidia-ml
 
 rm -rf %{buildroot}
+{% if soname >= 46 %}
+export SLURM_PERL_INSTALLDIRS=vendor
+{% endif %}
 make install DESTDIR=%{buildroot}
 make install-contrib DESTDIR=%{buildroot}
 
@@ -473,6 +492,11 @@ install -D -m644 etc/job_submit.lua.example %{buildroot}/%{_sysconfdir}/job_subm
 install -D -m644 etc/slurm.conf.example %{buildroot}/%{_sysconfdir}/slurm.conf.example
 install -D -m600 etc/slurmdbd.conf.example %{buildroot}/%{_sysconfdir}/slurmdbd.conf.example
 install -D -m644 etc/cli_filter.lua.example %{buildroot}/%{_sysconfdir}/cli_filter.lua.example
+{% if soname >= 46 %}
+install -D -m644 etc/resctrl.yaml.example %{buildroot}/%{_sysconfdir}/resctrl.yaml.example
+install -D -m644 etc/runtime.lua.example %{buildroot}/%{_sysconfdir}/runtime.lua.example
+install -D -m644 etc/tpu.yaml.example %{buildroot}/%{_sysconfdir}/tpu.yaml.example
+{% endif %}
 install -D -m755 contribs/sjstat %{buildroot}/%{_bindir}/sjstat
 
 # Delete unpackaged files:
@@ -578,6 +602,11 @@ rm -rf %{buildroot}
 %config %{_sysconfdir}/slurm.conf.example
 %config %{_sysconfdir}/slurmdbd.conf.example
 %config %{_sysconfdir}/cli_filter.lua.example
+{% if soname >= 46 %}
+%config %{_sysconfdir}/resctrl.yaml.example
+%config %{_sysconfdir}/runtime.lua.example
+%config %{_sysconfdir}/tpu.yaml.example
+{% endif %}
 #############################################################################
 
 %files devel
