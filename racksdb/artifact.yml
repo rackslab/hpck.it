@@ -1,9 +1,9 @@
 ---
-version: 0.7.0
+version: 0.8.0
 source: https://github.com/rackslab/racksdb/archive/refs/tags/v{{ version | gittag }}.tar.gz
 checksums:
-  '0.7.0':
-    sha256: 4ad539403d873155a54367b0577405f2c8b4d304acd00ea6c379d718c7af66c7
+  '0.8.0':
+    sha256: 4e82afc2d1b87e1c5f1196aa71df4ed4a5531ff7d4e8e78000e92ff3c511fded
 rpm:
   release: 1
 deb:
