@@ -15,7 +15,9 @@ URL:            https://github.com/rackslab/RacksDB
 {{ sources }}
 {{ patches }}
 BuildRequires:  python3-devel
-BuildRequires:  python3-rfl-build
+# RFL.build setup generator supports package-data and data-files directives of
+# pyproject.toml starting from version 1.9.0.
+BuildRequires:  python3-rfl-build >= 1.9.0
 {% if pkg.distribution == "el8" %}
 # PyYAML library is required for docs/update-materials script. It does not have
 # to be explicitely declared as build requirement except on el8 because it is
@@ -249,14 +251,6 @@ ln -s ${NODE_MODULES} node_modules
 
 # empty configuration directory
 install -d %{buildroot}%{_sysconfdir}/racksdb
-
-{% if pkg.distribution in ["el8", "el9", "suse15"] %}
-# RFL.build setup generator does not support data-files in pyproject.toml, then
-# schemas files must be installed manually on distributions that need this
-# generator.
-install -d %{buildroot}%{_datadir}/racksdb/schemas
-install -p -m 0644 schemas/*.yml %{buildroot}%{_datadir}/racksdb/schemas
-{% endif %}
 
 # empty database directory
 install -d %{buildroot}%{_sharedstatedir}/racksdb
