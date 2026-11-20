@@ -1,6 +1,12 @@
 # Packages
 
-TDB
+FireHPC source produces these packages:
+
+- `firehpc`: FireHPC CLI, Ansible configuration and plugins, OS images database.
+- `firehpc-agent`: `firehpc-agent` program and system files (systemd services,
+  wrappers, polkit rules, `firehpc` group) required on the host running the
+  clusters containers. This is the only package required on remote hosts.
+- `python3-firehpc`: FireHPC Python library shared by both packages.
 
 # Environments
 

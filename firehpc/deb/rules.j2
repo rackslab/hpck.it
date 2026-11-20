@@ -10,6 +10,12 @@ override_dh_auto_build:
 	dh_auto_build
 	make -C docs man
 
+# Do not generate dependencies from Python package metadata, they are declared
+# explicitly in control file. This avoids pulling all CLI dependencies with
+# firehpc-agent on remote hosts.
+override_dh_python3:
+	dh_python3 --no-guessing-deps
+
 # Can be dropped in compat level 14
 execute_after_dh_installinit:
 	dh_installsysusers

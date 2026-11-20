@@ -11,6 +11,7 @@ Build-Depends:
  python3-ansible-runner,
  python3-dasbus,
  python3-fake-factory,
+ python3-paramiko,
  python3-racksdb,
 {% if version.dist == "ubuntu2204" %}
  python3-rfl-build,
@@ -25,11 +26,46 @@ Architecture: all
 Section: admin
 Depends:
  ${misc:Depends},
- ${python3:Depends},
- polkitd,
+ python3-firehpc (= ${binary:Version}),
+ firehpc-agent (= ${binary:Version}),
+ python3-ansible-runner,
+ python3-fake-factory,
+ python3-jinja2,
+ python3-paramiko,
+ python3-racksdb,
  python3-venv,
- systemd-container,
- systemd-resolved,
+ python3-yaml,
 Description: Deploy container-based emulated HPC clusters
  FireHPC is an open source solution to deploy container-based emulated HPC
  clusters, typically for development, testing or learning purposes.
+ This package provides FireHPC CLI.
+
+Package: firehpc-agent
+Architecture: all
+Section: admin
+Depends:
+ ${misc:Depends},
+ python3-firehpc (= ${binary:Version}),
+ polkitd,
+ systemd-container,
+ systemd-resolved,
+Recommends:
+ libnss-mymachines,
+Description: Agent to run containers of emulated HPC clusters
+ FireHPC is an open source solution to deploy container-based emulated HPC
+ clusters, typically for development, testing or learning purposes.
+ This package provides FireHPC agent and system files (systemd services,
+ wrappers, polkit rules) required to run clusters containers on the host,
+ locally or on behalf of FireHPC running on another host.
+
+Package: python3-firehpc
+Architecture: all
+Section: python
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+ python3-dasbus,
+Description: Python library for container-based emulated HPC clusters
+ FireHPC is an open source solution to deploy container-based emulated HPC
+ clusters, typically for development, testing or learning purposes.
+ This package provides FireHPC Python library.
