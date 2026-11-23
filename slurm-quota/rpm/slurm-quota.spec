@@ -146,7 +146,7 @@ install -d %{buildroot}%{_sharedstatedir}/state/slurm-quota
 %define _slurm_quota_pysuffix dist-info
 
 %check
-%pyproject_check_import -e 'slurm_quota.tests*'
+%pyproject_check_import
 %pytest
 
 %post controller
