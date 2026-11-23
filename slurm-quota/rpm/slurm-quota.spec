@@ -50,7 +50,8 @@ Requires:       sqlite
 
 %description controller
 Controller package for slurm-quota with Slurm integration files, systemd units,
-logrotate policy and database migration.
+logrotate policy, database migration, Slurm associations synchronization and
+legacy consumption reallocation.
 
 %package web
 Summary:        Web dashboard for slurm-quota
@@ -72,6 +73,7 @@ rfl-install-setup-generator
 # Rewrite /usr/local/bin references to libexec paths for internal commands
 sed -i 's|/usr/local/bin/slurm-quota-charge|%{_libexecdir}/slurm-quota/slurm-quota-charge|g' slurm-quota-charge-wrapper
 sed -i 's|/usr/local/bin/slurm-quota-serve|%{_libexecdir}/slurm-quota/slurm-quota-serve|g' slurm-quota.service
+sed -i 's|/usr/local/bin/slurm-quota-sync|%{_libexecdir}/slurm-quota/slurm-quota-sync|g' slurm-quota-sync.service
 
 # Generate man pages from source AsciiDoc files.
 asciidoctor -a revnumber=%{version} -b manpage -o slurm-quota.1 man/slurm-quota.1.adoc
@@ -79,6 +81,8 @@ asciidoctor -a revnumber=%{version} -b manpage -o slurm-quota-charge.1 man/slurm
 asciidoctor -a revnumber=%{version} -b manpage -o slurm-quota-serve.1 man/slurm-quota-serve.1.adoc
 asciidoctor -a revnumber=%{version} -b manpage -o slurm-quota-token.1 man/slurm-quota-token.1.adoc
 asciidoctor -a revnumber=%{version} -b manpage -o slurm-quota-prune.1 man/slurm-quota-prune.1.adoc
+asciidoctor -a revnumber=%{version} -b manpage -o slurm-quota-sync.1 man/slurm-quota-sync.1.adoc
+asciidoctor -a revnumber=%{version} -b manpage -o slurm-quota-reallocate.1 man/slurm-quota-reallocate.1.adoc
 asciidoctor -a revnumber=%{version} -b manpage -o slurm-quota-web.1 man/slurm-quota-web.1.adoc
 
 %install
@@ -104,6 +108,7 @@ install -d %{buildroot}%{_libexecdir}/slurm-quota
 mv %{buildroot}%{_bindir}/slurm-quota-charge %{buildroot}%{_libexecdir}/slurm-quota/
 mv %{buildroot}%{_bindir}/slurm-quota-serve %{buildroot}%{_libexecdir}/slurm-quota/
 mv %{buildroot}%{_bindir}/slurm-quota-migrate %{buildroot}%{_libexecdir}/slurm-quota/
+mv %{buildroot}%{_bindir}/slurm-quota-sync %{buildroot}%{_libexecdir}/slurm-quota/
 mv %{buildroot}%{_bindir}/slurm-quota-web %{buildroot}%{_libexecdir}/slurm-quota/
 
 # Slurm integration and systemd units
@@ -111,6 +116,8 @@ install -Dm0755 slurm-quota-charge-wrapper %{buildroot}%{_sysconfdir}/slurm/slur
 install -Dm0644 job_submit.lua %{buildroot}%{_sysconfdir}/slurm/job_submit.lua
 install -Dm0644 slurm-quota.service %{buildroot}%{_unitdir}/slurm-quota.service
 install -Dm0644 slurm-quota.socket %{buildroot}%{_unitdir}/slurm-quota.socket
+install -Dm0644 slurm-quota-sync.service %{buildroot}%{_unitdir}/slurm-quota-sync.service
+install -Dm0644 slurm-quota-sync.timer %{buildroot}%{_unitdir}/slurm-quota-sync.timer
 install -Dm0644 slurm-quota-charge.logrotate %{buildroot}%{_sysconfdir}/logrotate.d/slurm-quota-charge
 
 # Site configuration directory
@@ -120,6 +127,7 @@ install -d %{buildroot}%{_sysconfdir}/slurm-quota
 install -Dm0644 slurm-quota.bash-completion %{buildroot}%{bash_completions_dir}/slurm-quota
 install -Dm0644 slurm-quota-prune.bash-completion %{buildroot}%{bash_completions_dir}/slurm-quota-prune
 install -Dm0644 slurm-quota-token.bash-completion %{buildroot}%{bash_completions_dir}/slurm-quota-token
+install -Dm0644 slurm-quota-reallocate.bash-completion %{buildroot}%{bash_completions_dir}/slurm-quota-reallocate
 
 # Man pages
 install -Dm0644 slurm-quota.1 %{buildroot}%{_mandir}/man1/slurm-quota.1
@@ -127,6 +135,8 @@ install -Dm0644 slurm-quota-charge.1 %{buildroot}%{_mandir}/man1/slurm-quota-cha
 install -Dm0644 slurm-quota-serve.1 %{buildroot}%{_mandir}/man1/slurm-quota-serve.1
 install -Dm0644 slurm-quota-token.1 %{buildroot}%{_mandir}/man1/slurm-quota-token.1
 install -Dm0644 slurm-quota-prune.1 %{buildroot}%{_mandir}/man1/slurm-quota-prune.1
+install -Dm0644 slurm-quota-sync.1 %{buildroot}%{_mandir}/man1/slurm-quota-sync.1
+install -Dm0644 slurm-quota-reallocate.1 %{buildroot}%{_mandir}/man1/slurm-quota-reallocate.1
 install -Dm0644 slurm-quota-web.1 %{buildroot}%{_mandir}/man1/slurm-quota-web.1
 
 # State and log directories
@@ -166,18 +176,25 @@ fi
 %{_libexecdir}/slurm-quota/slurm-quota-charge
 %{_libexecdir}/slurm-quota/slurm-quota-serve
 %{_libexecdir}/slurm-quota/slurm-quota-migrate
+%{_libexecdir}/slurm-quota/slurm-quota-sync
 %{_bindir}/slurm-quota-token
 %{_bindir}/slurm-quota-prune
+%{_bindir}/slurm-quota-reallocate
 %doc %{_mandir}/man1/slurm-quota-charge.1*
 %doc %{_mandir}/man1/slurm-quota-serve.1*
 %doc %{_mandir}/man1/slurm-quota-token.1*
 %doc %{_mandir}/man1/slurm-quota-prune.1*
+%doc %{_mandir}/man1/slurm-quota-sync.1*
+%doc %{_mandir}/man1/slurm-quota-reallocate.1*
 %{bash_completions_dir}/slurm-quota-prune
 %{bash_completions_dir}/slurm-quota-token
+%{bash_completions_dir}/slurm-quota-reallocate
 %{_sysconfdir}/slurm/slurm-quota-charge-wrapper
 %config(noreplace) %{_sysconfdir}/slurm/job_submit.lua
 %{_unitdir}/slurm-quota.service
 %{_unitdir}/slurm-quota.socket
+%{_unitdir}/slurm-quota-sync.service
+%{_unitdir}/slurm-quota-sync.timer
 %config(noreplace) %{_sysconfdir}/logrotate.d/slurm-quota-charge
 %dir %attr(0755,slurm,slurm) %{_localstatedir}/log/slurm/charge
 %dir %attr(0755,slurm,slurm) %{_sharedstatedir}/state/slurm-quota

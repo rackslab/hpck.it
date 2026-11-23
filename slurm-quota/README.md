@@ -3,7 +3,7 @@
 Development packages:
 
 ```
-fatbuildrctl --uri https://build.rackslab.io/devs build -a slurm-quota -d el9 --sources 3.0.0@.
+fatbuildrctl --uri https://build.rackslab.io/devs build -a slurm-quota -d el9 --sources 4.0.0@.
 ```
 
 Official releases:
