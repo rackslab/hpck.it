@@ -7,6 +7,11 @@ FireHPC source produces these packages:
   wrappers, polkit rules, `firehpc` group) required on the host running the
   clusters containers. This is the only package required on remote hosts.
 - `python3-firehpc`: FireHPC Python library shared by both packages.
+- `firehpc-nvidia-fake`: fake `nvidia-smi` and DCGM exporter programs installed
+  on emulated cluster GPU compute nodes. It does not depend on FireHPC library.
+
+RPM packaging only produces `firehpc-nvidia-fake` package, for emulated cluster
+nodes based on RHEL.
 
 # Environments
 
