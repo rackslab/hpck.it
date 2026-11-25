@@ -72,9 +72,3 @@ running containers:
 # printf '[Resolve]\nDNSSEC=no\n' > /etc/systemd/resolved.conf.d/firehpc.conf
 # systemctl restart systemd-resolved
 ```
-
-Export to remote repository:
-
-```
-$ rsync --rsync-path="sudo rsync"  -e "ssh -p 3322" -avh --delete /var/lib/fatbuildr/registry/hpckit roohatch@hpck.it:/var/lib/fatbuildr/registry/
-```
