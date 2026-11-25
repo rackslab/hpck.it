@@ -18,15 +18,16 @@ nodes based on RHEL.
 Launch these commands to build the FireHPC environments:
 
 ```
-$ fatbuildrctl --uri dbus://system/hpckit build --artifact node-debian11 --distribution firehpc --subdir firehpc/envs
-$ fatbuildrctl --uri dbus://system/hpckit build --artifact node-debian12 --distribution firehpc --subdir firehpc/envs
-$ fatbuildrctl --uri dbus://system/hpckit build --artifact node-debian13 --distribution firehpc --subdir firehpc/envs
-$ fatbuildrctl --uri dbus://system/hpckit build --artifact node-debian14 --distribution firehpc --subdir firehpc/envs
-$ fatbuildrctl --uri dbus://system/hpckit build --artifact node-rocky8 --distribution firehpc --subdir firehpc/envs
-$ fatbuildrctl --uri dbus://system/hpckit build --artifact node-rocky9 --distribution firehpc --subdir firehpc/envs
-$ fatbuildrctl --uri dbus://system/hpckit build --artifact node-rocky10 --distribution firehpc --subdir firehpc/envs
-$ fatbuildrctl --uri dbus://system/hpckit build --artifact node-opensuse15 --distribution firehpc --subdir firehpc/envs
-$ fatbuildrctl --uri dbus://system/hpckit build --artifact node-opensuse16 --distribution firehpc --subdir firehpc/envs
+$ export FATBUILDR_URI=https://build.rackslab.io/hpckit
+$ fatbuildrctl build --artifact node-debian11 --distribution firehpc --subdir firehpc/envs
+$ fatbuildrctl build --artifact node-debian12 --distribution firehpc --subdir firehpc/envs
+$ fatbuildrctl build --artifact node-debian13 --distribution firehpc --subdir firehpc/envs
+$ fatbuildrctl build --artifact node-debian14 --distribution firehpc --subdir firehpc/envs
+$ fatbuildrctl build --artifact node-rocky8 --distribution firehpc --subdir firehpc/envs
+$ fatbuildrctl build --artifact node-rocky9 --distribution firehpc --subdir firehpc/envs
+$ fatbuildrctl build --artifact node-rocky10 --distribution firehpc --subdir firehpc/envs
+$ fatbuildrctl build --artifact node-opensuse15 --distribution firehpc --subdir firehpc/envs
+$ fatbuildrctl build --artifact node-opensuse16 --distribution firehpc --subdir firehpc/envs
 ```
 
 Export to remote repository:
