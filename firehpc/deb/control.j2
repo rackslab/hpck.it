@@ -58,6 +58,20 @@ Description: Agent to run containers of emulated HPC clusters
  wrappers, polkit rules) required to run clusters containers on the host,
  locally or on behalf of FireHPC running on another host.
 
+Package: firehpc-nvidia-fake
+Architecture: all
+Section: admin
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Description: Fake NVIDIA tools for FireHPC emulated GPU nodes
+ FireHPC is an open source solution to deploy container-based emulated HPC
+ clusters, typically for development, testing or learning purposes.
+ This package provides fake nvidia-smi and NVIDIA DCGM exporter programs to
+ emulate NVIDIA GPUs on emulated cluster compute nodes, for GPU monitoring
+ tools such as CEEMS exporter. It does not depend on FireHPC library and it
+ is meant to be installed on cluster nodes.
+
 Package: python3-firehpc
 Architecture: all
 Section: python
