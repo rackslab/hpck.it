@@ -3,11 +3,12 @@
 Build Slurm packages for all supported versions on all supported distributions:
 
 ```sh
+export FATBUILDR_URI=https://build.rackslab.io/hpckit
 export SLURM_VERSIONS="24.05 24.11 25.05 25.11 26.05 26.11"
 export SLURM_DISTRIBS="bookworm trixie sid el8 el9"
 for SLURM_DISTRIB in ${SLURM_DISTRIBS}; do
   for SLURM_VERSION in ${SLURM_VERSIONS}; do
-    fatbuildrctl --uri dbus://system/hpckit build -a slurm -d ${SLURM_DISTRIB} --derivative slurm${SLURM_VERSION} --batch
+    fatbuildrctl build -a slurm -d ${SLURM_DISTRIB} --derivative slurm${SLURM_VERSION} --batch
   done
 done
 ```
@@ -16,13 +17,14 @@ Clean repositories of all Slurm packages for all supported version and all
 supported distributions:
 
 ```sh
+export FATBUILDR_URI=https://build.rackslab.io/hpckit
 export SLURM_VERSIONS="24.05 24.11 25.05 25.11 26.05 26.11"
 export SLURM_DISTRIBS="bookworm trixie sid el8 el9"
 export SLURM_ARTIFACTS="pmi sack slurm sview"
 for SLURM_ARTIFACT in ${SLURM_ARTIFACTS}; do
   for SLURM_DISTRIB in ${SLURM_DISTRIBS}; do
     for SLURM_VERSION in ${SLURM_VERSIONS}; do
-      fatbuildrctl --uri dbus://system/hpckit registry -a ${SLURM_ARTIFACT} -d ${SLURM_DISTRIB} --derivative slurm${SLURM_VERSION} delete
+      fatbuildrctl registry -a ${SLURM_ARTIFACT} -d ${SLURM_DISTRIB} --derivative slurm${SLURM_VERSION} delete
     done
   done
 done
@@ -35,7 +37,7 @@ sudo -u fatbuildr reprepro --basedir /var/lib/fatbuildr/registry/hpckit/deb clea
 ```
 
 ```sh
-export FATBUILDR_URI=dbus://system/hpckit
+export FATBUILDR_URI=https://build.rackslab.io/hpckit
 export SLURM_VERSION=26.11
 export BUILD_MESSAGE="New upstream release ${SLURM_VERSION}"
 fatbuildrctl build -a slurm -d trixie -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
@@ -45,7 +47,7 @@ fatbuildrctl build -a slurm -d el8 -m "${BUILD_MESSAGE}" --derivative slurm${SLU
 fatbuildrctl build -a slurm -d el9 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el10 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 
-export FATBUILDR_URI=dbus://system/hpckit
+export FATBUILDR_URI=https://build.rackslab.io/hpckit
 export SLURM_VERSION=26.05
 export BUILD_MESSAGE="New upstream release ${SLURM_VERSION}"
 fatbuildrctl build -a slurm -d trixie -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
@@ -55,7 +57,7 @@ fatbuildrctl build -a slurm -d el8 -m "${BUILD_MESSAGE}" --derivative slurm${SLU
 fatbuildrctl build -a slurm -d el9 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el10 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 
-export FATBUILDR_URI=dbus://system/hpckit
+export FATBUILDR_URI=https://build.rackslab.io/hpckit
 export SLURM_VERSION=25.11
 export BUILD_MESSAGE="New upstream release ${SLURM_VERSION}"
 fatbuildrctl build -a slurm -d trixie -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
@@ -64,7 +66,7 @@ fatbuildrctl build -a slurm -d sid -m "${BUILD_MESSAGE}" --derivative slurm${SLU
 fatbuildrctl build -a slurm -d el8 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 fatbuildrctl build -a slurm -d el9 -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
 
-export FATBUILDR_URI=dbus://system/hpckit
+export FATBUILDR_URI=https://build.rackslab.io/hpckit
 export SLURM_VERSION=25.05
 export BUILD_MESSAGE="New upstream release ${SLURM_VERSION}"
 fatbuildrctl build -a slurm -d trixie -m "${BUILD_MESSAGE}" --derivative slurm${SLURM_VERSION}
