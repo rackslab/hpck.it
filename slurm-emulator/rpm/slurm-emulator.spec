@@ -494,7 +494,6 @@ install -D -m600 etc/slurmdbd.conf.example %{buildroot}/%{_sysconfdir}/slurmdbd.
 install -D -m644 etc/cli_filter.lua.example %{buildroot}/%{_sysconfdir}/cli_filter.lua.example
 {% if soname >= 46 %}
 install -D -m644 etc/resctrl.yaml.example %{buildroot}/%{_sysconfdir}/resctrl.yaml.example
-install -D -m644 etc/runtime.lua.example %{buildroot}/%{_sysconfdir}/runtime.lua.example
 install -D -m644 etc/tpu.yaml.example %{buildroot}/%{_sysconfdir}/tpu.yaml.example
 {% endif %}
 install -D -m755 contribs/sjstat %{buildroot}/%{_bindir}/sjstat
@@ -604,7 +603,6 @@ rm -rf %{buildroot}
 %config %{_sysconfdir}/cli_filter.lua.example
 {% if soname >= 46 %}
 %config %{_sysconfdir}/resctrl.yaml.example
-%config %{_sysconfdir}/runtime.lua.example
 %config %{_sysconfdir}/tpu.yaml.example
 {% endif %}
 #############################################################################
