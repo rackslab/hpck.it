@@ -16,6 +16,9 @@ Packages=
   systemd
   systemd-networkd
   systemd-resolved
+  pam
+  util-linux
+  authselect
   rpm
   dnf
   python3

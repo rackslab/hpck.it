@@ -24,6 +24,15 @@ EOF
 
 fi
 
+if [ $DISTRIBUTION == "rocky" ] && [ $RELEASE == "10" ]; then
+
+    # Generate PAM and nsswitch configuration with authselect, required by
+    # machinectl shell (container-shell@.service has PAMName=login). On EL10,
+    # local profile replaces minimal profile available on previous releases.
+    authselect select local --force
+
+fi
+
 if [ $DISTRIBUTION == "opensuse" ]; then
   rpm --import /usr/lib/rpm/gpupg/keys/gpg-pubkey-suse-backports
 fi
