@@ -8,6 +8,22 @@ if [ $DISTRIBUTION == "rocky" ] || [ $DISTRIBUTION == "opensuse" ]; then
 
 fi
 
+if [ $DISTRIBUTION == "rocky" ]; then
+
+    # Images have uninitialized machine-id, so systemd applies presets on first
+    # boot. On EL10, systemd is built with first-boot-full-preset, which
+    # disables units enabled above as the distribution preset policy disables
+    # systemd-networkd and systemd-resolved. Add a preset policy with higher
+    # priority to keep them enabled.
+    mkdir -p /etc/systemd/system-preset
+    cat > /etc/systemd/system-preset/80-firehpc.preset <<EOF
+enable systemd-networkd.service
+enable systemd-networkd.socket
+enable systemd-resolved.service
+EOF
+
+fi
+
 if [ $DISTRIBUTION == "opensuse" ]; then
   rpm --import /usr/lib/rpm/gpupg/keys/gpg-pubkey-suse-backports
 fi
