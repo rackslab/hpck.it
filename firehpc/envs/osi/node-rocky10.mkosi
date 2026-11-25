@@ -6,6 +6,9 @@ Repositories=epel
 [Output]
 Format=disk
 CompressOutput=xz
+# Images have no ESP partition, which is required by El Torito boot catalog
+# that mkosi enables by default with systemd-repart >= 261.
+ElTorito=no
 
 [Content]
 WithDocs=yes
