@@ -18,3 +18,16 @@ index e777f45..a61bb0e 100644
  description = "Instantly fire up container-based emulated HPC cluster"
  license = {text = "GPLv3+"}
  requires-python = ">=3.9"
+diff --git a/utils/nvidia-fake/pyproject.toml b/utils/nvidia-fake/pyproject.toml
+index c4803f6..3f2e036 100644
+--- a/utils/nvidia-fake/pyproject.toml
++++ b/utils/nvidia-fake/pyproject.toml
+@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
+ 
+ [project]
+ name = "firehpc-nvidia-fake"
+-version = "1.2.0"
++version = "{{ version.main }}"
+ description = "Fake nvidia-smi and DCGM exporter for FireHPC emulated GPU nodes"
+ license = {text = "GPLv3+"}
+ # Rocky Linux 8 nodes run Python 3.6.
